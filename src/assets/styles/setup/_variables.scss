@@ -1,16 +1,32 @@
 // Colors
-$clr1: #ce2e6c;
-$clr2: #4f3a65;
-$clr3: #574f7d;
-$clr4: #95adbe;
-$clr5: #dff0ea;
-$clr6: #fff;
-$clr7: #222;
+$clr1: #edeff8; // main-bcg
+$clr2: #f5f6fc; // menu-bcg
+$clr3: #fff; // board-bcg
+// $clr4: 
+$txt-clr: #323338;
 
-$gray1: #ddd;
-$gray2: #aaa;
-$gray3: #777;
+
+
+$gray1: #d6d8df;
+$gray2: #c5c7d0; // add comment on taks btn
+$gray3: #9799a6; //
 $gray4: #333;
+
+// Dark mode
+
+$dark-clr0: #292f4c; // Background color
+$dark-clr1: #222743; // main menu bcg
+$dark-clr2: #191b34; // BoardDetails bcg
+
+$dark-txt-clr: $gray1;
+
+// Typography
+
+$title-font-family: "Poppins", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
+$main-font-family: "Figtree", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
+
+$logo-size: 1em;
+$board-title-size: rem(14px);
 
 // Breakpoints
 $mobile-breakpoint: 460px;
