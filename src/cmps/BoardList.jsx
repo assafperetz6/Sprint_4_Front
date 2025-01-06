@@ -23,7 +23,9 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
                         <button onClick={() => onUpdateBoard(board)}>Edit</button>
                         <button onClick={() => onRemoveBoard(board._id)}>x</button>
                     </div>}
-                    <button onClick={() => navigate(`/board/${board._id}`)}>details</button>
+                    <div>
+                        <button onClick={() => navigate(`/board/${board._id}`)}>details</button>
+                    </div>
                 </li>)
             }
         </ul>
