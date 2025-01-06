@@ -25,9 +25,7 @@ export function AppHeader() {
 					E2E Demo
 				</NavLink>
 				<NavLink to="about">About</NavLink>
-				<NavLink to="car">Cars</NavLink>
-				<NavLink to="chat">Chat</NavLink>
-				<NavLink to="review">Review</NavLink>
+				<NavLink to="board">Boards</NavLink>
 
                 {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
 
@@ -35,10 +33,8 @@ export function AppHeader() {
 				{user && (
 					<div className="user-info">
 						<Link to={`user/${user._id}`}>
-							{/* {user.imgUrl && <img src={user.imgUrl} />} */}
 							{user.fullname}
 						</Link>
-						{/* <span className="score">{user.score?.toLocaleString()}</span> */}
 						<button onClick={onLogout}>logout</button>
 					</div>
 				)}
