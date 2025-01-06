@@ -1,7 +1,11 @@
+
+
+//placeholder, not functional yet. need to refactor both local and remote
+
 const { DEV, VITE_LOCAL } = import.meta.env
 
-import { reviewService as local } from './review.service.local'
-import { reviewService as remote } from './review.service.remote'
+import { reviewService as local } from './discussion.service.local'
+import { reviewService as remote } from './discussion.service.remote'
 
 export const reviewService = VITE_LOCAL === 'true' ? local : remote
 
