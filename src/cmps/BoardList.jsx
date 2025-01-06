@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom'
 import { userService } from '../services/user'
 import { BoardPreview } from './BoardPreview'
 
 export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
     
+    const navigate = useNavigate()
+
     function shouldShowActionBtns(board) {
         const user = userService.getLoggedinUser()
         
@@ -20,6 +23,7 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
                         <button onClick={() => onUpdateBoard(board)}>Edit</button>
                         <button onClick={() => onRemoveBoard(board._id)}>x</button>
                     </div>}
+                    <button onClick={() => navigate(`/board/${board._id}`)}>details</button>
                 </li>)
             }
         </ul>

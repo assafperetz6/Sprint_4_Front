@@ -91,3 +91,12 @@ async function _createAdmin() {
     const newUser = await storageService.post('user', userCred)
     console.log('newUser: ', newUser)
 }
+
+function makeUserAdmin(){
+    const user = JSON.parse(localStorage.getItem('user'))
+    user[0].isAdmin = true
+    localStorage.setItem('user', JSON.stringify(user))
+    saveLoggedinUser(user)
+}
+
+window.makeAdmin = makeUserAdmin

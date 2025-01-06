@@ -1,8 +1,13 @@
 
 
-export function BoardPreview(){
+export function BoardPreview({ board }){
 
     return (
-        <h1>preview</h1>
+        <section className="boardPreview">
+            <h1>ID: {board._id}</h1>
+            <h1>TITLE: {board.title}</h1>
+            <h1>Creatd by:</h1>
+            <pre>{JSON.stringify(board.createdBy, null, 2)}</pre>
+        </section>
     )
 }

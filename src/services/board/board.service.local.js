@@ -1,7 +1,7 @@
 
 import { storageService } from '../async-storage.service'
-import { makeId } from '../util.service'
 import { userService } from '../user'
+import { defaultBoard } from './data'
 
 const STORAGE_KEY = 'board'
 
@@ -16,6 +16,9 @@ export const boardService = {
 
 async function query() {
     var boards = await storageService.query(STORAGE_KEY)
+    if (!boards.length) {
+        boards = _makeBoard()
+    }
     return boards
 }
 
@@ -49,6 +52,14 @@ async function save(board) {
         savedBoard = await storageService.post(STORAGE_KEY, boardToSave)
     }
     return savedBoard
+}
+
+async function _makeBoard(){
+    const test = await storageService.query()
+    if(!test.length) {
+        localStorage.setItem('board', JSON.stringify(defaultBoard))
+    }
+    return defaultBoard
 }
 
 // async function addtaskUpdate(taskId, txt) {
