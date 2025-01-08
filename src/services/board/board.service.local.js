@@ -1,6 +1,7 @@
 
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
+import { makeId } from '../util.service'
 import { defaultBoard } from './data'
 
 const STORAGE_KEY = 'board'
@@ -10,7 +11,10 @@ export const boardService = {
     getById,
     save,
     remove,
-    // addBoardUpdate
+    getGroups,
+    getGroupById,
+    saveGroup,
+    removeGroup,
 }
 
 
@@ -62,16 +66,63 @@ async function _makeBoard(){
     return defaultBoard
 }
 
-// async function addtaskUpdate(taskId, txt) {
-//     const task = await getById(taskId)
+async function getGroups(boardId){
+    try {
+        const { groups } = await getById(boardId)
+        return groups         
+    } catch (err) {
+        throw err
+    }
+}
 
-//     const update = {
-//         id: makeId(),
-//         by: userService.getLoggedinUser(),
-//         txt
-//     }
-//     task.updates.push(update)
-//     await storageService.put(STORAGE_KEY, task)
+async function getGroupById(boardId, groupId){
+    try {
+        const { groups } = await getById(boardId)
+        const group = groups.find( group => group.id === groupId)
+        if(!group) throw new Error(`No group with id: ${groupId}`)
+        return group
+    }        
+    catch (err) {
+      throw err  
+    }
+}
 
-//     return update
-// }
+async function removeGroup(boardId, groupId) {
+    try {
+        const board = await getById(boardId)
+        const groupIdx = board.groups.findIndex( group => group.id === groupId)
+        if(groupIdx === -1) throw new Error(`No group with id: ${groupId}`)
+
+        board.groups.splice(groupIdx, 1)
+        return storageService.put(STORAGE_KEY, board)
+    }        
+    catch (err) {
+      throw err  
+    }
+}
+
+async function saveGroup(boardId, group) {
+    const groupToSave = {
+        title: group.title,
+        style: group.style,
+        tasks: group.tasks,
+    }
+
+    try {
+        const board = await getById(boardId)
+        if(group.id) {
+            groupToSave.id = group.id
+            const groupIdx = board.groups.findIndex( group => group.id === groupToSave.id)
+            if(groupIdx === -1) throw new Error(`No group with id: ${group.id}`)    
+            board.groups.splice(groupIdx, 1, groupToSave)
+        }
+        else {
+            groupToSave.id = makeId()
+            board.groups.push(groupToSave)
+        }
+        return storageService.put(STORAGE_KEY, board)
+    }        
+    catch (err) {
+      throw err  
+    }
+}
