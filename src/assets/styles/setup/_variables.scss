@@ -10,6 +10,8 @@ $clr6: #222743;
 $clr7: #0073ea; // blue btns
 $txt-clr: #323338;
 
+$primary-hover-clr: rgba(103, 104, 121, 0.1);
+$avatar-background: rgba(255, 255, 255, 0.5);
 
 // color picker
 
@@ -32,7 +34,6 @@ $brown: #7f5347;
 $lightgrey: #c4c4c4;
 $darkgrey: #757575;
 
-
 $gray3: #9799a6;
 $gray4: #333;
 
@@ -47,8 +48,8 @@ $gray2: #c5c7d0; // add comment on taks btn
 
 // Typography
 
-$title-font-family: "Poppins", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
-$main-font-family: "Figtree", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
+$title-font-family: 'Poppins', 'Roboto', 'Noto Sans Hebrew', 'Noto Kufi Arabic', 'Noto Sans JP', sans-serif;
+$main-font-family: 'Figtree', 'Roboto', 'Noto Sans Hebrew', 'Noto Kufi Arabic', 'Noto Sans JP', sans-serif;
 
 $logo-size: 1em;
 $board-title-size: 0.875rem;
@@ -57,3 +58,7 @@ $board-title-size: 0.875rem;
 $mobile-breakpoint: 460px;
 $narrow-breakpoint: 720px;
 $normal-breakpoint: 960px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-small: 8px;
