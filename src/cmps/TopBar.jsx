@@ -3,7 +3,6 @@ import { svgs } from '../services/svg.service'
 import { Link } from 'react-router-dom'
 
 export function TopBar() {
-	const DEFAULT_AVATAR = ' https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736337067/dapulse_default_photo_kvhsyn.png'
 	const user = useSelector(storeState => storeState.userModule.user)
 
 	return (
@@ -30,7 +29,7 @@ export function TopBar() {
 							<div className="account-logo-wrapper flex justify-center align-center">
 								<img style={{ width: '24px', height: '24px', borderRadius: '4px' }} src="https://cdn.monday.com/images/logos/monday_logo_icon.png" alt="logo" />
 							</div>
-							<img className="avatar-image" src={user?.imgUrl || DEFAULT_AVATAR} alt="avatar" />
+							<img className="avatar-image" src={user?.imgUrl} />
 						</Link>
 					</button>
 				</nav>
