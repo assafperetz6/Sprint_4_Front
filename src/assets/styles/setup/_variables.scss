@@ -8,6 +8,8 @@ $clr5: #323338; // icons with darker grey
 
 $clr6: #222743;
 $clr7: #0073ea; // blue btns
+$clr8: #d0d4e4; // lightmode border
+$clr9: #666879; // hovered border clr
 $txt-clr: #323338;
 
 $primary-hover-clr: rgba(103, 104, 121, 0.1);
@@ -53,6 +55,11 @@ $main-font-family: 'Figtree', 'Roboto', 'Noto Sans Hebrew', 'Noto Kufi Arabic', 
 
 $logo-size: 1em;
 $board-title-size: 0.875rem;
+
+// Size and radius
+
+$radius: 8px;
+$border: solid 1px $clr8;
 
 // Breakpoints
 $mobile-breakpoint: 460px;
