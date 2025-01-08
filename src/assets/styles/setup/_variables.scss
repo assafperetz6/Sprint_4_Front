@@ -8,33 +8,11 @@ $clr5: #323338; // icons with darker grey
 
 $clr6: #222743;
 $clr7: #0073ea; // blue btns
+$clr8: #d0d4e4; // lightmode border
+$clr9: #666879; // hovered border clr
 $txt-clr: #323338;
 
 
-// color picker
-
-$green1: #00c875;
-$green2: #027f4b;
-$yellow1: #ffcb00;
-$yellow2: #9dd326;
-$purple1: #9d50dd;
-$purple2: #784bd1;
-$turq: #007eb5;
-$blue1: #66ccff;
-$blue2: #579bfc;
-$red1: #bb3354;
-$red2: #df2e4a;
-$pink1: #ff5ac4;
-$pink2: #ff007e;
-$orange1: #fdab3d;
-$orange2: #ff642e;
-$brown: #7f5347;
-$lightgrey: #c4c4c4;
-$darkgrey: #757575;
-
-
-$gray3: #9799a6;
-$gray4: #333;
 
 // Dark mode
 
@@ -52,6 +30,12 @@ $main-font-family: "Figtree", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", 
 
 $logo-size: 1em;
 $board-title-size: 0.875rem;
+
+// Size and radius 
+
+$radius: 8px;
+$border: solid 1px $clr8;
+
 
 // Breakpoints
 $mobile-breakpoint: 460px;

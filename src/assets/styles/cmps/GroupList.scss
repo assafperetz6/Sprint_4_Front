@@ -1,0 +1,49 @@
+.group {
+    display: grid;
+
+    grid-template-rows: 40px repeat(auto, 36px);
+    grid-template-columns: 40px repeat(auto, 1fr);
+
+    .column-titles {
+        @include boardGridTemplate;
+
+        > li {
+            display: grid;
+            place-items: center;
+            flex-grow: 1;
+            height: 34px;
+            
+            padding-inline: 4px;
+            border: $border;
+
+            &:not(:last-child) {
+                border-inline-end: 0;
+            }
+
+            &:nth-child(2) {
+                flex-grow: 2;
+            }
+        }
+
+        .checkbox {
+            flex-grow: unset;
+            height: 32px;
+            width: 32px;
+            padding: 8px;
+
+            button {
+                height: 16px;
+                width: 16px;
+
+                padding: 0;
+                border: $border;
+                border-radius: 2px;
+                background-color: $clr3;
+
+                &:hover {
+                    border-color: $clr9;
+                }
+            }
+        }
+    }
+}

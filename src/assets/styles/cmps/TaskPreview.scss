@@ -1,0 +1,8 @@
+.task-preview {
+    @include boardGridTemplate;
+    // grid-template-columns: subgrid;
+    > li {
+        border: $border;
+
+    }
+}
