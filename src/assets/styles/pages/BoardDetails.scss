@@ -1,0 +1,46 @@
+.board-details {
+    .board-header {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            @include btn
+        }
+
+        .board-title {
+            position: relative;
+
+            &::before {
+                position: absolute;
+                right: -30px;
+                top: -5px;
+                content: "⌄";
+            }
+        }
+
+        .board-actions {
+            display: flex;
+        }
+    }
+
+    .board-tabs {
+        display: flex;
+    }
+
+    .task-actions {
+        display: flex;
+        align-items: center;
+        > button {
+            @include btn;
+            width: unset;
+
+        }
+        .toggle-board-tabs {
+            height: 24px;
+            width: 24px;
+
+            padding: 0;
+            border-radius: 50%;
+        }
+    }
+}
