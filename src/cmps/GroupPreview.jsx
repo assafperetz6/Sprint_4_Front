@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { TaskPreview } from './TaskPreview'
+import { TaskListHeader } from './TaskListHeader'
+import { TaskList } from './TaskList'
 
 export function GroupPreview({ group, cmpsOrder }) {
 	const [colWidth, setColwidth] = useState('150px')
@@ -9,29 +11,10 @@ export function GroupPreview({ group, cmpsOrder }) {
 			<div className="group-sticky-container">
 				<div className="header-container">
 					<h4 className="group-title">{group.title}</h4>
-
-					<ul className="task-list-header task-row clean-list">
-						<li className="checkbox">
-							<button></button>
-						</li>
-
-						<li className="sticky-container task-title-header">Task</li>
-
-						{cmpsOrder.map(columnTitle => (
-							<li style={{ width: colWidth }} key={columnTitle}>
-								{columnTitle}
-							</li>
-						))}
-						<li className="line-end"></li>
-					</ul>
+					<TaskListHeader group={group} cmpsOrder={cmpsOrder} tasks={group.tasks} colWidth={colWidth} />
 				</div>
 			</div>
-
-			<ul className="task-list task-row">
-				{group.tasks.map(task => (
-					<TaskPreview key={task.id} task={task} cmpsOrder={cmpsOrder} colWidth={colWidth} />
-				))}
-			</ul>
+			<TaskList group={group} cmpsOrder={cmpsOrder} colWidth={colWidth} />
 		</section>
 	)
 }

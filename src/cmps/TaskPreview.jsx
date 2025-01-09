@@ -7,7 +7,7 @@ export function TaskPreview({ task, cmpsOrder, colWidth }) {
 		<ul className="task-preview task-row flex">
 			<div className="main-preview-container">
 				<div className="sticky-container">
-					<li className="task-selcetion">
+					<li className="check-box">
 						<button></button>
 					</li>
 
@@ -25,6 +25,7 @@ export function TaskPreview({ task, cmpsOrder, colWidth }) {
 					<LabelPicker key={columnType + task.id} task={task} columnType={columnType} colWidth={colWidth} />
 				))}
 			</div>
+			<li className="line-end"></li>
 		</ul>
 	)
 }

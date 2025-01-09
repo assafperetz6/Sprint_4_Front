@@ -1,44 +1,17 @@
-import { useSelector } from 'react-redux'
-
-export function TaskListHeader({ group, task ,cmpsOrder }) {
-
+export function TaskListHeader({ cmpsOrder, group, tasks, colWidth }) {
 	return (
-	
-			cmpsOrder.map((cmp, idx) => {
-				let cmpTitle
-				switch (cmp.cmpName) {
-					case 'statusPicker':
-						cmpTitle = 'Status'
-						break
-					case 'priorityPicker':
-						cmpTitle = 'Priority'
-						break
-					case 'ownerPicker':
-						cmpTitle = 'Owner'
-						break
-					case 'collaboratorPicker':
-						cmpTitle = 'Collaborators'
-						break
-					case 'datePicker':
-						cmpTitle = 'Date'
-						break
-					case 'timelinePicker':
-						cmpTitle = 'Timeline'
-						break
-					default:
-						cmpTitle = null
-				}
+		<ul className="task-list-header task-row clean-list">
+			<li className="checkbox">
+				<button></button>
+			</li>
 
-				return (
-					cmpTitle &&
-					cmp.isShown && (
-						<li key={cmp.id} style={{ width: cmp.defaultWidth }}>
-							{cmpTitle}
-							<div onMouseDown={ev => onMouseDown(ev, idx)} className={`resizing-container ${activeResizerIdx === idx ? 'is-dragging' : ''}`}></div>
-						</li>
-					)
-				)
-			})}
+			<li className="sticky-container task-title-header">Task</li>
+
+			{cmpsOrder.map(columnTitle => (
+				<li style={{ width: colWidth }} key={columnTitle}>
+					{columnTitle}
+				</li>
+			))}
 			<li className="line-end"></li>
 		</ul>
 	)
