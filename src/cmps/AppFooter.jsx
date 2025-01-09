@@ -3,7 +3,7 @@
 export function AppFooter() {
 
 	return (
-		<footer className="app-footer full">
+		<footer className="app-footer">
 			<p>Coffeerights &copy; 2024</p>
             
             {import.meta.env.VITE_LOCAL ? 

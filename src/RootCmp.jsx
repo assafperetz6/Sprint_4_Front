@@ -15,11 +15,13 @@ import { Login } from './pages/Login.jsx'
 import { Signup } from './pages/Signup.jsx'
 import { BoardIndex } from './pages/BoardIndex.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
+import { SideBar } from './cmps/SideBar.jsx'
 
 export function RootCmp() {
     return (
         <div className="main-container">
             <AppHeader />
+            <SideBar />
             <UserMsg />
 
             <main>
@@ -36,7 +38,6 @@ export function RootCmp() {
                     </Route>
                 </Routes>
             </main>
-            <AppFooter />
         </div>
     )
 }
