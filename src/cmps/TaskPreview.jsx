@@ -6,11 +6,10 @@ export function TaskPreview({ task, cmpsOrder, colWidth }) {
 	return (
 		<ul className="task-preview task-row flex">
 			<div className="main-preview-container">
+				<li className="check-box">
+					<button></button>
+				</li>
 				<div className="sticky-container">
-					<li className="check-box">
-						<button></button>
-					</li>
-
 					<li className="task-title">
 						<div className="title-main-container">
 							<span>{task.title}</span>
