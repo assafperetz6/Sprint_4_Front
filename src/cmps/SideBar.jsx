@@ -10,18 +10,20 @@ export function SideBar() {
         <aside className="sidebar">
 
             <nav>
-                <NavLink to=''>{svgs.house} Home</NavLink>
+                <NavLink to='/board'>{svgs.house} Home</NavLink>
                 <NavLink to='my_work'>{svgs.myWork} My work</NavLink>
             </nav>
 
-            <button className="toggle-favorites">{svgs.star} Favorites</button>
+            <div className="favorite-container">
+                <button className="toggle-favorites">{svgs.star} Favorites</button>
+            </div>
 
             <section className="workspaces-actions">
                 <div>{svgs.workspaces} Workspaces</div>
                 <button>{svgs.threeDots}</button>
                 <button>{svgs.search}</button>
 
-                <button className="workspace-list">main workspace</button>
+                <button className="workspace-list-btn"><div>S {svgs.workspaceHouse}</div> main workspace</button>
                 <button className="add-workspace-item">{svgs.plus}</button>
             </section>
             <section className="board-links">

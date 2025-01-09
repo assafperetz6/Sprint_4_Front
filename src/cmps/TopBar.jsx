@@ -6,7 +6,7 @@ export function TopBar() {
 	const user = useSelector(storeState => storeState.userModule.user)
 
 	return (
-		<div className="top-bar flex ">
+		<div className="top-bar flex full">
 			<header className="top-bar-header flex align-center justify-between full">
 				<div className="switcher-logo flex align-center">
 					<button className="switcher flex align-center">{svgs.dottedMenuBtn}</button>

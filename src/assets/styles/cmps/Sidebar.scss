@@ -5,52 +5,145 @@
     display: flex;
     flex-direction: column;
 
-    min-width: 200px;
-    // position: fixed;
-    // top: 0;
-    // left: 0;
-    border-top-right-radius: var(--border-radius-medium);
     height: 100%;
-    background: linear-gradient(135deg, $clr3 5% , #eceff8 100%);
+    min-width: 200px;
+
+    border-top-right-radius: $radius;
     margin-right: 10px;
-    // position: absolute;
-    // width: 30px;
+    
+    background: linear-gradient(135deg, $clr3 5% , #eceff8 100%);
+    &, * {
+        font-size: rem(14px);
+    }
 
-    font-size: rem(14px);
-
-    > * {
+    > *:not(nav) {
         margin-inline: 12px;
     }
+
+    svg {
+        height: 18px;
+        width: 18px;
+    }
+
     > nav {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: 32px 32px;
+        gap: 2px;
+        width: 100%;
+        justify-content: baseline;
+
         padding: 4px 12px;
-        > * {
+
+        > a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: $txt-clr;
             height: 32px;
+
+            padding: 0 4px 0 5px;
         }
     }
 
-    .toggle-favorites {
-        height: 40px;
+    .favorite-container {
+        display: flex;
+
+        padding: 8px 12px;
+        border-block: $border;
+        margin: 0;
+        
+        .toggle-favorites {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 7px;
+
+            height: 30px;
+            width: 100%;
+
+            padding: 0;
+            margin: 0 4px 0 5px;
+            background-color: unset;
+
+            svg {
+                height: 20px;
+                width: 20px;
+            }
+        }
     }
+
 
     .workspaces-actions {
         display: grid;
         grid-template-columns: 1fr 24px 24px;
         grid-template-rows: repeat(2, 32px);
 
+        padding: 4px 12px;
+        margin: 0;
+
+        > * {
+            justify-self: start;
+            gap: 7px;
+        }
+
         > div {
+            display: flex;
+            align-items: center;
             grid-column: 1 / 2;
+
+            padding: 6px
         }
 
         button {
-            @include btn
+            @include btn;
+
+            background-color: unset;
         }
 
-        .workspace-list {
+        .workspace-list-btn {
             grid-column: 1 / -2;
 
             width: unset;
+            padding: 6px;
+            margin: 0;
+
+            font-size: 1rem;
+            font-weight: 600;
+            > div {
+                height: 20px;
+                width: 20px;
+
+                border-radius: 6px;
+
+                color: $clr3;
+                background-color: #595ad4;
+
+                svg {
+                    height: 14px;
+                    width: 14px;
+
+                    position: relative;
+                    top: -25%;
+                    right: -25%;
+                }
+            }
+        }
+
+        .add-workspace-item {
+            height: 32px;
+            width: 32px;
+
+            padding: 0;
+            margin: 0;
+            background-color: $clr7;
+
+            > svg {
+                height: 20px;
+                width: 20px;
+                color: #fff;
+    
+            }
         }
     }
 

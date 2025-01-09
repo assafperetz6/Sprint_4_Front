@@ -2,8 +2,6 @@ export function LabelPicker({ ...props }) {
     let { task, columnType } = props
     
     if (columnType === 'item') return
-
-    console.log(task)
     
     let columnData
     switch (columnType) {
