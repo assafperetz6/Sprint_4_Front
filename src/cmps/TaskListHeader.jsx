@@ -5,7 +5,7 @@ export function TaskListHeader({ cmpsOrder, group, tasks, colWidth }) {
 				<button></button>
 			</li>
 
-			<li className="sticky-container task-title-header">Task</li>
+			<li className="sticky-container task-title-header">Item</li>
 
 			{cmpsOrder.map(columnTitle => (
 				<li style={{ width: colWidth }} key={columnTitle}>
