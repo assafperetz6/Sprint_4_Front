@@ -6,7 +6,7 @@ export function LabelPicker({ ...props }) {
     let columnData
     switch (columnType) {
         case 'person':            
-            columnData = <li><img src={task.byMember?.imgUrl} alt="User Pic" /></li>
+            columnData = <img src={task.byMember?.imgUrl} alt="User Pic" />
             break;
         case 'status':
             columnData = task.status

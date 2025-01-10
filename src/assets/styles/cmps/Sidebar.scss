@@ -8,12 +8,18 @@
     height: 100%;
     min-width: 200px;
 
+
     border-top-right-radius: $radius;
     margin-right: 10px;
     
     background: linear-gradient(135deg, $clr3 5% , #eceff8 100%);
     &, * {
         font-size: rem(14px);
+    }
+
+    a:hover, button:hover {
+        border-radius: 4px;
+        background-color: $hovered-btns;
     }
 
     > *:not(nav) {
@@ -116,6 +122,8 @@
 
                 border-radius: 6px;
 
+                line-height: 1.5;
+                font-weight: 200;
                 color: $clr3;
                 background-color: #595ad4;
 
@@ -124,8 +132,8 @@
                     width: 14px;
 
                     position: relative;
-                    top: -25%;
-                    right: -25%;
+                    top: -50%;
+                    right: -30%;
                 }
             }
         }
@@ -152,5 +160,14 @@
         display: flex;
         flex-direction: column;
         
+        > a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            height: 32px;
+
+            margin-inline-start: 6px;
+        }
     }
 }

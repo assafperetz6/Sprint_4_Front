@@ -13,6 +13,7 @@ import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup } from './pages/LoginSignup.jsx'
 import { Login } from './pages/Login.jsx'
 import { Signup } from './pages/Signup.jsx'
+import { Dashboard } from './pages/Dashboard.jsx'
 import { BoardIndex } from './pages/BoardIndex.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
 import { SideBar } from './cmps/SideBar.jsx'
@@ -30,6 +31,7 @@ export function RootCmp() {
                 <Routes>
                     <Route path="" element={<HomePage />} />
                     <Route path="about" element={<AboutUs />} />
+                    <Route path="dashboard" element={<Dashboard />} />
                     <Route path="board" element={<BoardIndex />} />
                     <Route path="board/:boardId" element={<BoardDetails />} />
                     <Route path="user/:id" element={<UserDetails />} />

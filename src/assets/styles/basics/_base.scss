@@ -13,7 +13,7 @@ body {
 
     font-family: $main-font-family;
     font-size: rem(18px);
-    letter-spacing: .1px;
+    letter-spacing: .2px;
 }
 
 h1,
@@ -36,6 +36,7 @@ p {
 
 a {
 	text-decoration: none;
+    color: $txt-clr;
 }
 
 a:hover {
