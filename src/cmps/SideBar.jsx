@@ -15,7 +15,7 @@ export function SideBar() {
 
     return (
         <aside className="sidebar">
-
+            <button className="toggle-sidebar">{svgs.arrowLeft}</button>
             <nav>
                 <NavLink to='/board'>{svgs.house} Home</NavLink>
                 <NavLink to='my_work'>{svgs.myWork} My work</NavLink>
