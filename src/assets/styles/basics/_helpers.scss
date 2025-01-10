@@ -38,6 +38,18 @@
 	&.align-center {
 		align-items: center;
 	}
+	&.justify-between {
+		justify-content: space-between;
+	}
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.clean-link {
+	color: inherit;
+	text-decoration: none;
 }
 
 .clean-list {

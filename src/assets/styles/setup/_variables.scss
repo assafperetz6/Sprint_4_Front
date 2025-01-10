@@ -12,7 +12,32 @@ $clr8: #d0d4e4; // lightmode border
 $clr9: #666879; // hovered border clr
 $txt-clr: #323338;
 
+$primary-hover-clr: rgba(103, 104, 121, 0.1);
+$avatar-background: rgba(255, 255, 255, 0.5);
 
+// color picker
+
+$green1: #00c875;
+$green2: #027f4b;
+$yellow1: #ffcb00;
+$yellow2: #9dd326;
+$purple1: #9d50dd;
+$purple2: #784bd1;
+$turq: #007eb5;
+$blue1: #66ccff;
+$blue2: #579bfc;
+$red1: #bb3354;
+$red2: #df2e4a;
+$pink1: #ff5ac4;
+$pink2: #ff007e;
+$orange1: #fdab3d;
+$orange2: #ff642e;
+$brown: #7f5347;
+$lightgrey: #c4c4c4;
+$darkgrey: #757575;
+
+$gray3: #9799a6;
+$gray4: #333;
 
 // Dark mode
 
@@ -25,19 +50,22 @@ $gray2: #c5c7d0; // add comment on taks btn
 
 // Typography
 
-$title-font-family: "Poppins", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
-$main-font-family: "Figtree", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP", sans-serif;
+$title-font-family: 'Poppins', 'Roboto', 'Noto Sans Hebrew', 'Noto Kufi Arabic', 'Noto Sans JP', sans-serif;
+$main-font-family: 'Figtree', 'Roboto', 'Noto Sans Hebrew', 'Noto Kufi Arabic', 'Noto Sans JP', sans-serif;
 
 $logo-size: 1em;
 $board-title-size: 0.875rem;
 
-// Size and radius 
+// Size and radius
 
 $radius: 8px;
 $border: solid 1px $clr8;
-
 
 // Breakpoints
 $mobile-breakpoint: 460px;
 $narrow-breakpoint: 720px;
 $normal-breakpoint: 960px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-small: 8px;
