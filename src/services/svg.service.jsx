@@ -9,7 +9,7 @@ export const svgs = {
 			className="icon_da9e87501e"
 			data-testid="topbar-icon"
 		>
-			<g clip-path="url(#clip0_1150_158978)">
+			<g clipPath="url(#clip0_1150_158978)">
 				<path
 					d="M20.3812 4.62863C20.3812 2.47439 18.6357 0.728027 16.4826 0.728027C14.3294 0.728027 12.584 2.47439 12.584 4.62863V8.91568C12.584 11.0699 14.3294 12.8163 16.4826 12.8163C18.6357 12.8163 20.3812 11.0699 20.3812 8.91568V4.62863Z"
 					fill="url(#paint0_linear_1150_158978)"
@@ -39,7 +39,7 @@ export const svgs = {
 					fill="#6161FF"
 				></path>
 			</g>
-			<g clip-path="url(#clip0_1150_158978)">
+			<g clipPath="url(#clip0_1150_158978)">
 				<path
 					d="M20.3812 4.62863C20.3812 2.47439 18.6357 0.728027 16.4826 0.728027C14.3294 0.728027 12.584 2.47439 12.584 4.62863V8.91568C12.584 11.0699 14.3294 12.8163 16.4826 12.8163C18.6357 12.8163 20.3812 11.0699 20.3812 8.91568V4.62863Z"
 					fill="url(#paint0_linear_1150_158978)"
@@ -69,7 +69,7 @@ export const svgs = {
 					fill="#6161FF"
 				></path>
 			</g>
-			<g clip-path="url(#clip0_1150_158978)">
+			<g clipPath="url(#clip0_1150_158978)">
 				<path
 					d="M20.3812 4.62863C20.3812 2.47439 18.6357 0.728027 16.4826 0.728027C14.3294 0.728027 12.584 2.47439 12.584 4.62863V8.91568C12.584 11.0699 14.3294 12.8163 16.4826 12.8163C18.6357 12.8163 20.3812 11.0699 20.3812 8.91568V4.62863Z"
 					fill="url(#paint0_linear_1150_158978)"
@@ -108,8 +108,8 @@ export const svgs = {
 					y2="13.595"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop offset=".411" stop-color="#6C6CFF" stop-opacity=".9"></stop>
-					<stop offset="1" stop-color="#6C6CFF" stop-opacity=".2"></stop>
+					<stop offset=".411" stopColor="#6C6CFF" stopOpacity=".9"></stop>
+					<stop offset="1" stopColor="#6C6CFF" stopOpacity=".2"></stop>
 				</linearGradient>
 				<linearGradient
 					id="paint1_linear_1150_158978"
@@ -119,8 +119,8 @@ export const svgs = {
 					y2="16.521"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop offset=".411" stop-color="#6C6CFF" stop-opacity=".9"></stop>
-					<stop offset="1" stop-color="#6C6CFF" stop-opacity=".2"></stop>
+					<stop offset=".411" stopColor="#6C6CFF" stopOpacity=".9"></stop>
+					<stop offset="1" stopColor="#6C6CFF" stopOpacity=".2"></stop>
 				</linearGradient>
 				<linearGradient
 					id="paint2_linear_1150_158978"
@@ -130,8 +130,8 @@ export const svgs = {
 					y2="21.306"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop offset=".411" stop-color="#6C6CFF" stop-opacity=".9"></stop>
-					<stop offset="1" stop-color="#6C6CFF" stop-opacity=".2"></stop>
+					<stop offset=".411" stopColor="#6C6CFF" stopOpacity=".9"></stop>
+					<stop offset="1" stopColor="#6C6CFF" stopOpacity=".2"></stop>
 				</linearGradient>
 				<linearGradient
 					id="paint3_linear_1150_158978"
@@ -141,8 +141,8 @@ export const svgs = {
 					y2="21.333"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop offset=".411" stop-color="#6C6CFF" stop-opacity=".9"></stop>
-					<stop offset="1" stop-color="#6C6CFF" stop-opacity=".2"></stop>
+					<stop offset=".411" stopColor="#6C6CFF" stopOpacity=".9"></stop>
+					<stop offset="1" stopColor="#6C6CFF" stopOpacity=".2"></stop>
 				</linearGradient>
 				<linearGradient
 					id="paint4_linear_1150_158978"
@@ -152,8 +152,8 @@ export const svgs = {
 					y2="16.52"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop offset=".411" stop-color="#6C6CFF" stop-opacity=".9"></stop>
-					<stop offset="1" stop-color="#6C6CFF" stop-opacity=".2"></stop>
+					<stop offset=".411" stopColor="#6C6CFF" stopOpacity=".9"></stop>
+					<stop offset="1" stopColor="#6C6CFF" stopOpacity=".2"></stop>
 				</linearGradient>
 				<clipPath id="clip0_1150_158978">
 					<path fill="#fff" d="M0 0H33V33H0z"></path>
@@ -171,7 +171,7 @@ export const svgs = {
 			className="icon_912dae9443"
 			data-testid="icon"
 		>
-			<g clip-path="url(#a)">
+			<g clipPath="url(#a)">
 				<path d="M4.5 2.25a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm7.75 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm7.75 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0ZM4.5 10A2.25 2.25 0 1 1 0 10a2.25 2.25 0 0 1 4.5 0Zm7.75 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0ZM20 10a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0ZM4.5 17.75a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm7.75 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm7.75 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"></path>
 			</g>
 			<defs>
@@ -288,7 +288,7 @@ export const svgs = {
 			width="18"
 			height="18"
 			aria-hidden="true"
-			tabindex="-1"
+			tabIndex="-1"
 			className="icon_d4998fda06"
 			data-testid="icon"
 		>
@@ -307,7 +307,7 @@ export const svgs = {
 			width="18"
 			height="18"
 			aria-hidden="true"
-			tabindex="-1"
+			tabIndex="-1"
 			className="icon_d4998fda06"
 			data-testid="icon"
 		>
@@ -344,7 +344,7 @@ export const svgs = {
 			width="18"
 			height="18"
 			aria-hidden="true"
-			tabindex="-1"
+			tabIndex="-1"
 			className="icon_d4998fda06"
 			data-testid="icon"
 		>
@@ -447,7 +447,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Move to"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -455,6 +455,26 @@ export const svgs = {
 		>
 			<path
 				d="M2.24999 10.071C2.24999 9.65683 2.58578 9.32104 2.99999 9.32104L15.3315 9.32105L10.7031 4.69273C10.4103 4.39983 10.4103 3.92496 10.7031 3.63207C10.996 3.33917 11.4709 3.33917 11.7638 3.63207L17.6725 9.54071C17.9653 9.83361 17.9653 10.3085 17.6725 10.6014L11.7638 16.51C11.4709 16.8029 10.996 16.8029 10.7031 16.51C10.4103 16.2171 10.4103 15.7423 10.7031 15.4494L15.3315 10.821L2.99999 10.821C2.58578 10.821 2.24999 10.4853 2.24999 10.071Z"
+				fill="currentColor"
+				fillRule="evenodd"
+				clipRule="evenodd"
+			></path>
+		</svg>
+	),
+	arrowLeft: (
+		<svg
+			viewBox="0 0 20 20"
+			fill="currentColor"
+			width="14"
+			height="14"
+			role="button"
+			tabIndex="0"
+			aria-hidden="false"
+			className="icon_a812034417 GD1dz clickable_e41bd603c6 noFocusStyle_cfe994126a"
+			data-testid="icon"
+		>
+			<path
+				d="M5.46967 10.5303L6 10L5.46967 9.46967C5.17678 9.76256 5.17678 10.2374 5.46967 10.5303ZM7.06066 10L13.5303 3.53033C13.8232 3.23744 13.8232 2.76256 13.5303 2.46967C13.2374 2.17678 12.7626 2.17678 12.4697 2.46967L5.46967 9.46967L6 10L5.46967 10.5303L12.4697 17.5303C12.7626 17.8232 13.2374 17.8232 13.5303 17.5303C13.8232 17.2374 13.8232 16.7626 13.5303 16.4697L7.06066 10Z"
 				fill="currentColor"
 				fillRule="evenodd"
 				clipRule="evenodd"
@@ -695,7 +715,7 @@ export const svgs = {
 			width="20"
 			height="20"
 			role="button"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			className="icon_874a914328 aXsDV nFT4_ clickable_29b8af2662 noFocusStyle_4f3c24dc23"
 			data-testid="icon"
@@ -812,7 +832,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Open task"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -831,7 +851,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Duplicate"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -852,7 +872,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Copy name"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -871,7 +891,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Customize cards"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -892,7 +912,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Archive"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -913,7 +933,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Delete"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -952,7 +972,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Activity log"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -973,7 +993,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Activity log"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -994,7 +1014,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Permissions"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"
@@ -1015,7 +1035,7 @@ export const svgs = {
 			width="16"
 			height="16"
 			role="img"
-			tabindex="0"
+			tabIndex="0"
 			aria-hidden="false"
 			aria-label="Share"
 			className="icon_35c1b9ef14 icon-service-icon noFocusStyle_e846aee9b1"

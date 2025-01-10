@@ -12,3 +12,4 @@ export function GroupList({ groups, cmpsOrder }) {
 		</section>
 	)
 }
+

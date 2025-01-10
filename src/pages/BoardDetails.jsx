@@ -21,7 +21,7 @@ export function BoardDetails(){
     function getMemberIcons() {
         // TODO: should return last two members on the activity log
 
-        return <img src={board.members[0].imgUrl} alt="" />
+        return <img src={board.createdBy?.imgUrl} alt="userImg" />
     }
 
     if(!board) return null
