@@ -79,6 +79,10 @@
 
         background-color: #f6f7fb;
 
+        &.hidden:not(.collapsed *) {
+            display: none;
+        }
+
         svg {
             height: 14px;
             width: 14px;

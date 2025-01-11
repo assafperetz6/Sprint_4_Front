@@ -21,7 +21,6 @@ export function SideBar() {
 	}
 
     function handleMouseHover(ev) {
-        if (!isCollapsed) return
         ev._reactName === 'onMouseEnter' ? setisHovered(true) : setisHovered(false)
     }
 
@@ -30,7 +29,7 @@ export function SideBar() {
                 onMouseEnter={handleMouseHover}
                 onMouseLeave={handleMouseHover}>
 
-			<button className="toggle-sidebar" onClick={toggleSidebar}>{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}</button>
+			<button className={`toggle-sidebar ${!isHovered ? 'hidden' : ''}`} onClick={toggleSidebar}>{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}</button>
 			<nav>
 				<NavLink to="/board">{svgs.house} Home</NavLink>
 				<NavLink to="my_work">{svgs.myWork} My work</NavLink>
