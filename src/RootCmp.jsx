@@ -8,7 +8,6 @@ import { AdminIndex } from './pages/AdminIndex.jsx'
 import { UserDetails } from './pages/UserDetails'
 
 import { AppHeader } from './cmps/AppHeader'
-import { AppFooter } from './cmps/AppFooter'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup } from './pages/LoginSignup.jsx'
 import { Login } from './pages/Login.jsx'
@@ -18,6 +17,7 @@ import { BoardIndex } from './pages/BoardIndex.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
 import { SideBar } from './cmps/SideBar.jsx'
 import { TopBar } from './cmps/TopBar.jsx'
+import { TaskDetails } from './cmps/TaskDetails.jsx'
 
 export function RootCmp() {
 	return (
@@ -33,7 +33,9 @@ export function RootCmp() {
                     <Route path="about" element={<AboutUs />} />
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="board" element={<BoardIndex />} />
-                    <Route path="board/:boardId" element={<BoardDetails />} />
+                    <Route path="board/:boardId" element={<BoardDetails />}>
+                    	<Route path="task/:taskId" element={<TaskDetails />} />
+					</Route>
                     <Route path="user/:id" element={<UserDetails />} />
                     <Route path="admin" element={<AdminIndex />} />
                     <Route path="login" element={<LoginSignup />}>

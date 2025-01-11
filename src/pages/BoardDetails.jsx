@@ -1,4 +1,4 @@
-import { useParams } from "react-router"
+import { Outlet, useParams } from "react-router"
 import { useEffect } from "react"
 import { loadBoard } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
@@ -60,6 +60,7 @@ export function BoardDetails(){
             </section>
 
             <GroupList groups={board.groups} cmpsOrder={board.cmpsOrder} />
+            <Outlet />
         </section>
     )
 }
