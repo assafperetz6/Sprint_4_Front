@@ -8,13 +8,38 @@
     flex-direction: column;
 
     height: 100%;
-    min-width: 200px;
+    width: 250px;
+    transition: width 0.3s ease;
 
 
     border-top-right-radius: $radius;
     margin-right: 10px;
     
     background: linear-gradient(135deg, $clr3 5% , #eceff8 100%);
+
+    &.collapsed {
+        position: fixed;
+        width: 30px;
+
+        &.hovered {
+            // position: fixed;
+            width: 250px;
+
+            box-shadow: 8px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            z-index: 20;
+        }
+        
+        &:not(.hovered) > *:not(.toggle-sidebar) {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.1s ease 0s;
+        }
+    }
+
+    > *:not(.toggle-sidebar) {
+        transition: opacity 0.2s ease 0.2s;
+    }
+
     &, * {
         font-size: rem(14px);
     }

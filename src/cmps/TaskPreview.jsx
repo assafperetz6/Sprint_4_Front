@@ -2,7 +2,6 @@ import { svgs } from '../services/svg.service'
 import { LabelPicker } from './LabelPicker'
 
 export function TaskPreview({ task, cmpsOrder, colWidth }) {
-	console.log(task)
 	return (
 		<ul className="task-preview task-row flex">
 			<div className="main-preview-container">
