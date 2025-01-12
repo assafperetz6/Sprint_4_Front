@@ -1,0 +1,158 @@
+.label-picker {
+	cursor: pointer;
+	text-align: center;
+	position: relative;
+	color: #ffff;
+	height: 98%;
+
+	span {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-size: rem(14px);
+		line-height: $task-row-height;
+	}
+
+	&:hover .corner-fold {
+		border-width: 0 10px 10px 0;
+	}
+
+	.corner-fold {
+		border-style: solid;
+		border-color: rgba(0, 0, 0, 0.2) #ffff;
+		border-width: 0;
+		transition: border-width 0.3s 0.2s ease;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
+	.label-picker-popup {
+		position: absolute;
+		top: calc($task-row-height + 5px);
+		z-index: 999;
+		width: fit-content;
+		background-color: #ffff;
+		border-radius: 8px;
+		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.32);
+
+		.new-label-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			color: $clr5;
+			font-weight: 400;
+			font-size: rem(14px);
+			height: rem(32px);
+			width: rem(152px);
+			padding: 4px;
+			margin-inline: auto;
+			margin-block-end: 8px;
+			border: 1px solid $clr8;
+			background-color: inherit;
+			border-radius: 4px;
+		}
+
+		ul {
+			display: grid;
+			grid-template-rows: repeat(6, auto);
+			grid-auto-flow: column;
+			column-gap: 20px;
+			padding: 16px 24px 0px 24px;
+
+			li {
+				border-radius: 2px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: rem(32px);
+				width: rem(152px);
+				font-size: rem(14px);
+				margin-block-end: 8px;
+
+				&.edit-label {
+					color: $clr5;
+				}
+
+				&:active:not(.edit-label) {
+					scale: 0.95;
+				}
+
+				&:hover .remove-label-btn {
+					opacity: 1;
+				}
+			}
+		}
+
+		.separator {
+			height: 1px;
+			width: 90%;
+			background-color: $clr8;
+			margin-inline: auto;
+		}
+
+		button.edit-labels {
+			background-color: inherit;
+			border: none;
+			display: flex;
+			margin-inline: auto;
+			align-items: center;
+			gap: 4px;
+			cursor: pointer;
+
+			.icon {
+				display: flex;
+				align-items: center;
+			}
+
+			.title {
+				color: $clr5;
+				font-size: rem(14px);
+				font-weight: 400;
+				font-family: Figtree, Roboto, Rubik, sans-serif;
+			}
+		}
+	}
+
+	.input-container {
+		position: relative;
+		border: 1px $clr8 solid;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		height: rem(32px);
+		width: rem(152px);
+		gap: 10px;
+
+		input {
+			all: unset;
+			color: $clr5;
+			text-align: left;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.remove-label-btn {
+			position: absolute;
+			color: $clr4;
+			right: -15px;
+			top: 2px;
+			opacity: 0;
+		}
+
+		.icon-color-bucket {
+			min-height: 24px;
+			min-width: 24px;
+			border-radius: 4px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-inline-start: 3px;
+			svg {
+				color: #ffff;
+			}
+		}
+	}
+}

@@ -11,7 +11,7 @@ function getEmptyBoard() {
 	return {
 		title: 'New board',
 		isStarred: false,
-		cmpsOrder: ['person', 'status', 'priority', 'timeline', 'people', 'date'],
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker'],
 		createdBy: {
 			_id: 'u101',
 			fullname: 'Abi Abambi',
@@ -20,18 +20,7 @@ function getEmptyBoard() {
 		style: {
 			backgroundImage: ''
 		},
-		labels: [
-			{
-				id: 'l101',
-				title: 'Done',
-				color: '#61bd4f'
-			},
-			{
-				id: 'l102',
-				title: 'Progress',
-				color: '#61bd33'
-			}
-		],
+
 		members: [
 			{
 				_id: 'u101',
@@ -52,7 +41,7 @@ function getEmptyBoard() {
 					{
 						id: makeId(),
 						title: 'Item 1',
-						status: 'Stuck',
+						status: 'sl102',
 						priority: 'medium',
 						dueDate: '2024-05-10',
 						description: 'description',
@@ -63,15 +52,12 @@ function getEmptyBoard() {
 							_id: 'u101',
 							fullname: 'Tal Tarablus',
 							imgUrl: ''
-						},
-						style: {
-							backgroundColor: '#26de81'
 						}
 					},
 					{
 						id: makeId(),
 						title: 'item 2',
-						status: 'Overdue',
+						status: 'sl101',
 						priority: 'Critical',
 						dueDate: '2024-09-24',
 						description: 'description',
@@ -82,9 +68,6 @@ function getEmptyBoard() {
 							_id: 'u101',
 							fullname: 'Tal Tarablus',
 							imgUrl: ''
-						},
-						style: {
-							backgroundColor: '#26de81'
 						}
 					}
 				],
@@ -97,7 +80,7 @@ function getEmptyBoard() {
 					{
 						id: makeId(),
 						title: 'Item 1',
-						status: 'Stuck',
+						status: 'sl102',
 						priority: 'medium',
 						dueDate: '2024-05-10',
 						description: 'description',
@@ -108,15 +91,12 @@ function getEmptyBoard() {
 							_id: 'u101',
 							fullname: 'Tal Tarablus',
 							imgUrl: ''
-						},
-						style: {
-							backgroundColor: '#26de81'
 						}
 					},
 					{
 						id: makeId(),
 						title: 'item 2',
-						status: 'Overdue',
+						status: 'sl103',
 						priority: 'Critical',
 						dueDate: '2024-09-24',
 						description: 'description',
@@ -127,16 +107,20 @@ function getEmptyBoard() {
 							_id: 'u101',
 							fullname: 'Tal Tarablus',
 							imgUrl: ''
-						},
-						style: {
-							backgroundColor: '#26de81'
 						}
 					}
 				],
 				style: { color: '#dede81' }
 			}
 		],
-		activities: []
+		activities: [],
+		statusLabels: [
+			{ id: 'sl100', title: 'Done', color: '#00C875' },
+			{ id: 'sl101', title: 'Working on it', color: '#FDAB3D' },
+			{ id: 'sl102', title: 'Stuck', color: '#E2445C' },
+			{ id: 'sl103', title: 'Almost done', color: '#0086C0' },
+			{ id: 'sl104', title: '', color: '#C4C4C4' }
+		]
 	}
 }
 
@@ -152,23 +136,31 @@ function getDefaultGroups() {
 			id: makeId(),
 			title: 'Group 1',
 			tasks: [getDefaultTask()],
-			style: {}
+			style: { color: '#dede81' }
 		},
 		{
 			id: makeId(),
 			title: 'Group 2',
 			tasks: [getDefaultTask()],
-			style: {}
+			style: { color: '#26de81' }
 		}
 	]
 
 	return groups
 }
+function getNewGroup() {
+	return {
+		id: makeId(),
+		title: 'Group 1',
+		tasks: [getDefaultTask()],
+		style: { color: '#dede81' }
+	}
+}
 
 function getDefaultTask() {
 	const task = {
 		id: makeId(),
-		title: 'Task 1',
+		title: 'Item 1',
 		status: '',
 		priority: 'low',
 		dueDate: '2024-09-10',
@@ -190,7 +182,7 @@ function getDefaultTask() {
 }
 function getEmptyTask(title = '', status = 'sl104') {
 	return {
-		id: '',
+		id: makeId(),
 		title,
 		status,
 		priority: 'pl104',
@@ -212,6 +204,6 @@ function getEmptyTask(title = '', status = 'sl104') {
 
 const service = VITE_LOCAL === 'true' ? local : remote
 
-export const boardService = { getEmptyBoard, getDefaultFilter, getEmptyTask, ...service }
+export const boardService = { getEmptyBoard, getNewGroup, getDefaultFilter, getEmptyTask, ...service }
 
 if (DEV) window.boardService = boardService
