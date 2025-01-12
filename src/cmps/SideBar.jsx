@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { svgs } from '../services/svg.service'
 import { boardService } from '../services/board'
-import { loadBoards, addBoard } from '../store/actions/board.actions'
+import { loadBoards, addBoard, removeBoard, updateBoard } from '../store/actions/board.actions'
+
+import { ContextMenu } from '../cmps/ContextMenu.jsx'
 
 export function SideBar() {
 	const boards = useSelector((storeState) => storeState.boardModule.boards)
+	const [activeMenuId, setActiveMenuId] = useState(null)
 	const [isCollapsed, setIsCollapsed] = useState(false)
 	const [isHovered, setisHovered] = useState(false)
     
@@ -16,22 +19,46 @@ export function SideBar() {
 	}, [])
 
 	function toggleSidebar() {
-        if (!isCollapsed) setisHovered(false)
+		if (!isCollapsed) setisHovered(false)
 		setIsCollapsed((prev) => !prev)
 	}
 
-    function handleMouseHover(ev) {
-        ev._reactName === 'onMouseEnter' ? setisHovered(true) : setisHovered(false)
+	function handleMouseHover(ev) {
+		ev._reactName === 'onMouseEnter' ? setisHovered(true) : setisHovered(false)
+	}
+
+	function toggleContextMenu(boardId) {
+		setActiveMenuId((prev) => (prev === boardId ? null : boardId))
+	}
+
+    function onRemoveBoard(boardId) {
+        removeBoard(boardId)
+    }
+
+    function onUpdateBoard(board) {
+        updateBoard(board)
     }
 
 	return (
-		<aside  className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isHovered ? 'hovered' : ''}`}
-                onMouseEnter={handleMouseHover}
-                onMouseLeave={handleMouseHover}>
-
-			<button className={`toggle-sidebar ${!isHovered ? 'hidden' : ''}`} onClick={toggleSidebar}>{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}</button>
+		<aside
+			className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${
+				isHovered ? 'hovered' : ''
+			}`}
+			onMouseEnter={handleMouseHover}
+			onMouseLeave={handleMouseHover}
+		>
+			<button
+				className={`toggle-sidebar ${!isHovered ? 'hidden' : ''}`}
+				onClick={toggleSidebar}
+			>
+				{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}
+			</button>
 			<nav>
-				<NavLink to="/board">{svgs.house} Home</NavLink>
+				<div>
+					<NavLink end to="/board">
+						{svgs.house} Home
+					</NavLink>
+				</div>
 				<NavLink to="my_work">{svgs.myWork} My work</NavLink>
 			</nav>
 
@@ -56,16 +83,29 @@ export function SideBar() {
 			</section>
 			<section className="board-links">
 				{boards.map((board) => (
-					<Link
-						key={board._id}
-						className="board-link"
-						to={`/board/${board._id}`}
-					>
-						{svgs.board}
-						{board.title}
-					</Link>
+					<div key={board._id} className="link-wrapper">
+						<NavLink
+							className="board-link"
+							to={`/board/${board._id}`}
+						>
+							{svgs.board}
+							{board.title}
+						</NavLink>
+						<button className="board-options" onClick={() => toggleContextMenu(board._id)}>{svgs.threeDots}</button>
+
+						{activeMenuId === board._id && (
+							<ContextMenu
+								board={board}
+								onClose={() => setActiveMenuId(null)}
+                                onRemoveBoard={onRemoveBoard}
+                                onUpdateBoard={onUpdateBoard}
+							/>
+						)}
+					</div>
 				))}
-				<Link to="/dashboard">{svgs.dashboard} Dashboard and reporting</Link>
+				<NavLink to="/dashboard">
+					{svgs.dashboard} Dashboard and reporting
+				</NavLink>
 			</section>
 		</aside>
 	)
