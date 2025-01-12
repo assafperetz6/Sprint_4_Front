@@ -1,42 +1,106 @@
-import { useEffect } from "react"
-import { useSelector } from "react-redux"
-import { Link, NavLink } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
-import { svgs } from "../services/svg.service"
-import { boardService } from "../services/board"
-import { loadBoards, addBoard } from "../store/actions/board.actions"
+import { svgs } from '../services/svg.service'
+import { boardService } from '../services/board'
+import { loadBoards, addBoard, removeBoard, updateBoard } from '../store/actions/board.actions'
+
+import { ContextMenu } from '../cmps/ContextMenu.jsx'
 
 export function SideBar() {
-    const boards = useSelector(storeState => storeState.boardModule.boards)
+	const boards = useSelector(storeState => storeState.boardModule.boards)
+	const [activeMenuId, setActiveMenuId] = useState(null)
+	const [boardNameToEdit, setboardNameToEdit] = useState(null)
+	const [isCollapsed, setIsCollapsed] = useState(false)
+	const [isHovered, setisHovered] = useState(false)
 
-    useEffect(() => {
-        if (!boards) loadBoards()
-    }, [boards])
+	useEffect(() => {
+		if (!boards?.length) loadBoards()
+	}, [])
 
-    return (
-        <aside className="sidebar">
-            <button className="toggle-sidebar">{svgs.arrowLeft}</button>
-            <nav>
-                <NavLink to='/board'>{svgs.house} Home</NavLink>
-                <NavLink to='my_work'>{svgs.myWork} My work</NavLink>
-            </nav>
+	function toggleSidebar() {
+		if (!isCollapsed) setisHovered(false)
+		setIsCollapsed(prev => !prev)
+	}
 
-            <div className="favorite-container">
-                <button className="toggle-favorites">{svgs.star} Favorites</button>
-            </div>
+	function handleMouseHover(ev) {
+		ev._reactName === 'onMouseEnter' ? setisHovered(true) : setisHovered(false)
+	}
 
-            <section className="workspaces-actions">
-                <div>{svgs.workspaces} Workspaces</div>
-                <button>{svgs.threeDots}</button>
-                <button>{svgs.search}</button>
+	function toggleContextMenu(boardId) {
+		setActiveMenuId(prev => (prev === boardId ? null : boardId))
+	}
 
-                <button className="workspace-list-btn"><div>S {svgs.workspaceHouse}</div> main workspace</button>
-                <button className="add-workspace-item" onClick={() => addBoard(boardService.getEmptyBoard())}>{svgs.plus}</button>
-            </section>
-            <section className="board-links">
-                {boards.map(board => <Link key={board._id} className="board-link" to={`/board/${board._id}`}>{svgs.board}{board.title}</Link>)}
-                <Link to='/dashboard'>{svgs.dashboard} Dashboard and reporting</Link>
-            </section>
-        </aside>
-    )
+	function onRemoveBoard(boardId) {
+		removeBoard(boardId)
+	}
+
+	function onUpdateBoard(board) {
+		updateBoard(board)
+		setActiveMenuId(null)
+	}
+
+	function onRenameBoard(boardTitle) {
+		setboardNameToEdit(boardTitle)
+		setActiveMenuId(null)
+	}
+
+	function onAddBoard() {
+		try {
+			addBoard(boardService.getEmptyBoard())
+		} catch (err) {
+			console.log('cannot add board', err)
+			throw err
+		}
+	}
+
+	return (
+		<aside className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isHovered ? 'hovered' : ''}`} onMouseEnter={handleMouseHover} onMouseLeave={handleMouseHover}>
+			<button className={`toggle-sidebar ${!isHovered ? 'hidden' : ''}`} onClick={toggleSidebar}>
+				{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}
+			</button>
+			<nav>
+				<div>
+					<NavLink end to="/board">
+						{svgs.house} Home
+					</NavLink>
+				</div>
+				<NavLink to="my_work">{svgs.myWork} My work</NavLink>
+			</nav>
+
+			<div className="favorite-container">
+				<button className="toggle-favorites">{svgs.star} Favorites</button>
+			</div>
+
+			<section className="workspaces-actions">
+				<div>{svgs.workspaces} Workspaces</div>
+				<button>{svgs.threeDots}</button>
+				<button>{svgs.search}</button>
+
+				<button className="workspace-list-btn">
+					<div>S {svgs.workspaceHouse}</div> main workspace
+				</button>
+				<button className="add-workspace-item" onClick={onAddBoard}>
+					{svgs.plus}
+				</button>
+			</section>
+			<section className="board-links">
+				{boards.map(board => (
+					<div key={board._id} className="link-wrapper">
+						<NavLink className="board-link" to={`/board/${board._id}`}>
+							{svgs.board}
+							{boardNameToEdit === board.title ? <input>{board.title}</input> : <span>{board.title}</span>}
+						</NavLink>
+						<button className="board-options" onClick={() => toggleContextMenu(board._id)}>
+							{svgs.threeDots}
+						</button>
+
+						{activeMenuId === board._id && <ContextMenu board={board} onClose={() => setActiveMenuId(null)} onRemoveBoard={onRemoveBoard} onUpdateBoard={onUpdateBoard} onRenameBoard={onRenameBoard} />}
+					</div>
+				))}
+				<NavLink to="/dashboard">{svgs.dashboard} Dashboard and reporting</NavLink>
+			</section>
+		</aside>
+	)
 }

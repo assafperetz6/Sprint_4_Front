@@ -1,9 +1,12 @@
+import { Link } from 'react-router-dom'
 import { svgs } from '../services/svg.service'
 import { hexToRgba } from '../services/util.service'
 import { LabelPicker } from './LabelPicker'
+import { useSelector } from 'react-redux'
 
-export function TaskPreview({ group, task, cmpsOrder, colWidth }) {
-	console.log(task)
+export function TaskPreview({ task, colWidth }) {
+	const board = useSelector(storeState => storeState.boardModule.board)
+
 	return (
 		<ul className="task-preview task-row flex">
 			<div className="main-preview-container">
@@ -16,14 +19,18 @@ export function TaskPreview({ group, task, cmpsOrder, colWidth }) {
 					<li className="task-title">
 						<div className="title-main-container">
 							<span>{task.title}</span>
-							<a href="#" className="conversation-icon-container">
-								{/* <div>{svgs}</div> */}
-							</a>
+							{/* <a href="#" className="conversation-icon-container"> */}
+							<Link to={`task/${task.id}`} className="conversation-icon-container">
+								{' '}
+								&nbsp; {svgs.expand} open
+							</Link>
+							{/* <div>{svgs}</div> */}
+							{/* </a> */}
 						</div>
 					</li>
 				</div>
 
-				{cmpsOrder.map(columnType => (
+				{board.cmpsOrder.map(columnType => (
 					<LabelPicker key={columnType + task.id} task={task} columnType={columnType} colWidth={colWidth} />
 				))}
 			</div>

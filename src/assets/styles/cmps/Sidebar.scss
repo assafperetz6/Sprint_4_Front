@@ -8,13 +8,37 @@
     flex-direction: column;
 
     height: 100%;
-    min-width: 200px;
-
+    width: 250px;
+    transition: width 0.3s ease;
 
     border-top-right-radius: $radius;
     margin-right: 10px;
     
     background: linear-gradient(135deg, $clr3 5% , #eceff8 100%);
+
+    &.collapsed {
+        position: fixed;
+        width: 30px;
+
+        &.hovered {
+            // position: fixed;
+            width: 250px;
+
+            box-shadow: 8px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            z-index: 20;
+        }
+        
+        &:not(.hovered) > *:not(.toggle-sidebar) {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.1s ease 0s;
+        }
+    }
+
+    *:not(.toggle-sidebar) {
+        transition: opacity 0.2s ease 0.2s, padding 50ms;
+    }
+
     &, * {
         font-size: rem(14px);
     }
@@ -23,7 +47,7 @@
         border-radius: 4px;
     }
 
-    a:hover, button:hover {
+    a:hover:not(.active), button:hover:not(.active) {
         background-color: $hovered-btns;
     }
 
@@ -34,6 +58,10 @@
     svg {
         height: 18px;
         width: 18px;
+    }
+
+    .active {
+        background-color: #cce5ff;
     }
 
     .toggle-sidebar {
@@ -54,6 +82,10 @@
 
         background-color: #f6f7fb;
 
+        &.hidden:not(.collapsed *) {
+            display: none;
+        }
+
         svg {
             height: 14px;
             width: 14px;
@@ -69,14 +101,11 @@
 
         padding: 4px 12px;
 
-        > a:first-child {
-            width: 80%;
-        }
-
-        > a {
+        a {
             display: flex;
             align-items: center;
             gap: 7px;
+            width: 100%;
 
             color: $txt-clr;
             height: 32px;
@@ -84,6 +113,10 @@
             padding: 0 4px 0 5px;
             margin-inline-end: 8px;
         }
+    }
+
+    &.hovered nav > div {
+        padding-right: 30px;
     }
 
     .favorite-container {
@@ -110,6 +143,7 @@
             &:hover {
                 background-color: $hovered-btns;
             }
+
             svg {
                 height: 20px;
                 width: 20px;
@@ -123,7 +157,8 @@
         grid-template-columns: 1fr 24px 24px;
         grid-template-rows: repeat(2, 32px);
 
-        padding: 4px 12px;
+        place-items: center;
+        padding: 4px 6px 4px 12px;
         margin: 0;
 
         > * {
@@ -142,10 +177,15 @@
         button {
             @include btn;
 
+            height: 24px;
+            width: 24px;
+            padding: 0;
+
             background-color: unset;
         }
 
         .workspace-list-btn {
+            grid-row: 2;
             grid-column: 1 / -2;
 
             width: unset;
@@ -154,6 +194,7 @@
 
             font-size: 1rem;
             font-weight: 600;
+
             > div {
                 height: 20px;
                 width: 20px;
@@ -177,6 +218,9 @@
         }
 
         .add-workspace-item {
+            grid-row: 2;
+            grid-column: 2 / 4;
+            place-self: center;
             height: 32px;
             width: 32px;
 
@@ -190,14 +234,37 @@
                 color: #fff;
     
             }
+
+            &:hover {
+                background-color: $hovered-blue;
+            }
         }
     }
 
     .board-links {
         display: flex;
         flex-direction: column;
-        
-        > a {
+        margin-inline: 8px 6px;
+
+        div {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            > a {
+                flex-grow: 1;
+            }
+
+            > button {
+                position: absolute;
+                right: 8px;
+
+                background-color: $hovered-btns;
+            }
+        }
+
+        a {
             display: flex;
             align-items: center;
             gap: 7px;
@@ -206,6 +273,53 @@
             
             padding: 4px;
             margin-inline-start: 6px;
+        }
+
+        .board-options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 24px;
+            width: 24px;
+
+            padding: 4px;
+            margin: 0;
+        }
+    }
+
+    .context-menu {
+        position: absolute;
+        top: 0;
+        left: 250px;
+
+        display: flex;
+        flex-direction: column;
+        
+        width: 256px;
+
+        padding: 8px;
+        border-radius: $radius;
+        margin: 0;
+
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+        background-color: $clr3;
+        z-index: 20;
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            height: 32px;
+
+            padding: 4px 8px;
+            text-align: start;
+            background-color: unset;
+
+            svg {
+                color: #676879;
+            }
         }
     }
 }

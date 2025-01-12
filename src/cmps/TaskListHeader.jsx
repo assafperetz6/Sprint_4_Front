@@ -1,6 +1,10 @@
 import { hexToRgba } from '../services/util.service'
 
-export function TaskListHeader({ cmpsOrder, group, tasks, colWidth }) {
+import { useSelector } from 'react-redux'
+
+export function TaskListHeader({ group, tasks, colWidth }) {
+	const board = useSelector(storeState => storeState.boardModule.board)
+
 	return (
 		<ul className="task-list-header task-row clean-list">
 			<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
@@ -10,7 +14,7 @@ export function TaskListHeader({ cmpsOrder, group, tasks, colWidth }) {
 
 			<li className="sticky-container task-title-header">Item</li>
 
-			{cmpsOrder.map(columnTitle => (
+			{board.cmpsOrder.map(columnTitle => (
 				<li style={{ width: colWidth }} key={columnTitle}>
 					{columnTitle}
 				</li>
