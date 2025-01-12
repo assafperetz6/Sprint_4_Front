@@ -39,6 +39,7 @@ async function save(board) {
             title: board.title,
             groups: board.groups,
             members: board.members,
+            isStarred: board.isStarred,
         }
         savedBoard = await storageService.put(STORAGE_KEY, boardToSave)
     } else {

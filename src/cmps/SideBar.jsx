@@ -11,6 +11,7 @@ import { ContextMenu } from '../cmps/ContextMenu.jsx'
 export function SideBar() {
 	const boards = useSelector((storeState) => storeState.boardModule.boards)
 	const [activeMenuId, setActiveMenuId] = useState(null)
+	const [boardNameToEdit, setboardNameToEdit] = useState(null)
 	const [isCollapsed, setIsCollapsed] = useState(false)
 	const [isHovered, setisHovered] = useState(false)
     
@@ -37,6 +38,12 @@ export function SideBar() {
 
     function onUpdateBoard(board) {
         updateBoard(board)
+        setActiveMenuId(null)
+    }
+
+    function onRenameBoard(boardTitle) {
+        setboardNameToEdit(boardTitle)
+        setActiveMenuId(null)
     }
 
 	return (
@@ -89,7 +96,10 @@ export function SideBar() {
 							to={`/board/${board._id}`}
 						>
 							{svgs.board}
-							{board.title}
+                            {boardNameToEdit === board.title
+                                ? <input>{board.title}</input>
+                                : <span>{board.title}</span>
+                            }
 						</NavLink>
 						<button className="board-options" onClick={() => toggleContextMenu(board._id)}>{svgs.threeDots}</button>
 
@@ -99,6 +109,7 @@ export function SideBar() {
 								onClose={() => setActiveMenuId(null)}
                                 onRemoveBoard={onRemoveBoard}
                                 onUpdateBoard={onUpdateBoard}
+                                onRenameBoard={onRenameBoard}
 							/>
 						)}
 					</div>

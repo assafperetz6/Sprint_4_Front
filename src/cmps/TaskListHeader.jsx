@@ -1,4 +1,6 @@
 export function TaskListHeader({ cmpsOrder, group, tasks, colWidth }) {
+	console.log(cmpsOrder)
+	
 	return (
 		<ul className="task-list-header task-row clean-list">
 			<li className="checkbox">
