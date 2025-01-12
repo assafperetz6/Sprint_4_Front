@@ -1,6 +1,8 @@
-export function TaskListHeader({ cmpsOrder, group, tasks, colWidth }) {
-	console.log(cmpsOrder)
-	
+import { useSelector } from 'react-redux'
+
+export function TaskListHeader({ group, tasks, colWidth }) {
+	const board = useSelector(storeState => storeState.boardModule.board)
+
 	return (
 		<ul className="task-list-header task-row clean-list">
 			<li className="checkbox">
@@ -9,7 +11,7 @@ export function TaskListHeader({ cmpsOrder, group, tasks, colWidth }) {
 
 			<li className="sticky-container task-title-header">Item</li>
 
-			{cmpsOrder.map(columnTitle => (
+			{board.cmpsOrder.map(columnTitle => (
 				<li style={{ width: colWidth }} key={columnTitle}>
 					{columnTitle}
 				</li>

@@ -9,19 +9,19 @@ import { loadBoards, addBoard, removeBoard, updateBoard } from '../store/actions
 import { ContextMenu } from '../cmps/ContextMenu.jsx'
 
 export function SideBar() {
-	const boards = useSelector((storeState) => storeState.boardModule.boards)
+	const boards = useSelector(storeState => storeState.boardModule.boards)
 	const [activeMenuId, setActiveMenuId] = useState(null)
 	const [boardNameToEdit, setboardNameToEdit] = useState(null)
 	const [isCollapsed, setIsCollapsed] = useState(false)
 	const [isHovered, setisHovered] = useState(false)
-    
+
 	useEffect(() => {
 		if (!boards?.length) loadBoards()
 	}, [])
 
 	function toggleSidebar() {
 		if (!isCollapsed) setisHovered(false)
-		setIsCollapsed((prev) => !prev)
+		setIsCollapsed(prev => !prev)
 	}
 
 	function handleMouseHover(ev) {
@@ -29,35 +29,35 @@ export function SideBar() {
 	}
 
 	function toggleContextMenu(boardId) {
-		setActiveMenuId((prev) => (prev === boardId ? null : boardId))
+		setActiveMenuId(prev => (prev === boardId ? null : boardId))
 	}
 
-    function onRemoveBoard(boardId) {
-        removeBoard(boardId)
-    }
+	function onRemoveBoard(boardId) {
+		removeBoard(boardId)
+	}
 
-    function onUpdateBoard(board) {
-        updateBoard(board)
-        setActiveMenuId(null)
-    }
+	function onUpdateBoard(board) {
+		updateBoard(board)
+		setActiveMenuId(null)
+	}
 
-    function onRenameBoard(boardTitle) {
-        setboardNameToEdit(boardTitle)
-        setActiveMenuId(null)
-    }
+	function onRenameBoard(boardTitle) {
+		setboardNameToEdit(boardTitle)
+		setActiveMenuId(null)
+	}
+
+	function onAddBoard() {
+		try {
+			addBoard(boardService.getEmptyBoard())
+		} catch (err) {
+			console.log('cannot add board', err)
+			throw err
+		}
+	}
 
 	return (
-		<aside
-			className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${
-				isHovered ? 'hovered' : ''
-			}`}
-			onMouseEnter={handleMouseHover}
-			onMouseLeave={handleMouseHover}
-		>
-			<button
-				className={`toggle-sidebar ${!isHovered ? 'hidden' : ''}`}
-				onClick={toggleSidebar}
-			>
+		<aside className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isHovered ? 'hovered' : ''}`} onMouseEnter={handleMouseHover} onMouseLeave={handleMouseHover}>
+			<button className={`toggle-sidebar ${!isHovered ? 'hidden' : ''}`} onClick={toggleSidebar}>
 				{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}
 			</button>
 			<nav>
@@ -81,42 +81,25 @@ export function SideBar() {
 				<button className="workspace-list-btn">
 					<div>S {svgs.workspaceHouse}</div> main workspace
 				</button>
-				<button
-					className="add-workspace-item"
-					onClick={() => addBoard(boardService.getEmptyBoard())}
-				>
+				<button className="add-workspace-item" onClick={onAddBoard}>
 					{svgs.plus}
 				</button>
 			</section>
 			<section className="board-links">
-				{boards.map((board) => (
+				{boards.map(board => (
 					<div key={board._id} className="link-wrapper">
-						<NavLink
-							className="board-link"
-							to={`/board/${board._id}`}
-						>
+						<NavLink className="board-link" to={`/board/${board._id}`}>
 							{svgs.board}
-                            {boardNameToEdit === board.title
-                                ? <input>{board.title}</input>
-                                : <span>{board.title}</span>
-                            }
+							{boardNameToEdit === board.title ? <input>{board.title}</input> : <span>{board.title}</span>}
 						</NavLink>
-						<button className="board-options" onClick={() => toggleContextMenu(board._id)}>{svgs.threeDots}</button>
+						<button className="board-options" onClick={() => toggleContextMenu(board._id)}>
+							{svgs.threeDots}
+						</button>
 
-						{activeMenuId === board._id && (
-							<ContextMenu
-								board={board}
-								onClose={() => setActiveMenuId(null)}
-                                onRemoveBoard={onRemoveBoard}
-                                onUpdateBoard={onUpdateBoard}
-                                onRenameBoard={onRenameBoard}
-							/>
-						)}
+						{activeMenuId === board._id && <ContextMenu board={board} onClose={() => setActiveMenuId(null)} onRemoveBoard={onRemoveBoard} onUpdateBoard={onUpdateBoard} onRenameBoard={onRenameBoard} />}
 					</div>
 				))}
-				<NavLink to="/dashboard">
-					{svgs.dashboard} Dashboard and reporting
-				</NavLink>
+				<NavLink to="/dashboard">{svgs.dashboard} Dashboard and reporting</NavLink>
 			</section>
 		</aside>
 	)
