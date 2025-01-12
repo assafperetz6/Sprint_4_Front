@@ -10,12 +10,18 @@ $clr6: #222743;
 $clr7: #0073ea; // blue btns
 $clr8: #d0d4e4; // lightmode border
 $clr9: #666879; // hovered border clr
+
+$task-hover-bgc: #f5f6f8;
+$input-hover-border-clr: #c3c6d4;
 $txt-clr: #323338;
 
 $primary-hover-clr: rgba(103, 104, 121, 0.1);
 $avatar-background: rgba(255, 255, 255, 0.5);
 $hovered-btns: #ececf0;
+
+$button-clicked-bgc: #cce5ff;
 $hovered-blue: #0060b9;
+
 // color picker
 
 $green1: #00c875;
@@ -66,6 +72,15 @@ $border: solid 1px $clr8;
 $mobile-breakpoint: 460px;
 $narrow-breakpoint: 720px;
 $normal-breakpoint: 960px;
+
+$task-row-height: 36px;
+
+// css variables
+:root {
+	--options-size: 0px;
+	--left-side-width: 150px;
+	--left-margin-size: 0px;
+}
 
 // Spacing
 $spacing-xs: 4px;

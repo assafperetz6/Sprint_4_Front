@@ -10,8 +10,8 @@ export function GroupPreview({ group }) {
 			<div className="group-sticky-container">
 				<div className="header-container">
 					<h4 className="group-title">{group.title}</h4>
-					<TaskListHeader group={group} tasks={group.tasks} colWidth={colWidth} />
 				</div>
+				<TaskListHeader group={group} tasks={group.tasks} colWidth={colWidth} />
 			</div>
 			<TaskList group={group} colWidth={colWidth} />
 		</section>

@@ -27,7 +27,7 @@
 
 @import 'cmps/TopBar';
 @import 'cmps/AppHeader';
-@import "cmps/Sidebar";
+@import 'cmps/Sidebar';
 @import 'cmps/AppFooter';
 @import 'cmps/UserMsg';
 
@@ -38,5 +38,12 @@
 @import 'cmps/BoardList';
 @import 'cmps/BoardPreview';
 @import 'cmps/GroupList.scss';
+@import 'cmps/GroupPreview.scss';
+
+@import 'cmps/TaskListHeader.scss';
+@import 'cmps/TaskList.scss';
 @import 'cmps/TaskPreview.scss';
+@import 'cmps/AddTask.scss';
+@import 'cmps/taskTitle.scss';
+
 @import 'cmps/TaskDetails.scss';

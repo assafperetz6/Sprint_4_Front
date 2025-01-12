@@ -4,7 +4,7 @@ import { hexToRgba } from '../services/util.service'
 import { LabelPicker } from './LabelPicker'
 import { useSelector } from 'react-redux'
 
-export function TaskPreview({ task, colWidth }) {
+export function TaskPreview({ group, task, colWidth }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
 	return (
@@ -17,15 +17,11 @@ export function TaskPreview({ task, colWidth }) {
 				</li>
 				<div className="sticky-container">
 					<li className="task-title">
-						<div className="title-main-container">
+						<div className="title-main-container justify-between">
 							<span>{task.title}</span>
-							{/* <a href="#" className="conversation-icon-container"> */}
-							<Link to={`task/${task.id}`} className="conversation-icon-container">
-								{' '}
+							<Link to={`task/${task.id}`} className="open-task-modal">
 								&nbsp; {svgs.expand} open
 							</Link>
-							{/* <div>{svgs}</div> */}
-							{/* </a> */}
 						</div>
 					</li>
 				</div>

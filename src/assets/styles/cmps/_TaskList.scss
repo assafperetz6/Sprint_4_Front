@@ -1,0 +1,21 @@
+.task-list {
+	border-start-end-radius: 4px;
+	border-start-start-radius: 4px;
+
+	& > li {
+		min-width: max-content;
+		ul {
+			min-width: max-content;
+		}
+		&:focus {
+			ul {
+				background-color: $button-clicked-bgc;
+				outline: none;
+			}
+		}
+	}
+
+	.active {
+		background-color: $button-clicked-bgc;
+	}
+}
