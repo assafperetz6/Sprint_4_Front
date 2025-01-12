@@ -1,13 +1,16 @@
 import { svgs } from '../services/svg.service'
+import { hexToRgba } from '../services/util.service'
 import { LabelPicker } from './LabelPicker'
 
-export function TaskPreview({ task, cmpsOrder, colWidth }) {
+export function TaskPreview({ group, task, cmpsOrder, colWidth }) {
 	console.log(task)
 	return (
 		<ul className="task-preview task-row flex">
 			<div className="main-preview-container">
+				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
+
 				<li className="check-box">
-					<button></button>
+					<input type="checkbox" />
 				</li>
 				<div className="sticky-container">
 					<li className="task-title">

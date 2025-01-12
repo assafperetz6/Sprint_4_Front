@@ -12,13 +12,13 @@ function getEmptyBoard() {
 		title: 'New board',
 		groups: getDefaultGroups(),
 		members: [],
-		createdBy: userService.getLoggedinUser(),
+		createdBy: userService.getLoggedinUser()
 	}
 }
 
 function getDefaultFilter() {
 	return {
-		txt: '',
+		txt: ''
 	}
 }
 
@@ -28,44 +28,65 @@ function getDefaultGroups() {
 			id: makeId(),
 			title: 'Group 1',
 			tasks: [getDefaultTask()],
-			style: {},
+			style: {}
 		},
 		{
 			id: makeId(),
 			title: 'Group 2',
 			tasks: [getDefaultTask()],
-			style: {},
-		},
+			style: {}
+		}
 	]
 
-    return groups
+	return groups
 }
 
 function getDefaultTask() {
-    const task = {
-        id: makeId(),
-        title: 'Task 1',
-        status: '',
-        priority: 'low',
-        dueDate: '2024-09-10',
-        description: 'description',
-        comments: [],
-        memberIds: ['u101'],
-        labelIds: ['l101', 'l102'],
-        byMember: {
-            _id: 'u101',
-            fullname: 'Tal Tarablus',
-            imgUrl: '',
-        },
-        style: {
-            backgroundColor: '#26de81',
-        },
-    }
+	const task = {
+		id: makeId(),
+		title: 'Task 1',
+		status: '',
+		priority: 'low',
+		dueDate: '2024-09-10',
+		description: 'description',
+		comments: [],
+		memberIds: ['u101'],
+		labelIds: ['l101', 'l102'],
+		byMember: {
+			_id: 'u101',
+			fullname: 'Tal Tarablus',
+			imgUrl: ''
+		},
+		style: {
+			backgroundColor: '#26de81'
+		}
+	}
 
-    return task
+	return task
+}
+function getEmptyTask(title = '', status = 'sl104') {
+	return {
+		id: '',
+		title,
+		status,
+		priority: 'pl104',
+		comments: [],
+		collaborators: [],
+		dueDate: null,
+		timeline: {
+			startDate: null,
+			endDate: null
+		},
+		owner: {
+			_id: '',
+			username: '',
+			fullname: '',
+			imgUrl: ''
+		}
+	}
 }
 
 const service = VITE_LOCAL === 'true' ? local : remote
-export const boardService = { getEmptyBoard, getDefaultFilter, ...service }
+export const boardService = { getEmptyBoard, getDefaultFilter, getEmptyTask, ...service }
 
 if (DEV) window.boardService = boardService

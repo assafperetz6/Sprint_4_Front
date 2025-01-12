@@ -1,8 +1,11 @@
+import { hexToRgba } from '../services/util.service'
+
 export function TaskListHeader({ cmpsOrder, group, tasks, colWidth }) {
 	return (
 		<ul className="task-list-header task-row clean-list">
-			<li className="checkbox">
-				<button></button>
+			<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
+			<li className="check-box">
+				<input type="checkbox" />
 			</li>
 
 			<li className="sticky-container task-title-header">Item</li>

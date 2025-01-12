@@ -94,7 +94,9 @@ export const defaultBoard = [
 						}
 					}
 				],
-				style: {}
+				style: {
+					color: '#26de81'
+				}
 			},
 			{
 				id: 'g102',
@@ -161,7 +163,7 @@ export const defaultBoard = [
 						}
 					}
 				],
-				style: {}
+				style: { color: '#26de81' }
 			}
 		],
 		activities: [

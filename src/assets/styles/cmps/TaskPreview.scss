@@ -27,32 +27,40 @@
 }
 
 .task-list-header {
+	& > * {
+		-webkit-border-end: 1px solid #d0d4e4;
+		align-items: center;
+		border-inline-end: 1px solid #d0d4e4;
+		display: flex;
+		flex-shrink: 0;
+		justify-content: center;
+		line-height: 1.4375rem;
+		position: relative;
+	}
+
 	border-block: 1px solid #d0d4e4;
 	border-start-start-radius: 4px;
 	display: flex;
 	font-size: 0.875rem;
 	position: relative;
-}
-.task-list-header .task-title-header {
-	align-items: center;
-	display: flex;
-	height: 36px;
-	justify-content: center;
-	-webkit-user-select: none;
-	user-select: none;
-	width: 150px;
-	width: 400px;
-}
 
-.task-list-header > * {
-	-webkit-border-end: 1px solid #d0d4e4;
-	align-items: center;
-	border-inline-end: 1px solid #d0d4e4;
-	display: flex;
-	flex-shrink: 0;
-	justify-content: center;
-	line-height: 1.4375rem;
-	position: relative;
+	.colored-border {
+		border-start-start-radius: 4px;
+		height: calc(100% + 2px);
+		min-width: 6px;
+		width: 6px;
+	}
+
+	.task-title-header {
+		align-items: center;
+		display: flex;
+		height: 36px;
+		justify-content: center;
+		-webkit-user-select: none;
+		user-select: none;
+		width: 150px;
+		width: 400px;
+	}
 }
 
 .task-preview {
@@ -62,6 +70,14 @@
 	display: flex;
 	height: 36px;
 	z-index: 2;
+
+	.colored-border {
+		-webkit-margin-after: -2px;
+		height: calc(100% + 1px);
+		margin-block-end: -2px;
+		min-width: 6px;
+		width: 6px;
+	}
 }
 
 .task-title {
@@ -103,4 +119,41 @@
 .line-end {
 	border-inline: none;
 	width: 250px;
+}
+
+.add-task {
+	-webkit-border-after: 1px solid #d0d4e4;
+	background-color: #fff;
+	border-block-end: 1px solid #d0d4e4;
+	border-bottom-left-radius: 4px;
+	cursor: text;
+	display: flex;
+	font-size: 0.875rem;
+	height: 36px;
+	z-index: 1;
+
+	.sticky-container {
+		display: flex;
+		left: 0;
+		position: -webkit-sticky;
+		position: sticky;
+		z-index: 2;
+	}
+
+	.colored-border {
+		-webkit-margin-after: -2px;
+		height: calc(100% + 1px);
+		margin-block-end: -2px;
+		min-width: 6px;
+		width: 6px;
+	}
+
+	.add-task-input {
+		-webkit-padding-start: 10px;
+		all: unset;
+		line-height: 21px;
+		margin: 8px;
+		max-width: 177px;
+		padding-inline-start: 10px;
+	}
 }
