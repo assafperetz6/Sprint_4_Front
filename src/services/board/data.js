@@ -14,18 +14,7 @@ export const defaultBoard = [
 		style: {
 			backgroundImage: ''
 		},
-		labels: [
-			{
-				id: 'l101',
-				title: 'Done',
-				color: '#61bd4f'
-			},
-			{
-				id: 'l102',
-				title: 'Progress',
-				color: '#61bd33'
-			}
-		],
+
 		members: [
 			{
 				_id: 'u101',
@@ -47,7 +36,7 @@ export const defaultBoard = [
 					{
 						id: 'c101',
 						title: 'Build a web app',
-						status: 'Stuck',
+						status: 'sl102',
 						priority: 'medium',
 						dueDate: '2024-05-10',
 						description: 'description',
@@ -56,8 +45,8 @@ export const defaultBoard = [
 						labelIds: ['l101', 'l102'],
 						byMember: {
 							_id: 'u101',
-							fullname: 'Tal Tarablus',
-							imgUrl: ''
+							fullname: 'Alon Wohl',
+							imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 						},
 						style: {
 							backgroundColor: '#26de81'
@@ -66,7 +55,7 @@ export const defaultBoard = [
 					{
 						id: 'c102',
 						title: 'Validate software behavior against business requirements',
-						status: 'Overdue',
+						status: 'sl101',
 						priority: 'Critical',
 						dueDate: '2024-09-24',
 						description: 'description',
@@ -77,17 +66,16 @@ export const defaultBoard = [
 								createdAt: 1590999817436,
 								byMember: {
 									_id: 'u101',
-									fullname: 'Tal Tarablus',
-									imgUrl: ''
+									fullname: 'Alon Wohl',
+									imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 								}
 							}
 						],
 						memberIds: ['u101'],
-						labelIds: ['l101', 'l102'],
 						byMember: {
 							_id: 'u101',
-							fullname: 'Tal Tarablus',
-							imgUrl: ''
+							fullname: 'Alon Wohl',
+							imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 						},
 						style: {
 							backgroundColor: '#26de81'
@@ -105,7 +93,7 @@ export const defaultBoard = [
 					{
 						id: 'c103',
 						title: 'Build taskPreview',
-						status: 'Done',
+						status: 'sl100',
 						priority: 'low',
 						dueDate: '2024-09-10',
 						description: 'description',
@@ -116,8 +104,8 @@ export const defaultBoard = [
 								createdAt: 1590934517436,
 								byMember: {
 									_id: 'u102',
-									fullname: 'Tal Tarablus',
-									imgUrl: ''
+									fullname: 'Alon Wohl',
+									imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 								}
 							}
 						],
@@ -125,8 +113,8 @@ export const defaultBoard = [
 						labelIds: ['l101', 'l102'],
 						byMember: {
 							_id: 'u101',
-							fullname: 'Tal Tarablus',
-							imgUrl: ''
+							fullname: 'Alon Wohl',
+							imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 						},
 						style: {
 							backgroundColor: '#26de81'
@@ -135,7 +123,7 @@ export const defaultBoard = [
 					{
 						id: 'c104',
 						title: 'Help me',
-						status: 'inProgress',
+						status: 'sl104',
 						priority: 'high',
 						dueDate: '2024-09-24',
 						description: 'description',
@@ -146,8 +134,8 @@ export const defaultBoard = [
 								createdAt: 1590999817436,
 								byMember: {
 									_id: 'u101',
-									fullname: 'Tal Tarablus',
-									imgUrl: ''
+									fullname: 'Alon Wohl',
+									imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 								}
 							}
 						],
@@ -155,8 +143,8 @@ export const defaultBoard = [
 						labelIds: ['l101', 'l102'],
 						byMember: {
 							_id: 'u101',
-							fullname: 'Tal Tarablus',
-							imgUrl: ''
+							fullname: 'Alon Wohl',
+							imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 						},
 						style: {
 							backgroundColor: '#26de81'
@@ -165,6 +153,13 @@ export const defaultBoard = [
 				],
 				style: { color: '#26de81' }
 			}
+		],
+		statusLabels: [
+			{ id: 'sl100', title: 'Done', color: '#00C875' },
+			{ id: 'sl101', title: 'Working on it', color: '#FDAB3D' },
+			{ id: 'sl102', title: 'Stuck', color: '#E2445C' },
+			{ id: 'sl103', title: 'Almost done', color: '#0086C0' },
+			{ id: 'sl104', title: '', color: '#C4C4C4' }
 		],
 		activities: [
 			{
@@ -188,6 +183,6 @@ export const defaultBoard = [
 		],
 
 		// For Monday draggable columns (optional)
-		cmpsOrder: ['person', 'status', 'priority', 'timeline', 'people', 'date']
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker']
 	}
 ]

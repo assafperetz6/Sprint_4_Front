@@ -14,11 +14,39 @@ export function TaskListHeader({ group, tasks, colWidth }) {
 
 			<li className="sticky-container task-title-header">Item</li>
 
-			{board.cmpsOrder.map(columnTitle => (
-				<li style={{ width: colWidth }} key={columnTitle}>
-					{columnTitle}
-				</li>
-			))}
+			{board.cmpsOrder.map((cmp, idx) => {
+				let cmpTitle
+				switch (cmp) {
+					case 'StatusPicker':
+						cmpTitle = 'Status'
+						break
+					case 'PriorityPicker':
+						cmpTitle = 'Priority'
+						break
+					case 'OwnerPicker':
+						cmpTitle = 'Owner'
+						break
+					case 'MemberPicker':
+						cmpTitle = 'People'
+						break
+					case 'DatePicker':
+						cmpTitle = 'Date'
+						break
+					case 'TimelinePicker':
+						cmpTitle = 'Timeline'
+						break
+					default:
+						cmpTitle = null
+				}
+
+				return (
+					cmpTitle && (
+						<li key={cmp.id} style={{ width: colWidth }}>
+							{cmpTitle}
+						</li>
+					)
+				)
+			})}
 			<li className="line-end"></li>
 		</ul>
 	)

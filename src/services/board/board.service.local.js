@@ -38,7 +38,8 @@ async function save(board) {
 			groups: board.groups,
 			members: board.members,
 			isStarred: board.isStarred,
-			cmpsOrder: board.cmpsOrder
+			cmpsOrder: board.cmpsOrder,
+			statusLabels: board.statusLabels
 		}
 		savedBoard = await storageService.put(STORAGE_KEY, boardToSave)
 	} else {
@@ -48,7 +49,8 @@ async function save(board) {
 			title: board.title,
 			groups: board.groups,
 			members: board.members,
-			cmpsOrder: board.cmpsOrder
+			cmpsOrder: board.cmpsOrder,
+			statusLabels: board.statusLabels
 		}
 		savedBoard = await storageService.post(STORAGE_KEY, boardToSave)
 	}
