@@ -1,0 +1,48 @@
+.add-task {
+	cursor: text;
+	z-index: 1;
+	font-size: rem(14px);
+	display: flex;
+	background-color: #ffff;
+	border-block-end: 1px solid $clr8;
+	height: $task-row-height;
+
+	.empty-option-container {
+		position: relative;
+		z-index: 2;
+		width: var(--left-margin-size);
+		height: 40px;
+		background-color: #ffff;
+	}
+
+	.sticky-container {
+		position: sticky;
+		display: flex;
+		left: 0px;
+		z-index: 2;
+
+		.colored-border {
+			margin-block-end: -1px;
+			height: calc(100% + 1px);
+			width: 6px;
+			min-width: 6px;
+			border-end-start-radius: 4px;
+		}
+	}
+
+	&:hover .add-task-input {
+		outline: 1px solid $input-hover-border-clr;
+		border-radius: 4px;
+	}
+
+	border-bottom-left-radius: 4px;
+
+	.add-task-input {
+		all: unset;
+		margin: 8px;
+		padding-inline-start: 10px;
+		line-height: 21px;
+
+		max-width: 177px;
+	}
+}

@@ -1,0 +1,54 @@
+.top-bar {
+	align-items: center;
+	justify-content: center;
+	background-color: $clr1;
+	font-family: $title-font-family;
+	height: rem(48px);
+
+	.switcher {
+		padding: 10px;
+		margin-inline-start: $spacing-xs;
+		margin-inline-end: $spacing-small;
+	}
+	.logo {
+		width: 33px;
+		margin-block-end: 3px;
+	}
+	.product {
+		font-size: $logo-size;
+	}
+
+	.top-bar.nav {
+		color: $clr4;
+	}
+
+	.avatar-with-company-logo {
+		border-radius: 4px 20px 20px 4px;
+		.account-logo-wrapper {
+			margin: 0 6px;
+		}
+
+		.avatar-image {
+			height: 32px;
+			width: 32px;
+			border-radius: 50%;
+		}
+	}
+	button {
+		padding: 0;
+
+		&.nav-btn {
+			height: 40px;
+			width: 40px;
+			background-color: transparent;
+		}
+
+		&.avatar-with-company-logo {
+			background-color: $avatar-background;
+		}
+
+		&:hover {
+			background-color: $primary-hover-clr;
+		}
+	}
+}

@@ -1,14 +1,17 @@
 .main-container {
+    position: relative;
     display: grid;
-    grid-template-columns: 1rem 1fr 1rem;
+    grid-template-columns: minmax(40px, auto) 1fr 1rem;
+    grid-template-rows: 48px 1fr;
 
+    background-color: $clr1;
     > * {
         grid-column: 2;
 
-        &.full {
-            grid-column: 1 / -1;
-        }
-    }
+		&.full {
+			grid-column: 1 / -1;
+		}
+	}
 
     // @include for-narrow-layout {
     //     grid-template-columns: 
@@ -28,10 +31,17 @@
     //         minmax(auto, $normal-breakpoint)
     //         minmax(20px, 1fr);
     // }
+
+    > main {
+        height: calc(100vh - 50px);
+        padding: 18px 30px 0 44px;
+        border-top-left-radius: $radius;
+        background-color: $clr3;
+    }
 }
 
 .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 20px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-gap: 20px;
 }
