@@ -247,21 +247,55 @@
 		flex-direction: column;
 		margin-inline: 8px 6px;
 
-		div {
+		.link-wrapper {
 			position: relative;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 
+            &:hover {
+                > a:not(.active), .board-options:active:not(.open) {
+                    background-color: rgba(103, 104, 121, 0.044);
+                }
+            }
+
+            .active + .board-options, .board-options.open, .board-options:active {
+                background-color: #cce5ff;
+
+                &:hover {
+                    background-color: #aed5fb;
+                }
+            }
+
+            // #c2e1fd #cae3ff 
+
+            .board-options {
+                position: absolute;
+                right: 8px;
+    
+                display: none;
+                justify-content: center;
+                align-items: center;
+    
+                height: 24px;
+                width: 24px;
+    
+                padding: 4px;
+                margin: 0;
+
+                transition: scale .2s;
+
+                &:active {
+                    scale: .9;
+                }
+            }
+
+            &:hover .board-options, .board-options.open {
+                display: flex;
+            }
+
 			> a {
 				flex-grow: 1;
-			}
-
-			> button {
-				position: absolute;
-				right: 8px;
-
-				background-color: $hovered-btns;
 			}
 		}
 
@@ -274,18 +308,6 @@
 
 			padding: 4px;
 			margin-inline-start: 6px;
-		}
-
-		.board-options {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
-			height: 24px;
-			width: 24px;
-
-			padding: 4px;
-			margin: 0;
 		}
 	}
 

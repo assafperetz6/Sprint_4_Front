@@ -28,7 +28,7 @@ export function SideBar() {
 		ev._reactName === 'onMouseEnter' ? setisHovered(true) : setisHovered(false)
 	}
 
-	function toggleContextMenu(boardId) {
+	function toggleContextMenu(ev, boardId) {
 		setActiveMenuId(prev => (prev === boardId ? null : boardId))
 	}
 
@@ -92,7 +92,7 @@ export function SideBar() {
 							{svgs.board}
 							{boardNameToEdit === board.title ? <input>{board.title}</input> : <span>{board.title}</span>}
 						</NavLink>
-						<button className="board-options" onClick={() => toggleContextMenu(board._id)}>
+						<button className={`board-options ${activeMenuId === board._id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, board._id)}>
 							{svgs.threeDots}
 						</button>
 
