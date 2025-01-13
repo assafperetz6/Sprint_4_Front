@@ -153,7 +153,6 @@ async function getTaskById(boardId, taskId) {
             if (taskToFind) task = taskToFind
         })
         if (!task) throw new Error(`No task with id: ${taskId} in group: ${groupId}`)
-        console.log(task)
         return task
     }
     catch (err) {

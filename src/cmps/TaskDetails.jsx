@@ -1,44 +1,36 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate, useOutletContext, useParams } from "react-router"
+import { boardService } from "../services/board"
 
-
-export function TaskDetails(){
-
+export function TaskDetails() {
+    
     const { boardId, taskId } = useParams()
-    const navigate = useNavigate()
-
-    // temp until service functions are fixed //
-    const board = useSelector(storeState => storeState.boardModule.board)
-    const [ task, setTask ] = useState(getTask(taskId))
-    // temp until service functions are fixed //
+    const [task, setTask] = useState(null)
+    const { isClosing, closeTaskDetails } = useOutletContext()
 
     useEffect(() => {
-        setTask(() => getTask(taskId))
+        getTask(boardId, taskId)
     }, [taskId])
 
-    // temp until service functions are fixed //
-    function getTask(taskId){
-            var taskToFind
-            board.groups.forEach( group => {
-                const task = group.tasks.find( task => task.id === taskId)
-                if (task) taskToFind = task
-            })
-            return taskToFind
+    async function getTask(boardId, taskId) {
+        const task = await boardService.getTaskById(boardId, taskId)
+        setTask(task)
     }
-    // temp until service functions are fixed //
 
-    const isOpenClass = task ? 'open' : ''
+    const animationClass = isClosing ? 'closing' : task ? 'open' : ''
 
-    if (!isOpenClass) return null
     return (
-        <section className={`task-details ${isOpenClass}`}>
-            <h1>{task.id}</h1>
-            <h1>{task.title}</h1>
-            <h1>{task.priority}</h1>
-            <h1>{task.status}</h1>
+        <section className={`task-details ${animationClass}`}>
+            {task ? (
+                <>
+                    <h1>{task.id}</h1>
+                    <h1>{task.title}</h1>
+                    <h1>{task.priority}</h1>
+                    <h1>{task.status}</h1>
+                </>
+            ) : null}
 
-            <button onClick={() => navigate(`/board/${boardId}`)}>X</button>
+            <button onClick={closeTaskDetails}>X</button>
         </section>
     )
 }

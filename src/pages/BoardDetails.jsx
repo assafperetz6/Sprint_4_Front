@@ -1,5 +1,5 @@
 import { Outlet, useParams } from 'react-router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { loadBoard } from '../store/actions/board.actions'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
@@ -9,10 +9,11 @@ import { GroupList } from '../cmps/GroupList.jsx'
 
 export function BoardDetails() {
 	const board = useSelector(storeState => storeState.boardModule.board)
+	const [ isClosing, setIsClosing ] = useState(false)
 	const { boardId } = useParams()
 	const navigate = useNavigate()
 
-	console.log(board)
+	// console.log(board)
 
 	useEffect(() => {
 		loadBoard(boardId)
@@ -22,6 +23,14 @@ export function BoardDetails() {
 		// TODO: should return last two members on the activity log
 
 		return <img src={board.createdBy?.imgUrl} alt="userImg" />
+	}
+
+	function closeTaskDetails(){
+		setIsClosing(true)
+		setTimeout(() => {
+			setIsClosing(false)
+			navigate(`/board/${boardId}`)
+		}, 100)
 	}
 
 	if (!board) return null
@@ -57,7 +66,7 @@ export function BoardDetails() {
 				<button className="toggle-board-tabs">{svgs.arrowUp}</button>
 			</section>
 			{!!board.groups.length && <GroupList groups={board.groups} />}
-			<Outlet />
+			<Outlet context={{ isClosing, closeTaskDetails }}/>
 		</section>
 	)
 }
