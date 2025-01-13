@@ -30,7 +30,7 @@ export function BoardDetails() {
 		setTimeout(() => {
 			setIsClosing(false)
 			navigate(`/board/${boardId}`)
-		}, 100)
+		}, 75)
 	}
 
 	if (!board) return null
