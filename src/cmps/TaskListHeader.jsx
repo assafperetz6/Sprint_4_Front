@@ -41,7 +41,7 @@ export function TaskListHeader({ group, tasks, colWidth }) {
 
 				return (
 					cmpTitle && (
-						<li key={cmp.id} style={{ width: colWidth }}>
+						<li key={cmp} style={{ width: colWidth }}>
 							{cmpTitle}
 						</li>
 					)
