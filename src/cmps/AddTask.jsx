@@ -14,9 +14,13 @@ export function AddTask({ group }) {
 
 	async function onAddTask(ev) {
 		if(ev) ev.preventDefault()
-		const savedBoard = await boardService.saveTask(board._id, group.id, taskToAdd)
-		dispatch({ type: SET_BOARD, board: savedBoard})
-		setTaskToAdd(boardService.getEmptyTask())
+		try {
+			const savedBoard = await boardService.saveTask(board._id, group.id, taskToAdd)
+			dispatch({ type: SET_BOARD, board: savedBoard})
+			setTaskToAdd(boardService.getEmptyTask())
+		} catch (err) {
+			throw err
+		}
 	}
 
 	function onBlur(){

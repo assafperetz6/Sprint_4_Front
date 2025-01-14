@@ -8,6 +8,8 @@
 	width: var(--left-side-width);
 	flex-shrink: 0;
 	user-select: none;
+
+	padding-inline-end: 10px;
 	.title-main-container {
 		height: $task-row-height;
 		width: 100%;

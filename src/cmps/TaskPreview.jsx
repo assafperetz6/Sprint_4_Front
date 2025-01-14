@@ -72,7 +72,7 @@ export function TaskPreview({ group, task, colWidth }) {
 					<li className="task-title">
 						<div className="title-main-container justify-between">
 							<span>{task.title}</span>
-							<Link to={`task/${task.id}`} className="open-task-modal">
+							<Link to={`task/${task.id}`} className="open-task-details">
 								&nbsp; {svgs.expand} open
 							</Link>
 						</div>
