@@ -58,10 +58,11 @@
 	}
 
 	.open-task-details {
+		display: none;
 		align-items: center;
+
 		height: 100%;
 		right: 0px;
-		display: none;
 
 		.open {
 			color: rgb(50, 51, 56);
@@ -73,17 +74,41 @@
 		}
 	}
 
+	.delete-btn{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		background-color: #00000000;
+		padding: 4px;
+		border-radius: 4px;
+		margin: 0;
+
+		color: $gray4;
+		opacity: 0;
+		visibility: hidden;
+
+		transition: opacity 100ms, visibility 100ms;
+	}
+
 	&:hover {
 		.open-task-details {
 			margin-inline-end: 10px;
 			display: flex;
 			gap: 4px;
 		}
+
+		.delete-btn{
+			background-color: $hovered-btns;
+
+			opacity: 100;
+			visibility: visible;	
+		}
 	}
 
 	span {
-		margin: 6px 10px 6px 26px;
-		padding: 2px 0px 3px;
+		margin: 6px 10px 6px 6px;
+		// padding: 2px 0px 3px;
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;

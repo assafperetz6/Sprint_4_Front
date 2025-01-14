@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { svgs } from '../services/svg.service'
 import { hexToRgba } from '../services/util.service'
 
@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DynamicCmp } from './DynamicCmp'
 import { updateBoard } from '../store/actions/board.actions'
 import { SET_BOARD } from '../store/reducers/board.reducer'
+import { boardService } from '../services/board'
 
 export function TaskPreview({ group, task, colWidth }) {
+
 	const dispatch = useDispatch()
 	const board = useSelector(storeState => storeState.boardModule.board)
+	const { boardId } = useParams()
 
 	async function handleUpdate(cmp, data) {
 		try {
@@ -60,6 +63,15 @@ export function TaskPreview({ group, task, colWidth }) {
 		}
 	}
 
+	async function deleteTask(taskId){
+		try {
+			const savedBoard = await boardService.removeTask(boardId, taskId)
+			dispatch({ type: SET_BOARD, board: savedBoard})
+		} catch (err) {
+			throw err
+		}
+	}
+
 	return (
 		<ul className="task-preview task-row flex">
 			<div className="main-preview-container">
@@ -70,6 +82,7 @@ export function TaskPreview({ group, task, colWidth }) {
 				</li>
 				<div className="sticky-container">
 					<li className="task-title">
+						<button className="delete-btn" onClick={() => deleteTask(task.id)}>{svgs.delete}</button>
 						<div className="title-main-container justify-between">
 							<span>{task.title}</span>
 							<Link to={`task/${task.id}`} className="open-task-details">
