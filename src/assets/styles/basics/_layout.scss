@@ -4,7 +4,11 @@
     grid-template-columns: minmax(40px, auto) 1fr 1rem;
     grid-template-rows: 48px 1fr;
 
+    height: 100vh;
+    overflow: hidden;
+
     background-color: $clr1;
+
     > * {
         grid-column: 2;
 
@@ -33,7 +37,13 @@
     // }
 
     > main {
-        height: calc(100vh - 50px);
+        position: relative;
+        
+        grid-column: 2 / -1;
+        height: 100%;
+
+        overflow: auto;
+
         padding: 18px 30px 0 44px;
         border-top-left-radius: $radius;
         background-color: $clr3;

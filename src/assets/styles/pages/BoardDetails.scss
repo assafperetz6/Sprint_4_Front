@@ -1,6 +1,25 @@
 .board-details {
-    .board-header {
+    height: 100%;
+    min-width: min-content;
+
+    display: flex;
+    flex-direction: column;
+
+    .board-header-container {
+        position: sticky;
+        top: 0;
+        right: 0;
+
+        background-color: $clr3;
+        z-index: 50;
+    }
+
+    .board-header, .board-tabs, .task-actions {
         display: flex;
+        flex-shrink: 0;
+    }
+
+    .board-header {
         justify-content: space-between;
 
         button {
@@ -23,13 +42,9 @@
         }
     }
 
-    .board-tabs {
-        display: flex;
-    }
-
     .task-actions {
-        display: flex;
         align-items: center;
+
         > button {
             @include btn;
             width: unset;

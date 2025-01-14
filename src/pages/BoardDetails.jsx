@@ -36,34 +36,35 @@ export function BoardDetails() {
 	if (!board) return null
 	return (
 		<section className="board-details">
-			<header className="board-header">
-				<h2 className="board-title">{board.title}</h2>
-
-				<section className="board-actions">
-					<button className="group-chat">{svgs.chat}</button>
-					<button className="activity-log">{getMemberIcons()}</button>
-					<button className="invite-members">Invite / 1</button>
-					<button className="copy-link">{svgs.link}</button>
-					<button className="options">{svgs.threeDots}</button>
+			<section className="board-header-container">
+				<header className="board-header">
+					<h2 className="board-title">{board.title}</h2>
+					<section className="board-actions">
+						<button className="group-chat">{svgs.chat}</button>
+						<button className="activity-log">{getMemberIcons()}</button>
+						<button className="invite-members">Invite / 1</button>
+						<button className="copy-link">{svgs.link}</button>
+						<button className="options">{svgs.threeDots}</button>
+					</section>
+				</header>
+				<section className="board-tabs">
+					<button>{svgs.house} Main Table</button>
+					<button className="tab-options">{svgs.threeDots}</button>
+					<button>{svgs.plus}</button>
 				</section>
-			</header>
-			<section className="board-tabs">
-				<button>{svgs.house} Main Table</button>
-				<button className="tab-options">{svgs.threeDots}</button>
-				<button>{svgs.plus}</button>
-			</section>
-			<section className="task-actions">
-				<button>New item</button>
-				<button>{svgs.arrowDown}</button>
-				<button>{svgs.search} Search</button>
-				<button>{svgs.person} Person</button>
-				<button>{svgs.filter} Filter</button>
-				<button className="toggle-advance-filter">{svgs.arrowDown}</button>
-				<button>{svgs.sortDir} Sort</button>
-				<button>{svgs.hideEye} Hide</button>
-				<button>{svgs.groupBy} Group by</button>
-				<button className="more-task-actions">{svgs.threeDots}</button>
-				<button className="toggle-board-tabs">{svgs.arrowUp}</button>
+				<section className="task-actions">
+					<button>New item</button>
+					<button>{svgs.arrowDown}</button>
+					<button>{svgs.search} Search</button>
+					<button>{svgs.person} Person</button>
+					<button>{svgs.filter} Filter</button>
+					<button className="toggle-advance-filter">{svgs.arrowDown}</button>
+					<button>{svgs.sortDir} Sort</button>
+					<button>{svgs.hideEye} Hide</button>
+					<button>{svgs.groupBy} Group by</button>
+					<button className="more-task-actions">{svgs.threeDots}</button>
+					<button className="toggle-board-tabs">{svgs.arrowUp}</button>
+				</section>
 			</section>
 			{!!board.groups.length && <GroupList groups={board.groups} />}
 			<Outlet context={{ isClosing, closeTaskDetails }}/>

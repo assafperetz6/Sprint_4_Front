@@ -1,7 +1,12 @@
 .task-list {
+	display: flex;
+	flex-direction: column;
+	// align-items: start;
+
 	border-start-end-radius: 4px;
 	border-start-start-radius: 4px;
 
+	
 	& > li {
 		min-width: max-content;
 		ul {
@@ -11,6 +16,22 @@
 			ul {
 				background-color: $button-clicked-bgc;
 				outline: none;
+			}
+		}
+
+		&:last-child {
+			display: flex;
+			width: 100%;
+			justify-content: start;
+
+			.check-box {
+				border-inline-end: $border;
+				margin-inline-end: 10px;
+			}
+
+			> .add-task li:last-child {
+				display: flex;
+				width: var(--left-side-width);
 			}
 		}
 	}

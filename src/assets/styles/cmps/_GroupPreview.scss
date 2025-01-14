@@ -57,8 +57,8 @@
 
 	.group-sticky-container {
 		position: sticky;
+		top: 150px;
 
-		// top: 185px;
 		z-index: 40;
 		background-color: #ffff;
 	}
@@ -72,10 +72,12 @@
 
 	.group-header {
 		position: sticky;
+
 		left: 0;
 		z-index: 30;
 		display: flex;
 		align-items: center;
+		
 		.group-title-container {
 			cursor: text;
 			padding-inline: 4px;
@@ -179,7 +181,17 @@
 	}
 
 	.task-row {
+		display: flex;
 		min-width: min-content;
+		
+		.sticky-container {
+            position: sticky;
+            left: var(--left-margin-size);
+            background-color: #ffff;
+            z-index: 20;
+            border-right: 1px solid $clr8;
+        }
+		
 		& > *:not(.task-option, .task-title-header, .task-title) {
 			flex-shrink: 0;
 			user-select: none;
