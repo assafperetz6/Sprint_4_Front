@@ -13,7 +13,7 @@ body {
 
 	font-family: $main-font-family;
 	font-size: rem(18px);
-	// letter-spacing: 0.2px;
+	letter-spacing: 0.2px;
 }
 
 h1,
@@ -53,6 +53,10 @@ input {
 }
 ul {
 	margin: 0;
+}
+
+button {
+	font-family: $main-font-family;
 }
 
 @media screen and (min-width: $mobile-breakpoint) {
