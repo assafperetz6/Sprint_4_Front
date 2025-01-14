@@ -180,25 +180,18 @@ function getDefaultTask() {
 
 	return task
 }
-function getEmptyTask(title = '', status = 'sl104') {
+function getEmptyTask() {
 	return {
-		id: makeId(),
-		title,
-		status,
+		title: '',
+		status: 'sl104',
 		priority: 'pl104',
 		comments: [],
-		collaborators: [],
+		memberIds: [],
 		dueDate: null,
 		timeline: {
 			startDate: null,
 			endDate: null
 		},
-		owner: {
-			_id: '',
-			username: '',
-			fullname: '',
-			imgUrl: ''
-		}
 	}
 }
 

@@ -206,7 +206,7 @@ async function saveTask(boardId, groupId, task) {
         }
         else {
             taskToSave.id = makeId()
-            tasks.unshift(taskToSave)
+            tasks.push(taskToSave)
         }
         return storageService.put(STORAGE_KEY, board)
     }

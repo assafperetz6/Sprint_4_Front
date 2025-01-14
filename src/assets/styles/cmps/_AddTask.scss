@@ -7,13 +7,13 @@
 	border-block-end: 1px solid $clr8;
 	height: $task-row-height;
 
-	.empty-option-container {
-		position: relative;
-		z-index: 2;
-		width: var(--left-margin-size);
-		height: 40px;
-		background-color: #ffff;
-	}
+	// .empty-option-container {
+	// 	position: relative;
+	// 	z-index: 2;
+	// 	width: var(--left-margin-size);
+	// 	height: 40px;
+	// 	background-color: #ffff;
+	// }
 
 	.sticky-container {
 		position: sticky;
@@ -23,9 +23,9 @@
 
 		.colored-border {
 			margin-block-end: -1px;
-			height: calc(100% + 1px);
-			width: 6px;
-			min-width: 6px;
+			// height: calc(100% + 1px);
+			width: 5.5px;
+			min-width: 5.5px;
 			border-end-start-radius: 4px;
 		}
 	}
@@ -37,12 +37,29 @@
 
 	border-bottom-left-radius: 4px;
 
+	form{
+		display: flex;
+		align-items: center;
+		border-inline-start: 1px solid $clr8;
+		padding-inline-start: 10px;
+	}
+
 	.add-task-input {
 		all: unset;
-		margin: 8px;
+		margin: 0;
 		padding-inline-start: 10px;
-		line-height: 21px;
+		line-height: 24px;
 
 		max-width: 177px;
+		height: 24px;
+	}
+
+	.check-box-wrapper{
+		border-inline-start: 1px solid $clr8;
+	}
+
+	.check-box {
+		height: 13px;
+		width: 13px;
 	}
 }

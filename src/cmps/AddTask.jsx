@@ -1,35 +1,35 @@
 import { useRef, useState } from 'react'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateBoard } from '../store/actions/board.actions'
 import { hexToRgba } from '../services/util.service'
+import { SET_BOARD } from '../store/reducers/board.reducer'
 
 export function AddTask({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [taskToAdd, setTaskToAdd] = useState(boardService.getEmptyTask())
 	const elInput = useRef()
+	const dispatch = useDispatch()
 
-	function onAddTask() {
-		console.log('task added')
-		setTaskToAdd(prev => ({ ...prev, title: '' }))
+	async function onAddTask(ev) {
+		if(ev) ev.preventDefault()
+		const savedBoard = await boardService.saveTask(board._id, group.id, taskToAdd)
+		dispatch({ type: SET_BOARD, board: savedBoard})
+		setTaskToAdd(boardService.getEmptyTask())
 	}
 
-	function hnadleKeyPressed({ key }) {
-		if (key === 'Enter') onAddTask()
-		if (key === 'Escape') onEmptyInput()
+	function onBlur(){
+		if(taskToAdd.title) onAddTask()
+		else return
 	}
 
-	function onEmptyInput() {
-		setTaskToAdd(prev => ({ ...prev, title: '' }))
-		elInput.current.blur()
-	}
 	function handleChange({ target }) {
 		setTaskToAdd(prev => ({ ...prev, title: target.value }))
 	}
 
 	return (
-		<ul
+		<div
 			className="add-task clean-list"
 			onClick={() => {
 				elInput.current.focus()
@@ -37,14 +37,15 @@ export function AddTask({ group }) {
 		>
 			<div className="sticky-container">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
-				<li className="check-box flex align-center justify-center">
-					<input type="checkbox" />
-				</li>
-
-				<li>
-					<input className="add-task-input" ref={elInput} onKeyDown={hnadleKeyPressed} placeholder="+ Add item" value={taskToAdd.title} onBlur={onAddTask} onChange={handleChange}></input>
-				</li>
+					
+				<div className='check-box-wrapper flex justify-center align-center'>
+					<input className="check-box" type="checkbox" />
+				</div>
+				
+				<form onSubmit={onAddTask}>
+					<input className="add-task-input" ref={elInput} placeholder="+ Add item" value={taskToAdd.title} onBlur={onBlur} onChange={handleChange}></input>
+				</form>
 			</div>
-		</ul>
+		</div>
 	)
 }
