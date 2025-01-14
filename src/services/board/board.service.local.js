@@ -1,31 +1,40 @@
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
+import { makeId } from '../util.service'
 import { defaultBoard } from './data'
 
 const STORAGE_KEY = 'board'
 
 export const boardService = {
-	query,
-	getById,
-	save,
-	remove
-	// addBoardUpdate
+    query,
+    getById,
+    save,
+    remove,
+    getGroups,
+    getGroupById,
+    saveGroup,
+    removeGroup,
+    getTasks,
+    getTaskById,
+    saveTask,
+    removeTask,
 }
 
+// Board //
 async function query() {
-	var boards = await storageService.query(STORAGE_KEY)
-	if (!boards.length) {
-		boards = _makeBoard()
-	}
-	return boards
+    var boards = await storageService.query(STORAGE_KEY)
+    if (!boards.length) {
+        boards = _makeBoard()
+    }
+    return boards
 }
 
 function getById(boardId) {
-	return storageService.get(STORAGE_KEY, boardId)
+    return storageService.get(STORAGE_KEY, boardId)
 }
 
 async function remove(boardId) {
-	await storageService.remove(STORAGE_KEY, boardId)
+    await storageService.remove(STORAGE_KEY, boardId)
 }
 
 async function save(board) {
@@ -58,23 +67,150 @@ async function save(board) {
 }
 
 async function _makeBoard() {
-	const test = await storageService.query()
-	if (!test.length) {
-		localStorage.setItem('board', JSON.stringify(defaultBoard))
-	}
-	return defaultBoard
+    const test = await storageService.query()
+    if (!test.length) {
+        localStorage.setItem('board', JSON.stringify(defaultBoard))
+    }
+    return defaultBoard
 }
 
-// async function addtaskUpdate(taskId, txt) {
-//     const task = await getById(taskId)
+// Group //
+async function getGroups(boardId) {
+    try {
+        const { groups } = await getById(boardId)
+        return groups
+    } catch (err) {
+        throw err
+    }
+}
 
-//     const update = {
-//         id: makeId(),
-//         by: userService.getLoggedinUser(),
-//         txt
-//     }
-//     task.updates.push(update)
-//     await storageService.put(STORAGE_KEY, task)
+async function getGroupById(boardId, groupId) {
+    try {
+        const { groups } = await getById(boardId)
+        const group = groups.find(group => group.id === groupId)
+        if (!group) throw new Error(`No group with id: ${groupId}`)
+        return group
+    }
+    catch (err) {
+        throw err
+    }
+}
 
-//     return update
-// }
+async function removeGroup(boardId, groupId) {
+    try {
+        const board = await getById(boardId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        if (groupIdx === -1) throw new Error(`No group with id: ${groupId}`)
+
+        board.groups.splice(groupIdx, 1)
+        return storageService.put(STORAGE_KEY, board)
+    }
+    catch (err) {
+        throw err
+    }
+}
+
+async function saveGroup(boardId, group) {
+    const groupToSave = {
+        title: group.title,
+        style: group.style,
+        tasks: group.tasks,
+    }
+
+    try {
+        const board = await getById(boardId)
+        if (group.id) {
+            groupToSave.id = group.id
+            const groupIdx = board.groups.findIndex(group => group.id === groupToSave.id)
+            if (groupIdx === -1) throw new Error(`No group with id: ${group.id}`)
+            board.groups.splice(groupIdx, 1, groupToSave)
+        }
+        else {
+            groupToSave.id = makeId()
+            board.groups.push(groupToSave)
+        }
+        return storageService.put(STORAGE_KEY, board)
+    }
+    catch (err) {
+        throw err
+    }
+}
+
+// Task //
+async function getTasks(boardId, groupId) {
+    try {
+        const { tasks } = await getGroupById(boardId, groupId)
+        return tasks
+    } catch (err) {
+        throw err
+    }
+}
+
+async function getTaskById(boardId, taskId) {
+    try {
+        const { groups } = await getById(boardId)
+        var task
+        groups.forEach(group => {
+            const taskToFind = group.tasks.find(task => task.id === taskId)
+            if (taskToFind) task = taskToFind
+        })
+        if (!task) throw new Error(`No task with id: ${taskId} in group: ${groupId}`)
+        return task
+    }
+    catch (err) {
+        throw err
+    }
+}
+
+async function removeTask(boardId, taskId) {
+    try {
+        const board = await getById(boardId)
+        let isTaskFound = false
+        board.groups.forEach((group, idx) => {
+            const taskIdx = group.tasks.findIndex(task => task.id === taskId)
+            if (taskIdx !== -1) {
+                isTaskFound = true
+                board.groups[idx].tasks.splice(taskIdx, 1)
+            }
+        })
+        if (!isTaskFound) throw new Error(`No task with id: ${taskId}`)
+        return storageService.put(STORAGE_KEY, board)
+    }
+    catch (err) {
+        throw err
+    }
+}
+
+async function saveTask(boardId, groupId, task) {
+
+    const taskToSave = {
+        title: task.title,
+        people: task.people,
+        priority: task.priority,
+        dueDate: task.dueDate,
+        status: task.status,
+    }
+
+    try {
+        const board = await getById(boardId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        if (groupIdx === -1) throw new Error(`No group with id: ${groupId}`)
+
+        const { tasks } = board.groups[groupIdx]
+
+        if (task.id) {
+            taskToSave.id = task.id
+            const taskIdx = tasks.findIndex(task => task.id === taskToSave.id)
+            if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
+            tasks.splice(taskIdx, 1, taskToSave)
+        }
+        else {
+            taskToSave.id = makeId()
+            tasks.unshift(taskToSave)
+        }
+        return storageService.put(STORAGE_KEY, board)
+    }
+    catch (err) {
+        throw err
+    }
+}

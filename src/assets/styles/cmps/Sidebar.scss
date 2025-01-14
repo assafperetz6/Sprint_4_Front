@@ -1,325 +1,378 @@
 .sidebar {
-    position: relative;
+	position: relative;
 
-    grid-column: 1;
-    grid-row: 2 / 3;
+	grid-column: 1;
+	grid-row: 2 / 3;
 
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-    height: 100%;
-    width: 250px;
-    transition: width 0.3s ease;
+	height: 100%;
+	width: 250px;
+	transition: width 0.3s ease;
 
-    border-top-right-radius: $radius;
-    margin-right: 10px;
-    
-    background: linear-gradient(135deg, $clr3 5% , #eceff8 100%);
+	border-top-right-radius: $radius;
+	margin-right: 10px;
 
-    &.collapsed {
-        position: fixed;
-        width: 30px;
+	background: linear-gradient(135deg, $clr3 5%, #eceff8 100%);
 
-        &.hovered {
-            // position: fixed;
-            width: 250px;
+	&.collapsed {
+		position: fixed;
+		width: 30px;
 
-            box-shadow: 8px 0px 10px 0px rgba(0, 0, 0, 0.1);
-            z-index: 20;
-        }
-        
-        &:not(.hovered) > *:not(.toggle-sidebar) {
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.1s ease 0s;
-        }
-    }
+		&.hovered {
+			// position: fixed;
+			width: 250px;
 
-    *:not(.toggle-sidebar) {
-        transition: opacity 0.2s ease 0.2s, padding 50ms;
-    }
+			box-shadow: 8px 0px 10px 0px rgba(0, 0, 0, 0.1);
+			z-index: 20;
+		}
 
-    &, * {
-        font-size: rem(14px);
-    }
+		&:not(.hovered) > *:not(.toggle-sidebar) {
+			visibility: hidden;
+			opacity: 0;
+			transition: opacity 0.1s ease 0s;
+		}
+	}
 
-    a, button {
-        border-radius: 4px;
-    }
+	*:not(.toggle-sidebar) {
+		transition: opacity 0.2s ease 0.2s, padding 50ms;
+	}
 
-    a:hover:not(.active), button:hover:not(.active) {
-        background-color: $hovered-btns;
-    }
+	&,
+	* {
+		font-size: rem(14px);
+	}
 
-    > *:not(nav) {
-        margin-inline: 12px;
-    }
+	a,
+	button {
+		border-radius: 4px;
+	}
 
-    svg {
-        height: 18px;
-        width: 18px;
-    }
+	a:hover:not(.active),
+	button:hover:not(.active) {
+		background-color: $hovered-btns;
+	}
 
-    .active {
-        background-color: #cce5ff;
-    }
+	> *:not(nav) {
+		margin-inline: 12px;
+	}
 
-    .toggle-sidebar {
-        position: absolute;
-        top: 0;
-        right: 0;
+	svg {
+		height: 18px;
+		width: 18px;
+	}
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+	.active {
+		background-color: $button-clicked-bgc;
+	}
 
-        height: 38px;
-        width: 30px;
+	.toggle-sidebar {
+		position: absolute;
+		top: 0;
+		right: 0;
 
-        padding: 0;
-        border-radius: 0 8px;
-        margin: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 
-        background-color: #f6f7fb;
+		height: 38px;
+		width: 30px;
 
-        &.hidden:not(.collapsed *) {
-            display: none;
-        }
+		padding: 0;
+		border-radius: 0 8px;
+		margin: 0;
 
-        svg {
-            height: 14px;
-            width: 14px;
-        }
-    }
+		background-color: #f6f7fb;
 
-    > nav {
-        display: grid;
-        grid-template-rows: 32px 32px;
-        gap: 2px;
-        width: 100%;
-        justify-content: baseline;
+		&.hidden:not(.collapsed *) {
+			display: none;
+		}
 
-        padding: 4px 12px;
+		svg {
+			height: 14px;
+			width: 14px;
+		}
+	}
 
-        a {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            width: 100%;
+	> nav {
+		display: grid;
+		grid-template-rows: 32px 32px;
+		gap: 2px;
+		width: 100%;
+		justify-content: baseline;
 
-            color: $txt-clr;
-            height: 32px;
+		padding: 4px 12px;
 
-            padding: 0 4px 0 5px;
-            margin-inline-end: 8px;
-        }
-    }
+		a {
+			display: flex;
+			align-items: center;
+			gap: 7px;
+			width: 100%;
 
-    &.hovered nav > div {
-        padding-right: 30px;
-    }
+			color: $txt-clr;
+			height: 32px;
 
-    .favorite-container {
-        display: flex;
+			padding: 0 4px 0 5px;
+			margin-inline-end: 8px;
+		}
+	}
 
-        padding: 8px 12px;
-        border-block: $border;
-        margin: 0;
-        
-        .toggle-favorites {
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            gap: 7px;
+	&.hovered nav > div {
+		padding-right: 30px;
+	}
 
-            height: 30px;
-            width: 100%;
+	.favorite-container {
+		display: flex;
 
-            // padding: 0;
-            padding-inline: 4px;
-            margin: 0 4px 0 1px;
-            background-color: unset;
+		padding: 8px 12px;
+		border-block: $border;
+		margin: 0;
 
-            &:hover {
-                background-color: $hovered-btns;
-            }
+		.toggle-favorites {
+			display: flex;
+			justify-content: start;
+			align-items: center;
+			gap: 7px;
 
-            svg {
-                height: 20px;
-                width: 20px;
-            }
-        }
-    }
+			height: 30px;
+			width: 100%;
 
+			// padding: 0;
+			padding-inline: 4px;
+			margin: 0 4px 0 1px;
+			background-color: unset;
 
-    .workspaces-actions {
-        display: grid;
-        grid-template-columns: 1fr 24px 24px;
-        grid-template-rows: repeat(2, 32px);
+			&:hover {
+				background-color: $hovered-btns;
+			}
 
-        place-items: center;
-        padding: 4px 6px 4px 12px;
-        margin: 0;
+			svg {
+				height: 20px;
+				width: 20px;
+			}
+		}
+	}
 
-        > * {
-            justify-self: start;
-            gap: 7px;
-        }
+	.workspaces-actions {
+		position: relative;
 
-        > div {
-            display: flex;
-            align-items: center;
-            grid-column: 1 / 2;
-
-            padding: 6px
-        }
-
-        button {
-            @include btn;
-
-            height: 24px;
-            width: 24px;
-            padding: 0;
-
-            background-color: unset;
-        }
-
-        .workspace-list-btn {
-            grid-row: 2;
-            grid-column: 1 / -2;
-
-            width: unset;
-            padding: 6px;
-            margin: 0;
-
-            font-size: 1rem;
-            font-weight: 600;
-
-            > div {
-                height: 20px;
-                width: 20px;
-
-                border-radius: 6px;
-
-                line-height: 1.5;
-                font-weight: 200;
-                color: $clr3;
-                background-color: #595ad4;
-
-                svg {
-                    height: 14px;
-                    width: 14px;
-
-                    position: relative;
-                    top: -50%;
-                    right: -30%;
-                }
-            }
-        }
-
-        .add-workspace-item {
-            grid-row: 2;
-            grid-column: 2 / 4;
-            place-self: center;
-            height: 32px;
-            width: 32px;
-
-            padding: 0;
-            margin: 0;
-            background-color: $clr7;
-
-            > svg {
-                height: 20px;
-                width: 20px;
-                color: #fff;
-    
-            }
-
-            &:hover {
-                background-color: $hovered-blue;
-            }
-        }
-    }
-
-    .board-links {
         display: flex;
         flex-direction: column;
-        margin-inline: 8px 6px;
 
-        div {
-            position: relative;
+		padding: 4px 6px 4px 12px;
+		margin: 0;
+
+		* {
+			gap: 8px;
+		}
+
+        .workspaces-wrapper {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            width: 100%;
+            padding: 0;
 
-            > a {
-                flex-grow: 1;
-            }
-
-            > button {
-                position: absolute;
-                right: 8px;
-
-                background-color: $hovered-btns;
-            }
         }
-
-        a {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            
-            height: 32px;
-            
-            padding: 4px;
-            margin-inline-start: 6px;
-        }
-
-        .board-options {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            height: 24px;
-            width: 24px;
-
-            padding: 4px;
-            margin: 0;
-        }
-    }
-
-    .context-menu {
-        position: absolute;
-        top: 0;
-        left: 250px;
-
-        display: flex;
-        flex-direction: column;
         
-        width: 256px;
-
-        padding: 8px;
-        border-radius: $radius;
-        margin: 0;
-
-        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
-        background-color: $clr3;
-        z-index: 20;
-
-        button {
+		div {
             display: flex;
-            align-items: center;
-            gap: 6px;
+			align-items: center;
+            padding: 6px;
+		}
+
+		button {
+			@include btn;
+
+            align-self: center;
+            justify-self: center;
+
+			height: 24px;
+			width: 24px;
+			padding: 0;
+
+			background-color: unset;
+
+            &:first-child {
+                grid-column: 2;
+            }
+		}
+
+		.workspace-list-btn {
+			display: flex;
+			align-items: center;
+            justify-content: start;
+			gap: 8px;
 
             height: 32px;
+			width: 80%;
 
-            padding: 4px 8px;
-            text-align: start;
-            background-color: unset;
+            border: 1px solid #c3c6d4;
+            margin: 0;
 
-            svg {
-                color: #676879;
+			> div {
+                position: relative;
+				flex-shrink: 0;
+
+				height: 20px;
+				width: 20px;
+
+				border-radius: 6px;
+                margin-inline-start: 4px;
+
+				line-height: 1.5;
+				font-weight: 500;
+				color: $clr3;
+				background-color: #595ad4;
+
+				svg {
+					// display: none;
+					position: absolute;
+                    top: 50%;
+                    left: 50%;
+					height: 14px;
+					width: 14px;
+				}
+			}
+
+            > span {
+                flex: 1;
+
+                font-size: 1rem;
+                font-weight: 600;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
-        }
-    }
+		}
+
+		.add-workspace-item {
+			height: 32px;
+			width: 32px;
+
+            flex-shrink: 0;
+
+			padding: 0;
+			margin-inline-end: 4px;
+			background-color: $clr7;
+
+			> svg {
+				height: 20px;
+				width: 20px;
+				color: #fff;
+			}
+
+			&:hover {
+				background-color: $hovered-blue;
+			}
+		}
+	}
+
+	.board-links {
+		display: flex;
+		flex-direction: column;
+		margin-inline: 8px 6px;
+
+		.link-wrapper {
+			position: relative;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			&:hover {
+				> a:not(.active),
+				.board-options:active:not(.open) {
+					background-color: rgba(103, 104, 121, 0.044);
+				}
+			}
+
+			.active + .board-options,
+			.board-options.open,
+			.board-options:active {
+				background-color: #cce5ff;
+
+				&:hover {
+					background-color: #aed5fb;
+				}
+			}
+
+			// #c2e1fd #cae3ff
+
+			.board-options {
+				position: absolute;
+				right: 8px;
+
+				display: none;
+				justify-content: center;
+				align-items: center;
+
+				height: 24px;
+				width: 24px;
+
+				padding: 4px;
+				margin: 0;
+
+				transition: scale 0.2s;
+
+				&:active {
+					scale: 0.9;
+				}
+			}
+
+			&:hover .board-options,
+			.board-options.open {
+				display: flex;
+			}
+
+			> a {
+				flex-grow: 1;
+			}
+		}
+
+		a {
+			display: flex;
+			align-items: center;
+			gap: 7px;
+
+			height: 32px;
+
+			padding: 4px;
+			margin-inline-start: 6px;
+		}
+	}
+
+	.context-menu {
+		position: absolute;
+		top: 0;
+		left: 250px;
+
+		display: flex;
+		flex-direction: column;
+
+		width: 256px;
+
+		padding: 8px;
+		border-radius: $radius;
+		margin: 0;
+
+		box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+		background-color: $clr3;
+		z-index: 50;
+
+		button {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+
+			height: 32px;
+
+			padding: 4px 8px;
+			text-align: start;
+			background-color: unset;
+
+			svg {
+				color: #676879;
+			}
+		}
+	}
 }

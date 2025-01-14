@@ -1,20 +1,110 @@
 .task-details {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
     position: fixed;
     top: 0;
     right: 0;
 
-    width: 300px;
+    width: 500px;
     height: 100%;
-    background-color: #f4f4f4;
+    background-color: $clr3;
+    padding: 20px;
 
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 
     transform: translateX(100%);
-    transition: transform 0.75s ease-in-out;
-    z-index: 1000;
+    transition: transform 75ms linear;
+    z-index: 100;
 
     &.open {
         transform: translateX(0);
     }
-}
 
+    &.closing {
+        transform: translateX(100%);
+    }
+
+    &.details-top-bar{
+        position: relative;
+
+        height: max-content;
+    }
+
+    & .details-top-bar::after{
+        content: '';
+        position: absolute;
+        right: 0;
+
+        width: 500px;
+        height: 0.5px;
+        border-block-end: 1px solid $line-clr;
+    }
+
+    & .exit-btn{
+        display: flex;
+        align-items: start;
+
+        background-color: rgba(0, 0, 0, 0);
+        border-radius: 4px;
+        padding: 0;
+        margin: 0;
+
+        &:hover{
+            background-color: $hovered-btns;
+        }
+    }
+
+    & h2{
+        padding-inline: 5px;
+
+        font-size: 1.25em;
+        line-height: 30px;
+        font-weight: 400;
+        font-family: $title-font-family ;
+    }
+
+    & .task-details-actions{
+        display: flex;
+
+        & button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            position: relative;
+
+            background-color: #00000000;
+            border-radius: 4px;
+            padding: 8px;
+            margin: 0;
+
+            &.active::before{
+                content: '';
+                position: absolute;
+                bottom: 0 - 1px;
+
+                width: 100%;
+                height: 2.5px;
+                background-color: $blue3;
+            }
+
+            &:hover{
+                background-color: $hovered-btns;
+                &::after{
+                    height: 0;
+                }
+            }
+    
+            &::after{
+                content: '';
+                position: absolute;
+                right: 0;
+
+                height: 20px;
+                border-inline-end: 1px solid $line-clr;
+            }
+        }
+    }
+}
