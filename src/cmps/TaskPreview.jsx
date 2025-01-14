@@ -5,6 +5,7 @@ import { hexToRgba } from '../services/util.service'
 import { useDispatch, useSelector } from 'react-redux'
 import { DynamicCmp } from './DynamicCmp'
 import { updateBoard } from '../store/actions/board.actions'
+import { SET_BOARD } from '../store/reducers/board.reducer'
 
 export function TaskPreview({ group, task, colWidth }) {
 	const dispatch = useDispatch()
@@ -52,7 +53,8 @@ export function TaskPreview({ group, task, colWidth }) {
 
 			updatedBoard.activities = [activity, ...(updatedBoard.activities || [])]
 
-			await updateBoard(updatedBoard)
+			const newBoard = await updateBoard(updatedBoard)
+			dispatch({ type: SET_BOARD, board: newBoard })
 		} catch (err) {
 			console.error('Failed to update board:', err)
 		}
