@@ -10,14 +10,26 @@ import { ContextMenu } from '../cmps/ContextMenu.jsx'
 
 export function SideBar() {
 	const boards = useSelector(storeState => storeState.boardModule.boards)
+	const loggedInUser = useSelector(storeState => storeState.userModule.user)
+
 	const [activeMenuId, setActiveMenuId] = useState(null)
 	const [boardNameToEdit, setboardNameToEdit] = useState(null)
 	const [isCollapsed, setIsCollapsed] = useState(false)
 	const [isHovered, setisHovered] = useState(false)
+    
 
 	useEffect(() => {
 		if (!boards?.length) loadBoards()
 	}, [])
+
+    function getUserFirstName() {
+        if (!loggedInUser) return 'Guest'
+        
+        let firstName = loggedInUser.fullname.split(' ')[0]
+        
+        firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
+        return firstName ? firstName : 'Guest'
+    }
 
 	function toggleSidebar() {
 		if (!isCollapsed) setisHovered(false)
@@ -74,16 +86,22 @@ export function SideBar() {
 			</div>
 
 			<section className="workspaces-actions">
-				<div>{svgs.workspaces} Workspaces</div>
-				<button>{svgs.threeDots}</button>
-				<button>{svgs.search}</button>
+				<div className="workspaces-wrapper">
+                    <div className="workspaces-wrapper">
+                                        <div>{svgs.workspaces} Workspaces</div>
+                                        <button>{svgs.threeDots}</button>
+                                    </div>
+                    <button>{svgs.search}</button>
+                </div>
 
-				<button className="workspace-list-btn">
-					<div>S {svgs.workspaceHouse}</div> main workspace
-				</button>
-				<button className="add-workspace-item" onClick={onAddBoard}>
-					{svgs.plus}
-				</button>
+				<div className="workspaces-wrapper">
+                    <button className="workspace-list-btn">
+                        <div>S {svgs.workspaceHouse}</div><span>{getUserFirstName()}'s main workspace</span>
+                    </button>
+                    <button className="add-workspace-item" onClick={onAddBoard}>
+                        {svgs.plus}
+                    </button>
+                </div>
 			</section>
 			<section className="board-links">
 				{boards.map(board => (
