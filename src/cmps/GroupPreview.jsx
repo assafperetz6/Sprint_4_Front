@@ -8,7 +8,7 @@ import { SET_BOARD } from '../store/reducers/board.reducer'
 export function GroupPreview({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [titleToEdit, setTitleToEdit] = useState(group.title)
-	const [g, setTitleToEdit] = useState(group.title)
+	// const [g, setTitleToEdit] = useState(group.title)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
 	const [isEditing, setIsEditing] = useState(false)
 	const [colWidth, setColwidth] = useState('150px')
