@@ -6,6 +6,8 @@ import { updateBoard } from '../store/actions/board.actions'
 import { SET_BOARD } from '../store/reducers/board.reducer'
 import { ColorPicker } from './ColorPicker'
 import { usePopper } from 'react-popper'
+import { svgs } from '../services/svg.service'
+import { boardService } from '../services/board'
 
 export function GroupPreview({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
@@ -129,6 +131,15 @@ export function GroupPreview({ group }) {
 		setIsEditing(true)
 	}
 
+	async function onRemoveGroup(groupId) {
+		try {
+			const savedBoard = await boardService.removeGroup(board._id, groupId)
+			dispatch({ type: SET_BOARD, board: savedBoard })
+		} catch (err) {
+			throw err
+		}
+	}
+
 	return (
 		<section className="group-preview" ref={groupRef}>
 			<div className="group-sticky-container">
@@ -152,6 +163,9 @@ export function GroupPreview({ group }) {
 						</div>
 					</div>
 				</div>
+				<button className="delete-btn" onClick={() => onRemoveGroup(group.id)}>
+					{svgs.delete}
+				</button>
 				<TaskListHeader group={group} tasks={group.tasks} colWidth={colWidth} />
 			</div>
 			<TaskList group={group} colWidth={colWidth} />
