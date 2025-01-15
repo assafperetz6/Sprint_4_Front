@@ -1,7 +1,7 @@
 .group-list {
 	padding: 0px 0px 40px;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: auto;
+	// overflow-x: hidden;
 
 	@media (min-width: $mobile-breakpoint) {
 		padding-block-end: 40px;
