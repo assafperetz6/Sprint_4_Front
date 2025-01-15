@@ -11,7 +11,7 @@ function getEmptyBoard() {
 	return {
 		title: 'New board',
 		isStarred: false,
-		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker'],
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker'],
 		createdBy: {
 			_id: 'u101',
 			fullname: 'Abi Abambi',
@@ -120,7 +120,15 @@ function getEmptyBoard() {
 			{ id: 'sl102', title: 'Stuck', color: '#E2445C' },
 			{ id: 'sl103', title: 'Almost done', color: '#0086C0' },
 			{ id: 'sl104', title: '', color: '#C4C4C4' }
-		]
+		],
+		priorityLabels: [
+			{ id: 'pl100', title: 'Critical', color: '#333333' },
+			{ id: 'pl101', title: 'High', color: '#401694' },
+			{ id: 'pl102', title: 'Medium', color: '#5559DF' },
+			{ id: 'pl103', title: 'Low', color: '#579BFC' },
+			{ id: 'pl104', title: '', color: '#C4C4C4' }
+		],
+		activities: []
 	}
 }
 

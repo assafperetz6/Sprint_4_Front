@@ -1,13 +1,14 @@
 import { MemberPicker } from './dynamic-cmp/MemberPicker'
 import { LabelPicker } from './dynamic-cmp/LabelPicker'
 
-export function DynamicCmp({ cmp, task, onUpdate, defaultWidth }) {
+export function DynamicCmp({ cmp, task, groupId, defaultWidth }) {
 	switch (cmp) {
 		case 'StatusPicker':
-			return <LabelPicker task={task} onUpdate={onUpdate} defaultWidth={defaultWidth} />
+		case 'PriorityPicker':
+			return <LabelPicker cmp={cmp} task={task} groupId={groupId} defaultWidth={defaultWidth} />
 		case 'MemberPicker':
-			return <MemberPicker task={task} onUpdate={onUpdate} defaultWidth={defaultWidth} />
+			return <MemberPicker task={task} defaultWidth={defaultWidth} />
 		default:
-			return <p>UNKNOWN {cmp}</p>
+			return <p style={{ width: defaultWidth }}> {cmp}</p>
 	}
 }

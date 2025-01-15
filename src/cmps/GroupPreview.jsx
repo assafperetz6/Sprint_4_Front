@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateBoard } from '../store/actions/board.actions'
 import { SET_BOARD } from '../store/reducers/board.reducer'
 import { ColorPicker } from './ColorPicker'
+import { usePopper } from 'react-popper'
 
 export function GroupPreview({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
@@ -13,6 +14,24 @@ export function GroupPreview({ group }) {
 	const [isEditing, setIsEditing] = useState(false)
 	const [colWidth] = useState('150px')
 	const groupRef = useRef()
+
+	const [referenceElement, setReferenceElement] = useState(null)
+	const [popperElement, setPopperElement] = useState(null)
+	const [arrowElement, setArrowElement] = useState(null)
+
+	const { styles, attributes } = usePopper(referenceElement, popperElement, {
+		modifiers: [
+			{ name: 'arrow', options: { element: arrowElement } },
+			{ name: 'offset', options: { offset: [0, 8] } },
+			{
+				name: 'preventOverflow',
+				options: {
+					padding: 8
+				}
+			}
+		],
+		placement: 'bottom-start'
+	})
 
 	const dispatch = useDispatch()
 
@@ -40,9 +59,20 @@ export function GroupPreview({ group }) {
 				return
 			}
 
-			const groupToUpdate = board.groups.map(g => (g.id === group.id ? { ...g, title: titleToEdit } : g))
+			const updatedBoard = {
+				...board,
+				groups: board.groups.map(g => {
+					if (g.id === group.id) {
+						return {
+							...g,
+							title: titleToEdit,
+							tasks: [...g.tasks]
+						}
+					}
+					return g
+				})
+			}
 
-			const updatedBoard = { ...board, groups: groupToUpdate }
 			const newBoard = await updateBoard(updatedBoard)
 			dispatch({ type: SET_BOARD, board: newBoard })
 			setIsEditing(false)
@@ -55,9 +85,20 @@ export function GroupPreview({ group }) {
 
 	async function setGroupStyle(newStyle) {
 		try {
-			const groupToUpdate = board.groups.map(g => (g.id === group.id ? { ...g, style: newStyle } : g))
+			const updatedBoard = {
+				...board,
+				groups: board.groups.map(g => {
+					if (g.id === group.id) {
+						return {
+							...g,
+							style: newStyle,
+							tasks: [...g.tasks]
+						}
+					}
+					return g
+				})
+			}
 
-			const updatedBoard = { ...board, groups: groupToUpdate }
 			const newBoard = await updateBoard(updatedBoard)
 			dispatch({ type: SET_BOARD, board: newBoard })
 			setIsColorPickerOpen(false)
@@ -96,9 +137,14 @@ export function GroupPreview({ group }) {
 						<div className="group-title-container" style={{ color: group.style.color }} onClick={startEditing}>
 							{isEditing ? (
 								<div className={`renaming-wrapper flex align-center ${isEditing ? 'editing' : ''}`} onClick={e => e.stopPropagation()}>
-									<button onClick={openColorPicker} style={{ backgroundColor: group.style.color }} className="group-color-picker" />
+									<button ref={setReferenceElement} onClick={openColorPicker} style={{ backgroundColor: group.style.color }} className="group-color-picker" />
 									<input className="group-title-input" type="text" onChange={handleChange} onKeyDown={handleKeyPressed} value={titleToEdit} name="title" id="groupTitle" autoFocus />
-									{isColorPickerOpen && <ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />}
+									{isColorPickerOpen && (
+										<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
+											<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
+											<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
+										</div>
+									)}
 								</div>
 							) : (
 								<h4 className="group-title">{group.title}</h4>
