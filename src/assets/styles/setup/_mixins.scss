@@ -79,3 +79,25 @@
     }
   }
 
+  @mixin alt-btn{
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    align-items: center;
+
+    background-color: #00000000;
+    padding: 5px;
+    border-radius: 4px;
+    margin: 0 $spacing-small 0 0;
+
+    color: $txt-clr;
+    font-weight: 400;
+
+    > svg{
+      color: $clr4;
+    }
+
+    &:hover{
+      background-color: $hovered-btns;
+    }
+  }

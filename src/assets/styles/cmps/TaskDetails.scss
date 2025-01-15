@@ -72,14 +72,9 @@
         display: flex;
 
         & button{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
+            @include alt-btn;
             position: relative;
 
-            background-color: #00000000;
-            border-radius: 4px;
             padding: 8px 14px;
             margin: 0;
 
@@ -94,7 +89,6 @@
             }
 
             &:hover{
-                background-color: $hovered-btns;
                 &::after{
                     height: 0;
                 }

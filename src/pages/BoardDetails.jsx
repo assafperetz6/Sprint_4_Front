@@ -22,6 +22,7 @@ export function BoardDetails() {
 	function getMemberIcons() {
 		// TODO: should return last two members on the activity log
 
+		return svgs.person
 		return <img src={board.createdBy?.imgUrl} alt="userImg" />
 	}
 
@@ -37,7 +38,7 @@ export function BoardDetails() {
 	return (
 		<section className="board-details">
 			<header className="board-header">
-				<h2 className="board-title">{board.title}</h2>
+				<h2 className="board-title flex justify-center align-center">{board.title}&nbsp;{svgs.arrowDown}</h2>
 
 				<section className="board-actions">
 					<button className="group-chat">{svgs.chat}</button>
@@ -48,17 +49,17 @@ export function BoardDetails() {
 				</section>
 			</header>
 			<section className="board-tabs">
-				<button>{svgs.house} Main Table</button>
-				<button className="tab-options">{svgs.threeDots}</button>
+				<button className='active'>{svgs.house}&nbsp;Main Table&nbsp;<span>{svgs.threeDots}</span></button>
 				<button>{svgs.plus}</button>
 			</section>
 			<section className="task-actions">
-				<button>New item</button>
-				<button>{svgs.arrowDown}</button>
+				<div className='add-task-header'>
+					<button >New item</button>
+					<button>{svgs.arrowDown}</button>
+				</div>
 				<button>{svgs.search} Search</button>
 				<button>{svgs.person} Person</button>
-				<button>{svgs.filter} Filter</button>
-				<button className="toggle-advance-filter">{svgs.arrowDown}</button>
+				<button>{svgs.filter} Filter {svgs.arrowDown}</button>
 				<button>{svgs.sortDir} Sort</button>
 				<button>{svgs.hideEye} Hide</button>
 				<button>{svgs.groupBy} Group by</button>
