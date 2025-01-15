@@ -161,6 +161,14 @@ export const defaultBoard = [
 			{ id: 'sl103', title: 'Almost done', color: '#0086C0' },
 			{ id: 'sl104', title: '', color: '#C4C4C4' }
 		],
+		priorityLabels: [
+			{ id: 'pl100', title: 'Critical', color: '#333333' },
+			{ id: 'pl101', title: 'High', color: '#401694' },
+			{ id: 'pl102', title: 'Medium', color: '#5559DF' },
+			{ id: 'pl103', title: 'Low', color: '#579BFC' },
+			{ id: 'pl104', title: '', color: '#C4C4C4' }
+		],
+		activities: [],
 		activities: [
 			{
 				id: 'a101',
