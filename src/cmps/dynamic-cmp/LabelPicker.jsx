@@ -11,9 +11,8 @@ export function LabelPicker({ cmp, task, groupId, defaultWidth }) {
 	const [isPickerOpen, setIsPickerOpen] = useState(false)
 	const [label, setLabel] = useState({})
 	const [labelsName, setLabelsName] = useState('')
-	// const [isEditing, setIsEditing] = useState(false)
+
 	const board = useSelector(storeState => storeState.boardModule.board)
-	const dispatch = useDispatch()
 
 	const [referenceElement, setReferenceElement] = useState(null)
 	const [popperElement, setPopperElement] = useState(null)
@@ -50,7 +49,6 @@ export function LabelPicker({ cmp, task, groupId, defaultWidth }) {
 	function onPickerClose(ev) {
 		if (!ev.target.closest('.label-picker-popup')) {
 			setIsPickerOpen(false)
-			// setIsEditor(false)
 		}
 	}
 

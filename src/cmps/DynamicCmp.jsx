@@ -8,7 +8,13 @@ export function DynamicCmp({ cmp, task, groupId, defaultWidth }) {
 			return <LabelPicker cmp={cmp} task={task} groupId={groupId} defaultWidth={defaultWidth} />
 		case 'MemberPicker':
 			return <MemberPicker task={task} defaultWidth={defaultWidth} />
+		case 'DatePicker':
+			return (
+				<span className="flex align-center justify-center" style={{ width: defaultWidth }}>
+					{task.dueDate}
+				</span>
+			)
 		default:
-			return <p style={{ width: defaultWidth }}> {cmp}</p>
+			return <p style={{ width: defaultWidth }}> {}</p>
 	}
 }
