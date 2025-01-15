@@ -170,7 +170,7 @@ function getDefaultTask() {
 		id: makeId(),
 		title: 'Item 1',
 		status: '',
-		priority: 'low',
+		priority: 'pl103',
 		dueDate: '2024-09-10',
 		description: 'description',
 		comments: [],
