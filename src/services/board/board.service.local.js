@@ -60,7 +60,8 @@ async function save(board) {
 			groups: board.groups,
 			members: board.members,
 			cmpsOrder: board.cmpsOrder,
-			statusLabels: board.statusLabels
+			statusLabels: board.statusLabels,
+			priorityLabels: board.priorityLabels
 		}
 		savedBoard = await storageService.post(STORAGE_KEY, boardToSave)
 	}
