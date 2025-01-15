@@ -11,7 +11,7 @@ function getEmptyBoard() {
 	return {
 		title: 'New board',
 		isStarred: false,
-		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker'],
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker'],
 		createdBy: {
 			_id: 'u101',
 			fullname: 'Abi Abambi',
