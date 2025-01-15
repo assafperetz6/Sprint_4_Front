@@ -71,6 +71,33 @@ export function hexToRgba(hex, alpha = 1) {
 	return `rgba(${r},${g},${b},${alpha})`
 }
 
+export function getRandomColor() {
+	const colors = [
+		'#00c875', // green1
+		'#027f4b', // green2
+		'#ffcb00', // yellow1
+		'#9dd326', // yellow2
+		'#9d50dd', // purple1
+		'#784bd1', // purple2
+		'#007eb5', // turq
+		'#66ccff', // blue1
+		'#579bfc', // blue2
+		'#3c72e6', // blue3
+		'#bb3354', // red1
+		'#df2e4a', // red2
+		'#ff5ac4', // pink1
+		'#ff007e', // pink2
+		'#fdab3d', // orange1
+		'#ff642e', // orange2
+		'#7f5347', // brown
+		'#c4c4c4', // lightgrey
+		'#757575' // darkgrey
+	]
+
+	const randomIndex = Math.floor(Math.random() * colors.length)
+	return colors[randomIndex]
+}
+
 export function randomPastTime() {
 	const HOUR = 1000 * 60 * 60
 	const DAY = 1000 * 60 * 60 * 24

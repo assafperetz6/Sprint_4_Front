@@ -36,30 +36,12 @@
 		border-radius: 8px;
 		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.32);
 
-		.new-label-btn {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			cursor: pointer;
-			color: $clr5;
-			font-weight: 400;
-			font-size: rem(14px);
-			height: rem(32px);
-			width: rem(152px);
-			padding: 4px;
-			margin-inline: auto;
-			margin-block-end: 8px;
-			border: 1px solid $clr8;
-			background-color: inherit;
-			border-radius: 4px;
-		}
-
 		ul {
 			display: grid;
 			grid-template-rows: repeat(6, auto);
 			grid-auto-flow: column;
 			column-gap: 20px;
-			padding: 16px 24px 0px 24px;
+			padding: 16px 24px 8px;
 
 			li {
 				border-radius: 2px;

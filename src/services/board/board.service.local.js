@@ -60,7 +60,8 @@ async function save(board) {
 			groups: board.groups,
 			members: board.members,
 			cmpsOrder: board.cmpsOrder,
-			statusLabels: board.statusLabels
+			statusLabels: board.statusLabels,
+			priorityLabels: board.priorityLabels
 		}
 		savedBoard = await storageService.post(STORAGE_KEY, boardToSave)
 	}
@@ -81,6 +82,7 @@ async function getGroups(boardId) {
 		const { groups } = await getById(boardId)
 		return groups
 	} catch (err) {
+		console.log('cannot get groups', err)
 		throw err
 	}
 }
@@ -92,6 +94,7 @@ async function getGroupById(boardId, groupId) {
 		if (!group) throw new Error(`No group with id: ${groupId}`)
 		return group
 	} catch (err) {
+		console.log('cannot get board', err)
 		throw err
 	}
 }
@@ -105,6 +108,7 @@ async function removeGroup(boardId, groupId) {
 		board.groups.splice(groupIdx, 1)
 		return storageService.put(STORAGE_KEY, board)
 	} catch (err) {
+		console.log('cannot remove group', err)
 		throw err
 	}
 }
@@ -129,6 +133,7 @@ async function saveGroup(boardId, group) {
 		}
 		return storageService.put(STORAGE_KEY, board)
 	} catch (err) {
+		console.log('cannot save group', err)
 		throw err
 	}
 }
@@ -139,6 +144,7 @@ async function getTasks(boardId, groupId) {
 		const { tasks } = await getGroupById(boardId, groupId)
 		return tasks
 	} catch (err) {
+		console.log('cannot get get tasks', err)
 		throw err
 	}
 }
@@ -154,6 +160,7 @@ async function getTaskById(boardId, taskId) {
 		if (!task) throw new Error(`No task with id: ${taskId} in group: ${groupId}`)
 		return task
 	} catch (err) {
+		console.log('cannot get task', err)
 		throw err
 	}
 }
@@ -172,14 +179,16 @@ async function removeTask(boardId, taskId) {
 		if (!isTaskFound) throw new Error(`No task with id: ${taskId}`)
 		return storageService.put(STORAGE_KEY, board)
 	} catch (err) {
+		console.log('cannot remove task', err)
 		throw err
 	}
 }
 
 async function saveTask(boardId, groupId, task) {
 	const taskToSave = {
+		id: task.id,
 		title: task.title,
-		people: task.people,
+		members: task.members,
 		priority: task.priority,
 		dueDate: task.dueDate,
 		status: task.status
@@ -201,8 +210,9 @@ async function saveTask(boardId, groupId, task) {
 			taskToSave.id = makeId()
 			tasks.push(taskToSave)
 		}
-		return storageService.put(STORAGE_KEY, board)
+		return save(board)
 	} catch (err) {
+		console.log('cannot save task', err)
 		throw err
 	}
 }
