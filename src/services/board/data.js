@@ -37,7 +37,7 @@ export const defaultBoard = [
 						id: 'c101',
 						title: 'Build a web app',
 						status: 'sl102',
-						priority: 'medium',
+						priority: 'pl102',
 						dueDate: '2024-05-10',
 						description: 'description',
 						comments: [],
@@ -56,7 +56,7 @@ export const defaultBoard = [
 						id: 'c102',
 						title: 'Validate software behavior against business requirements',
 						status: 'sl101',
-						priority: 'Critical',
+						priority: 'pl100',
 						dueDate: '2024-09-24',
 						description: 'description',
 						comments: [
@@ -94,7 +94,7 @@ export const defaultBoard = [
 						id: 'c103',
 						title: 'Build taskPreview',
 						status: 'sl100',
-						priority: 'low',
+						priority: 'pl103',
 						dueDate: '2024-09-10',
 						description: 'description',
 						comments: [
@@ -124,7 +124,7 @@ export const defaultBoard = [
 						id: 'c104',
 						title: 'Help me',
 						status: 'sl104',
-						priority: 'high',
+						priority: 'pl101',
 						dueDate: '2024-09-24',
 						description: 'description',
 						comments: [
@@ -161,6 +161,14 @@ export const defaultBoard = [
 			{ id: 'sl103', title: 'Almost done', color: '#0086C0' },
 			{ id: 'sl104', title: '', color: '#C4C4C4' }
 		],
+		priorityLabels: [
+			{ id: 'pl100', title: 'Critical ⚠️', color: '#333333' },
+			{ id: 'pl101', title: 'High', color: '#401694' },
+			{ id: 'pl102', title: 'Medium', color: '#5559DF' },
+			{ id: 'pl103', title: 'Low', color: '#579BFC' },
+			{ id: 'pl104', title: '', color: '#C4C4C4' }
+		],
+		activities: [],
 		activities: [
 			{
 				id: 'a101',

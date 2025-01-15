@@ -1,106 +1,127 @@
 import { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { showErrorMsg } from '../../services/event-bus.service'
+import { usePopper } from 'react-popper'
+import { useEffectUpdate } from '../../customHooks/useEffectUpdate'
+import { updateBoard } from '../../store/actions/board.actions'
 import { svgs } from '../../services/svg.service'
 
-export function LabelPicker({ task, onUpdate, defaultWidth }) {
-	const [isPopupOpen, setIsPopupOpen] = useState(false)
-	const [isEditing, setIsEditing] = useState(false)
-	const [labelTitle, setLabelTitle] = useState('')
-	const popupRef = useRef(null)
-	const dispatch = useDispatch()
+export function LabelPicker({ cmp, task, groupId, defaultWidth }) {
+	const [isPickerOpen, setIsPickerOpen] = useState(false)
+	const [label, setLabel] = useState({})
+	const [labelsName, setLabelsName] = useState('')
 
 	const board = useSelector(storeState => storeState.boardModule.board)
-	const labels = board.statusLabels || []
 
-	const currentLabel = labels.find(l => l.id === task.status) || null
+	const [referenceElement, setReferenceElement] = useState(null)
+	const [popperElement, setPopperElement] = useState(null)
+	const [arrowElement, setArrowElement] = useState(null)
+	const { styles, attributes } = usePopper(referenceElement, popperElement, {
+		modifiers: [
+			{ name: 'arrow', options: { element: arrowElement } },
+			{ name: 'offset', options: { offset: [0, 8] } }
+		]
+	})
 
 	useEffect(() => {
-		function handleClickOutside(event) {
-			if (popupRef.current && !popupRef.current.contains(event.target)) {
-				setIsPopupOpen(false)
-				setIsEditing(false)
-			}
+		if (cmp === 'StatusPicker') {
+			setLabelsName('statusLabels')
+		} else if (cmp === 'PriorityPicker') {
+			setLabelsName('priorityLabels')
 		}
+	}, [task, cmp])
 
-		if (isPopupOpen) {
-			document.addEventListener('mousedown', handleClickOutside)
+	useEffect(() => {
+		document.addEventListener('mousedown', onPickerClose)
+		return () => {
+			document.removeEventListener('mousedown', onPickerClose)
 		}
+	}, [])
 
-		return () => document.removeEventListener('mousedown', handleClickOutside)
-	}, [isPopupOpen])
+	useEffectUpdate(() => {
+		const labelId = cmp === 'StatusPicker' ? task.status : task.priority
+		const label = board[labelsName]?.find(l => l.id === labelId)
 
-	function handleLabelClick(ev) {
-		ev.preventDefault()
+		setLabel(label)
+	}, [labelsName, board])
+
+	function onPickerClose(ev) {
+		if (!ev.target.closest('.label-picker-popup')) {
+			setIsPickerOpen(false)
+		}
+	}
+
+	function handleClick() {
+		setIsPickerOpen(true)
+	}
+	async function onChangeLabel(ev, newLabel) {
 		ev.stopPropagation()
-		setIsPopupOpen(!isPopupOpen)
-	}
+		setIsPickerOpen(false)
 
-	function handleNewLabel() {
-		setIsEditing(true)
-		setLabelTitle('')
-	}
-
-	async function handleSelectLabel(label) {
 		try {
-			await onUpdate(label.id)
-			setIsPopupOpen(false)
+			const labelTaskName = labelsName === 'statusLabels' ? 'status' : 'priority'
+			const updatedBoard = {
+				...board,
+				groups: board.groups.map(group => {
+					if (group.id === groupId) {
+						return {
+							...group,
+							tasks: group.tasks.map(t => {
+								if (t.id === task.id) {
+									return {
+										...t,
+										[labelTaskName]: newLabel.id
+									}
+								}
+								return t
+							})
+						}
+					}
+					return group
+				})
+			}
+
+			console.log(board)
+
+			try {
+				await updateBoard(updatedBoard)
+				setLabel(newLabel)
+			} catch (err) {
+				console.error('Dispatch error:', err)
+				throw err
+			}
 		} catch (error) {
 			console.error('Failed to update label:', error)
+			showErrorMsg('Cannot change label')
 		}
 	}
 
 	return (
-		<div className="label-picker">
-			<div
-				onClick={handleLabelClick}
-				style={{
-					backgroundColor: currentLabel?.color || '#c4c4c4',
-					width: defaultWidth
-				}}
-			>
-				<span>{currentLabel?.title || 'No Status'}</span>
-				<div className="corner-fold"></div>
-			</div>
+		<li style={{ backgroundColor: label?.color || '#C4C4C4', width: defaultWidth }} className="label-picker" ref={setReferenceElement} onClick={handleClick}>
+			<span>{label?.title || ''}</span>
+			<div className="corner-fold"></div>
+			{isPickerOpen && <LabelPickerPopUp popperRef={setPopperElement} board={board} labelsName={labelsName} onChangeLabel={onChangeLabel} label={label} styles={styles} setArrowElement={setArrowElement} attributes={attributes} />}
+		</li>
+	)
+}
 
-			{isPopupOpen && (
-				<div className="label-picker-popup" ref={popupRef}>
-					{!isEditing ? (
-						<>
-							<button className="new-label-btn" onClick={handleNewLabel}>
-								+ Add Label
-							</button>
-
-							<ul className="clean-list">
-								{labels.map(label => (
-									<li key={label.id} style={{ backgroundColor: label.color }} onClick={() => handleSelectLabel(label)} className={label.id === task.status ? 'selected' : ''}>
-										{label.title}
-									</li>
-								))}
-							</ul>
-
-							<div className="separator"></div>
-
-							<button className="edit-labels" onClick={() => setIsEditing(true)}>
-								<span className="icon">{svgs.edit}</span>
-								<span className="title">Edit Labels</span>
-							</button>
-						</>
-					) : (
-						<div className="input-container">
-							<div className="icon-color-bucket" style={{ backgroundColor: '#c4c4c4' }}>
-								{svgs.colorBucket}
-							</div>
-							<form
-								onSubmit={ev => {
-									ev.preventDefault()
-								}}
-							>
-								<input type="text" value={labelTitle} onChange={e => setLabelTitle(e.target.value)} placeholder="Create new label" autoFocus />
-							</form>
-						</div>
-					)}
-				</div>
-			)}
+function LabelPickerPopUp({ board, labelsName, onChangeLabel, setIsEditor, styles, popperRef, setArrowElement, attributes }) {
+	return (
+		<div className="label-picker-popup" ref={popperRef} style={styles.popper} {...attributes.popper}>
+			<div className="modal-up-arrow" ref={setArrowElement} style={styles.arrow}></div>
+			<ul className="labels-list clean-list">
+				{board[labelsName].map(label => (
+					<li key={label.id} style={{ backgroundColor: label.color }} onClick={ev => onChangeLabel(ev, label)}>
+						{label.title}
+					</li>
+				))}
+			</ul>
+			<div className="separator"></div>
+			<button className="edit-labels" onClick={console.log('edit')}>
+				<span className="icon">{svgs.pencil}</span>
+				<span className="title">Edit Labels</span>
+			</button>
 		</div>
 	)
 }

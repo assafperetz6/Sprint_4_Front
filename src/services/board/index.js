@@ -11,7 +11,7 @@ function getEmptyBoard() {
 	return {
 		title: 'New board',
 		isStarred: false,
-		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker'],
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker'],
 		createdBy: {
 			_id: 'u101',
 			fullname: 'Abi Abambi',
@@ -42,7 +42,7 @@ function getEmptyBoard() {
 						id: makeId(),
 						title: 'Item 1',
 						status: 'sl102',
-						priority: 'medium',
+						priority: 'pl103',
 						dueDate: '2024-05-10',
 						description: 'description',
 						comments: [],
@@ -58,7 +58,7 @@ function getEmptyBoard() {
 						id: makeId(),
 						title: 'item 2',
 						status: 'sl101',
-						priority: 'Critical',
+						priority: 'pl100',
 						dueDate: '2024-09-24',
 						description: 'description',
 						comments: [],
@@ -81,7 +81,7 @@ function getEmptyBoard() {
 						id: makeId(),
 						title: 'Item 1',
 						status: 'sl102',
-						priority: 'medium',
+						priority: 'pl102',
 						dueDate: '2024-05-10',
 						description: 'description',
 						comments: [],
@@ -97,7 +97,7 @@ function getEmptyBoard() {
 						id: makeId(),
 						title: 'item 2',
 						status: 'sl103',
-						priority: 'Critical',
+						priority: 'pl101',
 						dueDate: '2024-09-24',
 						description: 'description',
 						comments: [],
@@ -120,7 +120,15 @@ function getEmptyBoard() {
 			{ id: 'sl102', title: 'Stuck', color: '#E2445C' },
 			{ id: 'sl103', title: 'Almost done', color: '#0086C0' },
 			{ id: 'sl104', title: '', color: '#C4C4C4' }
-		]
+		],
+		priorityLabels: [
+			{ id: 'pl100', title: 'Critical ⚠️', color: '#333333' },
+			{ id: 'pl101', title: 'High', color: '#401694' },
+			{ id: 'pl102', title: 'Medium', color: '#5559DF' },
+			{ id: 'pl103', title: 'Low', color: '#579BFC' },
+			{ id: 'pl104', title: '', color: '#C4C4C4' }
+		],
+		activities: []
 	}
 }
 
@@ -162,7 +170,7 @@ function getDefaultTask() {
 		id: makeId(),
 		title: 'Item 1',
 		status: '',
-		priority: 'low',
+		priority: 'pl103',
 		dueDate: '2024-09-10',
 		description: 'description',
 		comments: [],
@@ -180,24 +188,17 @@ function getDefaultTask() {
 
 	return task
 }
-function getEmptyTask(title = '', status = 'sl104') {
+function getEmptyTask() {
 	return {
-		id: makeId(),
-		title,
-		status,
+		title: '',
+		status: 'sl104',
 		priority: 'pl104',
 		comments: [],
-		collaborators: [],
+		memberIds: [],
 		dueDate: null,
 		timeline: {
 			startDate: null,
 			endDate: null
-		},
-		owner: {
-			_id: '',
-			username: '',
-			fullname: '',
-			imgUrl: ''
 		}
 	}
 }

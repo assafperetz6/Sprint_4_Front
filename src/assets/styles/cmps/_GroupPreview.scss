@@ -90,6 +90,18 @@
 					border-radius: 4px;
 				}
 			}
+
+			.group-color-picker {
+				width: 21px;
+				height: 21px;
+				display: inline-block;
+				border-radius: 50%;
+			}
+
+			.renaming-wrapper {
+				border: 1px solid $clr7;
+				border-radius: 4px;
+			}
 		}
 
 		.group-title-input {
@@ -97,11 +109,11 @@
 			font-weight: 500;
 			font-size: rem(18px);
 			font-family: $title-font-family;
-			width: 80vw;
+			padding-inline-start: 4px;
+			width: 70vw;
 
 			&:focus {
-				outline: 1px solid $clr7;
-				border-radius: 4px;
+				outline: none;
 			}
 		}
 
@@ -195,7 +207,7 @@
 
 .color-picker {
 	position: absolute;
-	width: rem(125px);
+	width: rem(142px);
 	background-color: #ffff;
 	border: 1px $input-hover-border-clr solid;
 	border-radius: 4px;
@@ -206,8 +218,8 @@
 
 	.color {
 		cursor: pointer;
-		height: em(20px);
-		width: em(20px);
+		height: rem(20px);
+		width: rem(20px);
 		border-radius: 50%;
 		margin: 3px;
 	}

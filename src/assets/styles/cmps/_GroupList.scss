@@ -60,8 +60,9 @@
 		cursor: pointer;
 
 		.txt {
+			text-wrap: nowrap;
 			color: rgb(50, 51, 56);
-			font-size: 14px;
+			font-size: rem(14px);
 		}
 	}
 }

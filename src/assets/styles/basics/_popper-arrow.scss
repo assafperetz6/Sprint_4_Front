@@ -1,0 +1,33 @@
+.modal-up-arrow,
+.modal-up-arrow::before {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	background: #fff;
+	z-index: -1;
+}
+
+.timeline-arrow,
+.timeline-arrow:before,
+.date-arrow,
+.date-arrow:before {
+	z-index: 20;
+}
+
+.modal-up-arrow {
+	visibility: hidden;
+}
+
+.modal-up-arrow::before {
+	visibility: visible;
+	content: '';
+	transform: rotate(45deg);
+}
+
+[data-popper-placement^='top'] .modal-up-arrow {
+	bottom: -4px;
+}
+
+[data-popper-placement^='bottom'] .modal-up-arrow {
+	top: -4px;
+}
