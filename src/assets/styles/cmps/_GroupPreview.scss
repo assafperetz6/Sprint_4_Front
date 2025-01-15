@@ -5,7 +5,7 @@
 .group-preview {
 	font-size: em(18px);
 	line-height: 24px;
-	margin-block-end: 55px;
+	margin-block-end: 28px;
 	border-radius: 4px;
 	position: relative;
 	min-width: max-content;
@@ -53,14 +53,6 @@
 				width: 80%;
 			}
 		}
-	}
-
-	.group-sticky-container {
-		position: sticky;
-		top: 150px;
-
-		z-index: 40;
-		background-color: #ffff;
 	}
 
 	.header-container {

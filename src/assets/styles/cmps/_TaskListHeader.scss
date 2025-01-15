@@ -17,6 +17,7 @@
 
 	.sticky-container {
 		position: sticky;
+		top: 0;
 		left: var(--left-margin-size);
 		background-color: #ffff;
 		z-index: 2;
@@ -28,7 +29,7 @@
 	}
 
 	.colored-border {
-		height: calc(100% + 2px);
+		// height: calc(100% + 2px);
 		width: 6px;
 		min-width: 6px;
 		border-start-start-radius: 4px;

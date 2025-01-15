@@ -13,8 +13,6 @@ export function BoardDetails() {
 	const { boardId } = useParams()
 	const navigate = useNavigate()
 
-	// console.log(board)
-
 	useEffect(() => {
 		loadBoard(boardId)
 	}, [boardId])

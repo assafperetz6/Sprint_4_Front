@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux'
 export function TaskListHeader({ group, tasks, colWidth }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
+	// console.log(group.style.color, 'hi')
+	
+
 	return (
 		<ul className="task-list-header task-row clean-list">
 			<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
@@ -41,13 +44,13 @@ export function TaskListHeader({ group, tasks, colWidth }) {
 
 				return (
 					cmpTitle && (
-						<li key={cmp} style={{ width: colWidth }}>
+						<li className="task-item-col" key={cmp} style={{ width: colWidth }}>
 							{cmpTitle}
 						</li>
 					)
 				)
 			})}
-			<li className="line-end"></li>
+			<li className="line-end task-item-col"></li>
 		</ul>
 	)
 }

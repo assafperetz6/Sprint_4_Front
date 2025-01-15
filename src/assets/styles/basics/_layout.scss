@@ -1,10 +1,12 @@
 .main-container {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(40px, auto) 1fr 1rem;
+    grid-template-columns: minmax(40px, auto) 1fr;
     grid-template-rows: 48px 1fr;
 
     height: 100vh;
+    width: 100vw;
+
     overflow: hidden;
 
     background-color: $clr1;
@@ -37,14 +39,14 @@
     // }
 
     > main {
-        position: relative;
-        
         grid-column: 2 / -1;
+        position: relative;
+
         height: 100%;
 
-        overflow: auto;
+        overflow: hidden;
 
-        padding: 18px 30px 0 44px;
+        padding: 18px 0 0 18px;
         border-top-left-radius: $radius;
         background-color: $clr3;
     }

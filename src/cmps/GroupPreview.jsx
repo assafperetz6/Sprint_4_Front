@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateBoard } from '../store/actions/board.actions'
 import { SET_BOARD } from '../store/reducers/board.reducer'
 
-export function GroupPreview({ group }) {
+export function GroupPreview({ group, idx }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [titleToEdit, setTitleToEdit] = useState(group.title)
 	// const [g, setTitleToEdit] = useState(group.title)
@@ -69,7 +69,7 @@ export function GroupPreview({ group }) {
 
 	return (
 		<section className="group-preview">
-			<div className="group-sticky-container">
+			{idx !== 0 && <div className="group-container">
 				<div className="header-container" role="input" onClick={() => setIsEditing(prev => !prev)}>
 					<div className="group-header">
 						<div className="group-title-container">
@@ -84,7 +84,7 @@ export function GroupPreview({ group }) {
 					</div>
 				</div>
 				<TaskListHeader group={group} tasks={group.tasks} colWidth={colWidth} />
-			</div>
+			</div>}
 			<TaskList group={group} colWidth={colWidth} />
 		</section>
 	)
