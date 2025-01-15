@@ -162,7 +162,7 @@ export const defaultBoard = [
 			{ id: 'sl104', title: '', color: '#C4C4C4' }
 		],
 		priorityLabels: [
-			{ id: 'pl100', title: 'Critical', color: '#333333' },
+			{ id: 'pl100', title: 'Critical ⚠️', color: '#333333' },
 			{ id: 'pl101', title: 'High', color: '#401694' },
 			{ id: 'pl102', title: 'Medium', color: '#5559DF' },
 			{ id: 'pl103', title: 'Low', color: '#579BFC' },
