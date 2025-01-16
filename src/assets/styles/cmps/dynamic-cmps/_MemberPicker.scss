@@ -9,4 +9,67 @@
 		min-height: 30px;
 		min-width: 30px;
 	}
+
+	.member-picker-popup {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		top: calc($task-row-height + 5px);
+		background-color: #fff;
+		height: 180px;
+		width: 264px;
+		outline: 0;
+		border-radius: 8px;
+		box-sizing: content-box;
+		z-index: 50;
+		box-shadow: 1px 1px 6px 0 rgba(0, 0, 0, 0.3);
+
+		.new-person-pikcer {
+			padding: 16px 16px 0 16px;
+		}
+
+		.person-tokens-list {
+			padding-left: 16px;
+			padding-top: 8px;
+
+			.person-token-item {
+				margin: 4px;
+				min-width: 0;
+				max-width: calc(100% - 8px);
+				background: #e5f4ff;
+				border: 1px solid #f7f7f7;
+				color: #333;
+				border-radius: 24px;
+				font-size: 12px;
+				font-weight: 400;
+				height: 22px;
+				box-sizing: content-box;
+				max-width: calc(100% - 8px);
+
+				.person-token-name {
+					font-size: 12px;
+					flex-shrink: 1;
+					min-width: 0;
+					text-overflow: ellipsis;
+					overflow: hidden;
+					white-space: nowrap;
+				}
+
+				.clear-btn {
+					font-size: 8px;
+					height: 16px;
+					width: 16px;
+					font-size: 8px;
+					border-radius: 100%;
+					cursor: pointer;
+					margin-left: 4px;
+					margin-right: 2px;
+					flex-shrink: 0;
+				}
+			}
+		}
+	}
+}
+
+.multiple-items-box-component .item-token {
 }
