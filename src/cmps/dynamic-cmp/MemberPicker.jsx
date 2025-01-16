@@ -20,8 +20,6 @@ export function MemberPicker({ cmp, task, groupId, defaultWidth }) {
 		))
 	}
 
-	console.log(task)
-
 	return (
 		<li className="member-picker" style={{ width: defaultWidth }} role="button">
 			<div className="member-avatars-container flex align-center justify-center">{renderMemberAvatars()}</div>
