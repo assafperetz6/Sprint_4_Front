@@ -7,8 +7,9 @@ import { ColorPicker } from './ColorPicker'
 import { usePopper } from 'react-popper'
 import { svgs } from '../services/svg.service'
 import { showErrorMsg } from '../services/event-bus.service'
+import { DynamicCmp } from './DynamicCmp'
 
-export function GroupPreview({ group }) {
+export function GroupPreview({ group, cmpsOrder }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [titleToEdit, setTitleToEdit] = useState(group.title)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
@@ -110,34 +111,48 @@ export function GroupPreview({ group }) {
 	}
 
 	return (
-		<section className="group-preview" ref={groupRef}>
-			<div className="group-sticky-container">
-				<div className="header-container">
-					<div className="group-header">
-						<div className="group-title-container" style={{ color: group.style.color }} onClick={startEditing}>
-							{isEditing ? (
-								<div className={`renaming-wrapper flex align-center ${isEditing ? 'editing' : ''}`} onClick={e => e.stopPropagation()}>
-									<button ref={setReferenceElement} onClick={openColorPicker} style={{ backgroundColor: group.style.color }} className="group-color-picker" />
-									<input className="group-title-input" type="text" onChange={handleChange} onKeyDown={handleKeyPressed} value={titleToEdit} name="title" id="groupTitle" autoFocus />
-									{isColorPickerOpen && (
-										<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
-											<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
-											<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
-										</div>
-									)}
-								</div>
-							) : (
-								<h4 className="group-title">{group.title}</h4>
-							)}
-						</div>
-					</div>
-				</div>
-				<button className="delete-btn" onClick={() => onRemoveGroup(group.id)}>
-					{svgs.delete}
-				</button>
-				<TaskListHeader group={group} tasks={group.tasks} />
-			</div>
-			<TaskList group={group} />
+		<section className="group-preview item-col full">
+			<TaskListHeader group={group} tasks={group.tasks} colWidth={colWidth} />
+			<TaskList group={group} colWidth={colWidth} />
 		</section>
 	)
+}
+
+{
+	/* <TaskListHeader group={group} colWidth={colWidth} />
+<TaskList group={group} colWidth={colWidth} /> */
+}
+
+// PREVIOUS GROUP-PREVIEW:
+
+{
+	/* <section className="group-preview">
+<div className="group-container">
+	<div className="header-container">
+		<div className="group-header">
+			<div className="group-title-container" style={{ color: group.style.color }} onClick={startEditing}>
+				{isEditing ? (
+					<div className={`renaming-wrapper flex align-center ${isEditing ? 'editing' : ''}`} onClick={e => e.stopPropagation()}>
+						<button ref={setReferenceElement} onClick={openColorPicker} style={{ backgroundColor: group.style.color }} className="group-color-picker" />
+						<input className="group-title-input" type="text" onChange={handleChange} onKeyDown={handleKeyPressed} value={titleToEdit} name="title" id="groupTitle" autoFocus />
+						{isColorPickerOpen && (
+							<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
+								<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
+								<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
+							</div>
+						)}
+					</div>
+				) : (
+					<h4 className="group-title">{group.title}</h4>
+				)}
+			</div>
+		</div>
+	</div>
+	<button className="delete-btn" onClick={() => onRemoveGroup(group.id)}>
+		{svgs.delete}
+	</button>
+	<TaskListHeader group={group} tasks={group.tasks} colWidth={colWidth} />
+</div>
+<TaskList group={group} colWidth={colWidth} />
+</section> */
 }
