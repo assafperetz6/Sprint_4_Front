@@ -7,20 +7,18 @@ import { DynamicCmp } from './DynamicCmp'
 import { SET_BOARD } from '../store/reducers/board.reducer'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
+import { removeTask } from '../store/actions/board.actions'
 
-export function TaskPreview({ group, task, colWidth }) {
-	const dispatch = useDispatch()
+export function TaskPreview({ group, task }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const { boardId } = useParams()
 
-	async function deleteTask(taskId) {
+	function onRemoveTask(taskId) {
 		try {
-			const savedBoard = await boardService.removeTask(boardId, taskId)
-			dispatch({ type: SET_BOARD, board: savedBoard })
+			removeTask(board._id, taskId)
 		} catch (err) {
-			showErrorMsg('cannot remove task')
 			console.log('cannot remove task', err)
-			throw err
+			showErrorMsg('cannot remove task')
 		}
 	}
 
@@ -33,7 +31,7 @@ export function TaskPreview({ group, task, colWidth }) {
 				</li>
 				<div className="sticky-container">
 					<li className="task-title">
-						<button className="delete-btn" onClick={() => deleteTask(task.id)}>
+						<button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
 							{svgs.delete}
 						</button>
 						<div className="title-main-container justify-between">

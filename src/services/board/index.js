@@ -7,7 +7,6 @@ import { boardService as local } from './board.service.local'
 import { boardService as remote } from './board.service.remote'
 
 function getEmptyBoard() {
-	const userImgURL = '../../assets/images/dapulse_default_photo.png'
 	return {
 		title: 'New board',
 		isStarred: false,
@@ -15,7 +14,7 @@ function getEmptyBoard() {
 		createdBy: {
 			_id: 'u101',
 			fullname: 'Abi Abambi',
-			imgUrl: `https://robohash.org/?set=set4`
+			imgUrl: `https://robohash.org/alon?set=set4`
 		},
 
 		members: [
@@ -30,86 +29,7 @@ function getEmptyBoard() {
 				imgUrl: 'https://robohash.org/dror?set=set4'
 			}
 		],
-		groups: [
-			{
-				id: makeId(),
-				title: 'Group 1',
-				tasks: [
-					{
-						id: makeId(),
-						title: 'Item 1',
-						status: 'sl102',
-						priority: 'pl103',
-						dueDate: '2024-05-10',
-						description: 'description',
-						comments: [],
-						members: [
-							{
-								_id: 'u101',
-								fullname: 'Tal Tarablus',
-								imgUrl: 'https://robohash.org/?set=set4'
-							}
-						]
-					},
-					{
-						id: makeId(),
-						title: 'item 2',
-						status: 'sl101',
-						priority: 'pl100',
-						dueDate: '2024-09-24',
-						description: 'description',
-						comments: [],
-						members: [
-							{
-								_id: 'u101',
-								fullname: 'Tal Tarablus',
-								imgUrl: 'https://robohash.org/?set=set4'
-							}
-						]
-					}
-				],
-				style: { color: '#00c875' }
-			},
-			{
-				id: makeId(),
-				title: 'Group 2',
-				tasks: [
-					{
-						id: makeId(),
-						title: 'Item 1',
-						status: 'sl102',
-						priority: 'pl102',
-						dueDate: '2024-05-10',
-						description: 'description',
-						comments: [],
-						members: [
-							{
-								_id: 'u101',
-								fullname: 'Tal Tarablus',
-								imgUrl: ''
-							}
-						]
-					},
-					{
-						id: makeId(),
-						title: 'item 2',
-						status: 'sl103',
-						priority: 'pl101',
-						dueDate: '2024-09-24',
-						description: 'description',
-						comments: [],
-						members: [
-							{
-								_id: 'u101',
-								fullname: 'Tal Tarablus',
-								imgUrl: ''
-							}
-						]
-					}
-				],
-				style: { color: '#66ccff' }
-			}
-		],
+		groups: getDefaultGroups(),
 		activities: [],
 		statusLabels: [
 			{ id: 'sl100', title: 'Done', color: '#00C875' },
@@ -124,8 +44,7 @@ function getEmptyBoard() {
 			{ id: 'pl102', title: 'Medium', color: '#5559DF' },
 			{ id: 'pl103', title: 'Low', color: '#579BFC' },
 			{ id: 'pl104', title: '', color: '#C4C4C4' }
-		],
-		activities: []
+		]
 	}
 }
 
@@ -140,14 +59,14 @@ function getDefaultGroups() {
 		{
 			id: makeId(),
 			title: 'Group 1',
-			tasks: [getDefaultTask()],
-			style: { color: '#00c875' }
+			tasks: getDefaultTasks(),
+			style: { color: getRandomColor() }
 		},
 		{
 			id: makeId(),
 			title: 'Group 2',
-			tasks: [getDefaultTask()],
-			style: { color: '#66ccff' }
+			tasks: getDefaultTasks(),
+			style: { color: getRandomColor() }
 		}
 	]
 
@@ -155,7 +74,6 @@ function getDefaultGroups() {
 }
 function getNewGroup() {
 	return {
-		id: makeId(),
 		title: 'Group 1',
 		tasks: [getDefaultTask()],
 		style: { color: getRandomColor() }
@@ -166,7 +84,7 @@ function getDefaultTask() {
 	const task = {
 		id: makeId(),
 		title: 'Item 1',
-		status: '',
+		status: 'sl100',
 		priority: 'pl103',
 		dueDate: '2024-09-10',
 		description: 'description',
@@ -174,13 +92,57 @@ function getDefaultTask() {
 		members: [
 			{
 				_id: 'u101',
-				fullname: 'Tal Tarablus',
-				imgUrl: 'https://robohash.org/?set=set4'
+				fullname: 'Alon Wohl',
+				imgUrl: 'https://robohash.org/alon?set=set4'
 			}
 		]
 	}
 
 	return task
+}
+
+function getDefaultTasks() {
+	const tasks = [
+		{
+			id: makeId(),
+			title: 'Item 1',
+			status: 'sl100',
+			priority: 'pl103',
+			dueDate: '2024-09-10',
+			description: 'description',
+			comments: [],
+			members: [
+				{
+					_id: 'u101',
+					fullname: 'Alon Wohl',
+					imgUrl: 'https://robohash.org/alon?set=set4'
+				}
+			]
+		},
+		{
+			id: makeId(),
+			title: 'Item 2',
+			status: 'sl103',
+			priority: 'pl101',
+			dueDate: '2024-09-10',
+			description: 'description',
+			comments: [],
+			members: [
+				{
+					_id: 'u102',
+					fullname: 'Dror Gaon',
+					imgUrl: 'https://robohash.org/dror?set=set4'
+				},
+				{
+					_id: 'u101',
+					fullname: 'Alon Wohl',
+					imgUrl: 'https://robohash.org/alon?set=set4'
+				}
+			]
+		}
+	]
+
+	return tasks
 }
 function getEmptyTask() {
 	return {

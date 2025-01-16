@@ -11,7 +11,7 @@ export function DynamicCmp({ cmp, task, groupId }) {
 			return <LabelPicker cmp={cmp} task={task} groupId={groupId} defaultWidth={cmpDefaultWidth} />
 		case 'MemberPicker':
 			cmpDefaultWidth = '97px'
-			return <MemberPicker task={task} defaultWidth={cmpDefaultWidth} />
+			return <MemberPicker task={task} cmp={cmp} groupId={groupId} defaultWidth={cmpDefaultWidth} />
 		case 'DatePicker':
 			cmpDefaultWidth = '140px'
 			return (

@@ -1,20 +1,19 @@
 import { useState, useRef, useEffect } from 'react'
 import { TaskListHeader } from './TaskListHeader'
 import { TaskList } from './TaskList'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateBoard } from '../store/actions/board.actions'
-import { SET_BOARD } from '../store/reducers/board.reducer'
+import { useSelector } from 'react-redux'
+import { removeGroup, updateGroup } from '../store/actions/board.actions'
 import { ColorPicker } from './ColorPicker'
 import { usePopper } from 'react-popper'
 import { svgs } from '../services/svg.service'
-import { boardService } from '../services/board'
+import { showErrorMsg } from '../services/event-bus.service'
 
 export function GroupPreview({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [titleToEdit, setTitleToEdit] = useState(group.title)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
 	const [isEditing, setIsEditing] = useState(false)
-	const [colWidth] = useState('150px')
+
 	const groupRef = useRef()
 
 	const [referenceElement, setReferenceElement] = useState(null)
@@ -35,8 +34,6 @@ export function GroupPreview({ group }) {
 		placement: 'bottom-start'
 	})
 
-	const dispatch = useDispatch()
-
 	useEffect(() => {
 		function handleClickOutside(event) {
 			if (!groupRef.current?.contains(event.target) && !event.target.closest('.color-picker')) {
@@ -56,27 +53,13 @@ export function GroupPreview({ group }) {
 		if (!isEditing) return
 
 		try {
+			const groupToSave = { ...group, title: titleToEdit }
 			if (!titleToEdit.trim()) {
 				onEmptyInput()
 				return
 			}
 
-			const updatedBoard = {
-				...board,
-				groups: board.groups.map(g => {
-					if (g.id === group.id) {
-						return {
-							...g,
-							title: titleToEdit,
-							tasks: [...g.tasks]
-						}
-					}
-					return g
-				})
-			}
-
-			const newBoard = await updateBoard(updatedBoard)
-			dispatch({ type: SET_BOARD, board: newBoard })
+			updateGroup(board._id, groupToSave)
 			setIsEditing(false)
 			setIsColorPickerOpen(false)
 		} catch (err) {
@@ -86,23 +69,9 @@ export function GroupPreview({ group }) {
 	}
 
 	async function setGroupStyle(newStyle) {
+		const groupToSave = { ...group, style: newStyle }
 		try {
-			const updatedBoard = {
-				...board,
-				groups: board.groups.map(g => {
-					if (g.id === group.id) {
-						return {
-							...g,
-							style: newStyle,
-							tasks: [...g.tasks]
-						}
-					}
-					return g
-				})
-			}
-
-			const newBoard = await updateBoard(updatedBoard)
-			dispatch({ type: SET_BOARD, board: newBoard })
+			updateGroup(board._id, groupToSave)
 			setIsColorPickerOpen(false)
 			setIsEditing(false)
 		} catch (err) {
@@ -133,10 +102,10 @@ export function GroupPreview({ group }) {
 
 	async function onRemoveGroup(groupId) {
 		try {
-			const savedBoard = await boardService.removeGroup(board._id, groupId)
-			dispatch({ type: SET_BOARD, board: savedBoard })
+			removeGroup(board._id, groupId)
 		} catch (err) {
-			throw err
+			console.log('cannot remove group')
+			showErrorMsg('cannot remove group')
 		}
 	}
 
@@ -166,9 +135,9 @@ export function GroupPreview({ group }) {
 				<button className="delete-btn" onClick={() => onRemoveGroup(group.id)}>
 					{svgs.delete}
 				</button>
-				<TaskListHeader group={group} tasks={group.tasks} colWidth={colWidth} />
+				<TaskListHeader group={group} tasks={group.tasks} />
 			</div>
-			<TaskList group={group} colWidth={colWidth} />
+			<TaskList group={group} />
 		</section>
 	)
 }
