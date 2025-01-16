@@ -1,19 +1,20 @@
 import { GroupPreview } from './GroupPreview.jsx'
 import { svgs } from '../services/svg.service.jsx'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateBoard } from '../store/actions/board.actions.js'
+import { addGroup, updateBoard } from '../store/actions/board.actions.js'
 import { boardService } from '../services/board/index.js'
+import { showErrorMsg } from '../services/event-bus.service.js'
 
 export function GroupList({ groups }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const dispatch = useDispatch()
 
-	async function onAddGroup() {
+	function onAddGroup() {
+		const groupToAdd = boardService.getNewGroup()
 		try {
-			const updatedBoard = { ...board, groups: [...board.groups, boardService.getNewGroup()] }
-			await updateBoard(updatedBoard)
-			dispatch({ type: 'SET_BOARD', board: updatedBoard })
+			addGroup(board._id, groupToAdd)
 		} catch (err) {
+			showErrorMsg('cannot add group')
 			console.log('cannot add group', err)
 		}
 	}

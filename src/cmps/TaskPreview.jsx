@@ -4,21 +4,21 @@ import { hexToRgba } from '../services/util.service'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { DynamicCmp } from './DynamicCmp'
-import { updateBoard } from '../store/actions/board.actions'
 import { SET_BOARD } from '../store/reducers/board.reducer'
 import { boardService } from '../services/board'
+import { showErrorMsg } from '../services/event-bus.service'
+import { removeTask } from '../store/actions/board.actions'
 
-export function TaskPreview({ group, task, colWidth }) {
-	const dispatch = useDispatch()
+export function TaskPreview({ group, task }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const { boardId } = useParams()
 
-	async function deleteTask(taskId) {
+	function onRemoveTask(taskId) {
 		try {
-			const savedBoard = await boardService.removeTask(boardId, taskId)
-			dispatch({ type: SET_BOARD, board: savedBoard })
+			removeTask(board._id, taskId)
 		} catch (err) {
-			throw err
+			console.log('cannot remove task', err)
+			showErrorMsg('cannot remove task')
 		}
 	}
 
@@ -26,13 +26,12 @@ export function TaskPreview({ group, task, colWidth }) {
 		<ul className="task-preview task-row flex">
 			<div className="main-preview-container">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
-
 				<li className="check-box">
 					<input type="checkbox" />
 				</li>
 				<div className="sticky-container">
 					<li className="task-title">
-						<button className="delete-btn" onClick={() => deleteTask(task.id)}>
+						<button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
 							{svgs.delete}
 						</button>
 						<div className="title-main-container justify-between">
@@ -45,7 +44,7 @@ export function TaskPreview({ group, task, colWidth }) {
 				</div>
 
 				{board.cmpsOrder.map((cmp, idx) => (
-					<DynamicCmp cmp={cmp} key={idx} groupId={group.id} task={task} defaultWidth={colWidth} />
+					<DynamicCmp cmp={cmp} key={idx} groupId={group.id} task={task} />
 				))}
 			</div>
 			<li className="line-end"></li>

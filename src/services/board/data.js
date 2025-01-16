@@ -1,4 +1,5 @@
 import userImg from '../../assets/images/dapulse_default_photo.png'
+import { getRandomColor } from '../util.service'
 
 export const defaultBoard = [
 	{
@@ -9,7 +10,7 @@ export const defaultBoard = [
 		createdBy: {
 			_id: 'u101',
 			fullname: 'Abi Abambi',
-			imgUrl: 'http://some-img'
+			imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 		},
 		style: {
 			backgroundImage: ''
@@ -19,12 +20,12 @@ export const defaultBoard = [
 			{
 				_id: 'u101',
 				fullname: 'Tal Taltal',
-				imgUrl: userImg
+				imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 			},
 			{
 				_id: 'u102',
 				fullname: 'Josh Ga',
-				imgUrl: userImg
+				imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
 			}
 		],
 		groups: [
@@ -41,16 +42,13 @@ export const defaultBoard = [
 						dueDate: '2024-05-10',
 						description: 'description',
 						comments: [],
-						memberIds: ['u101'],
-						labelIds: ['l101', 'l102'],
-						byMember: {
-							_id: 'u101',
-							fullname: 'Alon Wohl',
-							imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
-						},
-						style: {
-							backgroundColor: '#26de81'
-						}
+						members: [
+							{
+								_id: 'u101',
+								fullname: 'Alon Wohl',
+								imgUrl: 'https://robohash.org/dror?set=set4'
+							}
+						]
 					},
 					{
 						id: 'c102',
@@ -67,23 +65,22 @@ export const defaultBoard = [
 								byMember: {
 									_id: 'u101',
 									fullname: 'Alon Wohl',
-									imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
+									imgUrl: 'https://robohash.org/dror?set=set4'
 								}
 							}
 						],
 						memberIds: ['u101'],
-						byMember: {
-							_id: 'u101',
-							fullname: 'Alon Wohl',
-							imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
-						},
-						style: {
-							backgroundColor: '#26de81'
-						}
+						members: [
+							{
+								_id: 'u101',
+								fullname: 'Alon Wohl',
+								imgUrl: 'https://robohash.org/dror?set=set4'
+							}
+						]
 					}
 				],
 				style: {
-					color: '#26de81'
+					color: getRandomColor()
 				}
 			},
 			{
@@ -109,16 +106,13 @@ export const defaultBoard = [
 								}
 							}
 						],
-						memberIds: ['u101'],
-						labelIds: ['l101', 'l102'],
-						byMember: {
-							_id: 'u101',
-							fullname: 'Alon Wohl',
-							imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
-						},
-						style: {
-							backgroundColor: '#26de81'
-						}
+						members: [
+							{
+								_id: 'u101',
+								fullname: 'Alon Wohl',
+								imgUrl: 'https://robohash.org/dror?set=set4'
+							}
+						]
 					},
 					{
 						id: 'c104',
@@ -141,17 +135,16 @@ export const defaultBoard = [
 						],
 						memberIds: ['u101'],
 						labelIds: ['l101', 'l102'],
-						byMember: {
-							_id: 'u101',
-							fullname: 'Alon Wohl',
-							imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
-						},
-						style: {
-							backgroundColor: '#26de81'
-						}
+						members: [
+							{
+								_id: 'u101',
+								fullname: 'Alon Wohl',
+								imgUrl: 'https://robohash.org/dror?set=set4'
+							}
+						]
 					}
 				],
-				style: { color: '#26de81' }
+				style: { color: getRandomColor() }
 			}
 		],
 		statusLabels: [
@@ -168,7 +161,7 @@ export const defaultBoard = [
 			{ id: 'pl103', title: 'Low', color: '#579BFC' },
 			{ id: 'pl104', title: '', color: '#C4C4C4' }
 		],
-		activities: [],
+
 		activities: [
 			{
 				id: 'a101',

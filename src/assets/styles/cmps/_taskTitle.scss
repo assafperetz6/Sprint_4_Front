@@ -9,7 +9,7 @@
 	flex-shrink: 0;
 	user-select: none;
 
-	padding-inline-end: 10px;
+	// padding-inline-end: 10px;
 	.title-main-container {
 		height: $task-row-height;
 		width: 100%;
@@ -74,7 +74,7 @@
 		}
 	}
 
-	.delete-btn{
+	.delete-btn {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -98,11 +98,11 @@
 			gap: 4px;
 		}
 
-		.delete-btn{
+		.delete-btn {
 			background-color: $hovered-btns;
 
 			opacity: 100;
-			visibility: visible;	
+			visibility: visible;
 		}
 	}
 

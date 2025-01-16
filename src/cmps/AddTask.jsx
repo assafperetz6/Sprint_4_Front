@@ -13,18 +13,19 @@ export function AddTask({ group }) {
 	const dispatch = useDispatch()
 
 	async function onAddTask(ev) {
-		if(ev) ev.preventDefault()
+		if (ev) ev.preventDefault()
 		try {
 			const savedBoard = await boardService.saveTask(board._id, group.id, taskToAdd)
-			dispatch({ type: SET_BOARD, board: savedBoard})
+			dispatch({ type: SET_BOARD, board: savedBoard })
 			setTaskToAdd(boardService.getEmptyTask())
 		} catch (err) {
+			console.log(err)
 			throw err
 		}
 	}
 
-	function onBlur(){
-		if(taskToAdd.title) onAddTask()
+	function onBlur() {
+		if (taskToAdd.title) onAddTask()
 		else return
 	}
 
@@ -41,11 +42,11 @@ export function AddTask({ group }) {
 		>
 			<div className="sticky-container">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
-					
-				<div className='check-box-wrapper flex justify-center align-center'>
+
+				<div className="check-box-wrapper flex justify-center align-center">
 					<input className="check-box" type="checkbox" />
 				</div>
-				
+
 				<form onSubmit={onAddTask}>
 					<input className="add-task-input" ref={elInput} placeholder="+ Add item" value={taskToAdd.title} onBlur={onBlur} onChange={handleChange}></input>
 				</form>
