@@ -8,6 +8,13 @@
 
     padding-inline-start: 20px;
 
+    overflow: auto;
+
+    .board-header-container {
+        position: sticky;
+        left: 0;
+    }
+
     .board-header, .board-tabs, .task-actions {
         display: flex;
         flex-shrink: 0;

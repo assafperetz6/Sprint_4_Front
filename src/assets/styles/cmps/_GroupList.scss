@@ -1,7 +1,13 @@
 .group-list {
+	position: sticky;
+	left: 0;
+	display: grid;
+	grid-template-columns: minmax(220px, auto) 1fr;
+
 	padding: 0px 0px 40px;
-	overflow: auto;
-	// overflow-x: hidden;
+
+	// overflow-x: scroll;
+    // overflow-y: scroll;
 
 	@media (min-width: $mobile-breakpoint) {
 		padding-block-end: 40px;
@@ -9,6 +15,11 @@
 
 	h4 {
 		font-size: rem(18px);
+	}
+
+	> * {
+		display: grid;
+		grid-template-columns: subgrid
 	}
 
 	.task-item-col {

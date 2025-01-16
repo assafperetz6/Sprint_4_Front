@@ -15,58 +15,58 @@ export function GroupList({ groups }) {
 	const [currentGroup, setCurrentGroup] = useState(groups[0])
 	const observerRef = useRef(null)
 
-	console.log(currentGroup)
+	// console.log(currentGroup)
 
-	useEffect(() => {
-    let lastIntersection = null
+// 	useEffect(() => {
+//     let lastIntersection = null
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const groupId = entry.target.dataset.groupId
-            const groupIndex = groups.findIndex(g => g.id === groupId)
-            const currentGroupIndex = groups.findIndex(g => g.id === currentGroup.id)
+//     const observer = new IntersectionObserver((entries) => {
+//         entries.forEach(entry => {
+//             const groupId = entry.target.dataset.groupId
+//             const groupIndex = groups.findIndex(g => g.id === groupId)
+//             const currentGroupIndex = groups.findIndex(g => g.id === currentGroup.id)
 
-            // Store the intersection position for comparison
-            if (entry.isIntersecting) {
-                if (!lastIntersection) {
-                    lastIntersection = entry.boundingClientRect.top
-                    return
-                }
+//             // Store the intersection position for comparison
+//             if (entry.isIntersecting) {
+//                 if (!lastIntersection) {
+//                     lastIntersection = entry.boundingClientRect.top
+//                     return
+//                 }
 
-                // Determine scroll direction by comparing with last intersection
-                const scrollingDown = entry.boundingClientRect.top < lastIntersection
-                lastIntersection = entry.boundingClientRect.top
+//                 // Determine scroll direction by comparing with last intersection
+//                 const scrollingDown = entry.boundingClientRect.top < lastIntersection
+//                 lastIntersection = entry.boundingClientRect.top
 
-                console.log('Intersection:', {
-                    groupId,
-                    direction: scrollingDown ? 'down' : 'up',
-                    position: entry.boundingClientRect.top,
-                    currentGroup: currentGroup.id,
-                })
+//                 console.log('Intersection:', {
+//                     groupId,
+//                     direction: scrollingDown ? 'down' : 'up',
+//                     position: entry.boundingClientRect.top,
+//                     currentGroup: currentGroup.id,
+//                 })
 
-                // Update group based on scroll direction and adjacent position
-                if (scrollingDown && groupIndex === currentGroupIndex + 1) {
-                    setCurrentGroup(groups[groupIndex])
-                } else if (!scrollingDown && groupIndex === currentGroupIndex - 1) {
-                    setCurrentGroup(groups[groupIndex])
-                }
-            }
-        })
-    }, {
-        threshold: [0],
-        rootMargin: "-20px 0px 0px 0px"
-    })
+//                 // Update group based on scroll direction and adjacent position
+//                 if (scrollingDown && groupIndex === currentGroupIndex + 1) {
+//                     setCurrentGroup(groups[groupIndex])
+//                 } else if (!scrollingDown && groupIndex === currentGroupIndex - 1) {
+//                     setCurrentGroup(groups[groupIndex])
+//                 }
+//             }
+//         })
+//     }, {
+//         threshold: [0],
+//         rootMargin: "-20px 0px 0px 0px"
+//     })
 
-    const elements = document.querySelectorAll('[data-group-id]')
-    elements.forEach(element => observer.observe(element))
+//     const elements = document.querySelectorAll('[data-group-id]')
+//     elements.forEach(element => observer.observe(element))
 
-    return () => observer.disconnect()
-}, [])
+//     return () => observer.disconnect()
+// }, [])
 
 	// Log when current group changes to debug
-	useEffect(() => {
-		console.log('Current group changed to:', currentGroup.id)
-	}, [currentGroup])
+	// useEffect(() => {
+	// 	console.log('Current group changed to:', currentGroup.id)
+	// }, [currentGroup])
 
 	async function onAddGroup() {
 		try {
@@ -83,14 +83,15 @@ export function GroupList({ groups }) {
 
 	return (
 		<section className="group-list">
-			<ul className="clean-list">
-				<GroupStickyContainer group={currentGroup} />
-				{groups.map((group, idx) => (
-					<li key={group.id}>
-						<GroupPreview idx={idx} data-group-id={group.id} group={group} key={group.id} />
-					</li>
-				))}
-			</ul>
+			{groups.map((group, idx) => (
+				<GroupPreview key={group.id} group={group} cmpsOrder={board.cmpsOrder} />
+			))}
+			{/* <GroupStickyContainer group={currentGroup} />
+			{groups.map((group, idx) => (
+				<li key={group.id}>
+					<GroupPreview idx={idx} data-group-id={group.id} group={group} key={group.id} />
+				</li>
+			))} */}
 			<div className="add-group-btn flex align-center" onClick={onAddGroup}>
 				<span className="icon flex align-center">{svgs.plus}</span>
 				<span className="txt">Add new group</span>
