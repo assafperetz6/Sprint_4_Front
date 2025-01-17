@@ -19,13 +19,18 @@ export const defaultBoard = [
 		members: [
 			{
 				_id: 'u101',
-				fullname: 'Tal Taltal',
-				imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
+				fullname: 'Alon Wohl',
+				imgUrl: 'https://robohash.org/alon?set=set4'
 			},
 			{
 				_id: 'u102',
-				fullname: 'Josh Ga',
-				imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
+				fullname: 'Dror Gaon',
+				imgUrl: 'https://robohash.org/dror?set=set4'
+			},
+			{
+				_id: 'u103',
+				fullname: 'Assaf Peretz',
+				imgUrl: 'https://robohash.org/assaf?set=set4'
 			}
 		],
 		groups: [
@@ -46,7 +51,7 @@ export const defaultBoard = [
 							{
 								_id: 'u101',
 								fullname: 'Alon Wohl',
-								imgUrl: 'https://robohash.org/dror?set=set4'
+								imgUrl: 'https://robohash.org/alon?set=set4'
 							}
 						]
 					},
@@ -69,7 +74,6 @@ export const defaultBoard = [
 								}
 							}
 						],
-						memberIds: ['u101'],
 						members: [
 							{
 								_id: 'u101',
@@ -110,7 +114,7 @@ export const defaultBoard = [
 							{
 								_id: 'u101',
 								fullname: 'Alon Wohl',
-								imgUrl: 'https://robohash.org/dror?set=set4'
+								imgUrl: 'https://robohash.org/alon?set=set4'
 							}
 						]
 					},
@@ -139,7 +143,7 @@ export const defaultBoard = [
 							{
 								_id: 'u101',
 								fullname: 'Alon Wohl',
-								imgUrl: 'https://robohash.org/dror?set=set4'
+								imgUrl: 'https://robohash.org/alon?set=set4'
 							}
 						]
 					}
