@@ -50,8 +50,8 @@ export function TaskListHeader({ group, tasks, colWidth }) {
 						)
 					)
 				})}
+				<li className="line-end task-item-col"></li>
 			</ul>
-			<li className="line-end task-item-col"></li>
 		</ul>
 	)
 }

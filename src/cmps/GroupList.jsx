@@ -13,8 +13,8 @@ export function GroupList({ groups }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const dispatch = useDispatch()
 
-	const [currentGroup, setCurrentGroup] = useState(groups[0])
-	const observerRef = useRef(null)
+	// const [currentGroup, setCurrentGroup] = useState(groups[0])
+	// const observerRef = useRef(null)
 
 	// console.log(currentGroup)
 
@@ -68,9 +68,6 @@ export function GroupList({ groups }) {
 	// useEffect(() => {
 	// 	console.log('Current group changed to:', currentGroup.id)
 	// }, [currentGroup])
-
-	const [currentGroup, setCurrentGroup] = useState(groups[0])
-	const observerRef = useRef(null)
 
 	// console.log(currentGroup)
 
@@ -146,7 +143,7 @@ export function GroupList({ groups }) {
 					<GroupPreview idx={idx} data-group-id={group.id} group={group} key={group.id} />
 				</li>
 			))} */}
-			<div className="add-group-btn flex align-center" onClick={onAddGroup}>
+			<div className="add-group-btn" onClick={onAddGroup}>
 				<span className="icon flex align-center">{svgs.plus}</span>
 				<span className="txt">Add new group</span>
 			</div>

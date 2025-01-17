@@ -112,8 +112,8 @@ export function GroupPreview({ group, cmpsOrder }) {
 
 	return (
 		<section className="group-preview item-col full">
-			<TaskListHeader group={group} tasks={group.tasks} colWidth={colWidth} />
-			<TaskList group={group} colWidth={colWidth} />
+			<TaskListHeader group={group} tasks={group.tasks} />
+			<TaskList group={group} />
 		</section>
 	)
 }

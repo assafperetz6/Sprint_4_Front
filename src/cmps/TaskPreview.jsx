@@ -44,7 +44,7 @@ export function TaskPreview({ group, task }) {
 				</section>
 			</section>
 
-			<section className="flex">
+			<section className="task-col flex">
 				{board.cmpsOrder.map((cmp, idx) => (
 					<DynamicCmp cmp={cmp} key={idx} groupId={group.id} task={task} />
 				))}

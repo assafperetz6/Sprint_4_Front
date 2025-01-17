@@ -2,10 +2,14 @@
 	display: grid;
 	grid-template-columns: subgrid;
 	border-block: 1px solid $clr8;
+	height: $task-row-height;
+	border-start-start-radius: 4px;
+	font-size: rem(14px);
 
 	.sticky-container {
 		position: sticky;
 		left: 0;
+		background: $clr3;
 	}
 
 	& *:not(.sticky-container) {
@@ -16,10 +20,17 @@
 		width: 100%;
 		align-items: center;
 		text-align: center;
+		border-inline-end: 1px solid $clr8;
 	}
 
-	li {
+	.task-columns > * {
+		height: 100%;
 		border-inline-end: 1px solid $clr8;
+		line-height: rem(23px);
+		flex-shrink: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.task-title-header {
@@ -28,6 +39,10 @@
 		justify-self: center;
 
 		text-align: center;
+	}
+
+	.colored-border {
+		border-radius: 4px 0 0 0;
 	}
 }
 

@@ -1,5 +1,7 @@
 .task-preview {
 	height: $task-row-height;
+	z-index: 2;
+	background-color: #ffff;
 
 	border-block-end: 1px solid $clr8;
 
@@ -8,12 +10,28 @@
 		left: 0;
 
 		z-index: 40;
-		// background-color: $clr3;
+		background-color: $clr3;
+		border-inline: 1px solid $clr8;
 	}
 
 	.title-main-container {
 		width: 100%;
-		border-inline: 1px solid $clr8;
+	}
+
+	&:hover {
+		.sticky-container {
+			background-color: $task-hover-bgc;
+		}
+	}
+
+	&:hover {
+		background-color: $task-hover-bgc;
+		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
+	}
+
+	.task-row > *,
+	.task-col > *:not(.line-end) {
+		border-inline-end: 1px solid $clr8;
 	}
 }
 
