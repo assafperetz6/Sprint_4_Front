@@ -46,19 +46,28 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
 			return <img src={DEFAULT_AVATAR} alt="Default avatar" className="member-avatar" />
 		}
 
-		return task.members.map((member, index) => (
-			<img
-				key={member._id || index}
-				src={member.imgUrl}
-				alt={member.fullname || 'Member avatar'}
-				className="member-avatar"
-				style={{
-					marginLeft: index > 0 ? '-8px' : '0'
-				}}
-			/>
-		))
-	}
+		if (task.members.length <= 2) {
+			return task.members.map((member, index) => (
+				<img
+					key={member._id || index}
+					src={member.imgUrl}
+					alt={member.fullname || 'Member avatar'}
+					className="member-avatar"
+					style={{
+						marginLeft: index > 0 ? '-8px' : '0',
+						zIndex: 2 - index
+					}}
+				/>
+			))
+		}
 
+		return (
+			<>
+				<img src={task.members[0].imgUrl} alt={task.members[0].fullname || 'Member avatar'} className="member-avatar" style={{ zIndex: 2 }} />
+				<div className="extra-members">+{task.members.length - 1}</div>
+			</>
+		)
+	}
 	function setPickerOpen(e) {
 		e.stopPropagation()
 		setIsPickerOpen(true)
@@ -152,7 +161,10 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
 
 	return (
 		<li className="member-picker" ref={setReferenceElement} style={{ width: defaultWidth }} onClick={setPickerOpen}>
-			<div className="member-avatars-container flex align-center justify-center">{renderMemberAvatars()}</div>
+			<div className="member-avatars-container flex align-center justify-center">
+				{renderMemberAvatars()}
+				<span className="add-member-btn">{svgs.plus}</span>
+			</div>
 			{isPickerOpen && (
 				<PopUpMemberModal
 					popperRef={setPopperElement}
