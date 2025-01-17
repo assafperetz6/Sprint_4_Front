@@ -1,12 +1,18 @@
 .add-task {
-	cursor: text;
-	z-index: 1;
-	font-size: rem(14px);
+	position: sticky;
+	left: 0px;
+	
 	display: flex;
-	background-color: #ffff;
-	border-block-end: 1px solid $clr8;
 	height: $task-row-height;
+	
+	border-block-end: 1px solid $clr8;
+	
+	background-color: #ffff;
+	
+	font-size: rem(14px);
+	cursor: text;
 
+	z-index: 1;
 	// .empty-option-container {
 	// 	position: relative;
 	// 	z-index: 2;
@@ -16,18 +22,17 @@
 	// }
 
 	.sticky-container {
-		position: sticky;
-		display: flex;
-		left: 0px;
-		z-index: 2;
 
-		.colored-border {
-			margin-block-end: -1px;
-			// height: calc(100% + 1px);
-			width: 5.5px;
-			min-width: 5.5px;
-			border-end-start-radius: 4px;
-		}
+		display: flex;
+		z-index: 2;
+	}
+
+	.colored-border {
+		// margin-block-end: -1px;
+		// height: calc(100% + 1px);
+		// width: 5.5px;
+		// min-width: 5.5px;
+		border-radius: 0 0 0 4px;
 	}
 
 	&:hover .add-task-input {
@@ -52,10 +57,6 @@
 
 		max-width: 177px;
 		height: 24px;
-	}
-
-	.check-box-wrapper{
-		border-inline-start: 1px solid $clr8;
 	}
 
 	.check-box {

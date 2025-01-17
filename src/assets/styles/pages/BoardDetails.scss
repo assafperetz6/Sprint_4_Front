@@ -1,7 +1,26 @@
 .board-details {
-    
-    .board-header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+
+    padding-inline-start: 20px;
+
+    overflow: auto;
+
+    .board-header-container {
+        position: sticky;
+        left: 0;
+    }
+
+    .board-header, .board-tabs, .task-actions {
         display: flex;
+        flex-shrink: 0;
+    }
+
+    .board-header {
         justify-content: space-between;
         align-items: center;
     }
@@ -106,8 +125,8 @@
     }
 
     .task-actions {
-        display: flex;
         align-items: center;
+
         > button {
             @include alt-btn;
 

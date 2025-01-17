@@ -23,31 +23,69 @@ export function TaskPreview({ group, task }) {
 	}
 
 	return (
-		<ul className="task-preview task-row flex">
-			<div className="main-preview-container">
+		<li className="task-preview task-row flex full">
+			<section className="sticky-container flex">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
-				<li className="check-box">
-					<input type="checkbox" />
-				</li>
-				<div className="sticky-container">
-					<li className="task-title">
-						<button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
-							{svgs.delete}
-						</button>
-						<div className="title-main-container justify-between">
-							<span>{task.title}</span>
-							<Link to={`task/${task.id}`} className="open-task-details">
-								&nbsp; {svgs.expand} open
-							</Link>
-						</div>
-					</li>
-				</div>
 
+				<input type="checkbox" className="check-box" />
+
+				<section className="task-title">
+					<button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
+						{svgs.delete}
+					</button>
+
+					<div className="title-main-container justify-between">
+						<span>{task.title}</span>
+						<div>{svgs.addUpdate}</div>
+						<Link to={`task/${task.id}`} className="open-task-details">
+							&nbsp; {svgs.expand} open
+						</Link>
+					</div>
+				</section>
+			</section>
+
+			<section className="task-col flex">
 				{board.cmpsOrder.map((cmp, idx) => (
 					<DynamicCmp cmp={cmp} key={idx} groupId={group.id} task={task} />
 				))}
-			</div>
-			<li className="line-end"></li>
-		</ul>
+				<li className="line-end"></li>
+			</section>
+		</li>
 	)
 }
+
+// DELETE TASK BTN:
+
+{
+	/* <button className="delete-btn" onClick={() => deleteTask(task.id)}>
+{svgs.delete}
+</button> */
+}
+
+// <ul className="task-preview task-row flex">
+// <div className="main-preview-container">
+// 	<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
+
+// 	<li className="check-box">
+// 		<input type="checkbox" />
+// 	</li>
+// 	<div className="sticky-container">
+// 		<li className="task-title">
+// 			<button className="delete-btn" onClick={() => deleteTask(task.id)}>
+// 				{svgs.delete}
+// 			</button>
+// 			<div className="title-main-container justify-between">
+// 				<span>{task.title}</span>
+// 				<Link to={`task/${task.id}`} className="open-task-details">
+// 					&nbsp; {svgs.expand} open
+// 				</Link>
+// 			</div>
+// 		</li>
+// 	</div>
+
+// 	{board.cmpsOrder.map((cmp, idx) => (
+// 		<DynamicCmp cmp={cmp} key={idx} groupId={group.id} task={task} defaultWidth={colWidth} />
+// 	))}
+// </div>
+// <li className="line-end"></li>
+// </ul>

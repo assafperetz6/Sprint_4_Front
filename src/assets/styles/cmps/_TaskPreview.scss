@@ -1,94 +1,131 @@
 .task-preview {
-	display: flex;
 	height: $task-row-height;
-	background-color: #ffff;
 	z-index: 2;
+	background-color: #ffff;
+
 	border-block-end: 1px solid $clr8;
+
+	.sticky-container {
+		position: sticky;
+		left: 0;
+
+		z-index: 40;
+		background-color: $clr3;
+		border-inline: 1px solid $clr8;
+	}
+
+	.title-main-container {
+		width: 100%;
+	}
+
 	&:hover {
 		.sticky-container {
 			background-color: $task-hover-bgc;
 		}
 	}
 
-	.main-preview-container {
-		display: flex;
-		min-width: max-content;
-		& > *:not(.line-end) {
-			border-inline-end: 1px solid $clr8;
-		}
-	}
-
-	.sticky-container {
-		z-index: 2;
-		height: calc($task-row-height);
-		border-block-end: 1px solid $clr8;
-		display: flex;
-		position: sticky;
-		left: var(--left-margin-size);
-		background-color: #ffff;
-		&:hover {
-			background-color: $task-hover-bgc;
-		}
-
-		li {
-			height: $task-row-height;
-		}
-	}
-
-	.colored-border {
-		margin-block-end: -2px;
-		height: calc(100% + 1px);
-		width: 6px;
-		min-width: 6px;
-	}
-
 	&:hover {
 		background-color: $task-hover-bgc;
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
-
-		.task-option {
-			opacity: 1;
-		}
 	}
 
-	.task-option-container {
-		position: sticky;
-		z-index: 30;
-		left: 0px;
-		height: 40px;
-		width: var(--left-margin-size);
-		justify-content: center;
-		align-items: center;
-		display: flex;
-		background-color: #ffff;
-	}
-
-	.task-option {
-		color: $clr1;
-
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 25px;
-		height: 25px;
-		position: relative;
-		opacity: 0;
-
-		svg {
-			height: var(--options-size);
-			width: var(--options-size);
-		}
-	}
-
-	.label-picker {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.check-box {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	.task-row > *,
+	.task-col > *:not(.line-end) {
+		border-inline-end: 1px solid $clr8;
 	}
 }
+
+// .task-preview {
+// 	display: flex;
+// 	height: $task-row-height;
+// 	background-color: #ffff;
+// 	z-index: 2;
+// 	border-block-end: 1px solid $clr8;
+// 	&:hover {
+// 		.sticky-container {
+// 			background-color: $task-hover-bgc;
+// 		}
+// 	}
+
+// 	.main-preview-container {
+// 		display: flex;
+// 		min-width: max-content;
+// 		& > *:not(.line-end) {
+// 			border-inline-end: 1px solid $clr8;
+// 		}
+// 	}
+
+// 	.sticky-container {
+// 		z-index: 2;
+// 		height: calc($task-row-height);
+// 		border-block-end: 1px solid $clr8;
+// 		display: flex;
+// 		position: sticky;
+// 		left: var(--left-margin-size);
+// 		background-color: #ffff;
+// 		&:hover {
+// 			background-color: $task-hover-bgc;
+// 		}
+
+// 		li {
+// 			height: $task-row-height;
+// 		}
+// 	}
+
+// 	.colored-border {
+// 		margin-block-end: -2px;
+// 		height: calc(100% + 1px);
+// 		width: 6px;
+// 		min-width: 6px;
+// 	}
+
+// 	&:hover {
+// 		background-color: $task-hover-bgc;
+// 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
+
+// 		.task-option {
+// 			opacity: 1;
+// 		}
+// 	}
+
+// 	.task-option-container {
+// 		position: sticky;
+// 		z-index: 30;
+// 		left: 0px;
+// 		height: 40px;
+// 		width: var(--left-margin-size);
+// 		justify-content: center;
+// 		align-items: center;
+// 		display: flex;
+// 		background-color: #ffff;
+// 	}
+
+// 	.task-option {
+// 		color: $clr1;
+
+// 		display: flex;
+// 		justify-content: center;
+// 		align-items: center;
+// 		width: 25px;
+// 		height: 25px;
+// 		position: relative;
+// 		opacity: 0;
+
+// 		svg {
+// 			height: var(--options-size);
+// 			width: var(--options-size);
+// 		}
+// 	}
+
+// 	.label-picker {
+// 		display: flex;
+// 		justify-content: center;
+// 		align-items: center;
+// 	}
+
+// 	.check-box {
+// 		display: flex;
+// 		justify-content: center;
+// 		align-items: center;
+// 	}
+// }
