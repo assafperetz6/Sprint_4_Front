@@ -2,7 +2,7 @@ import { hexToRgba } from '../services/util.service'
 
 import { useSelector } from 'react-redux'
 
-export function TaskListHeader({ group, tasks, colWidth }) {
+export function TaskListHeader({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
 	return (

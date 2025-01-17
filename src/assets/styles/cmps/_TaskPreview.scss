@@ -1,17 +1,17 @@
 .task-preview {
 	height: $task-row-height;
-	z-index: 2;
 	background-color: #ffff;
 
 	border-block-end: 1px solid $clr8;
 
 	.sticky-container {
 		position: sticky;
+		height: calc($task-row-height);
 		left: 0;
-
-		z-index: 40;
+		z-index: 2;
 		background-color: $clr3;
 		border-inline: 1px solid $clr8;
+		border-block-end: 1px solid $clr8;
 	}
 
 	.title-main-container {
@@ -32,6 +32,10 @@
 	.task-row > *,
 	.task-col > *:not(.line-end) {
 		border-inline-end: 1px solid $clr8;
+	}
+
+	li {
+		height: $task-row-height;
 	}
 }
 
