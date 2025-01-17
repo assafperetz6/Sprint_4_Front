@@ -13,8 +13,8 @@ export function MemberPicker({ cmp, task, groupId, defaultWidth }) {
 				alt={member.fullname || 'Member avatar'}
 				className="member-avatar"
 				style={{
-					marginLeft: index > 0 ? '-8px' : '0',
-					zIndex: task.members.length - index
+					marginLeft: index > 0 ? '-8px' : '0'
+					// zIndex: task.members.length - index
 				}}
 			/>
 		))
