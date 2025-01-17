@@ -2,7 +2,7 @@
 	cursor: pointer;
 
 	& img {
-		border: 2px solid #fff;
+		border: 2px solid $clr3;
 		border-radius: 50%;
 		max-height: 30px;
 		max-width: 30px;
@@ -15,17 +15,37 @@
 		display: flex;
 		flex-direction: column;
 		top: calc($task-row-height + 5px);
-		background-color: #fff;
-		height: 180px;
-		width: 264px;
+		background-color: $clr3;
+		width: 360px;
 		outline: 0;
 		border-radius: 8px;
 		box-sizing: content-box;
 		z-index: 50;
 		box-shadow: 1px 1px 6px 0 rgba(0, 0, 0, 0.3);
-
-		.new-person-pikcer {
+		.new-person-picker {
 			padding: 16px 16px 0 16px;
+			.search-input {
+				min-height: 32px;
+				position: relative;
+				width: 100%;
+				gap: $spacing-small;
+
+				padding-block: $spacing-xs;
+				padding-inline: $spacing-medium $spacing-xs;
+
+				border: 1px solid $input-hover-border-clr;
+				border-radius: $spacing-xs;
+				input {
+					width: 100%;
+					border: none;
+					outline: none;
+				}
+
+				svg {
+					height: 16px;
+					width: 16px;
+				}
+			}
 		}
 
 		.person-tokens-list {
@@ -68,8 +88,56 @@
 				}
 			}
 		}
-	}
-}
 
-.multiple-items-box-component .item-token {
+		.suggested-list {
+			overflow: hidden;
+
+			.suggested-people {
+				display: flex;
+				flex-direction: column;
+				flex: 1 1 auto;
+				margin-block-start: $spacing-small;
+
+				margin-bottom: $spacing-xs;
+
+				color: $clr4;
+				font-size: rem(14px);
+
+				overflow-x: visible;
+				overflow-y: auto;
+			}
+
+			.suggested-item {
+				font-size: rem(14px);
+				padding: $spacing-small;
+				border-radius: $spacing-xs;
+				cursor: pointer;
+
+				.avatar {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					height: 28px;
+					width: 28px;
+
+					border-radius: 50%;
+					overflow: hidden;
+
+					img {
+						height: 100%;
+						width: 100%;
+						object-fit: cover;
+					}
+				}
+
+				span {
+					padding: 0 $spacing-small;
+				}
+				&:hover {
+					background-color: $primary-hover-clr;
+				}
+			}
+		}
+	}
 }
