@@ -27,7 +27,7 @@ export function TaskPreview({ group, task }) {
 			<section className="sticky-container flex">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
 
-				<input type="checkbox" className="check-box" />
+				<div className="checkbox-wrapper"><input type="checkbox" className="checkbox" /></div>
 
 				<section className="task-title">
 					<button className="delete-btn" onClick={() => onRemoveTask(task.id)}>

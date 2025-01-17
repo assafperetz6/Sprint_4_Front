@@ -43,8 +43,8 @@ export function AddTask({ group }) {
 			<div className="sticky-container">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
 
-				<div className="check-box-wrapper flex justify-center align-center">
-					<input className="check-box" type="checkbox" />
+				<div className="checkbox-wrapper flex justify-center align-center">
+					<input className="checkbox" type="checkbox" />
 				</div>
 
 				<form onSubmit={onAddTask}>

@@ -520,8 +520,8 @@ export const svgs = {
 		<svg
 			viewBox="0 0 20 20"
 			fill="currentColor"
-			width="20"
-			height="20"
+			width="18"
+			height="18"
 			aria-hidden="true"
 			className="icon_35c1b9ef14 noFocusStyle_e846aee9b1"
 			data-testid="icon"

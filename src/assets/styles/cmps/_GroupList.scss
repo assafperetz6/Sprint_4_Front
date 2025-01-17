@@ -6,9 +6,6 @@
 
 	padding: 0px 0px 40px;
 
-	// overflow-x: scroll;
-	// overflow-y: scroll;
-
 	@media (min-width: $mobile-breakpoint) {
 		padding-block-end: 40px;
 	}
@@ -24,14 +21,15 @@
 
 	.task-item-col {
 		&.sticky-container,  // This targets the "Item" column
-        &.check-box {
-			// This targets the checkbox column
-			position: sticky;
-			background-color: #fff;
-			z-index: 30;
-		}
+        // &.check-box {
+		// 	// This targets the checkbox column
 
-		&.check-box {
+		// 	position: sticky;
+		// 	background-color: #fff;
+		// 	z-index: 30;
+		// }
+
+		& .check-box {
 			left: 0;
 		}
 

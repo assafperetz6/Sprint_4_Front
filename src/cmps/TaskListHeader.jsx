@@ -9,7 +9,7 @@ export function TaskListHeader({ group }) {
 		<ul className="task-list-header task-row clean-list flex full">
 			<li className="sticky-container flex">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
-				<input type="checkbox" className="check-box" />
+				<div className="checkbox-wrapper"><input type="checkbox" className="checkbox" /></div>
 				<div className="task-title-header">Item</div>
 			</li>
 
