@@ -65,14 +65,13 @@ export function TaskPreview({ group, task }) {
 					</button> */}
 
 					<div className="title-main-container">
-						<div className="link-wrapper">
-							<span>{task.title}</span>
-							<Link to={`task/${task.id}`} className="open-task-details">
-								&nbsp; {svgs.expand} open
-							</Link>
-						</div>
-						<div className="add-update-btn">{svgs.addUpdate}</div>
+						<input type="text" onChange={handleChnage} onBlur={onBlur} value={titleToEdit} />
+
+						<Link to={`task/${task.id}`} className="open-task-details">
+							&nbsp; {svgs.expand} open
+						</Link>
 					</div>
+					<div className="add-update-btn">{svgs.addUpdate}</div>
 				</section>
 			</section>
 
