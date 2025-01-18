@@ -74,11 +74,11 @@ export function SideBar() {
 			</button>
 			<nav>
 				<div>
-					<NavLink end to="/board">
+					<NavLink end to="/home">
 						{svgs.house} Home
 					</NavLink>
 				</div>
-				<NavLink to="my_work">{svgs.myWork} My work</NavLink>
+				<NavLink to="/board">{svgs.myWork} My work</NavLink>
 			</nav>
 
 			<div className="favorite-container">

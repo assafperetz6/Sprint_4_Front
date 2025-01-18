@@ -1,13 +1,17 @@
-
+import { useNavigate } from 'react-router-dom'
+import { svgs } from "../services/svg.service";
 
 export function BoardPreview({ board }){
 
+    const navigate = useNavigate()
+
     return (
-        <section className="board-preview">
-            <h1>ID: {board._id}</h1>
-            <h1>TITLE: {board.title}</h1>
-            <h1>Creatd by:</h1>
-            <pre>{JSON.stringify(board.createdBy, null, 2)}</pre>
-        </section>
+        <li onClick={() => navigate(`/board/${board._id}`)} className="board-preview">
+            {svgs.boardImg}
+            <h2>
+                <span>{svgs.board} {board.title}</span>
+                <button>{svgs.star}</button>
+            </h2>
+        </li>
     )
 }
