@@ -520,8 +520,8 @@ export const svgs = {
 		<svg
 			viewBox="0 0 20 20"
 			fill="currentColor"
-			width="20"
-			height="20"
+			width="18"
+			height="18"
 			aria-hidden="true"
 			className="icon_35c1b9ef14 noFocusStyle_e846aee9b1"
 			data-testid="icon"
@@ -1078,16 +1078,27 @@ export const svgs = {
 		</svg>
 	),
 	exit: (
-		<svg 
-		xmlns="http://www.w3.org/2000/svg" 
-		viewBox="0 0 20 20" 
-		fill="currentColor" 
-		width="25" 
-		height="25" 
-		aria-hidden="true" 
-		data-testid="icon"
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 20 20"
+			fill="currentColor"
+			width="25"
+			height="25"
+			aria-hidden="true"
+			data-testid="icon"
 		>
-			<path d="M6.331 5.27a.75.75 0 0 0-1.06 1.06L8.94 10l-3.67 3.668a.75.75 0 1 0 1.06 1.06L10 11.06l3.668 3.669a.75.75 0 0 0 1.06-1.06l-3.668-3.67 3.67-3.669a.75.75 0 0 0-1.061-1.06L10 8.939l-3.669-3.67Z"/>
+			<path d="M6.331 5.27a.75.75 0 0 0-1.06 1.06L8.94 10l-3.67 3.668a.75.75 0 1 0 1.06 1.06L10 11.06l3.668 3.669a.75.75 0 0 0 1.06-1.06l-3.668-3.67 3.67-3.669a.75.75 0 0 0-1.061-1.06L10 8.939l-3.669-3.67Z" />
+		</svg>
+	),
+	checkmark: (
+		<svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true">
+			<path
+				d="M8.53033 14.2478L8 13.7175L7.46967 14.2478C7.76256 14.5407 8.23744 14.5407 8.53033 14.2478ZM8 12.6569L4.53033 9.18718C4.23744 8.89429 3.76256 8.89429 3.46967 9.18718C3.17678 9.48008 3.17678 9.95495 3.46967 10.2478L7.46967 14.2478L8 13.7175L8.53033 14.2478L16.2478 6.53033C16.5407 6.23743 16.5407 5.76256 16.2478 5.46967C15.955 5.17677 15.4801 5.17677 15.1872 5.46967L8 12.6569Z"
+				fill="none"
+				stroke="white"
+				strokeWidth="0.1"
+				className="checkmark-path"
+			></path>
 		</svg>
 	),
 }

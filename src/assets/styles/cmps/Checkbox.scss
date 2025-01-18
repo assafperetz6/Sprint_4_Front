@@ -1,0 +1,62 @@
+.checkbox-wrapper {
+	position: relative;
+	display: flex;
+
+    flex-shrink: 0;
+	justify-content: center;
+	align-items: center;
+
+	height: 100%;
+	width: 32px;
+
+    border-inline-end: $border;
+    margin-top: auto;
+    margin-bottom: auto;
+
+	> input {
+		appearance: none;
+		height: 16px;
+		width: 16px;
+
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		margin: 0;
+
+        &:hover {
+            border-color: $clr4;
+        }
+
+		&:checked {
+			border: none;
+			background-color: $blue3;
+
+            ~ .check-icon .checkmark-path {
+                animation: draw-checkmark 0.3s ease forwards;
+            }
+		}
+	}
+
+	.check-icon {
+		position: absolute;
+        top: 6px;
+        
+		pointer-events: none;
+
+        .task-preview & {
+            top: 4px;
+        }
+	}
+
+	// /* Assuming your checkmark SVG path is targetable with some class */
+	// // .checkmark-path {
+	// // 	stroke-dasharray: 40; /* Length of the path */
+	// // 	stroke-dashoffset: 40; /* Start fully "hidden" */
+	// // }
+
+	@keyframes draw-checkmark {
+		to {
+			// stroke-dashoffset: 0; /* Animate to fully "drawn" */
+            fill: white;
+		}
+	}
+}

@@ -6,11 +6,13 @@
 
 	.sticky-container {
 		position: sticky;
-		height: calc($task-row-height);
 		left: 0;
-		z-index: 1;
-		background-color: $clr3;
-		border-inline: 1px solid $clr8;
+
+		display: flex;
+		align-items: center;
+		height: calc($task-row-height);
+
+		border-inline-end: 1px solid $clr8;
 		border-block-end: 1px solid $clr8;
 	}
 

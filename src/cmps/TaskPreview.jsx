@@ -8,6 +8,7 @@ import { SET_BOARD } from '../store/reducers/board.reducer'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
 import { removeTask, updateTask } from '../store/actions/board.actions'
+import { Checkbox } from './Checkbox'
 import { useEffect, useState } from 'react'
 
 export function TaskPreview({ group, task }) {
@@ -53,22 +54,24 @@ export function TaskPreview({ group, task }) {
 
 	return (
 		<li className="task-preview task-row flex full">
-			<section className="sticky-container flex">
+			<section className="sticky-container">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
 
-				<input type="checkbox" className="check-box" />
+				<Checkbox />
 
 				<section className="task-title">
-					<button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
+					{/* <button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
 						{svgs.delete}
-					</button>
+					</button> */}
 
-					<div className="title-main-container justify-between">
-						<input type="text" value={titleToEdit} onChange={handleChnage} onBlur={onBlur} />
-						<Link to={`task/${task.id}`} className="open-task-details">
-							&nbsp; {svgs.expand} open
-						</Link>
-						<div>{svgs.addUpdate}</div>
+					<div className="title-main-container">
+						<div className="link-wrapper">
+							<span>{task.title}</span>
+							<Link to={`task/${task.id}`} className="open-task-details">
+								&nbsp; {svgs.expand} open
+							</Link>
+						</div>
+						<div className="add-update-btn">{svgs.addUpdate}</div>
 					</div>
 				</section>
 			</section>
