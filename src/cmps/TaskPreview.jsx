@@ -7,11 +7,19 @@ import { DynamicCmp } from './DynamicCmp'
 import { SET_BOARD } from '../store/reducers/board.reducer'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
-import { removeTask } from '../store/actions/board.actions'
+import { removeTask, updateTask } from '../store/actions/board.actions'
+import { useEffect, useState } from 'react'
 
 export function TaskPreview({ group, task }) {
+	const [isEditing, setIsEditing] = useState(false)
+	const [titleToEdit, setTitleToEdit] = useState('')
+
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const { boardId } = useParams()
+
+	useEffect(() => {
+		setTitleToEdit(task.title)
+	}, [])
 
 	function onRemoveTask(taskId) {
 		try {
@@ -20,6 +28,27 @@ export function TaskPreview({ group, task }) {
 			console.log('cannot remove task', err)
 			showErrorMsg('cannot remove task')
 		}
+	}
+
+	function handleChnage({ target }) {
+		setTitleToEdit(target.value)
+	}
+
+	async function onSaveTask() {
+		try {
+			const taskToSave = { ...task, title: titleToEdit }
+			await updateTask(board._id, group.id, taskToSave)
+		} catch (err) {
+			console.log('cannot update title', err)
+			showErrorMsg('cannot update title')
+		}
+	}
+
+	function onBlur() {
+		if (titleToEdit) {
+			onSaveTask()
+			setIsEditing(false)
+		} else return
 	}
 
 	return (
@@ -35,11 +64,11 @@ export function TaskPreview({ group, task }) {
 					</button>
 
 					<div className="title-main-container justify-between">
-						<span>{task.title}</span>
-						<div>{svgs.addUpdate}</div>
+						<input type="text" value={titleToEdit} onChange={handleChnage} onBlur={onBlur} />
 						<Link to={`task/${task.id}`} className="open-task-details">
 							&nbsp; {svgs.expand} open
 						</Link>
+						<div>{svgs.addUpdate}</div>
 					</div>
 				</section>
 			</section>

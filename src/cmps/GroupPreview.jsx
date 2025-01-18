@@ -5,7 +5,7 @@ import { removeGroup } from '../store/actions/board.actions'
 import { showErrorMsg } from '../services/event-bus.service'
 import { GroupTitle } from './GroupTitle'
 
-export function GroupPreview({ group, cmpsOrder }) {
+export function GroupPreview({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
 	async function onRemoveGroup(groupId) {

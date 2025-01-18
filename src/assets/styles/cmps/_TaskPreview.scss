@@ -8,7 +8,7 @@
 		position: sticky;
 		height: calc($task-row-height);
 		left: 0;
-		z-index: 2;
+		z-index: 1;
 		background-color: $clr3;
 		border-inline: 1px solid $clr8;
 		border-block-end: 1px solid $clr8;
@@ -16,6 +16,10 @@
 
 	.title-main-container {
 		width: 100%;
+	}
+
+	:not(.sticky-container) {
+		z-index: 0;
 	}
 
 	&:hover {
