@@ -114,24 +114,24 @@
 			display: inline-block;
 			border-radius: 50%;
 		}
+
+		input {
+			all: unset;
+			font-weight: 500;
+			font-size: rem(18px);
+			font-family: $title-font-family;
+			padding-inline-start: 8px;
+			// width: 70vw;
+
+			&:focus {
+				outline: none;
+			}
+		}
 	}
 
 	.edit {
 		border: 1px solid $clr7;
 		border-radius: 4px;
-	}
-
-	input {
-		all: unset;
-		font-weight: 500;
-		font-size: rem(18px);
-		font-family: $title-font-family;
-		padding-inline-start: 8px;
-		// width: 70vw;
-
-		&:focus {
-			outline: none;
-		}
 	}
 
 	// 	.expand-arrow-container {
