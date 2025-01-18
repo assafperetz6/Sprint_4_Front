@@ -19,41 +19,6 @@
 		grid-template-columns: subgrid;
 	}
 
-	.task-item-col {
-		&.sticky-container,  // This targets the "Item" column
-        // &.check-box {
-		// 	// This targets the checkbox column
-
-		// 	position: sticky;
-		// 	background-color: #fff;
-		// 	z-index: 30;
-		// }
-
-		& .check-box {
-			left: 0;
-		}
-
-		&.sticky-container {
-			left: 32px; // Adjust based on your checkbox width
-		}
-	}
-
-	.group-sticky-container {
-		position: sticky;
-		top: 0;
-
-		z-index: 40;
-		background-color: #ffff;
-
-		.task-item-col {
-			&.sticky-container,
-			&.check-box {
-				position: sticky;
-				z-index: 41;
-			}
-		}
-	}
-
 	min-width: 1100px;
 
 	.add-group-btn {

@@ -1,6 +1,7 @@
 import { hexToRgba } from '../services/util.service'
 
 import { useSelector } from 'react-redux'
+import { Checkbox } from './Checkbox'
 
 export function TaskListHeader({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
@@ -9,7 +10,7 @@ export function TaskListHeader({ group }) {
 		<ul className="task-list-header task-row clean-list flex full">
 			<li className="sticky-container flex">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
-				<div className="checkbox-wrapper"><input type="checkbox" className="checkbox" /></div>
+				<Checkbox />
 				<div className="task-title-header">Item</div>
 			</li>
 

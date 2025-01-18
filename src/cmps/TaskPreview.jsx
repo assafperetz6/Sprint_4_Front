@@ -8,6 +8,7 @@ import { SET_BOARD } from '../store/reducers/board.reducer'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
 import { removeTask } from '../store/actions/board.actions'
+import { Checkbox } from './Checkbox'
 
 export function TaskPreview({ group, task }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
@@ -24,10 +25,10 @@ export function TaskPreview({ group, task }) {
 
 	return (
 		<li className="task-preview task-row flex full">
-			<section className="sticky-container flex">
+			<section className="sticky-container">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
 
-				<div className="checkbox-wrapper"><input type="checkbox" className="checkbox" /></div>
+				<Checkbox />
 
 				<section className="task-title">
 					<button className="delete-btn" onClick={() => onRemoveTask(task.id)}>

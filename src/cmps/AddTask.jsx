@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateBoard } from '../store/actions/board.actions'
 import { hexToRgba } from '../services/util.service'
 import { SET_BOARD } from '../store/reducers/board.reducer'
+import { Checkbox } from './Checkbox'
 
 export function AddTask({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
@@ -43,9 +44,7 @@ export function AddTask({ group }) {
 			<div className="sticky-container">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
 
-				<div className="checkbox-wrapper flex justify-center align-center">
-					<input className="checkbox" type="checkbox" />
-				</div>
+				<Checkbox />
 
 				<form onSubmit={onAddTask}>
 					<input className="add-task-input" ref={elInput} placeholder="+ Add item" value={taskToAdd.title} onBlur={onBlur} onChange={handleChange}></input>

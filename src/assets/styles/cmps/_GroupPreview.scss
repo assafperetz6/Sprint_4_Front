@@ -31,23 +31,6 @@
 		align-items: center;
 		height: 40px;
 	}
-
-	.checkbox-wrapper {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		height: 32px;
-		width: 32px;
-		
-		> input {
-			height: 16px;
-			width: 16px;
-
-			// border: 1px solid red;
-			margin: 0;
-		}
-	}
 }
 	// 	.title-count-container {
 	// 		display: flex;
