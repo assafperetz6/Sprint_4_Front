@@ -31,16 +31,25 @@ export function GroupTitle({ group }) {
 		placement: 'bottom-start'
 	})
 
-	// useEffect(() => {
-	// 	function handleClickOutside(event) {
-	// 		if (!groupRef.current?.contains(event.target) && !event.target.closest('.color-picker')) {
-	// 			handleSave()
-	// 		}
-	// 	}
+	useEffect(() => {
+		function handleClickOutside(event) {
+			if (!isEditing) return
 
-	// 	document.addEventListener('mousedown', handleClickOutside)
-	// 	return () => document.removeEventListener('mousedown', handleClickOutside)
-	// }, [isEditing, titleToEdit])
+			if (!event.target.closest('.group-title-container')) {
+				handleSave()
+				setIsColorPickerOpen(false)
+				setIsEditing(false)
+			}
+		}
+
+		if (isEditing) {
+			document.addEventListener('mousedown', handleClickOutside)
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [isEditing])
 
 	function handleChange({ target }) {
 		setTitleToEdit(target.value)
@@ -102,7 +111,7 @@ export function GroupTitle({ group }) {
 			{isEditing ? (
 				<>
 					<span className="group-color-picker" style={{ background: group.style.color }} onClick={openColorPicker} ref={setReferenceElement}></span>
-					<input type="text" value={titleToEdit} onChange={handleChange} />
+					<input type="text" value={titleToEdit} onChange={handleChange} autoFocus />
 				</>
 			) : (
 				<h4 className="group-title">{group.title}</h4>
