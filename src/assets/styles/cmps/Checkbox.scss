@@ -6,10 +6,10 @@
 	justify-content: center;
 	align-items: center;
 
-	height: 32px;
+	height: 100%;
 	width: 32px;
 
-
+    border-inline-end: $border;
     margin-top: auto;
     margin-bottom: auto;
 
@@ -38,8 +38,8 @@
 
 	.check-icon {
 		position: absolute;
-        
         top: 6px;
+        
 		pointer-events: none;
 
         .task-preview & {

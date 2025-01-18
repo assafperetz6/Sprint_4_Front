@@ -3,6 +3,7 @@ import { updateGroup } from '../store/actions/board.actions'
 import { usePopper } from 'react-popper'
 import { useSelector } from 'react-redux'
 import { ColorPicker } from './ColorPicker'
+import { svgs } from '../services/svg.service'
 
 export function GroupTitle({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
@@ -99,6 +100,7 @@ export function GroupTitle({ group }) {
 
 	return (
 		<div className="group-title-container" style={{ color: group.style.color }} onClick={startEditing}>
+			<button className='toggle-group-preview'>{svgs.arrowDown}</button>
 			{isEditing ? (
 				<div className={`renaming-wrapper flex align-center ${isEditing ? 'editing' : ''}`} onClick={e => e.stopPropagation()}>
 					<button ref={setReferenceElement} onClick={openColorPicker} style={{ backgroundColor: group.style.color }} className="group-color-picker" />

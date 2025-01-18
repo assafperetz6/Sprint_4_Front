@@ -11,7 +11,7 @@ import { removeTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
 
 export function TaskPreview({ group, task }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+	const board = useSelector((storeState) => storeState.boardModule.board)
 	const { boardId } = useParams()
 
 	function onRemoveTask(taskId) {
@@ -26,21 +26,26 @@ export function TaskPreview({ group, task }) {
 	return (
 		<li className="task-preview task-row flex full">
 			<section className="sticky-container">
-				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
+				<div
+					className="colored-border"
+					style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
+				></div>
 
 				<Checkbox />
 
 				<section className="task-title">
-					<button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
+					{/* <button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
 						{svgs.delete}
-					</button>
+					</button> */}
 
-					<div className="title-main-container justify-between">
-						<span>{task.title}</span>
-						<div>{svgs.addUpdate}</div>
-						<Link to={`task/${task.id}`} className="open-task-details">
-							&nbsp; {svgs.expand} open
-						</Link>
+					<div className="title-main-container">
+						<div className="link-wrapper">
+							<span>{task.title}</span>
+							<Link to={`task/${task.id}`} className="open-task-details">
+								&nbsp; {svgs.expand} open
+							</Link>
+						</div>
+						<div className="add-update-btn">{svgs.addUpdate}</div>
 					</div>
 				</section>
 			</section>

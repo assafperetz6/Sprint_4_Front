@@ -61,6 +61,10 @@ button {
 	font-family: $main-font-family;
 }
 
+*:focus, *:focus-visible {
+	outline: none;
+}
+
 @media screen and (min-width: $mobile-breakpoint) {
 	:root {
 		--options-size: 22px;

@@ -9,51 +9,50 @@
 	flex-shrink: 0;
 	user-select: none;
 
-	// padding-inline-end: 10px;
 	.title-main-container {
+		display: flex;
+
+		align-items: center;
+
 		height: $task-row-height;
 		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
-	}
 
-	.conversation-icon-container {
-		cursor: pointer;
-		height: 100%;
-		border-inline-start: 1px solid $clr8;
-		color: $clr9;
-
-		&.comments-available {
-			color: $clr7;
-		}
-
-		&:hover {
-			color: $clr7;
-		}
-		div {
-			width: 100%;
-			height: 100%;
+		.link-wrapper {
 			display: flex;
+			justify-content: space-between;
 			align-items: center;
-			justify-content: center;
-			padding-inline: 16px;
-			position: relative;
 
-			.updates-count {
-				cursor: pointer;
-				position: absolute;
-				top: 12px;
-				background-color: $clr7;
-				border-radius: 250px;
-				color: #ffff;
-				font-size: rem(10px);
-				padding: 2px 4px;
-				line-height: 9px;
+			width: calc(100% - 65px);
+		}
+
+		span {
+			margin: 6px 10px 6px 6px;
+			
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			
+			cursor: text;
+
+			&:hover {
+				outline: 1px solid $input-hover-border-clr;
+				border-radius: 4px;
+				cursor: text;
 			}
+		}
+
+		.add-update-btn {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			width: 65px;
+
+			border-inline-start: $border;
 		}
 	}
 
@@ -106,21 +105,6 @@
 		}
 	}
 
-	span {
-		margin: 6px 10px 6px 6px;
-		// padding: 2px 0px 3px;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-		cursor: text;
-
-		&:hover {
-			outline: 1px solid $input-hover-border-clr;
-			border-radius: 4px;
-			cursor: text;
-		}
-	}
-
 	input {
 		all: unset;
 		cursor: text;
@@ -134,3 +118,41 @@
 		}
 	}
 }
+
+
+
+	// .conversation-icon-container {
+	// 	cursor: pointer;
+	// 	height: 100%;
+	// 	border-inline-start: 1px solid $clr8;
+	// 	color: $clr9;
+
+	// 	&.comments-available {
+	// 		color: $clr7;
+	// 	}
+
+	// 	&:hover {
+	// 		color: $clr7;
+	// 	}
+	// 	div {
+	// 		width: 100%;
+	// 		height: 100%;
+	// 		display: flex;
+	// 		align-items: center;
+	// 		justify-content: center;
+	// 		padding-inline: 16px;
+	// 		position: relative;
+
+	// 		.updates-count {
+	// 			cursor: pointer;
+	// 			position: absolute;
+	// 			top: 12px;
+	// 			background-color: $clr7;
+	// 			border-radius: 250px;
+	// 			color: #ffff;
+	// 			font-size: rem(10px);
+	// 			padding: 2px 4px;
+	// 			line-height: 9px;
+	// 		}
+	// 	}
+	// }

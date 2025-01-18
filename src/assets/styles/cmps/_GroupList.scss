@@ -1,6 +1,6 @@
 .group-list {
-	position: sticky;
-	left: 0;
+	position: relative;
+
 	display: grid;
 	grid-template-columns: minmax(220px, auto) 1fr;
 
