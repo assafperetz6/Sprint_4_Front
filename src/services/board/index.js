@@ -155,7 +155,7 @@ function getEmptyTask() {
 		status: 'sl104',
 		priority: 'pl104',
 		comments: [],
-		memberIds: [],
+		members: [],
 		dueDate: null,
 		timeline: {
 			startDate: null,
