@@ -26,7 +26,7 @@
 		display: none;
 		
 		background-color: $clr3;
-		z-index: 30;
+		z-index: 40;
 
 		&.show {
 			display: grid;
@@ -67,7 +67,7 @@
 	.group-title-container {
 		position: sticky;
 		top: 138px;
-		left: 40px;
+		left: 84px;
 
 		display: flex;
 		align-items: center;
