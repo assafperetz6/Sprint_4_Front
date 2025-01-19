@@ -110,25 +110,26 @@ export function GroupTitle({ group }) {
 	console.log(isColorPickerOpen)
 
 	return (
-		<>
-			<button className="toggle-group-preview">{svgs.arrowDown}</button>
-			<div className={`group-title-container ${isEditing ? 'edit' : ''}`} style={{ color: group.style.color }} onClick={startEditing}>
+		<div className="row-header flex" style={{ color: group.style.color }}>
+			<div className="toggle-group-preview flex align-center justify-center">{svgs.arrowDown}</div>
+
+			<div className={`group-title-container ${isEditing ? 'edit' : ''}`} onClick={startEditing}>
 				{isEditing ? (
 					<>
 						<span className="group-color-picker" style={{ background: group.style.color }} onClick={openColorPicker} ref={setReferenceElement} onKeyDown={handleKeyPressed}></span>
-						<input type="text" value={titleToEdit} onChange={handleChange} autoFocus style={{ color: group.style.color }} />
+						<input type="text" value={titleToEdit} onChange={handleChange} autoFocus style={{ color: group.style.color }}></input>
 					</>
 				) : (
 					<h4 className="group-title">{group.title}</h4>
 				)}
-			</div>
 
-			{isColorPickerOpen && (
-				<div ref={setPopperElement} className="color-picker-popup" style={styles.popper} {...attributes.popper}>
-					<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
-					<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
-				</div>
-			)}
-		</>
+				{isColorPickerOpen && (
+					<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
+						<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
+						<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
+					</div>
+				)}
+			</div>
+		</div>
 	)
 }
