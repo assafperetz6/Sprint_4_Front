@@ -60,9 +60,10 @@
 
 		border-inline-end: 1px solid $clr8;
 		border-block-end: 1px solid $clr8;
+	}
 
-		background-color: $clr3;
-		z-index: 2;
+	:not(.sticky-container) {
+		z-index: 0;
 	}
 
 	&:hover {

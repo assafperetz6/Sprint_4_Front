@@ -140,4 +140,51 @@
 			}
 		}
 	}
+
+	.extra-members {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		height: 30px;
+		min-width: 30px;
+		border-radius: 50%;
+
+		background-color: $gray4;
+		color: $clr3;
+		border: 2px solid $task-hover-bgc;
+		font-size: 12px;
+		font-weight: 300;
+	}
+
+	.member-avatars-container {
+		position: relative;
+	}
+
+	.add-member-btn {
+		display: none;
+		color: $clr3;
+		background-color: $clr7;
+		font-size: 12px;
+		margin: 0 -6px;
+		border-radius: 50%;
+		width: 12px;
+		height: 12px;
+		position: absolute;
+		left: 14px;
+		z-index: 5;
+
+		svg {
+			height: 12px;
+			width: 12px;
+		}
+	}
+
+	&:hover {
+		.add-member-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
 }
