@@ -9,52 +9,61 @@ import { svgs } from '../services/svg.service.jsx'
 import { GroupPreview } from './GroupPreview.jsx'
 import { GroupHeader } from './GroupHeader.jsx'
 
-export function GroupList({ groups }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+export function GroupList({
+	groups,
+	isScrolling,
+	currentGroup,
+	setCurrentGroup,
+	scrollContainer,
+}) {
+	const board = useSelector((storeState) => storeState.boardModule.board)
 	const dispatch = useDispatch()
 
-    const [currentGroup, setCurrentGroup] = useState(null)
-	const [isScrolling, setIsScrolling] = useState(false)
 	const groupRefs = useRef([])
 
-	useEffect(() => {
-		const handleScroll = () => {
-            setIsScrolling(window.scrollY > 0)
-        }
-        window.addEventListener('scroll', handleScroll)
+	
 
-        const options = {
-            root: null,
-            rootMargin: `-20px 0px 0px 0px`,
-            threshold: 0
-        }
+	useEffect(() => {
+		if (!scrollContainer) return
+
+		const headerHeight = 76 // Group header height
+		const boardHeaderHeight = 174  // Height of the board header
+		const windowVH = window.innerHeight
+		let lastScrollTop = scrollContainer.scrollTop
+
+
+		const options = {
+			rootMargin: `-240px 0px -${windowVH - 100}px`,
+		}
 
 		const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const idx = parseInt(entry.target.dataset.groupIndex)
-                const group = groups[idx]
+			const currentScrollTop = scrollContainer.scrollTop
+			// Determine scroll direction
+			const isScrollingDown = currentScrollTop > lastScrollTop
+			lastScrollTop = currentScrollTop
 
-                if (entry.boundingClientRect.top <= 0) {
-                    setCurrentGroup(group)
-                }
-            })
-        }, options)
+			entries.forEach((entry) => {
+				const idx = parseInt(entry.target.dataset.groupIndex)
+				const group = groups[idx]
 
-        // Observe all group elements
-        groupRefs.current.forEach((element, idx) => {
-            if (element) {
-                element.dataset.groupIndex = idx
-                observer.observe(element)
-            }
-        })
+				if (entry.isIntersecting) setCurrentGroup(group)
+			})
+		}, options)
 
-        return () => {
-            groupRefs.current.forEach(element => {
-                if (element) observer.unobserve(element)
-            })
-            window.removeEventListener('scroll', handleScroll)
-        }
-    }, [groups])
+		// Observe all group elements
+		groupRefs.current.forEach((element, idx) => {
+			if (element) {
+				element.dataset.groupIndex = idx
+				observer.observe(element)
+			}
+		})
+
+		return () => {
+			groupRefs.current.forEach((element) => {
+				if (element) observer.unobserve(element)
+			})
+		}
+	}, [groups, scrollContainer])
 
 	function onAddGroup() {
 		const groupToAdd = boardService.getNewGroup()
@@ -68,15 +77,17 @@ export function GroupList({ groups }) {
 
 	return (
 		<section className="group-list">
-			<div className='sticky-header-container' style={ { display: isScrolling ? 'block' : 'none' }}>
-				{currentGroup && <GroupHeader group={currentGroup}/>}
+			<div
+				className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}
+			>
+				{currentGroup && <GroupHeader group={currentGroup} />}
 			</div>
 
 			{groups.map((group, idx) => (
-				<div 
-					key={group.id} 
-					ref={el => groupRefs.current[idx] = el}
-					className='full'
+				<div
+					key={group.id}
+					ref={(el) => (groupRefs.current[idx] = el)}
+					className="full"
 				>
 					<GroupPreview group={group} cmpsOrder={board.cmpsOrder} />
 				</div>
