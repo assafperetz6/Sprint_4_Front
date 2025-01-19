@@ -21,7 +21,7 @@ export function GroupTitle({ group }) {
 	const { styles, attributes } = usePopper(referenceElement, popperElement, {
 		modifiers: [
 			{ name: 'arrow', options: { element: arrowElement } },
-			{ name: 'offset', options: { offset: [0, 8] } },
+			{ name: 'offset', options: { offset: [-12, 11] } },
 			{
 				name: 'preventOverflow',
 				options: {
@@ -110,7 +110,7 @@ export function GroupTitle({ group }) {
 	console.log(isColorPickerOpen)
 
 	return (
-		<div className="row-header flex" style={{ color: group.style.color }}>
+		<div className="row-header flex align-center" style={{ color: group.style.color }}>
 			<div className="toggle-group-preview flex align-center justify-center">{svgs.arrowDown}</div>
 
 			<div className={`group-title-container ${isEditing ? 'edit' : ''}`} onClick={startEditing}>
