@@ -1,10 +1,14 @@
 import { useSelector } from 'react-redux'
 import { svgs } from '../services/svg.service'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import DEFAULT_AVATAR from '../assets/images/dapulse_default_photo.png'
 
 export function TopBar() {
+
 	const user = useSelector(storeState => storeState.userModule.user)
+	const { pathname } = useLocation()
+	
+	// if(pathname.startsWith('/login')) return null
 	return (
 		<div className="top-bar flex full">
 			<header className="top-bar-header flex align-center justify-between full">
@@ -25,7 +29,7 @@ export function TopBar() {
 					<button className="nav-btn flex justify-center align-center">{svgs.search}</button>
 
 					<button className="avatar-with-company-logo flex justify-center align-center">
-						<Link className="flex" to={`/user/${user?._id}`}>
+						<Link className="flex" to={`/login`}>
 							<div className="account-logo-wrapper flex justify-center align-center">
 								<img style={{ width: '24px', height: '24px', borderRadius: '4px' }} src="https://cdn.monday.com/images/logos/monday_logo_icon.png" alt="logo" />
 							</div>

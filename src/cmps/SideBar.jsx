@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import { svgs } from '../services/svg.service'
 import { boardService } from '../services/board'
@@ -16,7 +16,7 @@ export function SideBar() {
 	const [boardNameToEdit, setboardNameToEdit] = useState(null)
 	const [isCollapsed, setIsCollapsed] = useState(false)
 	const [isHovered, setisHovered] = useState(false)
-    
+	const { pathname } = useLocation()
 
 	useEffect(() => {
 		if (!boards?.length) loadBoards()
@@ -67,6 +67,7 @@ export function SideBar() {
 		}
 	}
 
+	if(pathname.startsWith('/login')) return null
 	return (
 		<aside className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isHovered ? 'hovered' : ''}`} onMouseEnter={handleMouseHover} onMouseLeave={handleMouseHover}>
 			<button className={`toggle-sidebar ${!isHovered ? 'hidden' : ''}`} onClick={toggleSidebar}>
