@@ -13,7 +13,7 @@ function getEmptyBoard() {
 		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker'],
 		createdBy: {
 			_id: 'u101',
-			fullname: 'Abi Abambi',
+			fullname: 'Alon Wohl',
 			imgUrl: `https://robohash.org/alon?set=set4`
 		},
 
@@ -27,6 +27,11 @@ function getEmptyBoard() {
 				_id: 'u102',
 				fullname: 'Dror gaon',
 				imgUrl: 'https://robohash.org/dror?set=set4'
+			},
+			{
+				_id: 'u103',
+				fullname: 'Assaf Peretz',
+				imgUrl: 'https://robohash.org/assaf?set=set4'
 			}
 		],
 		groups: getDefaultGroups(),
@@ -150,7 +155,7 @@ function getEmptyTask() {
 		status: 'sl104',
 		priority: 'pl104',
 		comments: [],
-		memberIds: [],
+		members: [],
 		dueDate: null,
 		timeline: {
 			startDate: null,
@@ -159,8 +164,14 @@ function getEmptyTask() {
 	}
 }
 
+function getBoardMembers(board, filter = '') {
+	const members = board.members
+	const regex = new RegExp(filter, 'i')
+	return members.filter(member => regex.test(member.fullname))
+}
+
 const service = VITE_LOCAL === 'true' ? local : remote
 
-export const boardService = { getEmptyBoard, getNewGroup, getDefaultFilter, getEmptyTask, ...service }
+export const boardService = { getEmptyBoard, getNewGroup, getDefaultFilter, getEmptyTask, getBoardMembers, ...service }
 
 if (DEV) window.boardService = boardService

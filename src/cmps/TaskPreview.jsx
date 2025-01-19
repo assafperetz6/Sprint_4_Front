@@ -7,12 +7,20 @@ import { DynamicCmp } from './DynamicCmp'
 import { SET_BOARD } from '../store/reducers/board.reducer'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
-import { removeTask } from '../store/actions/board.actions'
+import { removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
+import { useEffect, useState } from 'react'
 
 export function TaskPreview({ group, task }) {
-	const board = useSelector((storeState) => storeState.boardModule.board)
+	const [isEditing, setIsEditing] = useState(false)
+	const [titleToEdit, setTitleToEdit] = useState('')
+
+	const board = useSelector(storeState => storeState.boardModule.board)
 	const { boardId } = useParams()
+
+	useEffect(() => {
+		setTitleToEdit(task.title)
+	}, [])
 
 	function onRemoveTask(taskId) {
 		try {
@@ -23,13 +31,31 @@ export function TaskPreview({ group, task }) {
 		}
 	}
 
+	function handleChnage({ target }) {
+		setTitleToEdit(target.value)
+	}
+
+	async function onSaveTask() {
+		try {
+			const taskToSave = { ...task, title: titleToEdit }
+			await updateTask(board._id, group.id, taskToSave)
+		} catch (err) {
+			console.log('cannot update title', err)
+			showErrorMsg('cannot update title')
+		}
+	}
+
+	function onBlur() {
+		if (titleToEdit) {
+			onSaveTask()
+			setIsEditing(false)
+		} else return
+	}
+
 	return (
 		<li className="task-preview task-row flex full">
 			<section className="sticky-container">
-				<div
-					className="colored-border"
-					style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
-				></div>
+				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
 
 				<Checkbox />
 
@@ -39,14 +65,13 @@ export function TaskPreview({ group, task }) {
 					</button> */}
 
 					<div className="title-main-container">
-						<div className="link-wrapper">
-							<span>{task.title}</span>
-							<Link to={`task/${task.id}`} className="open-task-details">
-								&nbsp; {svgs.expand} open
-							</Link>
-						</div>
-						<div className="add-update-btn">{svgs.addUpdate}</div>
+						<input type="text" onChange={handleChnage} onBlur={onBlur} value={titleToEdit} />
+
+						<Link to={`task/${task.id}`} className="open-task-details">
+							&nbsp; {svgs.expand} open
+						</Link>
 					</div>
+					<div className="add-update-btn">{svgs.addUpdate}</div>
 				</section>
 			</section>
 

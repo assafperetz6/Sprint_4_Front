@@ -5,8 +5,8 @@ import { removeGroup } from '../store/actions/board.actions'
 import { showErrorMsg } from '../services/event-bus.service'
 import { GroupHeader } from './GroupHeader.jsx'
 
-export function GroupPreview({ group, cmpsOrder }) {
-	const board = useSelector((storeState) => storeState.boardModule.board)
+export function GroupPreview({ group }) {
+	const board = useSelector(storeState => storeState.boardModule.board)
 
 	async function onRemoveGroup(groupId) {
 		try {

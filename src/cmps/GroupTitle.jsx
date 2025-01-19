@@ -34,14 +34,23 @@ export function GroupTitle({ group }) {
 
 	useEffect(() => {
 		function handleClickOutside(event) {
-			if (!groupRef.current?.contains(event.target) && !event.target.closest('.color-picker')) {
+			if (!isEditing) return
+
+			if (!event.target.closest('.group-title-container')) {
 				handleSave()
+				setIsColorPickerOpen(false)
+				setIsEditing(false)
 			}
 		}
 
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => document.removeEventListener('mousedown', handleClickOutside)
-	}, [isEditing, titleToEdit])
+		if (isEditing) {
+			document.addEventListener('mousedown', handleClickOutside)
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [isEditing])
 
 	function handleChange({ target }) {
 		setTitleToEdit(target.value)
@@ -98,23 +107,28 @@ export function GroupTitle({ group }) {
 		setIsEditing(true)
 	}
 
+	console.log(isColorPickerOpen)
+
 	return (
-		<div className="group-title-container full" style={{ color: group.style.color }} onClick={startEditing}>
-			<button style={{ color: group.style.color }} className='toggle-group-preview'>{svgs.arrowDown}</button>
-			{isEditing ? (
-				<div className={`renaming-wrapper flex align-center ${isEditing ? 'editing' : ''}`} onClick={e => e.stopPropagation()}>
-					<button ref={setReferenceElement} onClick={openColorPicker} style={{ backgroundColor: group.style.color }} className="group-color-picker" />
-					<input className="group-title-input" type="text" onChange={handleChange} onKeyDown={handleKeyPressed} value={titleToEdit} name="title" id="groupTitle" autoFocus />
-					{isColorPickerOpen && (
-						<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
-							<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
-							<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
-						</div>
-					)}
+		<>
+			<button className="toggle-group-preview">{svgs.arrowDown}</button>
+			<div className={`group-title-container ${isEditing ? 'edit' : ''}`} style={{ color: group.style.color }} onClick={startEditing}>
+				{isEditing ? (
+					<>
+						<span className="group-color-picker" style={{ background: group.style.color }} onClick={openColorPicker} ref={setReferenceElement} onKeyDown={handleKeyPressed}></span>
+						<input type="text" value={titleToEdit} onChange={handleChange} autoFocus style={{ color: group.style.color }} />
+					</>
+				) : (
+					<h4 className="group-title">{group.title}</h4>
+				)}
+			</div>
+
+			{isColorPickerOpen && (
+				<div ref={setPopperElement} className="color-picker-popup" style={styles.popper} {...attributes.popper}>
+					<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
+					<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
 				</div>
-			) : (
-				<h4 className="group-title">{group.title}</h4>
 			)}
-		</div>
+		</>
 	)
 }

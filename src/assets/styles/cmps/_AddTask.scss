@@ -1,14 +1,14 @@
 .add-task {
 	position: sticky;
 	left: 0px;
-	
+
 	display: flex;
 	height: $task-row-height;
-	
+
 	border-block-end: 1px solid $clr8;
-	
+
 	background-color: #ffff;
-	
+
 	font-size: rem(14px);
 	cursor: text;
 
@@ -30,7 +30,7 @@
 
 	border-bottom-left-radius: 4px;
 
-	form{
+	form {
 		display: flex;
 		align-items: center;
 		padding-inline-start: 10px;
