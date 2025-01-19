@@ -27,17 +27,22 @@
 		min-width: 6px;
 	}
 
+	.group-header-wrapper {
+		// position: sticky;
+		// top: 138px;
+
+		display: grid;
+		grid-template-columns: subgrid;
+		z-index: 20;
+	}
+
 	.group-title-container {
-		position: sticky;
-		top: 138px;
 
 		display: flex;
 		align-items: center;
 		height: 40px;
 
 		background-color: $clr3;
-
-		z-index: 20;
 
 		.toggle-group-preview {
 			position: sticky;

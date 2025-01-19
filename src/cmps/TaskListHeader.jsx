@@ -3,15 +3,15 @@ import { hexToRgba } from '../services/util.service'
 import { useSelector } from 'react-redux'
 import { Checkbox } from './Checkbox'
 
-export function TaskListHeader({ group }) {
+export function TaskListHeader({ groupColor }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
 	return (
 		<ul className="task-list-header task-row clean-list flex full">
 			<li className="sticky-container flex">
-				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
+				<div className="colored-border" style={{ backgroundColor: hexToRgba(groupColor, 1) }}></div>
 				<Checkbox />
-				<div className="task-title-header">Item</div>
+				<div className="task-title-header">Task</div>
 			</li>
 
 			<ul className="task-columns flex">

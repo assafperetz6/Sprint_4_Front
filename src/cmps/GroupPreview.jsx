@@ -3,10 +3,10 @@ import { TaskList } from './TaskList'
 import { useSelector } from 'react-redux'
 import { removeGroup } from '../store/actions/board.actions'
 import { showErrorMsg } from '../services/event-bus.service'
-import { GroupTitle } from './GroupTitle'
+import { GroupHeader } from './GroupHeader.jsx'
 
 export function GroupPreview({ group, cmpsOrder }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+	const board = useSelector((storeState) => storeState.boardModule.board)
 
 	async function onRemoveGroup(groupId) {
 		try {
@@ -19,8 +19,7 @@ export function GroupPreview({ group, cmpsOrder }) {
 
 	return (
 		<section className="group-preview item-col full">
-			<GroupTitle group={group} />
-			<TaskListHeader group={group} tasks={group.tasks} />
+			<GroupHeader group={group} />
 			<TaskList group={group} />
 		</section>
 	)

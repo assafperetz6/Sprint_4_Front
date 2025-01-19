@@ -99,8 +99,8 @@ export function GroupTitle({ group }) {
 	}
 
 	return (
-		<div className="group-title-container" style={{ color: group.style.color }} onClick={startEditing}>
-			<button className='toggle-group-preview'>{svgs.arrowDown}</button>
+		<div className="group-title-container full" style={{ color: group.style.color }} onClick={startEditing}>
+			<button style={{ color: group.style.color }} className='toggle-group-preview'>{svgs.arrowDown}</button>
 			{isEditing ? (
 				<div className={`renaming-wrapper flex align-center ${isEditing ? 'editing' : ''}`} onClick={e => e.stopPropagation()}>
 					<button ref={setReferenceElement} onClick={openColorPicker} style={{ backgroundColor: group.style.color }} className="group-color-picker" />
