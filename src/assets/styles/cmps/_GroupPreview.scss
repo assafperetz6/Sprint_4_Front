@@ -17,6 +17,10 @@
 
 	background-color: $clr3;
 
+	.group-header-wrapper, li.add-task {
+		margin-inline-start: 40px;
+	}
+
 	.task-preview > * {
 		display: flex;
 		align-items: center;

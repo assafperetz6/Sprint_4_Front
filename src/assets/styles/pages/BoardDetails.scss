@@ -6,29 +6,28 @@
     height: 100%;
     width: 100%;
 
-    padding-inline-start: 20px;
-
     overflow: auto;
 
     .board-header-container {
         position: sticky;
         top: 0;
-        left: 0;
+        left: 38px;
 
+        margin: 0 30px 0 38px;
         background-color: $clr3;
         z-index: 30;
+
+        .board-header {
+            justify-content: space-between;
+            align-items: center;
+    
+            height: 32px;
+        }
     }
 
     .board-header, .board-tabs, .task-actions {
         display: flex;
         flex-shrink: 0;
-    }
-
-    .board-header {
-        justify-content: space-between;
-        align-items: center;
-
-        height: 32px;
     }
 
     .board-actions {

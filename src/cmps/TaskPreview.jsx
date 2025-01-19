@@ -9,10 +9,17 @@ import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
 import { removeTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
+import { useState } from 'react'
 
 export function TaskPreview({ group, task }) {
 	const board = useSelector((storeState) => storeState.boardModule.board)
 	const { boardId } = useParams()
+
+	const [activeMenuId, setActiveMenuId] = useState(null)
+
+	function toggleContextMenu(ev, taskId) {
+		setActiveMenuId(prev => (prev === taskId ? null : taskId))
+	}
 
 	function onRemoveTask(taskId) {
 		try {
@@ -26,6 +33,16 @@ export function TaskPreview({ group, task }) {
 	return (
 		<li className="task-preview task-row flex full">
 			<section className="sticky-container">
+				<div className="context-btn-container">
+					<button
+						className={`task-context-menu ${
+							activeMenuId === task.id ? 'open' : ''
+						}`}
+						onClick={(ev) => toggleContextMenu(ev, board._id)}
+					>
+						{svgs.threeDots}
+					</button>
+				</div>
 				<div
 					className="colored-border"
 					style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
@@ -34,10 +51,6 @@ export function TaskPreview({ group, task }) {
 				<Checkbox />
 
 				<section className="task-title">
-					{/* <button className="delete-btn" onClick={() => onRemoveTask(task.id)}>
-						{svgs.delete}
-					</button> */}
-
 					<div className="title-main-container">
 						<div className="link-wrapper">
 							<span>{task.title}</span>
@@ -67,31 +80,3 @@ export function TaskPreview({ group, task }) {
 {svgs.delete}
 </button> */
 }
-
-// <ul className="task-preview task-row flex">
-// <div className="main-preview-container">
-// 	<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
-
-// 	<li className="check-box">
-// 		<input type="checkbox" />
-// 	</li>
-// 	<div className="sticky-container">
-// 		<li className="task-title">
-// 			<button className="delete-btn" onClick={() => deleteTask(task.id)}>
-// 				{svgs.delete}
-// 			</button>
-// 			<div className="title-main-container justify-between">
-// 				<span>{task.title}</span>
-// 				<Link to={`task/${task.id}`} className="open-task-details">
-// 					&nbsp; {svgs.expand} open
-// 				</Link>
-// 			</div>
-// 		</li>
-// 	</div>
-
-// 	{board.cmpsOrder.map((cmp, idx) => (
-// 		<DynamicCmp cmp={cmp} key={idx} groupId={group.id} task={task} defaultWidth={colWidth} />
-// 	))}
-// </div>
-// <li className="line-end"></li>
-// </ul>
