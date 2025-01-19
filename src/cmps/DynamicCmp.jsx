@@ -1,5 +1,6 @@
 import { MemberPicker } from './dynamic-cmp/MemberPicker'
 import { LabelPicker } from './dynamic-cmp/LabelPicker'
+import { DatePicker } from './dynamic-cmp/DatePicker'
 
 export function DynamicCmp({ cmp, task, groupId }) {
 	let cmpDefaultWidth
@@ -14,11 +15,7 @@ export function DynamicCmp({ cmp, task, groupId }) {
 			return <MemberPicker task={task} cmp={cmp} groupId={groupId} defaultWidth={cmpDefaultWidth} />
 		case 'DatePicker':
 			cmpDefaultWidth = '140px'
-			return (
-				<span className="flex align-center justify-center" style={{ width: cmpDefaultWidth }}>
-					{task.dueDate}
-				</span>
-			)
+			return <DatePicker cmp={cmp} task={task} groupId={groupId} defaultWidth={cmpDefaultWidth} />
 		default:
 			return <p style={{ width: '140px' }}> {}</p>
 	}

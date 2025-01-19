@@ -1,6 +1,6 @@
 const { DEV, VITE_LOCAL } = import.meta.env
 
-import { getRandomColor, makeId } from '../../services/util.service.js'
+import { getRandomColor, getRandomTimestamp, makeId } from '../../services/util.service.js'
 import { userService } from '../user'
 
 import { boardService as local } from './board.service.local'
@@ -91,7 +91,7 @@ function getDefaultTask() {
 		title: 'Item 1',
 		status: 'sl100',
 		priority: 'pl103',
-		dueDate: '2024-09-10',
+		dueDate: getRandomTimestamp(),
 		description: 'description',
 		comments: [],
 		members: [
@@ -113,7 +113,7 @@ function getDefaultTasks() {
 			title: 'Item 1',
 			status: 'sl100',
 			priority: 'pl103',
-			dueDate: '2024-09-10',
+			dueDate: getRandomTimestamp(),
 			description: 'description',
 			comments: [],
 			members: [
@@ -129,7 +129,7 @@ function getDefaultTasks() {
 			title: 'Item 2',
 			status: 'sl103',
 			priority: 'pl101',
-			dueDate: '2024-09-10',
+			dueDate: getRandomTimestamp(),
 			description: 'description',
 			comments: [],
 			members: [

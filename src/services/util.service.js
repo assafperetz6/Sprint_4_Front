@@ -107,6 +107,29 @@ export function randomPastTime() {
 	return Date.now() - pastTime
 }
 
+export function getRandomTimestamp(yearsBack = 1, yearsForward = 1) {
+	const currentYear = new Date().getFullYear()
+	const startDate = new Date(currentYear - yearsBack, 0, 1).getTime()
+	const endDate = new Date(currentYear + yearsForward, 11, 31).getTime()
+
+	return startDate + Math.random() * (endDate - startDate)
+}
+
+export function formatDate(timestamp) {
+	if (!timestamp) return ''
+
+	const date = new Date(timestamp)
+	const now = new Date()
+
+	const isCurrentYear = date.getFullYear() === now.getFullYear()
+
+	const day = String(date.getDate()).padStart(2, '0')
+	const month = date.toLocaleString('en-US', { month: 'short' })
+	const year = date.getFullYear()
+
+	return isCurrentYear ? `${day} ${month}` : `${day} ${month} ${year}`
+}
+
 export function debounce(func, timeout = 300) {
 	let timer
 	return (...args) => {
