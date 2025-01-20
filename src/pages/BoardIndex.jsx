@@ -53,7 +53,6 @@ export function BoardIndex() {
         <main className="board-index">
             <header>
                 <h2>Boards</h2>
-                {userService.getLoggedinUser() && <button onClick={onAddBoard}>Add a Board</button>}
             </header>
             <BoardList 
                 boards={boards}
