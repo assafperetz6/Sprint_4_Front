@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { createPopper } from '@popperjs/core'
+import { createPopper, offset } from '@popperjs/core'
 import { svgs } from '../../services/svg.service'
 import { formatDate, formatDateForInput } from '../../services/util.service'
 import { DayPicker } from 'react-day-picker'
@@ -16,6 +16,7 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 
 	const buttonRef = useRef(null)
 	const popperRef = useRef(null)
+	const modalRef = useRef(null)
 	const popperInstance = useRef(null)
 
 	useEffect(() => {
@@ -23,21 +24,36 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 
 		popperInstance.current = createPopper(buttonRef.current, popperRef.current, {
 			placement: 'bottom-start',
-			modifiers: [
-				{
-					name: 'offset',
-					options: {}
-				}
-			]
+			modifiers: [{ name: 'offset', options: { offset: [50, 0] } }]
 		})
+
+		const handleClickOutside = event => {
+			if (modalRef.current && !modalRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
+				setIsModalOpen(false)
+			}
+		}
+
+		document.addEventListener('mousedown', handleClickOutside)
 
 		return () => {
 			if (popperInstance.current) {
 				popperInstance.current.destroy()
 				popperInstance.current = null
 			}
+			document.removeEventListener('mousedown', handleClickOutside)
 		}
 	}, [isModalOpen])
+
+	useEffect(() => {
+		const handleCloseModals = () => {
+			setIsModalOpen(false)
+		}
+
+		window.addEventListener('closeAllModals', handleCloseModals)
+		return () => {
+			window.removeEventListener('closeAllModals', handleCloseModals)
+		}
+	}, [])
 
 	const dateContent = task.dueDate ? (
 		<span>{formattedDate}</span>
@@ -47,6 +63,12 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 			{svgs.calendarSmall}
 		</div>
 	)
+
+	const handleOpenModal = () => {
+		const closeEvent = new CustomEvent('closeAllModals')
+		window.dispatchEvent(closeEvent)
+		setIsModalOpen(true)
+	}
 
 	async function onSelectDate(date) {
 		if (!date) {
@@ -63,7 +85,6 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 
 		setSelectedDate(date)
 		const timestamp = new Date(date).setHours(0, 0, 0, 0)
-		console.log(timestamp)
 		setIsModalOpen(false)
 		try {
 			const taskToSave = { ...task, dueDate: timestamp }
@@ -73,7 +94,7 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 		}
 	}
 
-	const handleInputChange = e => {
+	function handleInputChange(e) {
 		let value = e.target.value.replace(/\D/g, '')
 
 		if (value.length > 4) {
@@ -99,18 +120,18 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 		}
 	}
 
-	const handleTodayClick = () => {
+	function handleTodayClick() {
 		const today = new Date()
 		today.setHours(0, 0, 0, 0)
 		onSelectDate(today)
 	}
 
-	const onClearDate = () => {
+	function onClearDate() {
 		onSelectDate(null)
 		setInputValue(null)
 	}
 
-	const handleKeyPressed = ({ key }) => {
+	function handleKeyPressed({ key }) {
 		if (key === 'Enter') {
 			if (inputValue.length === 10) {
 				const [day, month, year] = inputValue.split('/')
@@ -122,12 +143,13 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 		}
 		if (key === 'Escape') {
 			setIsModalOpen(false)
-			setInputValue(inputValue)
+			setInputValue(formattedDate)
 		}
 	}
+
 	return (
 		<li className="date-picker flex align-center justify-center" style={{ width: defaultWidth }}>
-			<div ref={buttonRef} onClick={() => setIsModalOpen(true)}>
+			<div ref={buttonRef} onClick={handleOpenModal}>
 				{dateContent}
 			</div>
 			{task.dueDate && (
@@ -137,15 +159,23 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 			)}
 
 			{isModalOpen && (
-				<div ref={popperRef} className="popper-container">
-					<header className="date-picker-header flex align-center justify-between">
-						<button className="today-button" onClick={handleTodayClick}>
-							Today
-						</button>
-						<button className="clock-btn">{svgs.clock}</button>
-					</header>
-					<input type="text" className="date-input" value={inputValue} onChange={handleInputChange} placeholder="DD/MM/YYYY" maxLength={10} onKeyDown={handleKeyPressed} />
-					<DayPicker mode="single" selected={selectedDate} onSelect={onSelectDate} showOutsideDays fixedWeeks defaultMonth={selectedDate} month={selectedDate} onMonthChange={setSelectedDate} />
+				<div
+					ref={el => {
+						popperRef.current = el
+						modalRef.current = el
+					}}
+					className="popper-container"
+				>
+					<div className="date-picker-modal">
+						<header className="date-picker-header flex align-center justify-between">
+							<button className="today-button" onClick={handleTodayClick}>
+								Today
+							</button>
+							<button className="clock-btn">{svgs.clock}</button>
+						</header>
+						<input type="text" className="date-input" value={inputValue} onChange={handleInputChange} placeholder="DD/MM/YYYY" maxLength={10} onKeyDown={handleKeyPressed} />
+						<DayPicker mode="single" selected={selectedDate} onSelect={onSelectDate} showOutsideDays fixedWeeks defaultMonth={selectedDate} month={selectedDate} onMonthChange={setSelectedDate} />
+					</div>
 				</div>
 			)}
 		</li>
