@@ -1,7 +1,6 @@
 const { DEV, VITE_LOCAL } = import.meta.env
 
 import { getRandomColor, getRandomTimestamp, makeId } from '../../services/util.service.js'
-import { userService } from '../user'
 
 import { boardService as local } from './board.service.local'
 import { boardService as remote } from './board.service.remote'
