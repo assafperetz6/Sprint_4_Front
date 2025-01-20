@@ -130,6 +130,15 @@ export function formatDate(timestamp) {
 	return isCurrentYear ? `${day} ${month}` : `${day} ${month} ${year}`
 }
 
+export function formatDateForInput(timestamp) {
+	if (!timestamp) return ''
+	const date = new Date(timestamp)
+	const day = String(date.getDate()).padStart(2, '0')
+	const month = String(date.getMonth() + 1).padStart(2, '0')
+	const year = date.getFullYear()
+	return `${day}/${month}/${year}`
+}
+
 export function debounce(func, timeout = 300) {
 	let timer
 	return (...args) => {
