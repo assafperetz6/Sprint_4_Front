@@ -66,7 +66,7 @@ export function TaskPreview({ group, task }) {
 						className={`task-context-menu ${
 							activeMenuId === task.id ? 'open' : ''
 						}`}
-						onClick={(ev) => toggleContextMenu(ev, board._id)}
+						onClick={(ev) => toggleContextMenu(ev, task.id)}
 					>
 						{svgs.threeDots}
 					</button>

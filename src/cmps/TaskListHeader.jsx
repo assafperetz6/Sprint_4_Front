@@ -7,7 +7,7 @@ export function TaskListHeader({ groupColor }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
 	return (
-		<ul className="task-list-header task-row clean-list flex full">
+		<ul className="task-list-header task-row clean-list full">
 			<li className="sticky-container flex">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(groupColor, 1) }}></div>
 				<Checkbox />

@@ -11,9 +11,10 @@
     .board-header-container {
         position: sticky;
         top: 0;
-        left: 38px;
+        left: 0;
 
-        margin: 0 0 0 38px;
+        padding-inline-start: 40px;
+        margin: 0;
         background-color: $clr3;
         z-index: 50;
 

@@ -6,7 +6,9 @@ import { ColorPicker } from './ColorPicker'
 import { svgs } from '../services/svg.service'
 
 export function GroupTitle({ group }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+	const board = useSelector((storeState) => storeState.boardModule.board)
+
+	const [activeMenuId, setActiveMenuId] = useState(null)
 
 	const [titleToEdit, setTitleToEdit] = useState(group.title)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
@@ -25,11 +27,11 @@ export function GroupTitle({ group }) {
 			{
 				name: 'preventOverflow',
 				options: {
-					padding: 8
-				}
-			}
+					padding: 8,
+				},
+			},
 		],
-		placement: 'bottom-start'
+		placement: 'bottom-start',
 	})
 
 	useEffect(() => {
@@ -51,6 +53,10 @@ export function GroupTitle({ group }) {
 			document.removeEventListener('mousedown', handleClickOutside)
 		}
 	}, [isEditing])
+
+	function toggleContextMenu(ev, taskId) {
+		setActiveMenuId(prev => (prev === taskId ? null : taskId))
+	}
 
 	function handleChange({ target }) {
 		setTitleToEdit(target.value)
@@ -111,12 +117,40 @@ export function GroupTitle({ group }) {
 
 	return (
 		<div className="group-header flex align-center">
+			<div className="context-btn-container">
+			<div className="context-btn-container">
+					<button
+						className={`group-context-menu ${
+							activeMenuId === group.id ? 'open' : ''
+						}`}
+						onClick={(ev) => toggleContextMenu(ev, group.id)}
+					>
+						{svgs.threeDots}
+					</button>
+				</div>
+			</div>
 			<button className="toggle-group-preview">{svgs.arrowDown}</button>
-			<div className={`group-title-container ${isEditing ? 'edit' : ''}`} style={{ color: group.style.color }} onClick={startEditing}>
+			<div
+				className={`group-title-container ${isEditing ? 'edit' : ''}`}
+				style={{ color: group.style.color }}
+				onClick={startEditing}
+			>
 				{isEditing ? (
 					<>
-						<span className="group-color-picker" style={{ background: group.style.color }} onClick={openColorPicker} ref={setReferenceElement} onKeyDown={handleKeyPressed}></span>
-						<input type="text" value={titleToEdit} onChange={handleChange} autoFocus style={{ color: group.style.color }} />
+						<span
+							className="group-color-picker"
+							style={{ background: group.style.color }}
+							onClick={openColorPicker}
+							ref={setReferenceElement}
+							onKeyDown={handleKeyPressed}
+						></span>
+						<input
+							type="text"
+							value={titleToEdit}
+							onChange={handleChange}
+							autoFocus
+							style={{ color: group.style.color }}
+						/>
 					</>
 				) : (
 					<h4 className="group-title">{group.title}</h4>
@@ -124,9 +158,21 @@ export function GroupTitle({ group }) {
 			</div>
 
 			{isColorPickerOpen && (
-				<div ref={setPopperElement} className="color-picker-popup" style={styles.popper} {...attributes.popper}>
-					<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
-					<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
+				<div
+					ref={setPopperElement}
+					className="color-picker-popup"
+					style={styles.popper}
+					{...attributes.popper}
+				>
+					<div
+						ref={setArrowElement}
+						style={styles.arrow}
+						className="popper-arrow"
+					/>
+					<ColorPicker
+						setEntityStyle={setGroupStyle}
+						setIsColorPickerOpen={setIsColorPickerOpen}
+					/>
 				</div>
 			)}
 		</div>

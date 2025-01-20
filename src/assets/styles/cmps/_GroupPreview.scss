@@ -17,9 +17,9 @@
 
 	background-color: $clr3;
 
-	.group-header-wrapper, li.add-task {
-		margin-inline-start: 40px;
-	}
+	// li.add-task {
+	// 	margin-inline-start: 40px;
+	// }
 
 	.task-preview > * {
 		display: flex;
@@ -28,7 +28,7 @@
 	.colored-border {
 		height: calc(100% + 1px);
 		width: 6px;
-		min-width: 6px;
+		min-width: 6px;		
 	}
 
 	.group-header-wrapper {
@@ -40,8 +40,8 @@
 	.group-header {
 		position: sticky;
 		top: 138px;
-		left: 40px;
-		// z-index: 20;
+		left: 0;
+		
 		height: 40px;
 
 		.group-title-container {

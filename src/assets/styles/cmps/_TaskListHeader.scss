@@ -4,7 +4,6 @@
 
 	display: grid;
 	grid-template-columns: subgrid;
-	border-block: 1px solid $clr8;
 	height: $task-row-height;
 	border-start-start-radius: 4px;
 	font-size: rem(14px);
@@ -13,7 +12,7 @@
 
 	.sticky-container {
 		position: sticky;
-		left: 40px;
+		left: 0;
 
 		display: flex;
 		align-items: center;
@@ -32,6 +31,10 @@
 		align-items: center;
 		text-align: center;
 		border-inline-end: 1px solid $clr8;
+	}
+
+	.task-columns, > li > *:not(.colored-border) {
+		border-block: 1px solid $clr8;
 	}
 
 	.task-columns {
@@ -53,6 +56,7 @@
 	}
 
 	.task-title-header {
+		height: 100%;
 		width: 100%;
 		place-content: center;
 		justify-self: center;
@@ -61,6 +65,8 @@
 	}
 
 	.colored-border {
+		box-sizing: content-box;
+		border-inline-start: 40px solid $clr3;
 		border-radius: 4px 0 0 0;
 	}
 }
