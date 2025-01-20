@@ -10,6 +10,7 @@ import { Checkbox } from './Checkbox'
 import { useEffect, useState } from 'react'
 
 export function TaskPreview({ group, task }) {
+	// eslint-disable-next-line no-unused-vars
 	const [isEditing, setIsEditing] = useState(false)
 	const [titleToEdit, setTitleToEdit] = useState('')
 
@@ -19,6 +20,7 @@ export function TaskPreview({ group, task }) {
 		setTitleToEdit(task.title)
 	}, [])
 
+	// eslint-disable-next-line no-unused-vars
 	function onRemoveTask(taskId) {
 		try {
 			removeTask(board._id, taskId)

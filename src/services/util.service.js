@@ -100,6 +100,7 @@ export function getRandomColor() {
 
 export function randomPastTime() {
 	const HOUR = 1000 * 60 * 60
+	// eslint-disable-next-line no-unused-vars
 	const DAY = 1000 * 60 * 60 * 24
 	const WEEK = 1000 * 60 * 60 * 24 * 7
 

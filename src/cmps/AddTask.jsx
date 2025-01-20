@@ -1,25 +1,23 @@
 import { useRef, useState } from 'react'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateBoard } from '../store/actions/board.actions'
+import { useSelector } from 'react-redux'
+import { addTask } from '../store/actions/board.actions'
 import { hexToRgba } from '../services/util.service'
-import { SET_BOARD } from '../store/reducers/board.reducer'
+
 import { Checkbox } from './Checkbox'
 
 export function AddTask({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [taskToAdd, setTaskToAdd] = useState(boardService.getEmptyTask())
 	const elInput = useRef()
-	const dispatch = useDispatch()
 
 	async function onAddTask(ev) {
 		if (ev) ev.preventDefault()
 		try {
-			const savedBoard = await boardService.saveTask(board._id, group.id, taskToAdd)
-			dispatch({ type: SET_BOARD, board: savedBoard })
-			setTaskToAdd(boardService.getEmptyTask())
+			addTask(board._id, group.id, taskToAdd)
 		} catch (err) {
+			showErrorMsg('cannot add task')
 			console.log(err)
 			throw err
 		}

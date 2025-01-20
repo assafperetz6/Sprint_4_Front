@@ -24,7 +24,7 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 
 		popperInstance.current = createPopper(buttonRef.current, popperRef.current, {
 			placement: 'bottom-start',
-			modifiers: [{ name: 'offset', options: { offset: [50, 0] } }]
+			modifiers: [{ name: 'offset', options: { offset: [-100, 10] } }]
 		})
 
 		const handleClickOutside = event => {

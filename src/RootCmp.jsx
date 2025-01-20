@@ -1,4 +1,3 @@
-import React from 'react'
 import { Routes, Route } from 'react-router'
 
 import { HomePage } from './pages/HomePage'
@@ -7,7 +6,6 @@ import { AdminIndex } from './pages/AdminIndex.jsx'
 
 import { UserDetails } from './pages/UserDetails'
 
-import { AppHeader } from './cmps/AppHeader'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup } from './pages/LoginSignup.jsx'
 import { Login } from './pages/Login.jsx'
