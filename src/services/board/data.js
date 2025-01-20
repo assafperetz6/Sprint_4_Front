@@ -45,10 +45,7 @@ export const defaultBoard = [
 						status: 'sl102',
 						priority: 'pl102',
 						dueDate: getRandomTimestamp(),
-						timeline: {
-							startDate: null,
-							endDate: null
-						},
+						timeline: null,
 						description: 'description',
 						comments: [],
 						members: [
@@ -65,10 +62,7 @@ export const defaultBoard = [
 						status: 'sl101',
 						priority: 'pl100',
 						dueDate: getRandomTimestamp(),
-						timeline: {
-							startDate: null,
-							endDate: null
-						},
+						timeline: null,
 						description: 'description',
 						comments: [
 							{
@@ -105,10 +99,7 @@ export const defaultBoard = [
 						status: 'sl100',
 						priority: 'pl103',
 						dueDate: getRandomTimestamp(),
-						timeline: {
-							startDate: null,
-							endDate: null
-						},
+						timeline: null,
 						description: 'description',
 						comments: [
 							{
@@ -136,10 +127,7 @@ export const defaultBoard = [
 						status: 'sl104',
 						priority: 'pl101',
 						dueDate: getRandomTimestamp(),
-						timeline: {
-							startDate: null,
-							endDate: null
-						},
+						timeline: null,
 						description: 'description',
 						comments: [
 							{
@@ -204,6 +192,6 @@ export const defaultBoard = [
 		],
 
 		// For Monday draggable columns (optional)
-		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker']
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker', 'TimelinePicker']
 	}
 ]

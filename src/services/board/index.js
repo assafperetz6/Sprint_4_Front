@@ -91,10 +91,7 @@ function getDefaultTask() {
 		status: 'sl100',
 		priority: 'pl103',
 		dueDate: getRandomTimestamp(),
-		timeline: {
-			startDate: undefined,
-			endDate: undefined
-		},
+		timeline: null,
 		description: 'description',
 		comments: [],
 		members: [
@@ -117,10 +114,7 @@ function getDefaultTasks() {
 			status: 'sl100',
 			priority: 'pl103',
 			dueDate: getRandomTimestamp(),
-			timeline: {
-				startDate: undefined,
-				endDate: undefined
-			},
+			timeline: null,
 			description: 'description',
 			comments: [],
 			members: [
@@ -164,10 +158,7 @@ function getEmptyTask() {
 		comments: [],
 		members: [],
 		dueDate: null,
-		timeline: {
-			startDate: null,
-			endDate: null
-		}
+		timeline: null
 	}
 }
 
