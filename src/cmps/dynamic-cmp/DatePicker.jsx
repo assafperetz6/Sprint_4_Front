@@ -26,9 +26,7 @@ export function DatePicker({ task, defaultWidth, groupId }) {
 			modifiers: [
 				{
 					name: 'offset',
-					options: {
-						offset: [10, 0]
-					}
+					options: {}
 				}
 			]
 		})

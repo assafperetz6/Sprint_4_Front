@@ -36,7 +36,7 @@ export function TaskListHeader({ groupColor }) {
 							cmpTitle = 'Date'
 							break
 						case 'TimelinePicker':
-							cmpDefaultWidth = '130px'
+							cmpDefaultWidth = '140px'
 							cmpTitle = 'Timeline'
 							break
 						default:

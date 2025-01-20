@@ -127,6 +127,7 @@ export async function updateTask(boardId, groupId, task) {
 	try {
 		const savedBoard = await boardService.saveTask(boardId, groupId, task)
 		store.dispatch(getCmdSetBoard(savedBoard))
+		return savedBoard
 	} catch (err) {
 		console.log('error from actions--> cannot update task', err)
 		throw err

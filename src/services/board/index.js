@@ -9,7 +9,7 @@ function getEmptyBoard() {
 	return {
 		title: 'New board',
 		isStarred: false,
-		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker'],
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker', 'TimelinePicker'],
 		createdBy: {
 			_id: 'u101',
 			fullname: 'Alon Wohl',
@@ -91,6 +91,10 @@ function getDefaultTask() {
 		status: 'sl100',
 		priority: 'pl103',
 		dueDate: getRandomTimestamp(),
+		timeline: {
+			startDate: undefined,
+			endDate: undefined
+		},
 		description: 'description',
 		comments: [],
 		members: [
@@ -113,6 +117,10 @@ function getDefaultTasks() {
 			status: 'sl100',
 			priority: 'pl103',
 			dueDate: getRandomTimestamp(),
+			timeline: {
+				startDate: undefined,
+				endDate: undefined
+			},
 			description: 'description',
 			comments: [],
 			members: [

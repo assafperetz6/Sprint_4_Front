@@ -54,6 +54,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		cursor: pointer;
+
 		height: $task-row-height;
 		width: 65px;
 
@@ -63,6 +65,7 @@
 	.open-task-details {
 		display: flex;
 		align-items: center;
+
 		opacity: 0;
 		height: 100%;
 		right: 0px;

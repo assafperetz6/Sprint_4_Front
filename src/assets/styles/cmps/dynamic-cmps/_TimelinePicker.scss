@@ -1,0 +1,114 @@
+.timeline-picker {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: $spacing-small;
+
+	.timeline-bar {
+		flex: 1;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		position: relative;
+		background: #c4c4c4;
+		height: 22px;
+		line-height: 22px;
+		border-radius: 11px;
+		margin: 8px 16px;
+		color: #fff;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		text-align: center;
+		white-space: nowrap;
+
+		.timeline-value {
+			width: 100%;
+			position: relative;
+			font-size: 13px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+
+			&::after {
+				content: attr(data-content);
+				// background: white;
+			}
+		}
+		&:hover .timeline-value::after {
+			content: attr(data-hover-content);
+		}
+	}
+
+	.rdp-root {
+		--rdp-cell-size: 30px;
+		--rdp-accent-color: #0073ea;
+		--rdp-background-color: #e6effc;
+		--horizontal-gap: 4px;
+		--vertical-gap: 2px;
+		margin: 0;
+
+		.rdp-caption {
+			padding: 0 8px;
+			margin-bottom: 8px;
+		}
+
+		.rdp-weekday {
+			height: var(--rdp-cell-size);
+			padding-block: 2px;
+			font-weight: 500;
+			font-size: 14px;
+			color: #666;
+		}
+
+		.rdp-months {
+			gap: var(--vertical-gap) var(--horizontal-gap);
+		}
+
+		.rdp-month_grid {
+			margin: 8px auto;
+			height: 234px;
+		}
+
+		.rdp-day {
+			height: min-content;
+			width: min-content;
+			padding: 1px;
+			font-size: 14px;
+			border-radius: 4px;
+			margin: var(--vertical-gap) var(--horizontal-gap);
+
+			&.rdp-selected {
+				color: white;
+				border-radius: 4px;
+
+				&.rdp-range_start,
+				&.rdp-range_end {
+					padding: 0;
+					border-radius: 4px;
+					background: var(--rdp-accent-color);
+				}
+
+				&.rdp-selected.rdp-range_middle {
+					background: var(--rdp-background-color);
+					margin: var(--vertical-gap) 0;
+					border-radius: 0;
+					color: $txt-clr;
+				}
+			}
+
+			button {
+				height: var(--rdp-cell-size);
+				width: var(--rdp-cell-size);
+			}
+		}
+
+		.rdp-day_outside {
+			color: #ccc;
+		}
+	}
+
+	.timeline-inputs {
+	}
+}

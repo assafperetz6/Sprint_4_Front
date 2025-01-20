@@ -191,6 +191,7 @@ async function saveTask(boardId, groupId, task) {
 		members: task.members,
 		priority: task.priority,
 		dueDate: task.dueDate,
+		timeline: task.timeline,
 		status: task.status
 	}
 

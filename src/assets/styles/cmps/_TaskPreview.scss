@@ -1,13 +1,12 @@
 .task-preview {
 	height: $task-row-height;
-	background-color: #ffff;
 
 	border-block-end: 1px solid $clr8;
 
 	.sticky-container {
 		position: sticky;
 		left: 0;
-		
+
 		display: flex;
 		align-items: center;
 		height: calc($task-row-height);
@@ -19,17 +18,6 @@
 		z-index: 2;
 	}
 
-	&:hover {
-		.sticky-container {
-			background-color: $task-hover-bgc;
-		}
-	}
-
-	&:hover {
-		background-color: $task-hover-bgc;
-		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
-	}
-
 	.task-row > *,
 	.task-col > *:not(.line-end) {
 		border-inline-end: 1px solid $clr8;
@@ -37,6 +25,15 @@
 
 	li {
 		height: $task-row-height;
+	}
+
+	&:hover {
+		background-color: $task-hover-bgc;
+		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
+		.sticky-container {
+			background-color: $task-hover-bgc;
+			box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
+		}
 	}
 }
 
