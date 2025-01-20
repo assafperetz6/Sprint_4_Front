@@ -1,4 +1,3 @@
-import userImg from '../../assets/images/dapulse_default_photo.png'
 import { getRandomColor, getRandomTimestamp } from '../util.service'
 
 export const defaultBoard = [

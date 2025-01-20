@@ -8,6 +8,6 @@ module.exports = {
 	plugins: ['react-refresh'],
 	rules: {
 		'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-		'no-undef': 'off'
+		'react/prop-types': 'off'
 	}
 }

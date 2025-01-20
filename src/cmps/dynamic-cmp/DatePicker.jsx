@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { createPopper, offset } from '@popperjs/core'
+import { createPopper } from '@popperjs/core'
 import { svgs } from '../../services/svg.service'
 import { formatDate, formatDateForInput } from '../../services/util.service'
 import { DayPicker } from 'react-day-picker'
