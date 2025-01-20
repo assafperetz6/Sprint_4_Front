@@ -5,7 +5,7 @@
 	justify-content: space-between;
 	overflow: hidden;
 	font-size: rem(14px);
-	width: var(--left-side-width);
+	// width: var(--left-side-width);
 	flex-shrink: 0;
 	user-select: none;
 
@@ -30,11 +30,13 @@
 
 		input {
 			all: unset;
-			cursor: text;
+			flex-shrink: 1;
 			margin: 6px 10px 6px 26px;
+			
 			text-overflow: ellipsis;
 			overflow: hidden;
 			white-space: nowrap;
+			
 			cursor: text;
 
 			&:hover {
@@ -54,8 +56,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		cursor: pointer;
+
 		height: $task-row-height;
 		width: 65px;
+
+		flex-shrink: 0;
 
 		border-inline-start: $border;
 	}
@@ -63,10 +69,11 @@
 	.open-task-details {
 		display: flex;
 		align-items: center;
-		opacity: 0;
+		
 		height: 100%;
-		right: 0px;
-
+		opacity: 0;
+		
+		z-index: 40;
 		.open {
 			color: rgb(50, 51, 56);
 			font-size: rem(13px);
@@ -74,6 +81,21 @@
 
 		.icon {
 			font-size: rem(13px);
+		}
+	}
+
+	&:hover {
+		.open-task-details {
+			gap: 4px;
+			margin-inline-end: 10px;
+			opacity: 1;
+		}
+
+		.delete-btn {
+			background-color: $hovered-btns;
+
+			opacity: 100;
+			visibility: visible;
 		}
 	}
 
@@ -92,21 +114,6 @@
 		visibility: hidden;
 
 		transition: opacity 100ms, visibility 100ms;
-	}
-
-	&:hover {
-		.open-task-details {
-			margin-inline-end: 10px;
-			opacity: 1;
-			gap: 4px;
-		}
-
-		.delete-btn {
-			background-color: $hovered-btns;
-
-			opacity: 100;
-			visibility: visible;
-		}
 	}
 }
 

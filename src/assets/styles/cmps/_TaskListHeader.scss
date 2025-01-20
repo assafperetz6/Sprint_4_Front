@@ -18,12 +18,10 @@
 		align-items: center;
 
 		background: $clr3;
-		z-index: 1;
 	}
 
 	& *:not(.sticky-container) {
 		grid-column: 2;
-		z-index: 0;
 	}
 
 	> * {

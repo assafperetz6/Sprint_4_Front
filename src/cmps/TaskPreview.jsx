@@ -2,22 +2,20 @@ import { Link, useParams } from 'react-router-dom'
 import { svgs } from '../services/svg.service'
 import { hexToRgba } from '../services/util.service'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { DynamicCmp } from './DynamicCmp'
-import { SET_BOARD } from '../store/reducers/board.reducer'
-import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
 import { removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
 import { useEffect, useState } from 'react'
 
 export function TaskPreview({ group, task }) {
+	// eslint-disable-next-line no-unused-vars
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const { boardId } = useParams()
 	const [isEditing, setIsEditing] = useState(false)
 	const [titleToEdit, setTitleToEdit] = useState('')
 	const [activeMenuId, setActiveMenuId] = useState(null)
-
 
 	useEffect(() => {
 		setTitleToEdit(task.title)
@@ -28,6 +26,7 @@ export function TaskPreview({ group, task }) {
 		setActiveMenuId(prev => (prev === taskId ? null : taskId))
 	}
 
+	// eslint-disable-next-line no-unused-vars
 	function onRemoveTask(taskId) {
 		try {
 			removeTask(board._id, taskId)
@@ -89,7 +88,7 @@ export function TaskPreview({ group, task }) {
 
 			<section className="task-col flex">
 				{board.cmpsOrder.map((cmp, idx) => (
-					<DynamicCmp cmp={cmp} key={idx} groupId={group.id} task={task} />
+					<DynamicCmp cmp={cmp} key={idx} group={group} task={task} />
 				))}
 				<li className="line-end"></li>
 			</section>

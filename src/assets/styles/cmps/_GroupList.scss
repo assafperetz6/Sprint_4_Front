@@ -45,10 +45,12 @@
 	.context-btn-container {
 		position: sticky;
 		left: 0;
+		
 		display: flex;
 		justify-content: center;
 		align-items: center;
 
+		flex-shrink: 0;
 		height: 36px;
 		width: 40px;
 
@@ -91,7 +93,7 @@
 	.group-title-container {
 		position: sticky;
 		top: 138px;
-		left: 84px;
+		left: 40px;
 
 		display: flex;
 		align-items: center;

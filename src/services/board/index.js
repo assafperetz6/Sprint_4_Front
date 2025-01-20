@@ -1,7 +1,6 @@
 const { DEV, VITE_LOCAL } = import.meta.env
 
-import { getRandomColor, makeId } from '../../services/util.service.js'
-import { userService } from '../user'
+import { getRandomColor, getRandomTimestamp, makeId } from '../../services/util.service.js'
 
 import { boardService as local } from './board.service.local'
 import { boardService as remote } from './board.service.remote'
@@ -10,7 +9,7 @@ function getEmptyBoard() {
 	return {
 		title: 'New board',
 		isStarred: false,
-		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker'],
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker', 'TimelinePicker'],
 		createdBy: {
 			_id: 'u101',
 			fullname: 'Alon Wohl',
@@ -91,7 +90,8 @@ function getDefaultTask() {
 		title: 'Item 1',
 		status: 'sl100',
 		priority: 'pl103',
-		dueDate: '2024-09-10',
+		dueDate: getRandomTimestamp(),
+		timeline: null,
 		description: 'description',
 		comments: [],
 		members: [
@@ -113,7 +113,8 @@ function getDefaultTasks() {
 			title: 'Item 1',
 			status: 'sl100',
 			priority: 'pl103',
-			dueDate: '2024-09-10',
+			dueDate: getRandomTimestamp(),
+			timeline: null,
 			description: 'description',
 			comments: [],
 			members: [
@@ -129,7 +130,7 @@ function getDefaultTasks() {
 			title: 'Item 2',
 			status: 'sl103',
 			priority: 'pl101',
-			dueDate: '2024-09-10',
+			dueDate: getRandomTimestamp(),
 			description: 'description',
 			comments: [],
 			members: [
@@ -157,10 +158,7 @@ function getEmptyTask() {
 		comments: [],
 		members: [],
 		dueDate: null,
-		timeline: {
-			startDate: null,
-			endDate: null
-		}
+		timeline: null
 	}
 }
 

@@ -1,0 +1,212 @@
+.date-picker {
+	position: relative;
+	font-size: rem(13px);
+	color: $clr9;
+	cursor: pointer;
+
+	&::before {
+		content: '';
+		display: none;
+		position: absolute;
+		top: 4px;
+		right: 5px;
+		bottom: 4px;
+		left: 5px;
+		border: 1px solid;
+		border-color: $input-hover-border-clr;
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	&:hover {
+		&::before {
+			display: block;
+		}
+		.clear-btn {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.empty-state {
+			opacity: 1;
+		}
+	}
+
+	.clear-btn {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 12px;
+		border-radius: 2px;
+		display: none;
+		cursor: pointer;
+		padding: 0;
+		margin: 0;
+		height: 1rem;
+		width: 1rem;
+	}
+
+	.empty-state {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		opacity: 0;
+		gap: $spacing-xs;
+
+		.plus {
+			position: relative;
+			color: white;
+			background-color: $clr7;
+			border-radius: 100%;
+			width: 13px;
+			height: 13px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&::before {
+				width: 1px;
+				height: 7px;
+				content: '';
+				background-color: $clr3;
+				position: absolute;
+			}
+			&::after {
+				height: 1px;
+				width: 7px;
+				content: '';
+				background-color: $clr3;
+				position: absolute;
+			}
+		}
+	}
+
+	.date-picker-modal {
+		height: 100%;
+		width: 100%;
+		padding: 8px;
+		background: white;
+		box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+	}
+}
+
+.today-button {
+	background: white;
+	border: 1px solid #ddd;
+	padding: 8px 16px;
+	margin: 0;
+	border-radius: 4px;
+	margin-bottom: 8px;
+	text-align: left;
+	cursor: pointer;
+
+	&:hover {
+		background: #f5f5f5;
+	}
+}
+
+.clock-btn {
+	background: white;
+	height: 32px;
+	width: 32px;
+	border-radius: 4px;
+	margin: 0;
+	margin-bottom: 8px;
+
+	cursor: pointer;
+
+	&:hover {
+		background: #f5f5f5;
+	}
+}
+
+.date-input {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-bottom: 8px;
+	font-size: 14px;
+}
+
+.rdp-root {
+	--rdp-cell-size: 30px;
+	--rdp-accent-color: $clr7;
+	--rdp-background-color: #e7edff;
+	margin: 0;
+	color: $clr4;
+
+	.rdp-months {
+		background: white;
+	}
+
+	.rdp-month {
+		background: white;
+	}
+
+	.rdp-day {
+		height: 100%;
+		width: 100%;
+		border-radius: 4px;
+		font-size: 14px;
+
+		button {
+			border: none;
+			height: 30px;
+			width: 30px;
+		}
+		&:hover:not([disabled]):not(.rdp-selected) {
+			background-color: rgba(103, 104, 121, 0.1);
+		}
+		&.rdp-selected {
+			background-color: $clr7;
+			color: white;
+		}
+
+		&.rdp-today {
+			color: inherit;
+			button {
+				border: 1px solid $clr7;
+				border-radius: 4px;
+			}
+			&.rdp-selected {
+				color: white;
+			}
+		}
+	}
+
+	// .rdp-head_cell {
+	// 	font-weight: 500;
+	// 	color: #666;
+	// 	font-size: 14px;
+	// }
+
+	.rdp-nav {
+		button {
+			height: 32px;
+			width: 32px;
+		}
+
+		svg {
+			fill: $clr9;
+			height: 20px;
+			width: 20px;
+		}
+	}
+	// .rdp-caption {
+	// 	display: flex;
+	// 	align-items: center;
+	// 	justify-content: space-between;
+	// 	padding: 0 8px;
+	// 	margin-bottom: 8px;
+	// }
+
+	// .rdp-caption_label {
+	// 	font-size: 16px;
+	// 	font-weight: 500;
+	// }
+
+	// .rdp-day_outside {
+	// 	color: #ccc;
+	// }
+}

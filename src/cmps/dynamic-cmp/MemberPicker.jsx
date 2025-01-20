@@ -54,8 +54,7 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
 					alt={member.fullname || 'Member avatar'}
 					className="member-avatar"
 					style={{
-						marginLeft: index > 0 ? '-8px' : '0',
-						zIndex: 2 - index
+						marginLeft: index > 0 ? '-8px' : '0'
 					}}
 				/>
 			))
@@ -63,7 +62,7 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
 
 		return (
 			<>
-				<img src={task.members[0].imgUrl} alt={task.members[0].fullname || 'Member avatar'} className="member-avatar" style={{ zIndex: 2 }} />
+				<img src={task.members[0].imgUrl} alt={task.members[0].fullname || 'Member avatar'} className="member-avatar" />
 				<div className="extra-members">+{task.members.length - 1}</div>
 			</>
 		)

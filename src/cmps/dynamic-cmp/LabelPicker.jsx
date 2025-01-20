@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 import { showErrorMsg } from '../../services/event-bus.service'
 import { usePopper } from 'react-popper'
@@ -64,7 +64,7 @@ export function LabelPicker({ cmp, task, groupId, defaultWidth }) {
 			const labelTaskName = labelsName === 'statusLabels' ? 'status' : 'priority'
 			const taskToSave = { ...task, [labelTaskName]: newLabel.id }
 			console.log(taskToSave)
-			const savedTask = await boardService.saveTask(board._id, groupId, taskToSave)
+			await boardService.saveTask(board._id, groupId, taskToSave)
 			setLabel(newLabel)
 		} catch (error) {
 			console.error('Failed to update label:', error)
@@ -81,7 +81,7 @@ export function LabelPicker({ cmp, task, groupId, defaultWidth }) {
 	)
 }
 
-function LabelPickerPopUp({ board, labelsName, onChangeLabel, setIsEditor, styles, popperRef, setArrowElement, attributes }) {
+function LabelPickerPopUp({ board, labelsName, onChangeLabel, styles, popperRef, setArrowElement, attributes }) {
 	return (
 		<div className="label-picker-popup" ref={popperRef} style={styles.popper} {...attributes.popper}>
 			<div className="modal-up-arrow" ref={setArrowElement} style={styles.arrow}></div>

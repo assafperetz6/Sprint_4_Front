@@ -18,10 +18,10 @@ export function ColorPicker({ onSetColorPickerClose, setEntityStyle, setIsColorP
 	}
 
 	return (
-		<section className="color-picker">
+		<ul className="color-picker">
 			{colors.map(color => (
-				<div className="color" key={color} style={{ backgroundColor: color }} onClick={e => onChooseColor(color, e)}></div>
+				<li className="color" key={color} style={{ backgroundColor: color }} onClick={e => onChooseColor(color, e)}></li>
 			))}
-		</section>
+		</ul>
 	)
 }
