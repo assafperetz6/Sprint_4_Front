@@ -46,7 +46,10 @@
 
         overflow: hidden;
 
-        padding: 18px 0 0 18px;
+        padding-block-start: 18px;
+        // padding: 18px 0 0 6px;
+        // border-inline-start: 12px solid $clr3;
+        
         border-top-left-radius: $radius;
         background-color: $clr3;
     }

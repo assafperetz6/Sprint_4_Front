@@ -156,8 +156,8 @@ async function getTaskById(boardId, taskId) {
 		groups.forEach(group => {
 			const taskToFind = group.tasks.find(task => task.id === taskId)
 			if (taskToFind) task = taskToFind
+			if (!task) throw new Error(`No task with id: ${taskId} in group: ${group.id}`)
 		})
-		if (!task) throw new Error(`No task with id: ${taskId} in group: ${groupId}`)
 		return task
 	} catch (err) {
 		console.log('cannot get task', err)
@@ -191,6 +191,7 @@ async function saveTask(boardId, groupId, task) {
 		members: task.members,
 		priority: task.priority,
 		dueDate: task.dueDate,
+		timeline: task.timeline,
 		status: task.status
 	}
 

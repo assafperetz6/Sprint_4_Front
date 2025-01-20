@@ -3,9 +3,12 @@ import { updateGroup } from '../store/actions/board.actions'
 import { usePopper } from 'react-popper'
 import { useSelector } from 'react-redux'
 import { ColorPicker } from './ColorPicker'
+import { svgs } from '../services/svg.service'
 
 export function GroupTitle({ group }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+	const board = useSelector((storeState) => storeState.boardModule.board)
+
+	const [activeMenuId, setActiveMenuId] = useState(null)
 
 	const [titleToEdit, setTitleToEdit] = useState(group.title)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
@@ -20,27 +23,40 @@ export function GroupTitle({ group }) {
 	const { styles, attributes } = usePopper(referenceElement, popperElement, {
 		modifiers: [
 			{ name: 'arrow', options: { element: arrowElement } },
-			{ name: 'offset', options: { offset: [0, 8] } },
+			{ name: 'offset', options: { offset: [-12, 11] } },
 			{
 				name: 'preventOverflow',
 				options: {
-					padding: 8
-				}
-			}
+					padding: 8,
+				},
+			},
 		],
-		placement: 'bottom-start'
+		placement: 'bottom-start',
 	})
 
 	useEffect(() => {
 		function handleClickOutside(event) {
-			if (!groupRef.current?.contains(event.target) && !event.target.closest('.color-picker')) {
+			if (!isEditing) return
+
+			if (!event.target.closest('.group-title-container')) {
 				handleSave()
+				setIsColorPickerOpen(false)
+				setIsEditing(false)
 			}
 		}
 
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => document.removeEventListener('mousedown', handleClickOutside)
-	}, [isEditing, titleToEdit])
+		if (isEditing) {
+			document.addEventListener('mousedown', handleClickOutside)
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [isEditing])
+
+	function toggleContextMenu(ev, taskId) {
+		setActiveMenuId(prev => (prev === taskId ? null : taskId))
+	}
 
 	function handleChange({ target }) {
 		setTitleToEdit(target.value)
@@ -97,21 +113,64 @@ export function GroupTitle({ group }) {
 		setIsEditing(true)
 	}
 
+	console.log(isColorPickerOpen)
+
 	return (
-		<div className="group-title-container" style={{ color: group.style.color }} onClick={startEditing}>
-			{isEditing ? (
-				<div className={`renaming-wrapper flex align-center ${isEditing ? 'editing' : ''}`} onClick={e => e.stopPropagation()}>
-					<button ref={setReferenceElement} onClick={openColorPicker} style={{ backgroundColor: group.style.color }} className="group-color-picker" />
-					<input className="group-title-input" type="text" onChange={handleChange} onKeyDown={handleKeyPressed} value={titleToEdit} name="title" id="groupTitle" autoFocus />
-					{isColorPickerOpen && (
-						<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
-							<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
-							<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
-						</div>
-					)}
+		<div className="group-header flex align-center full">
+			<div className="context-btn-container">
+					<button
+						className={`group-context-menu ${
+							activeMenuId === group.id ? 'open' : ''
+						}`}
+						onClick={(ev) => toggleContextMenu(ev, group.id)}
+					>
+						{svgs.threeDots}
+					</button>
+			</div>
+
+			<div
+				className={`group-title-container ${isEditing ? 'edit' : ''}`}
+				style={{ color: group.style.color }}
+				onClick={startEditing}
+			>
+			<div className="toggle-group-preview flex align-center justify-center">{svgs.arrowDown}</div>
+
+			<div className={`group-title-container ${isEditing ? 'edit' : ''}`} onClick={startEditing}>
+				{isEditing ? (
+					<>
+						<span className="group-color-picker" style={{ background: group.style.color }} onClick={openColorPicker} ref={setReferenceElement} onKeyDown={handleKeyPressed}></span>
+						<input type="text" value={titleToEdit} onChange={handleChange} autoFocus style={{ color: group.style.color }}></input>
+					</>
+				) : (
+					<h4 className="group-title">{group.title}</h4>
+				)}
+
+				{isColorPickerOpen && (
+					<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
+						<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
+						<ColorPicker setEntityStyle={setGroupStyle} setIsColorPickerOpen={setIsColorPickerOpen} />
+					</div>
+				)}
+			</div>
+			</div>
+
+			{isColorPickerOpen && (
+				<div
+					ref={setPopperElement}
+					className="color-picker-popup"
+					style={styles.popper}
+					{...attributes.popper}
+				>
+					<div
+						ref={setArrowElement}
+						style={styles.arrow}
+						className="popper-arrow"
+					/>
+					<ColorPicker
+						setEntityStyle={setGroupStyle}
+						setIsColorPickerOpen={setIsColorPickerOpen}
+					/>
 				</div>
-			) : (
-				<h4 className="group-title">{group.title}</h4>
 			)}
 		</div>
 	)

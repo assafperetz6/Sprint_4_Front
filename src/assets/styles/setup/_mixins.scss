@@ -82,7 +82,7 @@
   @mixin alt-btn{
     display: flex;
     justify-content: center;
-    gap: 4px;
+    gap: 2px;
     align-items: center;
 
     background-color: #00000000;
@@ -99,5 +99,39 @@
 
     &:hover{
       background-color: $hovered-btns;
+    }
+  }
+
+  @mixin context-menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 24px;
+      width: 24px;
+  
+      padding: 0;
+      border-radius: 4px;
+  
+      margin: 0;
+      background-color: $clr3;
+      transition: scale 0.2s;
+  
+      opacity: 0;
+  
+      &:hover {
+        background-color: $hovered-btns;
+      }
+  
+      &:active { 
+        scale: 0.9;
+      }
+  
+      svg {
+        height: 16px;
+        width: 16px;
+      }
+  
+    * > &:hover {
+      opacity: 1;
     }
   }

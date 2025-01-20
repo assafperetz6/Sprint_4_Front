@@ -1,7 +1,6 @@
 const { DEV, VITE_LOCAL } = import.meta.env
 
-import { getRandomColor, makeId } from '../../services/util.service.js'
-import { userService } from '../user'
+import { getRandomColor, getRandomTimestamp, makeId } from '../../services/util.service.js'
 
 import { boardService as local } from './board.service.local'
 import { boardService as remote } from './board.service.remote'
@@ -10,10 +9,10 @@ function getEmptyBoard() {
 	return {
 		title: 'New board',
 		isStarred: false,
-		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker'],
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker', 'TimelinePicker'],
 		createdBy: {
 			_id: 'u101',
-			fullname: 'Abi Abambi',
+			fullname: 'Alon Wohl',
 			imgUrl: `https://robohash.org/alon?set=set4`
 		},
 
@@ -27,6 +26,11 @@ function getEmptyBoard() {
 				_id: 'u102',
 				fullname: 'Dror gaon',
 				imgUrl: 'https://robohash.org/dror?set=set4'
+			},
+			{
+				_id: 'u103',
+				fullname: 'Assaf Peretz',
+				imgUrl: 'https://robohash.org/assaf?set=set4'
 			}
 		],
 		groups: getDefaultGroups(),
@@ -86,7 +90,8 @@ function getDefaultTask() {
 		title: 'Item 1',
 		status: 'sl100',
 		priority: 'pl103',
-		dueDate: '2024-09-10',
+		dueDate: getRandomTimestamp(),
+		timeline: null,
 		description: 'description',
 		comments: [],
 		members: [
@@ -108,7 +113,8 @@ function getDefaultTasks() {
 			title: 'Item 1',
 			status: 'sl100',
 			priority: 'pl103',
-			dueDate: '2024-09-10',
+			dueDate: getRandomTimestamp(),
+			timeline: null,
 			description: 'description',
 			comments: [],
 			members: [
@@ -124,7 +130,7 @@ function getDefaultTasks() {
 			title: 'Item 2',
 			status: 'sl103',
 			priority: 'pl101',
-			dueDate: '2024-09-10',
+			dueDate: getRandomTimestamp(),
 			description: 'description',
 			comments: [],
 			members: [
@@ -150,17 +156,20 @@ function getEmptyTask() {
 		status: 'sl104',
 		priority: 'pl104',
 		comments: [],
-		memberIds: [],
+		members: [],
 		dueDate: null,
-		timeline: {
-			startDate: null,
-			endDate: null
-		}
+		timeline: null
 	}
+}
+
+function getBoardMembers(board, filter = '') {
+	const members = board.members
+	const regex = new RegExp(filter, 'i')
+	return members.filter(member => regex.test(member.fullname))
 }
 
 const service = VITE_LOCAL === 'true' ? local : remote
 
-export const boardService = { getEmptyBoard, getNewGroup, getDefaultFilter, getEmptyTask, ...service }
+export const boardService = { getEmptyBoard, getNewGroup, getDefaultFilter, getEmptyTask, getBoardMembers, ...service }
 
 if (DEV) window.boardService = boardService

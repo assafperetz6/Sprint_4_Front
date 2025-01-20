@@ -1,5 +1,4 @@
-import userImg from '../../assets/images/dapulse_default_photo.png'
-import { getRandomColor } from '../util.service'
+import { getRandomColor, getRandomTimestamp } from '../util.service'
 
 export const defaultBoard = [
 	{
@@ -19,13 +18,18 @@ export const defaultBoard = [
 		members: [
 			{
 				_id: 'u101',
-				fullname: 'Tal Taltal',
-				imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
+				fullname: 'Alon Wohl',
+				imgUrl: 'https://robohash.org/alon?set=set4'
 			},
 			{
 				_id: 'u102',
-				fullname: 'Josh Ga',
-				imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1736340217/niykjaqgf80eloral0yl.heic'
+				fullname: 'Dror Gaon',
+				imgUrl: 'https://robohash.org/dror?set=set4'
+			},
+			{
+				_id: 'u103',
+				fullname: 'Assaf Peretz',
+				imgUrl: 'https://robohash.org/assaf?set=set4'
 			}
 		],
 		groups: [
@@ -39,14 +43,15 @@ export const defaultBoard = [
 						title: 'Build a web app',
 						status: 'sl102',
 						priority: 'pl102',
-						dueDate: '2024-05-10',
+						dueDate: getRandomTimestamp(),
+						timeline: null,
 						description: 'description',
 						comments: [],
 						members: [
 							{
 								_id: 'u101',
 								fullname: 'Alon Wohl',
-								imgUrl: 'https://robohash.org/dror?set=set4'
+								imgUrl: 'https://robohash.org/alon?set=set4'
 							}
 						]
 					},
@@ -55,7 +60,8 @@ export const defaultBoard = [
 						title: 'Validate software behavior against business requirements',
 						status: 'sl101',
 						priority: 'pl100',
-						dueDate: '2024-09-24',
+						dueDate: getRandomTimestamp(),
+						timeline: null,
 						description: 'description',
 						comments: [
 							{
@@ -69,7 +75,6 @@ export const defaultBoard = [
 								}
 							}
 						],
-						memberIds: ['u101'],
 						members: [
 							{
 								_id: 'u101',
@@ -92,7 +97,8 @@ export const defaultBoard = [
 						title: 'Build taskPreview',
 						status: 'sl100',
 						priority: 'pl103',
-						dueDate: '2024-09-10',
+						dueDate: getRandomTimestamp(),
+						timeline: null,
 						description: 'description',
 						comments: [
 							{
@@ -110,7 +116,7 @@ export const defaultBoard = [
 							{
 								_id: 'u101',
 								fullname: 'Alon Wohl',
-								imgUrl: 'https://robohash.org/dror?set=set4'
+								imgUrl: 'https://robohash.org/alon?set=set4'
 							}
 						]
 					},
@@ -119,7 +125,8 @@ export const defaultBoard = [
 						title: 'Help me',
 						status: 'sl104',
 						priority: 'pl101',
-						dueDate: '2024-09-24',
+						dueDate: getRandomTimestamp(),
+						timeline: null,
 						description: 'description',
 						comments: [
 							{
@@ -139,7 +146,7 @@ export const defaultBoard = [
 							{
 								_id: 'u101',
 								fullname: 'Alon Wohl',
-								imgUrl: 'https://robohash.org/dror?set=set4'
+								imgUrl: 'https://robohash.org/alon?set=set4'
 							}
 						]
 					}
@@ -184,6 +191,6 @@ export const defaultBoard = [
 		],
 
 		// For Monday draggable columns (optional)
-		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker']
+		cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker', 'TimelinePicker']
 	}
 ]

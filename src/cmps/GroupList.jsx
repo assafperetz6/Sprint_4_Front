@@ -1,126 +1,69 @@
-import { GroupPreview } from './GroupPreview.jsx'
-import { svgs } from '../services/svg.service.jsx'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addGroup, updateBoard } from '../store/actions/board.actions.js'
+
 import { boardService } from '../services/board/index.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
-import { debounce } from '../services/util.service.js'
-import { TaskListHeader } from './TaskListHeader.jsx'
-import { useEffect, useRef, useState } from 'react'
-import { GroupStickyContainer } from './GroupStickyContainer.jsx'
 
-export function GroupList({ groups }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+import { svgs } from '../services/svg.service.jsx'
+import { GroupPreview } from './GroupPreview.jsx'
+import { GroupHeader } from './GroupHeader.jsx'
+
+export function GroupList({
+	groups,
+	isScrolling,
+	currentGroup,
+	setCurrentGroup,
+	scrollContainer,
+}) {
+	const board = useSelector((storeState) => storeState.boardModule.board)
 	const dispatch = useDispatch()
 
-	// const [currentGroup, setCurrentGroup] = useState(groups[0])
-	// const observerRef = useRef(null)
+	const groupRefs = useRef([])
 
-	// console.log(currentGroup)
+	
 
-	// 	useEffect(() => {
-	//     let lastIntersection = null
+	useEffect(() => {
+		if (!scrollContainer) return
 
-	//     const observer = new IntersectionObserver((entries) => {
-	//         entries.forEach(entry => {
-	//             const groupId = entry.target.dataset.groupId
-	//             const groupIndex = groups.findIndex(g => g.id === groupId)
-	//             const currentGroupIndex = groups.findIndex(g => g.id === currentGroup.id)
+		const headerHeight = 76 // Group header height
+		const boardHeaderHeight = 174  // Height of the board header
+		const windowVH = window.innerHeight
+		let lastScrollTop = scrollContainer.scrollTop
 
-	//             // Store the intersection position for comparison
-	//             if (entry.isIntersecting) {
-	//                 if (!lastIntersection) {
-	//                     lastIntersection = entry.boundingClientRect.top
-	//                     return
-	//                 }
 
-	//                 // Determine scroll direction by comparing with last intersection
-	//                 const scrollingDown = entry.boundingClientRect.top < lastIntersection
-	//                 lastIntersection = entry.boundingClientRect.top
+		const options = {
+			rootMargin: `-240px 0px -${windowVH - 100}px`,
+		}
 
-	//                 console.log('Intersection:', {
-	//                     groupId,
-	//                     direction: scrollingDown ? 'down' : 'up',
-	//                     position: entry.boundingClientRect.top,
-	//                     currentGroup: currentGroup.id,
-	//                 })
+		const observer = new IntersectionObserver((entries) => {
+			const currentScrollTop = scrollContainer.scrollTop
+			// Determine scroll direction
+			const isScrollingDown = currentScrollTop > lastScrollTop
+			lastScrollTop = currentScrollTop
 
-	//                 // Update group based on scroll direction and adjacent position
-	//                 if (scrollingDown && groupIndex === currentGroupIndex + 1) {
-	//                     setCurrentGroup(groups[groupIndex])
-	//                 } else if (!scrollingDown && groupIndex === currentGroupIndex - 1) {
-	//                     setCurrentGroup(groups[groupIndex])
-	//                 }
-	//             }
-	//         })
-	//     }, {
-	//         threshold: [0],
-	//         rootMargin: "-20px 0px 0px 0px"
-	//     })
+			entries.forEach((entry) => {
+				const idx = parseInt(entry.target.dataset.groupIndex)
+				const group = groups[idx]
 
-	//     const elements = document.querySelectorAll('[data-group-id]')
-	//     elements.forEach(element => observer.observe(element))
+				if (entry.isIntersecting) setCurrentGroup(group)
+			})
+		}, options)
 
-	//     return () => observer.disconnect()
-	// }, [])
+		// Observe all group elements
+		groupRefs.current.forEach((element, idx) => {
+			if (element) {
+				element.dataset.groupIndex = idx
+				observer.observe(element)
+			}
+		})
 
-	// Log when current group changes to debug
-	// useEffect(() => {
-	// 	console.log('Current group changed to:', currentGroup.id)
-	// }, [currentGroup])
-
-	// console.log(currentGroup)
-
-	// 	useEffect(() => {
-	//     let lastIntersection = null
-
-	//     const observer = new IntersectionObserver((entries) => {
-	//         entries.forEach(entry => {
-	//             const groupId = entry.target.dataset.groupId
-	//             const groupIndex = groups.findIndex(g => g.id === groupId)
-	//             const currentGroupIndex = groups.findIndex(g => g.id === currentGroup.id)
-
-	//             // Store the intersection position for comparison
-	//             if (entry.isIntersecting) {
-	//                 if (!lastIntersection) {
-	//                     lastIntersection = entry.boundingClientRect.top
-	//                     return
-	//                 }
-
-	//                 // Determine scroll direction by comparing with last intersection
-	//                 const scrollingDown = entry.boundingClientRect.top < lastIntersection
-	//                 lastIntersection = entry.boundingClientRect.top
-
-	//                 console.log('Intersection:', {
-	//                     groupId,
-	//                     direction: scrollingDown ? 'down' : 'up',
-	//                     position: entry.boundingClientRect.top,
-	//                     currentGroup: currentGroup.id,
-	//                 })
-
-	//                 // Update group based on scroll direction and adjacent position
-	//                 if (scrollingDown && groupIndex === currentGroupIndex + 1) {
-	//                     setCurrentGroup(groups[groupIndex])
-	//                 } else if (!scrollingDown && groupIndex === currentGroupIndex - 1) {
-	//                     setCurrentGroup(groups[groupIndex])
-	//                 }
-	//             }
-	//         })
-	//     }, {
-	//         threshold: [0],
-	//         rootMargin: "-20px 0px 0px 0px"
-	//     })
-
-	//     const elements = document.querySelectorAll('[data-group-id]')
-	//     elements.forEach(element => observer.observe(element))
-
-	//     return () => observer.disconnect()
-	// }, [])
-
-	// Log when current group changes to debug
-	// useEffect(() => {
-	// 	console.log('Current group changed to:', currentGroup.id)
-	// }, [currentGroup])
+		return () => {
+			groupRefs.current.forEach((element) => {
+				if (element) observer.unobserve(element)
+			})
+		}
+	}, [groups, scrollContainer])
 
 	function onAddGroup() {
 		const groupToAdd = boardService.getNewGroup()
@@ -134,15 +77,21 @@ export function GroupList({ groups }) {
 
 	return (
 		<section className="group-list">
+			<div
+				className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}
+			>
+				{currentGroup && <GroupHeader group={currentGroup} />}
+			</div>
+
 			{groups.map((group, idx) => (
-				<GroupPreview key={group.id} group={group} cmpsOrder={board.cmpsOrder} />
+				<div
+					key={group.id}
+					ref={(el) => (groupRefs.current[idx] = el)}
+					className="full"
+				>
+					<GroupPreview group={group} cmpsOrder={board.cmpsOrder} />
+				</div>
 			))}
-			{/* <GroupStickyContainer group={currentGroup} />
-			{groups.map((group, idx) => (
-				<li key={group.id}>
-					<GroupPreview idx={idx} data-group-id={group.id} group={group} key={group.id} />
-				</li>
-			))} */}
 			<div className="add-group-btn" onClick={onAddGroup}>
 				<span className="icon flex align-center">{svgs.plus}</span>
 				<span className="txt">Add new group</span>

@@ -100,11 +100,44 @@ export function getRandomColor() {
 
 export function randomPastTime() {
 	const HOUR = 1000 * 60 * 60
+	// eslint-disable-next-line no-unused-vars
 	const DAY = 1000 * 60 * 60 * 24
 	const WEEK = 1000 * 60 * 60 * 24 * 7
 
 	const pastTime = getRandomIntInclusive(HOUR, WEEK)
 	return Date.now() - pastTime
+}
+
+export function getRandomTimestamp(yearsBack = 1, yearsForward = 1) {
+	const currentYear = new Date().getFullYear()
+	const startDate = new Date(currentYear - yearsBack, 0, 1).getTime()
+	const endDate = new Date(currentYear + yearsForward, 11, 31).getTime()
+
+	return startDate + Math.random() * (endDate - startDate)
+}
+
+export function formatDate(timestamp) {
+	if (!timestamp) return ''
+
+	const date = new Date(timestamp)
+	const now = new Date()
+
+	const isCurrentYear = date.getFullYear() === now.getFullYear()
+
+	const day = String(date.getDate()).padStart(2, '0')
+	const month = date.toLocaleString('en-US', { month: 'short' })
+	const year = date.getFullYear()
+
+	return isCurrentYear ? `${day} ${month}` : `${day} ${month} ${year}`
+}
+
+export function formatDateForInput(timestamp) {
+	if (!timestamp) return ''
+	const date = new Date(timestamp)
+	const day = String(date.getDate()).padStart(2, '0')
+	const month = String(date.getMonth() + 1).padStart(2, '0')
+	const year = date.getFullYear()
+	return `${day}/${month}/${year}`
 }
 
 export function debounce(func, timeout = 300) {

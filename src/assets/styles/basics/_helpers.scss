@@ -41,6 +41,9 @@
 	&.justify-between {
 		justify-content: space-between;
 	}
+	&.col {
+		flex-direction: column;
+	}
 }
 
 .full {

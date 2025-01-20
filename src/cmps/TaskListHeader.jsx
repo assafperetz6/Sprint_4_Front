@@ -1,16 +1,17 @@
 import { hexToRgba } from '../services/util.service'
 
 import { useSelector } from 'react-redux'
+import { Checkbox } from './Checkbox'
 
-export function TaskListHeader({ group }) {
+export function TaskListHeader({ groupColor }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
 	return (
-		<ul className="task-list-header task-row clean-list flex full">
+		<ul className="task-list-header task-row clean-list full">
 			<li className="sticky-container flex">
-				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
-				<input type="checkbox" className="check-box" />
-				<div className="task-title-header">Item</div>
+				<div className="colored-border" style={{ backgroundColor: hexToRgba(groupColor, 1) }}></div>
+				<Checkbox />
+				<div className="task-title-header">Task</div>
 			</li>
 
 			<ul className="task-columns flex">
@@ -35,7 +36,7 @@ export function TaskListHeader({ group }) {
 							cmpTitle = 'Date'
 							break
 						case 'TimelinePicker':
-							cmpDefaultWidth = '130px'
+							cmpDefaultWidth = '140px'
 							cmpTitle = 'Timeline'
 							break
 						default:

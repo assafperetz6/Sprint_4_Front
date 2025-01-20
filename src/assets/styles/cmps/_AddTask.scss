@@ -1,37 +1,34 @@
 .add-task {
 	position: sticky;
-	left: 0px;
+	left: 0;
 	
 	display: flex;
 	height: $task-row-height;
-	
+
 	border-block-end: 1px solid $clr8;
-	
+
 	background-color: #ffff;
-	
+
 	font-size: rem(14px);
 	cursor: text;
 
 	z-index: 1;
-	// .empty-option-container {
-	// 	position: relative;
-	// 	z-index: 2;
-	// 	width: var(--left-margin-size);
-	// 	height: 40px;
-	// 	background-color: #ffff;
-	// }
+
+	&:hover {
+		background-color: $task-hover-rgb;
+		.sticky-container {
+			background-color: $task-hover-rgb;
+		}
+	}
 
 	.sticky-container {
-
 		display: flex;
 		z-index: 2;
 	}
 
 	.colored-border {
-		// margin-block-end: -1px;
-		// height: calc(100% + 1px);
-		// width: 5.5px;
-		// min-width: 5.5px;
+		box-sizing: content-box;
+		border-inline-start: 40px solid $clr3;
 		border-radius: 0 0 0 4px;
 	}
 
@@ -42,11 +39,14 @@
 
 	border-bottom-left-radius: 4px;
 
-	form{
+	form {
 		display: flex;
 		align-items: center;
-		border-inline-start: 1px solid $clr8;
 		padding-inline-start: 10px;
+
+		input {
+			background: transparent;
+		}
 	}
 
 	.add-task-input {

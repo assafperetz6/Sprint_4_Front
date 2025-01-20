@@ -4,14 +4,16 @@ import { useSelector } from 'react-redux'
 import { svgs } from '../../services/svg.service'
 import { showErrorMsg } from '../../services/event-bus.service'
 import { updateTask } from '../../store/actions/board.actions'
+import { boardService } from '../../services/board'
 
-export function MemberPicker({ cmp, task, groupId, defaultWidth }) {
+export function MemberPicker({ task, groupId, defaultWidth }) {
 	const DEFAULT_AVATAR = 'https://cdn.monday.com/icons/dapulse-person-column.svg'
 	const DEFAULT_IMG = 'https://cdn1.monday.com/dapulse_default_photo.png'
 
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [isPickerOpen, setIsPickerOpen] = useState(false)
 	const [searchTerm, setSearchTerm] = useState('')
+
 	const [referenceElement, setReferenceElement] = useState(null)
 	const [popperElement, setPopperElement] = useState(null)
 	const [arrowElement, setArrowElement] = useState(null)
@@ -44,33 +46,47 @@ export function MemberPicker({ cmp, task, groupId, defaultWidth }) {
 			return <img src={DEFAULT_AVATAR} alt="Default avatar" className="member-avatar" />
 		}
 
-		return task.members.map((member, index) => (
-			<img
-				key={member._id || index}
-				src={member.imgUrl}
-				alt={member.fullname || 'Member avatar'}
-				className="member-avatar"
-				style={{
-					marginLeft: index > 0 ? '-8px' : '0'
-				}}
-			/>
-		))
-	}
+		if (task.members.length <= 2) {
+			return task.members.map((member, index) => (
+				<img
+					key={member._id || index}
+					src={member.imgUrl}
+					alt={member.fullname || 'Member avatar'}
+					className="member-avatar"
+					style={{
+						marginLeft: index > 0 ? '-8px' : '0'
+					}}
+				/>
+			))
+		}
 
+		return (
+			<>
+				<img src={task.members[0].imgUrl} alt={task.members[0].fullname || 'Member avatar'} className="member-avatar" />
+				<div className="extra-members">+{task.members.length - 1}</div>
+			</>
+		)
+	}
 	function setPickerOpen(e) {
 		e.stopPropagation()
 		setIsPickerOpen(true)
 	}
 
-	async function handleSelect(memberId) {
+	async function onSetMember(member) {
 		try {
-			const member = await loadUser(memberId)
+			const isAlreadyAssigned = task.members.some(taskMember => taskMember._id === member._id)
+
+			if (isAlreadyAssigned) {
+				showErrorMsg('Member is already assigned to this task')
+				return
+			}
+
 			const taskToSave = { ...task, members: [...task.members, member] }
 			await updateTask(board._id, groupId, taskToSave)
 			setIsPickerOpen(false)
 		} catch (err) {
-			console.log('cannot get user', err)
-			showErrorMsg('cannot add member')
+			console.error('Cannot add member:', err)
+			showErrorMsg('Cannot add member')
 		}
 	}
 
@@ -119,34 +135,43 @@ export function MemberPicker({ cmp, task, groupId, defaultWidth }) {
 	}
 
 	function getSuggestedPeople() {
-		const filteredMembers = board.members.filter(member => member.fullname.toLowerCase().includes(searchTerm.toLowerCase()))
+		const filteredMembers = boardService.getBoardMembers(board, searchTerm).filter(member => {
+			const isAlreadyAssigned = task.members.some(taskMember => taskMember._id === member._id)
+			return !isAlreadyAssigned
+		})
+
+		if (filteredMembers.length === 0) {
+			return (
+				<li className="suggested-item flex align-center justify-center">
+					<span className="name empty-state">{searchTerm ? 'No matching members found' : 'No members available'}</span>
+				</li>
+			)
+		}
 
 		return filteredMembers.map(member => (
-			<li className="suggested-item flex align-center" key={member._id} onClick={() => handleSelect(member._id)}>
+			<li className="suggested-item flex align-center" key={member._id} onClick={() => onSetMember(member)}>
 				<div className="avatar">
-					<img src={member.imgUrl || DEFAULT_IMG} />
+					<img src={member.imgUrl || DEFAULT_IMG} alt={member.fullname} />
 				</div>
 				<span className="name">{member.fullname}</span>
 			</li>
 		))
 	}
 
-	function handleSearch({ target }) {
-		setSearchTerm(target.value)
-	}
-
 	return (
 		<li className="member-picker" ref={setReferenceElement} style={{ width: defaultWidth }} onClick={setPickerOpen}>
-			<div className="member-avatars-container flex align-center justify-center">{renderMemberAvatars()}</div>
+			<div className="member-avatars-container flex align-center justify-center">
+				{renderMemberAvatars()}
+				<span className="add-member-btn">{svgs.plus}</span>
+			</div>
 			{isPickerOpen && (
 				<PopUpMemberModal
-					task={task}
 					popperRef={setPopperElement}
 					styles={styles}
 					attributes={attributes}
 					setArrowElement={setArrowElement}
 					searchTerm={searchTerm}
-					handleSearch={handleSearch}
+					setSearchTerm={setSearchTerm}
 					getUserTokens={getUserTokens}
 					getSuggestedPeople={getSuggestedPeople}
 				/>
@@ -155,7 +180,7 @@ export function MemberPicker({ cmp, task, groupId, defaultWidth }) {
 	)
 }
 
-function PopUpMemberModal({ task, popperRef, setArrowElement, styles, attributes, searchTerm, handleSearch, getUserTokens, getSuggestedPeople }) {
+function PopUpMemberModal({ popperRef, setArrowElement, styles, attributes, searchTerm, setSearchTerm, getUserTokens, getSuggestedPeople }) {
 	return (
 		<div className="member-picker-popup" ref={popperRef} style={styles.popper} {...attributes.popper}>
 			<div className="modal-up-arrow" ref={setArrowElement} style={styles.arrow} />
@@ -164,7 +189,7 @@ function PopUpMemberModal({ task, popperRef, setArrowElement, styles, attributes
 				<ul className="suggested-list">
 					<div className="search-input flex align-center">
 						{svgs.search}
-						<input type="search" placeholder="Search names, roles or teams" value={searchTerm} onChange={handleSearch} />
+						<input type="search" placeholder="Search names, roles or teams" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
 					</div>
 					<div className="suggested-people">
 						{searchTerm ? 'Search Results' : 'Suggested people'}
