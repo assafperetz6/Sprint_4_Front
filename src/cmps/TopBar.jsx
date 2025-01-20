@@ -15,7 +15,7 @@ export function TopBar() {
 				<div className="switcher-logo flex align-center">
 					<button className="switcher flex align-center">{svgs.dottedMenuBtn}</button>
 
-					<Link to="/" className="logo-product flex clean-link">
+					<Link to="/home" className="logo-product flex clean-link">
 						<div className="logo flex align-center">{svgs.mgmtLogo}</div>
 						<h1 className="product flex align-center">
 							<span className="mundane">mundane</span>

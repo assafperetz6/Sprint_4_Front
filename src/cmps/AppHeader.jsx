@@ -11,7 +11,7 @@ export function AppHeader() {
 	async function onLogout() {
 		try {
 			await logout()
-			navigate('/')
+			navigate('/home')
 			showSuccessMsg(`Bye now`)
 		} catch (err) {
 			showErrorMsg('Cannot logout')

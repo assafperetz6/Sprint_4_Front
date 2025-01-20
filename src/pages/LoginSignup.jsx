@@ -26,7 +26,7 @@ export function LoginSignup() {
 
         if (!credentials.username || !credentials.password || !credentials.fullname) return
         await signup(credentials)
-        navigate('/')
+        navigate('/home')
     }
 
     async function onLogin( ev ){
@@ -34,7 +34,7 @@ export function LoginSignup() {
         
         if (!credentials.username || !credentials.password) return
         await login(credentials)
-        navigate('/')
+        navigate('/home')
 
     }
 

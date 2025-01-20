@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router'
+import { Routes, Route, Navigate } from 'react-router'
 
 import { HomePage } from './pages/HomePage'
 import { AboutUs } from './pages/AboutUs'
@@ -15,6 +15,7 @@ import { BoardDetails } from './pages/BoardDetails.jsx'
 import { SideBar } from './cmps/SideBar.jsx'
 import { TopBar } from './cmps/TopBar.jsx'
 import { TaskDetails } from './cmps/TaskDetails.jsx'
+import { LandingPage } from './pages/LandingPage.jsx'
 
 export function RootCmp() {
 	return (
@@ -25,7 +26,9 @@ export function RootCmp() {
 
 			<main>
 				<Routes>
-					<Route path="" element={<HomePage />} />
+					<Route path="/" element={<Navigate to="/welcome" />} />
+					<Route path="/welcome" element={<LandingPage />} />
+					<Route path="/home" element={<HomePage />} />
 					<Route path="about" element={<AboutUs />} />
 					<Route path="dashboard" element={<Dashboard />} />
 					<Route path="board" element={<BoardIndex />} />
