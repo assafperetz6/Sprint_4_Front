@@ -13,10 +13,8 @@ import { InlineEdit } from './InlineEditText'
 export function TaskPreview({ group, task }) {
 	// eslint-disable-next-line no-unused-vars
 	const board = useSelector(storeState => storeState.boardModule.board)
-	const { boardId } = useParams()
 	const [isTaskHovered, setIsTaskHovered] = useState(false)
-	const [isEditing, setIsEditing] = useState(false)
-	const [titleToEdit, setTitleToEdit] = useState('')
+	const [titleToEdit, setTitleToEdit] = useState(task.title)
 	const [activeMenuId, setActiveMenuId] = useState(null)
 
 	useEffect(() => {
