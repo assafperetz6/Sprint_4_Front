@@ -3,40 +3,50 @@
 
 	align-items: center;
 	justify-content: space-between;
-	overflow: hidden;
-	font-size: rem(14px);
-	// width: var(--left-side-width);
+
+	width: calc(100% - 78px);
 	flex-shrink: 0;
+
+	font-size: rem(14px);
+	
 	user-select: none;
 
 	.title-main-container {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+
 		height: $task-row-height;
-		width: 100%;
+		// width: calc(100% + 64px);
 
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
+		// text-overflow: ellipsis;
+		// overflow: hidden;
+		// white-space: nowrap;
 
-		// .link-wrapper {
-		// 	display: flex;
-		// 	justify-content: space-between;
-		// 	align-items: center;
+		&:hover {
+			// .open-task-details {
+			// 	gap: 4px;
+			// 	// padding: ;
+			// 	visibility: visible;
+			// 	opacity: 1;
+			// }
 
-		// 	width: calc(100% - 65px);
-		// }
+			.delete-btn {
+				background-color: $hovered-btns;
+
+				opacity: 100;
+				visibility: visible;
+			}
+		}
 
 		input {
 			all: unset;
-			flex-shrink: 1;
 			margin: 6px 10px 6px 26px;
-			
+
 			text-overflow: ellipsis;
 			overflow: hidden;
 			white-space: nowrap;
-			
+
 			cursor: text;
 
 			&:hover {
@@ -52,6 +62,31 @@
 			}
 		}
 	}
+
+	.open-task-details {
+		display: none;
+		justify-content: center;
+		align-items: center;
+		
+		height: 100%;
+		width: 64px;
+		
+		margin-inline-end: 10px;
+		// visibility: hidden;
+		// opacity: 0;
+
+		z-index: 40;
+
+		.open {
+			color: rgb(50, 51, 56);
+			font-size: rem(13px);
+		}
+
+		.icon {
+			font-size: rem(13px);
+		}
+	}
+
 	.add-update-btn {
 		display: flex;
 		justify-content: center;
@@ -64,39 +99,6 @@
 		flex-shrink: 0;
 
 		border-inline-start: $border;
-	}
-
-	.open-task-details {
-		display: flex;
-		align-items: center;
-		
-		height: 100%;
-		opacity: 0;
-		
-		z-index: 40;
-		.open {
-			color: rgb(50, 51, 56);
-			font-size: rem(13px);
-		}
-
-		.icon {
-			font-size: rem(13px);
-		}
-	}
-
-	&:hover {
-		.open-task-details {
-			gap: 4px;
-			margin-inline-end: 10px;
-			opacity: 1;
-		}
-
-		.delete-btn {
-			background-color: $hovered-btns;
-
-			opacity: 100;
-			visibility: visible;
-		}
 	}
 
 	.delete-btn {

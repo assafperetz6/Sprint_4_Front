@@ -19,29 +19,34 @@ export function GroupList({
 	const board = useSelector((storeState) => storeState.boardModule.board)
 	const dispatch = useDispatch()
 
+	const [titleColWidth, setTitleColWidth] = useState(null)
 	const groupRefs = useRef([])
 
-	
+	useEffect(() => {
+		const longestTaskTitle = () => {
+			const text = board.groups
+								.map(group => group.tasks.map(task => task.title).toSorted((t1, t2) => t2.length - t1.length)[0])
+								.toSorted((title1, title2) => title2.length - title1.length)[0]
+
+			const canvas = document.createElement('canvas')
+			const context = canvas.getContext('2d')
+			context.font = '14px Figtree'
+			return context.measureText(text).width
+		}
+
+		setTitleColWidth(longestTaskTitle())
+	}, [board])
 
 	useEffect(() => {
 		if (!scrollContainer) return
 
-		const headerHeight = 76 // Group header height
-		const boardHeaderHeight = 174  // Height of the board header
 		const windowVH = window.innerHeight
-		let lastScrollTop = scrollContainer.scrollTop
-
 
 		const options = {
 			rootMargin: `-240px 0px -${windowVH - 100}px`,
 		}
 
 		const observer = new IntersectionObserver((entries) => {
-			const currentScrollTop = scrollContainer.scrollTop
-			// Determine scroll direction
-			const isScrollingDown = currentScrollTop > lastScrollTop
-			lastScrollTop = currentScrollTop
-
 			entries.forEach((entry) => {
 				const idx = parseInt(entry.target.dataset.groupIndex)
 				const group = groups[idx]
@@ -74,7 +79,8 @@ export function GroupList({
 			console.log('cannot add group', err)
 		}
 	}
-
+	console.log(titleColWidth)
+	
 	return (
 		<section className="group-list">
 			<div

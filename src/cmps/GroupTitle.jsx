@@ -113,8 +113,6 @@ export function GroupTitle({ group }) {
 		setIsEditing(true)
 	}
 
-	console.log(isColorPickerOpen)
-
 	return (
 		<div className="group-header flex align-center full">
 			<div className="context-btn-container">

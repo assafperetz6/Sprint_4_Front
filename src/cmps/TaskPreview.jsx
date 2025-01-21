@@ -13,6 +13,7 @@ export function TaskPreview({ group, task }) {
 	// eslint-disable-next-line no-unused-vars
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const { boardId } = useParams()
+	const [isTaskHovered, setIsTaskHovered] = useState(false)
 	const [isEditing, setIsEditing] = useState(false)
 	const [titleToEdit, setTitleToEdit] = useState('')
 	const [activeMenuId, setActiveMenuId] = useState(null)
@@ -75,10 +76,10 @@ export function TaskPreview({ group, task }) {
 				<Checkbox />
 
 				<section className="task-title">
-					<div className="title-main-container">
+					<div className="title-main-container" onMouseEnter={() => setIsTaskHovered(true)} onMouseLeave={() => setIsTaskHovered(false)}>
 						<input type="text" onChange={handleChnage} onBlur={onBlur} value={titleToEdit} />
 
-						<Link to={`task/${task.id}`} className="open-task-details">
+						<Link to={`task/${task.id}`} className="open-task-details" style={{ display: isTaskHovered ? 'flex' : 'none'}}>
 							&nbsp; {svgs.expand} open
 						</Link>
 					</div>
