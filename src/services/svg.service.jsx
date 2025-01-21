@@ -637,7 +637,6 @@ export const svgs = {
 	boardImg: (
 		<svg width="262" height="140" viewBox="0 0 262 140" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<g clipPath="url(#clip0_11119_14507)">
-			<g clipPath="url(#clip0_11119_14507)">
 			<rect width="262" height="140" rx="2" fill="#CBDDFF"/>
 			<path d="M28.0117 30.7979C28.0117 28.1594 30.1506 26.0205 32.7891 26.0205H228.948C231.586 26.0205 233.725 28.1594 233.725 30.7979V140.741C233.725 143.379 231.586 145.518 228.948 145.518H32.7891C30.1506 145.518 28.0117 143.379 28.0117 140.741V30.7979Z" fill="white"/>
 			<rect width="176.322" height="13.1231" transform="matrix(1 0.000181335 -0.000228743 1 42.5 59.8428)" fill="#ECEFF8"/>
