@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { svgs } from "../services/svg.service.jsx";
+import boardImage from '../assets/images/board-image.png'
 
 
 export function LandingPage(){
@@ -23,6 +24,7 @@ export function LandingPage(){
                     <img style={{ width: '40px', height: '40px' }} src="https://cdn.monday.com/images/logos/monday_logo_icon.png" alt="logo" />
                     mundane <span>.com</span>
                 </h1>
+                <Link to={'/home'}>Get started {svgs.arrowRightAlt}</Link>
             </header>
 
             <section className="landing-page-main">
@@ -40,20 +42,24 @@ export function LandingPage(){
 
                 <Link to={'/home'}>Get started {svgs.arrowRightAlt}</Link>
 
-                <section className="landing-page-features-container">
-                    <h4>With us you can manage:</h4>
-                    <section className="landing-page-features">
-                        {features.map(feature => {
-                            return (
-                                <section key={feature} className="feature-preview">
-                                    <span>{svgs[`features${feature}`]}</span>
-                                    <h4>{feature}</h4>
-                                </section>
-                            )})
-                        }
+                <section className="landing-page-lower-container">
+                    <section className="landing-page-features-container">
+                        <h4>With us you can manage:</h4>
+                        <section className="landing-page-features">
+                            {features.map(feature => {
+                                return (
+                                    <section key={feature} className="feature-preview">
+                                        <span>{svgs[`features${feature}`]}</span>
+                                        <h4>{feature}</h4>
+                                    </section>
+                                )})
+                            }
+                        </section>
                     </section>
+                    <img src={boardImage} alt="photo" />
                 </section>
             </section>
+
         </section>
     )
 }

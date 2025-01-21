@@ -135,3 +135,23 @@
       opacity: 1;
     }
   }
+
+  @mixin get-started-btn {
+    background-color: $welcome-page-btn-clr;
+    padding: 12px 24px;
+    border-radius: 100vw;
+
+    color: $clr3;
+    transition: 200ms;
+
+    svg {
+        transition: transform 350ms ease-in-out;
+    }
+
+    &:hover {
+        filter: brightness(0.90);
+        svg {
+            transform: translateX(6px) ;
+        }
+    }
+  }
