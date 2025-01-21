@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import { GroupTitle } from './GroupTitle'
 import { TaskListHeader } from './TaskListHeader'
 

@@ -24,9 +24,9 @@
 		position: sticky;
 		top: 138px;
 		display: none;
-		
+
 		background-color: $clr3;
-		z-index: 40;
+		z-index: 50;
 
 		&.show {
 			display: grid;
@@ -37,7 +37,85 @@
 			grid-template-columns: subgrid;
 		}
 
-		.sticky-container > *:not(.colored-border), .task-columns {
+		.group-header {
+			z-index: 40;
+		}
+
+		.group-title-container {
+			position: sticky;
+			display: flex;
+			align-items: center;
+			height: min-content;
+
+			background-color: $clr3;
+
+			h4 {
+				position: sticky;
+				left: 46px;
+
+				&:hover {
+					outline: 1px solid $input-hover-border-clr;
+					border-radius: 4px;
+					cursor: text;
+				}
+			}
+
+			input {
+				position: relative;
+				all: unset;
+				cursor: text;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				cursor: text;
+
+				&:focus {
+					background-color: #ffff;
+					outline: none;
+					border-radius: 4px;
+				}
+			}
+
+			&.edit {
+				width: 80vw;
+				border: 1px solid $clr7;
+				border-radius: 4px;
+				input {
+					padding-inline-start: 30px;
+				}
+			}
+
+			.group-color-picker {
+				position: absolute;
+				left: $spacing-small;
+				cursor: pointer;
+				width: 14px;
+				height: 14px;
+				border-radius: 25%;
+			}
+
+			.color-picker {
+				display: flex;
+				flex-wrap: wrap;
+				width: rem(172px);
+				background-color: #ffff;
+				border: 1px $input-hover-border-clr solid;
+				border-radius: 4px;
+				padding: 5px;
+				justify-content: flex-start;
+
+				.color {
+					cursor: pointer;
+					height: rem(24px);
+					width: rem(24px);
+					border-radius: 4px;
+					margin: 4px;
+				}
+			}
+		}
+
+		.sticky-container > *:not(.colored-border),
+		.task-columns {
 			box-shadow: 4px 6px 15px -8px #c3c6d4;
 		}
 	}
@@ -45,7 +123,7 @@
 	.context-btn-container {
 		position: sticky;
 		left: 0;
-		
+
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -58,7 +136,7 @@
 	}
 
 	.group-context-menu {
-		@include context-menu
+		@include context-menu;
 	}
 
 	.group-header:hover .group-context-menu {
@@ -71,7 +149,6 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
 
 		padding: 0 6px;
 		margin: 0 5px;
@@ -90,22 +167,22 @@
 		flex-shrink: 0;
 	}
 
-	.group-title-container {
-		position: sticky;
-		top: 138px;
-		left: 40px;
+	// .group-title-container {
+	// 	position: sticky;
+	// 	top: 138px;
+	// 	left: 40px;
 
-		display: flex;
-		align-items: center;
-		height: 40px;
+	// 	display: flex;
+	// 	align-items: center;
+	// 	height: 40px;
 
-		background-color: $clr3;
+	// 	background-color: $clr3;
 
-		h4 {
-			position: sticky;
-			left: 84px;
-		}
-	}
+	// 	h4 {
+	// 		position: sticky;
+	// 		left: 84px;
+	// 	}
+	// }
 
 	.add-group-btn {
 		position: sticky;

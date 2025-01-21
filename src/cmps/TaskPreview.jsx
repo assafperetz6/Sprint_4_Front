@@ -8,6 +8,7 @@ import { showErrorMsg } from '../services/event-bus.service'
 import { removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
 import { useEffect, useState } from 'react'
+import { InlineEdit } from './InlineEditText'
 
 export function TaskPreview({ group, task }) {
 	// eslint-disable-next-line no-unused-vars
@@ -21,7 +22,6 @@ export function TaskPreview({ group, task }) {
 	useEffect(() => {
 		setTitleToEdit(task.title)
 	}, [])
-
 
 	function toggleContextMenu(ev, taskId) {
 		setActiveMenuId(prev => (prev === taskId ? null : taskId))
@@ -37,13 +37,9 @@ export function TaskPreview({ group, task }) {
 		}
 	}
 
-	function handleChnage({ target }) {
-		setTitleToEdit(target.value)
-	}
-
-	async function onSaveTask() {
+	async function onSaveTask(newTitle) {
 		try {
-			const taskToSave = { ...task, title: titleToEdit }
+			const taskToSave = { ...task, title: newTitle }
 			await updateTask(board._id, group.id, taskToSave)
 		} catch (err) {
 			console.log('cannot update title', err)
@@ -51,23 +47,11 @@ export function TaskPreview({ group, task }) {
 		}
 	}
 
-	function onBlur() {
-		if (titleToEdit) {
-			onSaveTask()
-			setIsEditing(false)
-		} else return
-	}
-
 	return (
 		<li className="task-preview task-row flex full">
 			<section className="sticky-container">
 				<div className="context-btn-container">
-					<button
-						className={`task-context-menu ${
-							activeMenuId === task.id ? 'open' : ''
-						}`}
-						onClick={(ev) => toggleContextMenu(ev, task.id)}
-					>
+					<button className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, task.id)}>
 						{svgs.threeDots}
 					</button>
 				</div>
@@ -77,9 +61,8 @@ export function TaskPreview({ group, task }) {
 
 				<section className="task-title">
 					<div className="title-main-container" onMouseEnter={() => setIsTaskHovered(true)} onMouseLeave={() => setIsTaskHovered(false)}>
-						<input type="text" onChange={handleChnage} onBlur={onBlur} value={titleToEdit} />
-
-						<Link to={`task/${task.id}`} className="open-task-details" style={{ display: isTaskHovered ? 'flex' : 'none'}}>
+						<InlineEdit value={titleToEdit} onSave={newTitle => onSaveTask(newTitle)} />
+						<Link to={`task/${task.id}`} className="open-task-details" style={{ display: isTaskHovered ? 'flex' : 'none' }}>
 							&nbsp; {svgs.expand} open
 						</Link>
 					</div>
