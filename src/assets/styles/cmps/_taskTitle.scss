@@ -3,9 +3,13 @@
 
 	align-items: center;
 	justify-content: space-between;
-	overflow: hidden;
+
+	width: calc(100% - 78px);
+	flex-shrink: 0;
+
 	font-size: rem(14px);
-	// width: var(--left-side-width);
+	height: 100%;
+	width: var(--left-side-width);
 	flex-shrink: 0;
 	user-select: none;
 
@@ -13,12 +17,15 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: $task-row-height;
+		height: 100%;
 		width: 100%;
 
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
+
+		margin: 6px 10px 6px 26px;
+		cursor: text;
 
 		// .link-wrapper {
 		// 	display: flex;
@@ -28,30 +35,32 @@
 		// 	width: calc(100% - 65px);
 		// }
 
-		input {
-			all: unset;
-			flex-shrink: 1;
-			margin: 6px 10px 6px 26px;
-			
-			text-overflow: ellipsis;
-			overflow: hidden;
-			white-space: nowrap;
-			
-			cursor: text;
+		.inline-edit {
+			flex: 1;
 
-			&:hover {
+			&:hover span {
 				outline: 1px solid $input-hover-border-clr;
 				border-radius: 4px;
 				cursor: text;
 			}
 
-			&:focus {
-				background-color: #ffff;
-				outline: 1px solid $clr7;
-				border-radius: 4px;
+			input {
+				all: unset;
+				flex: 1;
+				width: 100%;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+
+				&:focus {
+					background-color: #ffff;
+					outline: 1px solid $clr7;
+					border-radius: 4px;
+				}
 			}
 		}
 	}
+
 	.add-update-btn {
 		display: flex;
 		justify-content: center;
@@ -69,10 +78,10 @@
 	.open-task-details {
 		display: flex;
 		align-items: center;
-		
+
 		height: 100%;
 		opacity: 0;
-		
+
 		z-index: 40;
 		.open {
 			color: rgb(50, 51, 56);

@@ -13,6 +13,7 @@ export function TimelinePicker({ task, group, defaultWidth }) {
 		startDate: task.timeline?.startDate ? new Date(task.timeline.startDate) : undefined,
 		endDate: task.timeline?.endDate ? new Date(task.timeline.endDate) : undefined
 	})
+	const [currentMonth, setCurrentMonth] = useState(task.timeline?.startDate ? new Date(task.timeline.startDate) : new Date())
 
 	const buttonRef = useRef(null)
 	const popperRef = useRef(null)
@@ -208,9 +209,9 @@ export function TimelinePicker({ task, group, defaultWidth }) {
 							onSelect={handleRangeSelect}
 							showOutsideDays
 							fixedWeeks
-							defaultMonth={selectedRange?.startDate}
-							month={selectedRange?.startDate}
-							onMonthChange={month => setSelectedRange(prev => ({ ...prev, startDate: month }))}
+							defaultMonth={currentMonth}
+							month={currentMonth}
+							onMonthChange={setCurrentMonth}
 						/>
 					</div>
 				</div>

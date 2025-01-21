@@ -34,7 +34,6 @@
 	.group-header-wrapper {
 		display: grid;
 		grid-template-columns: subgrid;
-		z-index: 20;
 	}
 
 	.toggle-group-preview {
@@ -54,92 +53,89 @@
 		}
 	}
 
-	.row-header {
+	.group-header {
 		height: 40px;
-		.group-header {
+
+		position: sticky;
+		top: 138px;
+		left: 0;
+		z-index: 40;
+
+		.group-title-container {
 			position: sticky;
-			top: 138px;
-			left: 0;
+			display: flex;
+			align-items: center;
+			height: min-content;
 
-			height: 40px;
+			background-color: $clr3;
 
-			.group-title-container {
+			h4 {
+				position: sticky;
+				left: 46px;
+
+				&:hover {
+					outline: 1px solid $input-hover-border-clr;
+					border-radius: 4px;
+					cursor: text;
+				}
+			}
+
+			input {
 				position: relative;
-				display: flex;
-				align-items: center;
-				height: min-content;
+				all: unset;
+				cursor: text;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				cursor: text;
 
-				background-color: $clr3;
-
-				h4 {
-					position: sticky;
-					left: 46px;
-
-					&:hover {
-						outline: 1px solid $input-hover-border-clr;
-						border-radius: 4px;
-						cursor: text;
-					}
-				}
-
-				input {
-					position: relative;
-					all: unset;
-					cursor: text;
-					text-overflow: ellipsis;
-					overflow: hidden;
-					white-space: nowrap;
-					cursor: text;
-
-					&:focus {
-						background-color: #ffff;
-						outline: none;
-						border-radius: 4px;
-					}
-				}
-
-				&.edit {
-					border: 1px solid $clr7;
-					border-radius: 4px;
-					input {
-						padding-inline-start: 30px;
-					}
-				}
-
-				.group-color-picker {
-					position: absolute;
-					left: $spacing-small;
-					cursor: pointer;
-					width: 14px;
-					height: 14px;
-					border-radius: 25%;
-				}
-
-				.color-picker {
-					display: flex;
-					position: absolute;
-					flex-wrap: wrap;
-
-					width: rem(172px);
+				&:focus {
 					background-color: #ffff;
-					border: 1px $input-hover-border-clr solid;
+					outline: none;
 					border-radius: 4px;
-					padding: 5px;
-					justify-content: flex-start;
-					z-index: 999 !important;
+				}
+			}
 
-					.color {
-						cursor: pointer;
-						height: rem(24px);
-						width: rem(24px);
-						border-radius: 4px;
-						margin: 4px;
-					}
+			&.edit {
+				width: 80vw;
+				border: 1px solid $clr7;
+				border-radius: 4px;
+				input {
+					padding-inline-start: 30px;
+				}
+			}
+
+			.color-picker-icon {
+				position: absolute;
+				left: $spacing-small;
+				cursor: pointer;
+				width: 14px;
+				height: 14px;
+				border-radius: 25%;
+			}
+
+			.color-picker {
+				display: flex;
+				flex-wrap: wrap;
+				width: rem(172px);
+				background-color: #ffff;
+				border: 1px $input-hover-border-clr solid;
+				border-radius: 4px;
+				padding: 5px;
+				justify-content: flex-start;
+
+				.color {
+					cursor: pointer;
+					height: rem(24px);
+					width: rem(24px);
+					border-radius: 4px;
+					margin: 4px;
 				}
 			}
 		}
 	}
 }
+
 // .popper-container {
 // 	z-index: 999 !important;
 // }

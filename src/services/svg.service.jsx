@@ -637,13 +637,16 @@ export const svgs = {
 	boardImg: (
 		<svg width="262" height="140" viewBox="0 0 262 140" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<g clipPath="url(#clip0_11119_14507)">
+			<g clipPath="url(#clip0_11119_14507)">
 			<rect width="262" height="140" rx="2" fill="#CBDDFF"/>
 			<path d="M28.0117 30.7979C28.0117 28.1594 30.1506 26.0205 32.7891 26.0205H228.948C231.586 26.0205 233.725 28.1594 233.725 30.7979V140.741C233.725 143.379 231.586 145.518 228.948 145.518H32.7891C30.1506 145.518 28.0117 143.379 28.0117 140.741V30.7979Z" fill="white"/>
 			<rect width="176.322" height="13.1231" transform="matrix(1 0.000181335 -0.000228743 1 42.5 59.8428)" fill="#ECEFF8"/>
 			<path d="M49.3359 66.418L74.5935 66.418" stroke="#181B34" strokeWidth="1.0524"/>
+			<path d="M49.3359 66.418L74.5935 66.418" stroke="#181B34" strokeWidth="1.0524"/>
 			<rect width="52.5069" height="13.2568" transform="matrix(1 0.00014618 -0.000283755 1 166.004 59.7148)" fill="#00CA72"/>
 			<circle cx="105.473" cy="66.418" r="4.47269" fill="#CBDDFF"/>
 			<rect width="176.322" height="13.1231" transform="matrix(1 0.000181335 -0.000228743 1 42.5 74.4912)" fill="#ECEFF8"/>
+			<path d="M49 80.999H83" stroke="#181B34" strokeWidth="1.0524"/>
 			<path d="M49 80.999H83" stroke="#181B34" strokeWidth="1.0524"/>
 			<rect width="52.5069" height="13.2568" transform="matrix(1 0.00014618 -0.000283755 1 166.004 74.3633)" fill="#FFCC00"/>
 			<circle cx="105.473" cy="81.0664" r="4.47269" fill="#CBDDFF"/>
@@ -654,17 +657,21 @@ export const svgs = {
 			<path d="M39.8613 62.4923C39.8613 61.0393 41.0393 59.8613 42.4923 59.8613H43.6061V102.521H42.4923C41.0393 102.521 39.8613 101.343 39.8613 99.89V62.4923Z" fill="#6161FF"/>
 			<path d="M39.8652 39.1553H85.1183" stroke="#CBDDFF" strokeWidth="2.60994"/>
 			<path d="M39.8652 53H70.6478" stroke="#6161FF" strokeWidth="1.82065"/>
+			<path d="M39.8652 39.1553H85.1183" stroke="#CBDDFF" strokeWidth="2.60994"/>
+			<path d="M39.8652 53H70.6478" stroke="#6161FF" strokeWidth="1.82065"/>
 			<mask id="mask0_11119_14507" maskUnits="userSpaceOnUse" x="28" y="105" width="206" height="41">
 			<path d="M28.0078 105.385L233.721 105.427L233.714 140.727C233.713 143.366 231.574 145.504 228.936 145.504L32.7771 145.464C30.1386 145.463 28.0001 143.324 28.0006 140.686L28.0078 105.385Z" fill="white"/>
 			</mask>
 			<g mask="url(#mask0_11119_14507)">
 			<rect width="176.322" height="13.1231" transform="matrix(1 0.00016627 -0.000249469 1 42.6777 119.792)" fill="#ECEFF8"/>
 			<path d="M49.5005 126.367L85.1646 126.367" stroke="#181B34" strokeWidth="1.0524"/>
+			<path d="M49.5005 126.367L85.1646 126.367" stroke="#181B34" strokeWidth="1.0524"/>
 			<rect width="52.5069" height="13.2568" transform="matrix(1 0.000149447 -0.000277551 1 166.229 119.663)" fill="#FFCC00"/>
 			<circle cx="105.637" cy="126.367" r="4.47269" fill="#CBDDFF"/>
 			<rect width="176.354" height="13.1231" transform="matrix(1 0.000181335 -0.000228743 1 42.6621 134.44)" fill="#ECEFF8"/>
 			<rect width="52.5069" height="13.2568" transform="matrix(1 0.000149447 -0.000277551 1 166.227 134.312)" fill="#FB275D"/>
 			<circle cx="105.635" cy="141.016" r="4.47269" fill="#CBDDFF"/>
+			<path d="M40.0273 113.349H78.1631" stroke="#449AFB" strokeWidth="1.82065"/>
 			<path d="M40.0273 113.349H78.1631" stroke="#449AFB" strokeWidth="1.82065"/>
 			<path d="M40.0268 122.441C40.0271 120.988 41.2053 119.81 42.6583 119.81L43.7721 119.81L43.7634 162.445L42.6497 162.445C41.1966 162.445 40.0189 161.266 40.0192 159.813L40.0268 122.441Z" fill="#449AFB"/>
 			</g>
