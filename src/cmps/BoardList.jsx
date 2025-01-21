@@ -4,7 +4,7 @@ export function BoardList({ boards }) {
 	
 	return (
 		<section>
-			<ul className='board-list' style={{ width: (300 * boards.length) + 'px'}}>
+			<ul className='board-list'>
 				{boards.map(board => (
 						<BoardPreview key={board._id} board={board} />
 				))}
