@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { showErrorMsg } from '../../services/event-bus.service'
 import { usePopper } from 'react-popper'
 import { useEffectUpdate } from '../../customHooks/useEffectUpdate'
 import { svgs } from '../../services/svg.service'
 import { boardService } from '../../services/board/index'
+import { updateTask } from '../../store/actions/board.actions'
 
 export function LabelPicker({ cmp, task, groupId, defaultWidth }) {
 	const [isPickerOpen, setIsPickerOpen] = useState(false)
@@ -64,7 +65,7 @@ export function LabelPicker({ cmp, task, groupId, defaultWidth }) {
 			const labelTaskName = labelsName === 'statusLabels' ? 'status' : 'priority'
 			const taskToSave = { ...task, [labelTaskName]: newLabel.id }
 			console.log(taskToSave)
-			await boardService.saveTask(board._id, groupId, taskToSave)
+			updateTask(board._id, groupId, taskToSave)
 			setLabel(newLabel)
 		} catch (error) {
 			console.error('Failed to update label:', error)
