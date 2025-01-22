@@ -3,11 +3,11 @@ import { svgs } from '../services/svg.service.jsx'
 
 export function ContextMenu({ board, onClose, onRemoveBoard, onUpdateBoard, onRenameBoard }) {
 	const menuRef = useRef()
-        
+
 	useEffect(() => {
-		function handleClickOutside(ev) {            
+		function handleClickOutside(ev) {
 			if (menuRef.current && !menuRef.current.contains(ev.target)) {
-				onClose()            
+				onClose()
 			}
 		}
 
@@ -17,19 +17,21 @@ export function ContextMenu({ board, onClose, onRemoveBoard, onUpdateBoard, onRe
 		}
 	}, [onClose])
 
-    // function toggleStarredBoard() {
-    //     const currIsStarred = board.isStarred
-    //     const boardToSave = { ...board, isStarred: !isStarred }
-    //     onUpdateBoard(boardToSave)
-        
-    //     onClose()
-    // }
+	// function toggleStarredBoard() {
+	//     const currIsStarred = board.isStarred
+	//     const boardToSave = { ...board, isStarred: !isStarred }
+	//     onUpdateBoard(boardToSave)
+
+	//     onClose()
+	// }
 
 	return (
 		<section ref={menuRef} className="context-menu">
 			<button>{svgs.openInNewTab} Open board</button>
-			<button onClick={onRenameBoard}>{svgs.pencil} Rename</button>
-			<button onClick={() => onUpdateBoard({ ...board, isStarred: !board.isStarred })}>{svgs.star} {`${board.isStarred ? 'Remove from' : 'Add to' } favorites`}</button>
+			<button onClick={() => onRenameBoard(board)}>{svgs.pencil} Rename</button>
+			<button onClick={() => onUpdateBoard({ ...board, isStarred: !board.isStarred })}>
+				{svgs.star} {`${board.isStarred ? 'Remove from' : 'Add to'} favorites`}
+			</button>
 			<button onClick={() => onRemoveBoard(board._id)}>{svgs.delete} Delete</button>
 		</section>
 	)

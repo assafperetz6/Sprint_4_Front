@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { svgs } from '../services/svg.service'
 import { hexToRgba } from '../services/util.service'
 
@@ -8,7 +8,7 @@ import { showErrorMsg } from '../services/event-bus.service'
 import { removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
 import { useEffect, useState } from 'react'
-import { InlineEdit } from './InlineEditText'
+import { InlineEdit } from './InlineEdit'
 
 export function TaskPreview({ group, task }) {
 	// eslint-disable-next-line no-unused-vars
