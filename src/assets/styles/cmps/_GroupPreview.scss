@@ -1,7 +1,3 @@
-.popper-container {
-	z-index: 999;
-}
-
 .group-preview {
 	position: relative;
 	display: grid;
@@ -38,7 +34,7 @@
 
 	.toggle-group-preview {
 		position: sticky;
-		left: 6px;
+		left: 46px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -63,6 +59,8 @@
 
 		.group-title-container {
 			position: sticky;
+			left: 86px;
+
 			display: flex;
 			align-items: center;
 			height: min-content;
@@ -70,8 +68,8 @@
 			background-color: $clr3;
 
 			h4 {
-				position: sticky;
-				left: 46px;
+				// position: sticky;
+				// left: 46px;
 
 				&:hover {
 					outline: 1px solid $input-hover-border-clr;

@@ -1,8 +1,12 @@
+.popper-container {
+	z-index: 999;
+}
+
 .group-list {
 	position: relative;
 
 	display: grid;
-	grid-template-columns: minmax(220px, auto) 1fr;
+	grid-template-columns: minmax(220px, 400px) 1fr;
 	padding: 0px 0px 40px;
 
 	@media (min-width: $mobile-breakpoint) {
@@ -43,6 +47,8 @@
 
 		.group-title-container {
 			position: sticky;
+			left: 86px;
+
 			display: flex;
 			align-items: center;
 			height: min-content;
@@ -50,9 +56,6 @@
 			background-color: $clr3;
 
 			h4 {
-				position: sticky;
-				left: 46px;
-
 				&:hover {
 					outline: 1px solid $input-hover-border-clr;
 					border-radius: 4px;
@@ -186,6 +189,7 @@
 
 	.add-group-btn {
 		position: sticky;
+		left: 40px;
 		// Ignore in regards to mq
 		// left: $task-row-height;
 		border: 1px solid rgb(195, 198, 212);

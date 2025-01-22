@@ -157,8 +157,8 @@
 	.workspaces-actions {
 		position: relative;
 
-        display: flex;
-        flex-direction: column;
+		display: flex;
+		flex-direction: column;
 
 		padding: 4px 6px 4px 12px;
 		margin: 0;
@@ -167,25 +167,24 @@
 			gap: 8px;
 		}
 
-        .workspaces-wrapper {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0;
+		.workspaces-wrapper {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: 0;
+		}
 
-        }
-        
 		div {
-            display: flex;
+			display: flex;
 			align-items: center;
-            padding: 6px;
+			padding: 6px;
 		}
 
 		button {
 			@include btn;
 
-            align-self: center;
-            justify-self: center;
+			align-self: center;
+			justify-self: center;
 
 			height: 24px;
 			width: 24px;
@@ -193,32 +192,32 @@
 
 			background-color: unset;
 
-            &:first-child {
-                grid-column: 2;
-            }
+			&:first-child {
+				grid-column: 2;
+			}
 		}
 
 		.workspace-list-btn {
 			display: flex;
 			align-items: center;
-            justify-content: start;
+			justify-content: start;
 			gap: 8px;
 
-            height: 32px;
+			height: 32px;
 			width: 80%;
 
-            border: 1px solid #c3c6d4;
-            margin: 0;
+			border: 1px solid #c3c6d4;
+			margin: 0;
 
 			> div {
-                position: relative;
+				position: relative;
 				flex-shrink: 0;
 
 				height: 20px;
 				width: 20px;
 
 				border-radius: 6px;
-                margin-inline-start: 4px;
+				margin-inline-start: 4px;
 
 				line-height: 1.5;
 				font-weight: 500;
@@ -228,29 +227,29 @@
 				svg {
 					// display: none;
 					position: absolute;
-                    top: 50%;
-                    left: 50%;
+					top: 50%;
+					left: 50%;
 					height: 14px;
 					width: 14px;
 				}
 			}
 
-            > span {
-                flex: 1;
+			> span {
+				flex: 1;
 
-                font-size: 1rem;
-                font-weight: 600;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
+				font-size: 1rem;
+				font-weight: 600;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 		}
 
 		.add-workspace-item {
 			height: 32px;
 			width: 32px;
 
-            flex-shrink: 0;
+			flex-shrink: 0;
 
 			padding: 0;
 			margin-inline-end: 4px;
@@ -327,6 +326,19 @@
 			> a {
 				flex-grow: 1;
 			}
+
+			.inline-edit {
+				input {
+					max-width: min-content;
+					border: none;
+					background: transparent;
+
+					&:focus {
+						outline: 1px solid $clr7;
+						border-radius: 4px;
+					}
+				}
+			}
 		}
 
 		a {
@@ -338,41 +350,6 @@
 
 			padding: 4px;
 			margin-inline-start: 6px;
-		}
-	}
-
-	.context-menu {
-		position: absolute;
-		top: 0;
-		left: 250px;
-
-		display: flex;
-		flex-direction: column;
-
-		width: 256px;
-
-		padding: 8px;
-		border-radius: $radius;
-		margin: 0;
-
-		box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
-		background-color: $clr3;
-		z-index: 50;
-
-		button {
-			display: flex;
-			align-items: center;
-			gap: 6px;
-
-			height: 32px;
-
-			padding: 4px 8px;
-			text-align: start;
-			background-color: unset;
-
-			svg {
-				color: #676879;
-			}
 		}
 	}
 }

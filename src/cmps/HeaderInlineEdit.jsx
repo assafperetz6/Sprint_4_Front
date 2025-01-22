@@ -66,7 +66,7 @@ export function HeaderInlineEdit({ value: initialValue, onSave, onStyleChange, s
 			return
 		}
 		onSave(value)
-		setIsEditing(false)
+		// setIsEditing(false)
 		setIsColorPickerOpen(false)
 	}
 
