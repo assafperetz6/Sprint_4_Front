@@ -1,49 +1,75 @@
 
 .group-summary {
     display: flex;
-    grid-column: 2 / -1;
 
     height: 36px;
-    border: 1px solid $clr8;
-    border-block-start: none;
-    border-radius: 0 0 0 8px ;
 
-    .summary {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
+    .white-space {
+        position: sticky;
+        left: 0;
+
+        background-color: $clr3;
+        grid-column: 1 / 2;
+
         height: 36px;
-        border-inline-end: 1px solid $clr8;
+        z-index: 40;
 
-        .summary-colored-block {
-            display: block;
-            height: 24px;
+    }
 
-            transition: height 100ms, border 100ms;
+    .group-summary-container {
+        position: relative;
 
-            &:hover {
-                height: 30px;
-                border-radius: 3px;
-            }
-        }
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-grow: 1;
 
-        .empty {
+        grid-column: 2 / -1;
+
+        border: 1px solid $clr8;
+        border-block-start: none;
+        border-radius: 0 0 0 8px ;    
+
+        // box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
+        z-index: 30;
+
+        .summary {
             display: flex;
             justify-content: center;
             align-items: center;
-
-            background-color: $lightgrey;
-            height: 22px;
-            border-radius: 100vw;
-
-            color: $clr3;
-            font-size: 14px;
-
-            &:hover {
-                
-                background-color: #ababab;
+    
+            height: 36px;
+            border-inline-end: 1px solid $clr8;
+    
+            .summary-colored-block {
+                display: block;
+                height: 24px;
+    
+                transition: height 100ms, border 100ms;
+    
+                &:hover {
+                    height: 30px;
+                    border-radius: 3px;
+                }
             }
-        }
+    
+            .empty {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+                background-color: $lightgrey;
+                height: 22px;
+                border-radius: 100vw;
+    
+                color: $clr3;
+                font-size: 14px;
+    
+                &:hover {
+    
+                    background-color: #ababab;
+                }
+            }
+        }    
     }
 }

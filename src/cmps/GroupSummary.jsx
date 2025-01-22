@@ -99,9 +99,12 @@ export function GroupSummary({ group, cmpsOrder }){
 
     return (
         <section className="group-summary full">
-            {groupSummaryArray.map(summary => (
-                    <DynamicSummaryCmp padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} />
-            ))}
+            <section style={{width: 400 + 'px'}} className="white-space"></section>
+            <section className="group-summary-container">
+                {groupSummaryArray.map(summary => (
+                        <DynamicSummaryCmp padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} />
+                ))}
+                </section>
         </section>
     )
 }
@@ -129,10 +132,6 @@ function DynamicSummaryCmp( props ){
         default:
             break;
     }
-
-    return (
-        <h1>test</h1>
-    )
 }
 
 function StatusSummary({ summary, statusLabels, padding }){
@@ -218,13 +217,13 @@ function DateSummary({ summary, padding }){
         return (
         <section style={{ width: width + 'px'}} className="date-summary summary">
             <h1>
-                date
+                
             </h1>
         </section>
     )} else return (
         <section style={{ width: width + 'px'}} className="date-summary summary">
             <h1>
-                date
+                
             </h1>
         </section>
     )
@@ -236,7 +235,7 @@ function MemberSummary({ summary }){
     return (
         <section style={{ width: width + 'px'}} className="member-summary summary">
             <h1>
-                member
+                
             </h1>
         </section>
     )
@@ -248,7 +247,7 @@ function TimelineSummary({ summary }){
     return (
         <section style={{ width: width + 'px'}} className="timeline-summary summary">
             <h1>
-                timeline
+                
             </h1>
         </section>
     )
