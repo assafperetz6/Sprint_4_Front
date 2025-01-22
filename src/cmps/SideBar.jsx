@@ -20,6 +20,7 @@ export function SideBar() {
 	const [isHovered, setisHovered] = useState(false)
 	const { pathname } = useLocation()
 	const toggleSidebarRef = useRef()
+	const buttonRefs = useRef({})
 
 	useEffect(() => {
 		if (!boards?.length) loadBoards()
@@ -128,11 +129,12 @@ export function SideBar() {
 								<span>{board.title}</span>
 							)}
 						</NavLink>
-						<button className={`board-options ${activeMenuId === board._id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, board._id)}>
+						<button className={`board-options ${activeMenuId === board._id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, board._id)} ref={el => (buttonRefs.current[board._id] = el)}>
 							{svgs.threeDots}
 						</button>
 
-						{activeMenuId === board._id && <ContextMenu board={board} onClose={() => setActiveMenuId(null)} onRemoveBoard={onRemoveBoard} onUpdateBoard={onUpdateBoard} onRenameBoard={onRenameBoard} />}
+						{/* {activeMenuId === board._id && <ContextMenu board={board} onClose={() => setActiveMenuId(null)} onRemoveBoard={onRemoveBoard} onUpdateBoard={onUpdateBoard} onRenameBoard={onRenameBoard} />} */}
+						{activeMenuId === board._id && <ContextMenu type="board" entity={board} onClose={() => setActiveMenuId(null)} onRemove={onRemoveBoard} onUpdate={onUpdateBoard} onRename={onRenameBoard} referenceElement={buttonRefs.current[board._id]} />}
 					</div>
 				))}
 				<NavLink to="/dashboard">{svgs.dashboard} Dashboard and reporting</NavLink>

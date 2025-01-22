@@ -7,8 +7,9 @@ import { DynamicCmp } from './DynamicCmp'
 import { showErrorMsg } from '../services/event-bus.service'
 import { removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { InlineEdit } from './InlineEdit'
+import { ContextMenu } from './ContextMenu'
 
 export function TaskPreview({ group, task }) {
 	// eslint-disable-next-line no-unused-vars
@@ -16,6 +17,7 @@ export function TaskPreview({ group, task }) {
 	const [isTaskHovered, setIsTaskHovered] = useState(false)
 	const [titleToEdit, setTitleToEdit] = useState(task.title)
 	const [activeMenuId, setActiveMenuId] = useState(null)
+	const buttonRef = useRef(null)
 
 	useEffect(() => {
 		setTitleToEdit(task.title)
@@ -49,10 +51,11 @@ export function TaskPreview({ group, task }) {
 		<li className="task-preview task-row flex full">
 			<section className="sticky-container">
 				<div className="context-btn-container">
-					<button className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, task.id)}>
+					<button className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, task.id)} ref={buttonRef}>
 						{svgs.threeDots}
 					</button>
 				</div>
+
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
 
 				<Checkbox />
@@ -74,6 +77,20 @@ export function TaskPreview({ group, task }) {
 				))}
 				<li className="line-end"></li>
 			</section>
+
+			{activeMenuId === task.id && (
+				<div className="popper-container">
+					<ContextMenu
+						type="task"
+						entity={task}
+						onClose={() => setActiveMenuId(null)}
+						onRemove={onRemoveTask}
+						onUpdate={updatedTask => onSaveTask(updatedTask.title)}
+						onRename={task => setTitleToEdit(task.title)}
+						referenceElement={buttonRef.current}
+					/>
+				</div>
+			)}
 		</li>
 	)
 }

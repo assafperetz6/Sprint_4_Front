@@ -1,8 +1,12 @@
+.popper-container {
+	z-index: 999;
+}
+
 .group-list {
 	position: relative;
 
 	display: grid;
-	grid-template-columns:  minmax(220px, 400px) 1fr;
+	grid-template-columns: minmax(220px, 400px) 1fr;
 	padding: 0px 0px 40px;
 
 	@media (min-width: $mobile-breakpoint) {

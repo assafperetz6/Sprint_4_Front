@@ -1,12 +1,15 @@
-import { useState } from 'react'
-import { updateGroup } from '../store/actions/board.actions'
+import { useRef, useState } from 'react'
+import { removeGroup, updateGroup } from '../store/actions/board.actions'
 import { useSelector } from 'react-redux'
 import { svgs } from '../services/svg.service'
 import { HeaderInlineEdit } from './HeaderInlineEdit'
+import { ContextMenu } from './ContextMenu'
+import { showErrorMsg } from '../services/event-bus.service'
 
 export function GroupTitle({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [activeMenuId, setActiveMenuId] = useState(null)
+	const buttonRef = useRef()
 
 	function toggleContextMenu(ev, taskId) {
 		setActiveMenuId(prev => (prev === taskId ? null : taskId))
@@ -30,12 +33,23 @@ export function GroupTitle({ group }) {
 		}
 	}
 
+	async function onRemoveGroup(groupId) {
+		try {
+			removeGroup(board._id, groupId)
+		} catch (err) {
+			console.log('cannot remove group')
+			showErrorMsg('cannot remove group')
+		}
+	}
+
 	return (
 		<div className="group-header flex align-center full">
 			<div className="context-btn-container">
-				<button className={`group-context-menu ${activeMenuId === group.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, group.id)}>
+				<button className={`group-context-menu ${activeMenuId === group.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, group.id)} ref={buttonRef}>
 					{svgs.threeDots}
 				</button>
+
+				{activeMenuId === group.id && <ContextMenu type="group" entity={group} onClose={() => setActiveMenuId(null)} onRemove={onRemoveGroup} onUpdate={handleStyleChange} onRename={() => null} referenceElement={buttonRef.current} />}
 			</div>
 
 			<div className="toggle-group-preview flex align-center justify-center">{svgs.arrowDown}</div>
