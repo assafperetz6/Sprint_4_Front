@@ -24,7 +24,7 @@ export function LandingPage(){
                     <img style={{ width: '40px', height: '40px' }} src="https://cdn.monday.com/images/logos/monday_logo_icon.png" alt="logo" />
                     mundane <span>.com</span>
                 </h1>
-                <Link to={'/home'}>Get started {svgs.arrowRightAlt}</Link>
+                <Link to={'/board'}>Get started {svgs.arrowRightAlt}</Link>
             </header>
 
             <section className="landing-page-main">
@@ -40,7 +40,7 @@ export function LandingPage(){
                     teams to make strategic decisions with confidence.
                 </h3>
 
-                <Link to={'/home'}>Get started {svgs.arrowRightAlt}</Link>
+                <Link to={'/board'}>Get started {svgs.arrowRightAlt}</Link>
 
                 <section className="landing-page-lower-container">
                     <section className="landing-page-features-container">
