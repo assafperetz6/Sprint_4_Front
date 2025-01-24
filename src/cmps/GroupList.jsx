@@ -16,18 +16,18 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 	const [titleColWidth, setTitleColWidth] = useState(null)
 	const groupRefs = useRef([])
 
-	useEffect(() => {
-		const longestTaskTitle = () => {
-			const text = board.groups.map(group => group.tasks.map(task => task.title).toSorted((t1, t2) => t2.length - t1.length)[0]).toSorted((title1, title2) => title2.length - title1.length)[0]
+	// useEffect(() => {
+	// 	const longestTaskTitle = () => {
+	// 		const text = board.groups.map(group => group.tasks.map(task => task.title).toSorted((t1, t2) => t2.length - t1.length)[0]).toSorted((title1, title2) => title2.length - title1.length)[0]
 
-			const canvas = document.createElement('canvas')
-			const context = canvas.getContext('2d')
-			context.font = '14px Figtree'
-			return context.measureText(text).width
-		}
+	// 		const canvas = document.createElement('canvas')
+	// 		const context = canvas.getContext('2d')
+	// 		context.font = '14px Figtree'
+	// 		return context.measureText(text).width
+	// 	}
 
-		setTitleColWidth(longestTaskTitle())
-	}, [board])
+	// 	setTitleColWidth(longestTaskTitle())
+	// }, [board])
 
 	useEffect(() => {
 		if (!scrollContainer) return
