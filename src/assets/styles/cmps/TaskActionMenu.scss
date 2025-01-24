@@ -1,0 +1,54 @@
+.task-action-menu {
+	position: fixed;
+	left: calc(50% + 250px);
+	bottom: 50px;
+
+	transform: translateX(calc(-50% - 125px));
+
+	display: flex;
+	height: 63px;
+	width: 800px;
+
+	border-radius: 5px;
+	box-shadow: 0px 15px 50px #0000004d;
+	background-color: $clr3;
+	z-index: 40;
+
+	.task-count {
+		align-content: center;
+		text-align: center;
+
+		height: 100%;
+		width: 63px;
+		font-size: rem(24px);
+
+		border-radius: 5px 0 0 5px;
+		color: $clr3;
+		background-color: $clr7;
+	}
+
+	h4 {
+		height: 100%;
+		align-content: center;
+
+		margin-inline: 18px 24px;
+
+		font-family: $main-font-family;
+		font-size: rem(24px);
+		font-weight: 300;
+	}
+
+	.actions {
+		display: flex;
+        align-items: center;
+
+		button {
+			width: 60px;
+			margin-inline-end: 20px;
+			svg {
+				height: 30px;
+				width: 30px;
+			}
+		}
+	}
+}

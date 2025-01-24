@@ -94,13 +94,13 @@ export function GroupSummary({ group, cmpsOrder }) {
 
 		return res
 	}
-
+    
 	return (
 		<section className="group-summary full">
 			<section style={{ width: 400 + 'px' }} className="white-space"></section>
 			<section className="group-summary-container">
 				{groupSummaryArray.map(summary => (
-					<DynamicSummaryCmp padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} />
+					<DynamicSummaryCmp key={Object.keys(summary)[0]} padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} />
 				))}
 			</section>
 		</section>

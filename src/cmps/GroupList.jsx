@@ -35,7 +35,7 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 		const windowVH = window.innerHeight
 
 		const options = {
-			rootMargin: `-240px 0px -${windowVH - 100}px`
+			rootMargin: `-236px 0px -${windowVH - 99}px`,
 		}
 
 		const observer = new IntersectionObserver(entries => {
@@ -71,8 +71,6 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 			console.log('cannot add group', err)
 		}
 	}
-
-	// console.log(currentGroup)
 
 	return (
 		<section className="group-list">

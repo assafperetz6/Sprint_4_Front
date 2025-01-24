@@ -8,6 +8,11 @@
 
     overflow: auto;
 
+    & > *:not(.task-action-menu) {
+        pointer-events: auto;
+      }
+      pointer-events: none;
+
     .board-header-container {
         position: sticky;
         top: 0;

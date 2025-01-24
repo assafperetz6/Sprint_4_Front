@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router'
 
 import { svgs } from '../services/svg.service.jsx'
 import { GroupList } from '../cmps/GroupList.jsx'
+import { TaskActionMenu } from '../cmps/TaskActionMenu.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
 
 export function BoardDetails() {
@@ -17,6 +18,8 @@ export function BoardDetails() {
 	const [isScrolling, setIsScrolling] = useState(false)
 	const [currentGroup, setCurrentGroup] = useState(null)
 	const boardDetailsRef = useRef(null)
+
+	const [selectedTasks, setSelectedTasks] = useState([board.groups[0].tasks[0], board.groups[0].tasks[1]])
 	
 	const handleScroll = (e) => {
 		if(!isScrolling && e.target.scrollTop > 0) setIsScrolling(true)
@@ -60,6 +63,7 @@ export function BoardDetails() {
 					scrollContainer={boardDetailsRef.current}
 				/>
 			)}
+			<TaskActionMenu tasks={selectedTasks} />
 			<Outlet context={{ isClosing, closeTaskDetails }} />
 		</section>
 	)
