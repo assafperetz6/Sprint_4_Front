@@ -1,5 +1,9 @@
 import { useSelector } from "react-redux";
-import { makeId } from "../services/util.service";
+import { StatusSummary } from "./dynamic-summary-cmp/StatusSummary";
+import { PrioritySummary } from "./dynamic-summary-cmp/PrioritySummary";
+import { DateSummary } from "./dynamic-summary-cmp/DateSummary";
+import { MemberSummary } from "./dynamic-summary-cmp/MemberSummary";
+import { TimelineSummary } from "./dynamic-summary-cmp/TimelineSummary";
 
 export function GroupSummary({ group, cmpsOrder }){
 
@@ -102,7 +106,7 @@ export function GroupSummary({ group, cmpsOrder }){
             <section style={{width: 400 + 'px'}} className="white-space"></section>
             <section className="group-summary-container">
                 {groupSummaryArray.map(summary => (
-                        <DynamicSummaryCmp padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} />
+                        <DynamicSummaryCmp group={group} padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} />
                 ))}
                 </section>
         </section>
@@ -132,123 +136,4 @@ function DynamicSummaryCmp( props ){
         default:
             break;
     }
-}
-
-function StatusSummary({ summary, statusLabels, padding }){
-
-    const width = 140
-    let total = 0
-
-    const { statusSummary } = summary
-    const summaryForRender = []
-
-    for (const field in statusSummary) {
-        total += statusSummary[field]
-        statusLabels.find(label => {
-            if (label.id === field) {
-                summaryForRender.push({ id: label.id, color: label.color, size: statusSummary[field]})
-            }
-        })
-    }
-
-    summaryForRender.sort((a, b) => a.id.localeCompare(b.id))
-    const unit = (width - (padding * 2) )/ total
-
-    return (
-        <section style={{ width: width + 'px'}} className="status-summary summary">
-            {summaryForRender.map(summary => (
-                <div 
-                    className="summary-colored-block" 
-                    key={makeId()} 
-                    style={{ backgroundColor: summary.color, width: (unit * summary.size) + 'px'}}>
-                </div>
-            ))}
-        </section>
-    )
-}
-
-function PrioritySummary({ summary, priorityLabels, padding }){
-
-    const width = 140
-    let total = 0
-
-    const { prioritySummary } = summary
-    const summaryForRender = []
-
-    for (const field in prioritySummary) {
-        total += prioritySummary[field]
-        priorityLabels.find(label => {
-            if (label.id === field) {
-                summaryForRender.push({ id: label.id, color: label.color, size: prioritySummary[field]})
-            }
-        })
-    }
-
-    summaryForRender.sort((a, b) => a.id.localeCompare(b.id))
-    const unit = (width - (padding * 2) )/ total
-
-    return (
-        <section style={{ width: width + 'px'}} className="priority-summary summary">
-            {summaryForRender.map(summary => (
-                <div 
-                    className="summary-colored-block" 
-                    key={makeId()} 
-                    style={{ backgroundColor: summary.color, width: (unit * summary.size) + 'px'}}>
-                </div>
-            ))}
-        </section>
-    )
-}
-
-function DateSummary({ summary, padding }){
-
-    const { dateSummary } = summary
-    const width = 140
-    console.log(dateSummary)
-
-    if (!dateSummary.start) {
-        return (
-            <section style={{ width: width + 'px'}} className="date-summary summary">
-                <div style={{width: width - (padding * 4)}} className="empty">
-                    -
-                </div>
-            </section>
-    )} else if (dateSummary.start === dateSummary.end) {
-        return (
-        <section style={{ width: width + 'px'}} className="date-summary summary">
-            <h1>
-                
-            </h1>
-        </section>
-    )} else return (
-        <section style={{ width: width + 'px'}} className="date-summary summary">
-            <h1>
-                
-            </h1>
-        </section>
-    )
-}
-
-function MemberSummary({ summary }){
-
-    const width = 97
-    return (
-        <section style={{ width: width + 'px'}} className="member-summary summary">
-            <h1>
-                
-            </h1>
-        </section>
-    )
-}
-
-function TimelineSummary({ summary }){
-
-    const width = 140
-    return (
-        <section style={{ width: width + 'px'}} className="timeline-summary summary">
-            <h1>
-                
-            </h1>
-        </section>
-    )
 }

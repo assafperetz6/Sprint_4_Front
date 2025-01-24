@@ -137,6 +137,11 @@
   }
 
   @mixin get-started-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
     background-color: $welcome-page-btn-clr;
     padding: 12px 24px;
     border-radius: 100vw;
@@ -150,6 +155,7 @@
 
     &:hover {
         filter: brightness(0.90);
+
         svg {
             transform: translateX(6px) ;
         }

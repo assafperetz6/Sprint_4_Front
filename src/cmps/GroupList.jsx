@@ -79,7 +79,7 @@ export function GroupList({
 			console.log('cannot add group', err)
 		}
 	}
-	console.log(titleColWidth)
+	// console.log(titleColWidth)
 	
 	return (
 		<section className="group-list">
