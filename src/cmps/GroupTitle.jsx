@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { removeGroup, updateGroup } from '../store/actions/board.actions'
 import { useSelector } from 'react-redux'
 import { svgs } from '../services/svg.service'
@@ -8,7 +8,6 @@ import { showErrorMsg } from '../services/event-bus.service'
 
 export function GroupTitle({ group }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
-	const [titleToEdit, setTitleToEdit] = useState(group.title)
 
 	const [activeMenuId, setActiveMenuId] = useState(null)
 	const buttonRef = useRef()
@@ -57,8 +56,7 @@ export function GroupTitle({ group }) {
 			<div className="toggle-group-preview flex align-center justify-center" style={{ color: group.style.color }}>
 				{svgs.arrowDown}
 			</div>
-
-			<HeaderInlineEdit value={titleToEdit} onSave={handleSave} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
+			<HeaderInlineEdit entity={group} onSave={handleSave} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
 		</div>
 	)
 }

@@ -9,14 +9,8 @@ import { svgs } from '../services/svg.service.jsx'
 import { GroupPreview } from './GroupPreview.jsx'
 import { GroupHeader } from './GroupHeader.jsx'
 
-export function GroupList({
-	groups,
-	isScrolling,
-	currentGroup,
-	setCurrentGroup,
-	scrollContainer,
-}) {
-	const board = useSelector((storeState) => storeState.boardModule.board)
+export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, scrollContainer }) {
+	const board = useSelector(storeState => storeState.boardModule.board)
 	const dispatch = useDispatch()
 
 	const [titleColWidth, setTitleColWidth] = useState(null)
@@ -24,9 +18,7 @@ export function GroupList({
 
 	useEffect(() => {
 		const longestTaskTitle = () => {
-			const text = board.groups
-								.map(group => group.tasks.map(task => task.title).toSorted((t1, t2) => t2.length - t1.length)[0])
-								.toSorted((title1, title2) => title2.length - title1.length)[0]
+			const text = board.groups.map(group => group.tasks.map(task => task.title).toSorted((t1, t2) => t2.length - t1.length)[0]).toSorted((title1, title2) => title2.length - title1.length)[0]
 
 			const canvas = document.createElement('canvas')
 			const context = canvas.getContext('2d')
@@ -43,11 +35,11 @@ export function GroupList({
 		const windowVH = window.innerHeight
 
 		const options = {
-			rootMargin: `-240px 0px -${windowVH - 100}px`,
+			rootMargin: `-240px 0px -${windowVH - 100}px`
 		}
 
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
+		const observer = new IntersectionObserver(entries => {
+			entries.forEach(entry => {
 				const idx = parseInt(entry.target.dataset.groupIndex)
 				const group = groups[idx]
 
@@ -64,7 +56,7 @@ export function GroupList({
 		})
 
 		return () => {
-			groupRefs.current.forEach((element) => {
+			groupRefs.current.forEach(element => {
 				if (element) observer.unobserve(element)
 			})
 		}
@@ -79,22 +71,15 @@ export function GroupList({
 			console.log('cannot add group', err)
 		}
 	}
-	console.log(titleColWidth)
-	
+
+	// console.log(currentGroup)
+
 	return (
 		<section className="group-list">
-			<div
-				className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}
-			>
-				{currentGroup && <GroupHeader group={currentGroup} />}
-			</div>
+			<div className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}>{currentGroup && <GroupHeader group={currentGroup} />}</div>
 
 			{groups.map((group, idx) => (
-				<div
-					key={group.id}
-					ref={(el) => (groupRefs.current[idx] = el)}
-					className="full"
-				>
+				<div key={group.id} ref={el => (groupRefs.current[idx] = el)} className="full">
 					<GroupPreview group={group} cmpsOrder={board.cmpsOrder} />
 				</div>
 			))}
