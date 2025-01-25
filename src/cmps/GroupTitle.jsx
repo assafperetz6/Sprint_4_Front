@@ -42,6 +42,11 @@ export function GroupTitle({ group }) {
 			showErrorMsg('cannot remove group')
 		}
 	}
+	function getTasksCount(tasksCount) {
+		if (!tasksCount) return 'No Items'
+		if (tasksCount === 1) return tasksCount + 'Item'
+		return tasksCount + 'Items'
+	}
 
 	return (
 		<div className="group-header flex align-center full">
@@ -57,6 +62,8 @@ export function GroupTitle({ group }) {
 				{svgs.arrowDown}
 			</div>
 			<HeaderInlineEdit entity={group} onSave={handleSave} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
+
+			<div className="title-count flex align-center justify-center">{getTasksCount(group.tasks.length)}</div>
 		</div>
 	)
 }
