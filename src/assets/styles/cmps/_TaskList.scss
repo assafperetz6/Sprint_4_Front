@@ -8,11 +8,11 @@
 	border-start-end-radius: 4px;
 	border-start-start-radius: 4px;
 
-	> * {
+	// > * {
 
-		display: grid;
-		grid-template-columns: subgrid;
-	}
+	// 	display: grid;
+	// 	grid-template-columns: subgrid;
+	// }
 
 	& > li {
 		min-width: max-content;
@@ -42,7 +42,6 @@
 			}
 		}
 	}
-
 
 	.active {
 		background-color: $button-clicked-bgc;

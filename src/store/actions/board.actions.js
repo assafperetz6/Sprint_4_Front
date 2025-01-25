@@ -38,6 +38,7 @@ export async function addBoard(board) {
 	try {
 		const savedBoard = await boardService.save(board)
 		store.dispatch(getCmdAddBoard(savedBoard))
+		store.dispatch({ type: SET_BOARD, board: savedBoard })
 		return savedBoard
 	} catch (err) {
 		console.log('error from actions--> Cannot add board', err)
@@ -49,6 +50,18 @@ export async function updateBoard(board) {
 	try {
 		const savedBoard = await boardService.save(board)
 		store.dispatch(getCmdUpdateBoard(savedBoard))
+		return savedBoard
+	} catch (err) {
+		console.log('error from actions--> Cannot save board', err)
+		throw err
+	}
+}
+
+export async function updateBoardOptimistic(board) {
+	try {
+		store.dispatch(getCmdUpdateBoard(board))
+		store.dispatch(getCmdSetBoard(board))
+		const savedBoard = await boardService.save(board)
 		return savedBoard
 	} catch (err) {
 		console.log('error from actions--> Cannot save board', err)
