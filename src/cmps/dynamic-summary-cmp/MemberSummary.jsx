@@ -22,7 +22,6 @@ export function MemberSummary({ summary }){
                     </>
             break;
         case memberSummary.length > 2:
-            console.log('yes') 
             avatars = 
                 <>
                     <img className="member-summary-image" src={memberSummary[0].imgUrl} alt="" />

@@ -48,7 +48,7 @@ export function TaskPreview({ group, task }) {
 	}
 
 	return (
-		<li className="task-preview task-row flex full">
+		<>
 			<section className="sticky-container">
 				<div className="context-btn-container">
 					<button className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, task.id)} ref={buttonRef}>
@@ -91,7 +91,7 @@ export function TaskPreview({ group, task }) {
 					/>
 				</div>
 			)}
-		</li>
+		</>
 	)
 }
 

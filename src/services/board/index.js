@@ -78,8 +78,8 @@ function getDefaultGroups() {
 }
 function getNewGroup() {
 	return {
-		title: 'Group 1',
-		tasks: [getDefaultTask()],
+		title: 'New Group',
+		tasks: [],
 		style: { color: getRandomColor() }
 	}
 }

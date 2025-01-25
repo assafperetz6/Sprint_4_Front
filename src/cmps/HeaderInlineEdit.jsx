@@ -2,9 +2,9 @@ import { useState, useRef, useEffect } from 'react'
 import { usePopper } from 'react-popper'
 import { ColorPicker } from './ColorPicker'
 
-export function HeaderInlineEdit({ value: initialValue, onSave, onStyleChange, style, className = '' }) {
+export function HeaderInlineEdit({ entity, onSave, onStyleChange, style, className = '' }) {
 	const [isEditing, setIsEditing] = useState(false)
-	const [value, setValue] = useState(initialValue)
+	const [value, setValue] = useState(entity.title)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
 	const inputRef = useRef(null)
 
@@ -25,6 +25,10 @@ export function HeaderInlineEdit({ value: initialValue, onSave, onStyleChange, s
 		],
 		placement: 'bottom-start'
 	})
+
+	useEffect(() => {
+		setValue(entity.title)
+	}, [entity])
 
 	useEffect(() => {
 		function handleClickOutside(event) {
