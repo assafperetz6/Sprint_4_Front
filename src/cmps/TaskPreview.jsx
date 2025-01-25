@@ -58,7 +58,7 @@ export function TaskPreview({ group, task }) {
 
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
 
-				<Checkbox />
+				<Checkbox task={task} />
 
 				<section className="task-title">
 					<div className="title-main-container" onMouseEnter={() => setIsTaskHovered(true)} onMouseLeave={() => setIsTaskHovered(false)}>

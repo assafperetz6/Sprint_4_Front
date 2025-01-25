@@ -6,13 +6,17 @@
 	transform: translateX(calc(-50% - 125px));
 
 	display: flex;
+    justify-content: space-between;
+    align-items: center;
 	height: 63px;
 	width: 800px;
 
 	border-radius: 5px;
 	box-shadow: 0px 15px 50px #0000004d;
 	background-color: $clr3;
-	z-index: 40;
+
+    pointer-events: none;
+	z-index: 60;
 
 	.task-count {
 		align-content: center;
@@ -31,6 +35,7 @@
 		height: 100%;
 		align-content: center;
 
+        flex-grow: 1;
 		margin-inline: 18px 24px;
 
 		font-family: $main-font-family;
@@ -42,13 +47,71 @@
 		display: flex;
         align-items: center;
 
-		button {
-			width: 60px;
-			margin-inline-end: 20px;
-			svg {
-				height: 30px;
-				width: 30px;
-			}
-		}
-	}
+        > button {
+            flex-direction: column;
+
+            &:hover, &:hover svg {
+                scale: 1.08;
+                fill: $blue3;
+                color: $blue3;
+            }
+        }
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+
+        height: 100%;
+        width: 60px;
+
+        padding: 0;
+        margin-inline-end: 20px;
+
+        pointer-events: auto;
+
+        background-color: $clr3;
+
+        transition: 50ms ease-in;
+        
+        svg {
+            height: 30px;
+            width: 30px;
+
+            padding: 4px;
+            fill: $clr5;
+        }
+
+        &.move-to-btn svg {
+            padding: 6px;
+        }
+    }
+
+
+    .close-menu {
+        width: 63px;
+
+        border-inline-start: $border;
+        border-width: 2px;
+        border-radius: 0 5px 5px 0;
+        margin: 0;
+
+        background-color: $clr3;
+
+        svg {
+            height: rem(32px);
+            width: 100%;
+
+            stroke-width: .5;
+        }
+
+        &:hover {
+            color: $blue2;
+            stroke: $blue2;
+
+            svg {
+                fill: $blue2;
+            }
+        }
+    }
 }

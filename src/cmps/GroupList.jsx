@@ -9,8 +9,14 @@ import { svgs } from '../services/svg.service.jsx'
 import { GroupPreview } from './GroupPreview.jsx'
 import { GroupHeader } from './GroupHeader.jsx'
 
-export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, scrollContainer }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+export function GroupList({
+	groups,
+	isScrolling,
+	currentGroup,
+	setCurrentGroup,
+	scrollContainer,
+}) {
+	const board = useSelector((storeState) => storeState.boardModule.board)
 	const dispatch = useDispatch()
 
 	const [titleColWidth, setTitleColWidth] = useState(null)
@@ -38,8 +44,8 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 			rootMargin: `-236px 0px -${windowVH - 99}px`,
 		}
 
-		const observer = new IntersectionObserver(entries => {
-			entries.forEach(entry => {
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
 				const idx = parseInt(entry.target.dataset.groupIndex)
 				const group = groups[idx]
 
@@ -56,7 +62,7 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 		})
 
 		return () => {
-			groupRefs.current.forEach(element => {
+			groupRefs.current.forEach((element) => {
 				if (element) observer.unobserve(element)
 			})
 		}
@@ -74,10 +80,18 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 
 	return (
 		<section className="group-list">
-			<div className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}>{currentGroup && <GroupHeader group={currentGroup} />}</div>
+			<div
+				className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}
+			>
+				{currentGroup && <GroupHeader group={currentGroup} />}
+			</div>
 
 			{groups.map((group, idx) => (
-				<div key={group.id} ref={el => (groupRefs.current[idx] = el)} className="full">
+				<div
+					key={group.id}
+					ref={(el) => (groupRefs.current[idx] = el)}
+					className="full"
+				>
 					<GroupPreview group={group} cmpsOrder={board.cmpsOrder} />
 				</div>
 			))}

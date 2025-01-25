@@ -43,7 +43,7 @@ export function AddTask({ group }) {
 			<div className="sticky-container">
 				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
 
-				<Checkbox />
+				<Checkbox disable={true} />
 
 				<form onSubmit={onAddTask}>
 					<input className="add-task-input" ref={elInput} placeholder="+ Add task" value={taskToAdd.title} onBlur={onBlur} onChange={handleChange}></input>

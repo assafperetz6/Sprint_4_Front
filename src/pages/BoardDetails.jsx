@@ -19,7 +19,7 @@ export function BoardDetails() {
 	const [currentGroup, setCurrentGroup] = useState(null)
 	const boardDetailsRef = useRef(null)
 
-	const [selectedTasks, setSelectedTasks] = useState([board.groups[0].tasks[0], board.groups[0].tasks[1]])
+	const selectedTasks = useSelector(storeState => storeState.boardModule.selectedTasks)
 	
 	const handleScroll = (e) => {
 		if(!isScrolling && e.target.scrollTop > 0) setIsScrolling(true)
@@ -45,6 +45,14 @@ export function BoardDetails() {
 		}, 75)
 	}
 
+	// function onSetSelectedTask(task) {
+	// 	if (selectedTasks.find(t => t.id === task.id)) {
+	// 		setSelectedTasks(prev => prev.filter(t => t.id !== task.id))
+	// 	} else {
+	// 		setSelectedTasks(prev => [...prev, task])
+	// 	}
+	// }
+
 	if (!board) return null
 	return (
 		<section
@@ -63,7 +71,7 @@ export function BoardDetails() {
 					scrollContainer={boardDetailsRef.current}
 				/>
 			)}
-			<TaskActionMenu tasks={selectedTasks} />
+			{selectedTasks.length > 0 && <TaskActionMenu tasks={selectedTasks} />}
 			<Outlet context={{ isClosing, closeTaskDetails }} />
 		</section>
 	)

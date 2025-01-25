@@ -105,7 +105,7 @@ export async function removeGroup(boardId, groupId) {
 
 // tasks actions: //
 
-export async function removeTask(boardId, taskId) {
+export async function removeTask(boardId, taskId) {	
 	try {
 		const savedBoard = await boardService.removeTask(boardId, taskId)
 		store.dispatch(getCmdSetBoard(savedBoard))
