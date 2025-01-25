@@ -3,18 +3,21 @@ import { hexToRgba } from '../services/util.service'
 import { useSelector } from 'react-redux'
 import { Checkbox } from './Checkbox'
 
-export function TaskListHeader({ groupColor }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+export function TaskListHeader({ groupColor, shadow }) {
+	const board = useSelector((storeState) => storeState.boardModule.board)
 
 	return (
 		<ul className="task-list-header task-row clean-list full">
 			<li className="sticky-container flex">
-				<div className="colored-border" style={{ backgroundColor: hexToRgba(groupColor, 1) }}></div>
+				<div
+					className="colored-border"
+					style={{ backgroundColor: hexToRgba(groupColor, 1) }}
+				></div>
 				<Checkbox />
-				<div className="task-title-header">Task</div>
+				<div className={`task-title-header ${shadow ? 'shadow' : ''}`}>Task</div>
 			</li>
 
-			<ul className="task-columns flex">
+			<ul className={`task-columns flex ${shadow ? 'shadow' : ''}`}>
 				{board.cmpsOrder.map((cmp, idx) => {
 					let cmpTitle
 					let cmpDefaultWidth
@@ -45,7 +48,11 @@ export function TaskListHeader({ groupColor }) {
 
 					return (
 						cmpTitle && (
-							<li key={cmp} className="task-item-col" style={{ width: cmpDefaultWidth }}>
+							<li
+								key={cmp}
+								className="task-item-col"
+								style={{ width: cmpDefaultWidth }}
+							>
 								{cmpTitle}
 							</li>
 						)

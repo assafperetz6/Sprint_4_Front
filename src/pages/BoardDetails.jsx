@@ -14,25 +14,17 @@ export function BoardDetails() {
 	const { boardId } = useParams()
 	const navigate = useNavigate()
 
-	const [isScrolling, setIsScrolling] = useState(false)
-	const [currentGroup, setCurrentGroup] = useState(null)
+	const [isScrolledTop, setIsScrolledTop] = useState(true)
 	const boardDetailsRef = useRef(null)
 	
 	const handleScroll = (e) => {
-		if(!isScrolling && e.target.scrollTop > 0) setIsScrolling(true)
-		else if(isScrolling && e.target.scrollTop <= 76) setIsScrolling(false)
-		
+		if (e.target.scrollTop === 0 && !isScrolledTop) setIsScrolledTop(true)
+		else if (e.target.scrollTop > 0 && isScrolledTop) setIsScrolledTop(false)
 	}
 	
 	useEffect(() => {
 		loadBoard(boardId)
 	}, [boardId])
-
-	useEffect(() => {
-		if (board?.groups?.length) {
-            setCurrentGroup(board.groups[0])
-        }
-	}, [board])
 
 	function closeTaskDetails() {
 		setIsClosing(true)
@@ -54,9 +46,7 @@ export function BoardDetails() {
 			{!!board.groups.length && (
 				<GroupList
 					groups={board.groups}
-					isScrolling={isScrolling}
-					currentGroup={currentGroup}
-					setCurrentGroup={setCurrentGroup}
+					isScrolledTop={isScrolledTop}
 					scrollContainer={boardDetailsRef.current}
 				/>
 			)}

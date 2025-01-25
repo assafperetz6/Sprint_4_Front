@@ -12,10 +12,11 @@ import { GroupPreview } from './GroupPreview.jsx'
 
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 
-export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, scrollContainer }) {
+export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const dispatch = useDispatch()
-
+	
+	const [currentGroup, setCurrentGroup] = useState(groups[0])
 	const [titleColWidth, setTitleColWidth] = useState(null)
 	const groupRefs = useRef([])
 
@@ -118,14 +119,14 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 			<Droppable droppableId={board._id} type="group">
 				{provided => (
 					<section className="group-list" {...provided.droppableProps} ref={provided.innerRef}>
-						<div className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}>{currentGroup && <GroupHeader group={currentGroup} />}</div>
+						<div className={`sticky-header-container full`}>{currentGroup && <GroupHeader group={currentGroup} shadow={!isScrolledTop} />}</div>
 
 						{groups.map((group, idx) => (
 							<div key={group.id} ref={el => (groupRefs.current[idx] = el)} className="full">
 								<Draggable key={group.id} draggableId={group.id} index={idx}>
 									{provided => (
 										<section className="group-preview item-col full" {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-											<GroupPreview group={group} cmpsOrder={board.cmpsOrder} provided={provided} />
+											<GroupPreview group={group} cmpsOrder={board.cmpsOrder} provided={provided} showHeader={idx >= 1} />
 										</section>
 									)}
 								</Draggable>

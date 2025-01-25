@@ -27,14 +27,10 @@
 	.sticky-header-container {
 		position: sticky;
 		top: 138px;
-		display: none;
+		display: grid;
 
 		background-color: $clr3;
 		z-index: 50;
-
-		&.show {
-			display: grid;
-		}
 
 		.group-header-wrapper {
 			display: grid;
@@ -115,10 +111,11 @@
 					margin: 4px;
 				}
 			}
+
+			@include title-count
 		}
 
-		.sticky-container > *:not(.colored-border),
-		.task-columns {
+		.shadow {
 			box-shadow: 4px 6px 15px -8px #c3c6d4;
 		}
 	}
