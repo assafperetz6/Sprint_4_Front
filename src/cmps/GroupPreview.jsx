@@ -1,6 +1,6 @@
 import { TaskList } from './TaskList'
 import { GroupHeader } from './GroupHeader.jsx'
-import { GroupSummary } from './GroupSUmmary.jsx'
+import { GroupSummary } from './GroupSummary.jsx'
 
 export function GroupPreview({ group, cmpsOrder }) {
 	return (

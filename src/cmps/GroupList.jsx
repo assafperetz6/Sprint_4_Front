@@ -43,8 +43,6 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 
 		const observer = new IntersectionObserver(entries => {
 			entries.forEach(entry => {
-		const observer = new IntersectionObserver(entries => {
-			entries.forEach(entry => {
 				const idx = parseInt(entry.target.dataset.groupIndex)
 				const group = groups[idx]
 
@@ -61,7 +59,6 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 		})
 
 		return () => {
-			groupRefs.current.forEach(element => {
 			groupRefs.current.forEach(element => {
 				if (element) observer.unobserve(element)
 			})
