@@ -17,9 +17,9 @@ export function GroupList({
 	scrollContainer,
 }) {
 	const board = useSelector((storeState) => storeState.boardModule.board)
-	const dispatch = useDispatch()
+	// const dispatch = useDispatch()
 
-	const [titleColWidth, setTitleColWidth] = useState(null)
+	// const [titleColWidth, setTitleColWidth] = useState(null)
 	const groupRefs = useRef([])
 
 	// useEffect(() => {

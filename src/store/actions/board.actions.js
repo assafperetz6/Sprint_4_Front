@@ -114,9 +114,9 @@ export async function removeTask(boardId, taskId) {
 		throw err
 	}
 }
-export async function addTask(boardId, groupId, task) {
+export async function addTask(boardId, groupId, task, tempTaskId) {
 	try {
-		const savedBoard = await boardService.saveTask(boardId, groupId, task)
+		const savedBoard = await boardService.saveTask(boardId, groupId, task, tempTaskId)
 		store.dispatch(getCmdSetBoard(savedBoard))
 	} catch (err) {
 		console.log('error from actions--> cannot add task', err)
@@ -133,3 +133,6 @@ export async function updateTask(boardId, groupId, task) {
 		throw err
 	}
 }
+
+
+// TODO: add batch function for multiselect menu

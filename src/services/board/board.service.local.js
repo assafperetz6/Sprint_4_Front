@@ -184,7 +184,7 @@ async function removeTask(boardId, taskId) {
 	}
 }
 
-async function saveTask(boardId, groupId, task) {
+async function saveTask(boardId, groupId, task, tempTaskId) {
 	const taskToSave = {
 		id: task.id,
 		title: task.title,
@@ -194,6 +194,7 @@ async function saveTask(boardId, groupId, task) {
 		timeline: task.timeline,
 		status: task.status
 	}
+	
 
 	try {
 		const board = await getById(boardId)
@@ -202,14 +203,18 @@ async function saveTask(boardId, groupId, task) {
 
 		const { tasks } = board.groups[groupIdx]
 
-		if (task.id) {
+ 		if (task.id) {
 			taskToSave.id = task.id
 			const taskIdx = tasks.findIndex(task => task.id === taskToSave.id)
 			if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
 			tasks.splice(taskIdx, 1, taskToSave)
 		} else {
 			taskToSave.id = makeId()
-			tasks.push(taskToSave)
+			if (tempTaskId) {
+				const appendAfterIdx = tasks.findIndex(task => task.id === tempTaskId)
+				
+				tasks.splice(appendAfterIdx + 1, 0, taskToSave)
+			} else tasks.push(taskToSave)
 		}
 		return save(board)
 	} catch (err) {

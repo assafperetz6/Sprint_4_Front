@@ -34,17 +34,18 @@ export function TaskActionMenu({ tasks }) {
 		onCloseMenu()
 	}
 
-	function onDuplicate() {
-		tasks.forEach((task) => {
+	async function onDuplicate() {
+
+		for (const task of tasks) {
 			const groupId = board.groups.find((group) => {
 				return group.tasks.find((t) => t.id === task.id)
 			}).id
 
             const copiedTask = { ...task, id: null, title: task.title + ' (copy)'}
 
-			addTask(board._id, groupId, copiedTask)
-            onCloseMenu()
-		})
+			await addTask(board._id, groupId, copiedTask, task.id)
+		}
+		onCloseMenu()
 	}
 
 	return (
