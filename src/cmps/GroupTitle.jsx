@@ -44,8 +44,8 @@ export function GroupTitle({ group }) {
 	}
 	function getTasksCount(tasksCount) {
 		if (!tasksCount) return 'No Items'
-		if (tasksCount === 1) return tasksCount + 'Item'
-		return tasksCount + 'Items'
+		if (tasksCount === 1) return tasksCount + ' Item'
+		return tasksCount + ' Items'
 	}
 
 	return (
