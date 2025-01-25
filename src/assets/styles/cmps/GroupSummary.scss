@@ -95,6 +95,33 @@
                     }    
                 }
             }
+
+                .member-summary-image {
+                    width: 30px;
+                    height: 30px;
+                    border: 2px solid #fff;
+                    border-radius: 50%;
+                }
+    
+                .extra-members {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+            
+                    height: 30px;
+                    min-width: 30px;
+                    border-radius: 50%;
+            
+                    background-color: $gray4;
+                    color: $clr3;
+                    border: 2px solid $task-hover-bgc;
+                    font-size: 12px;
+                    font-weight: 300;
+                }        
+                
+                .second {
+                    margin-inline-start: -8px;
+                }
         }    
     }
 }

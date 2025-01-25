@@ -65,6 +65,7 @@ export function GroupSummary({ group, cmpsOrder }){
                 return true
             } else return false
         })
+        summary.memberSummary = filteredMemberSummary
 
         if (dateSummary.length >= 2) {
             dateSummary.sort((a, b) => a - b)
