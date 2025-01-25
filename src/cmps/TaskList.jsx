@@ -16,6 +16,7 @@ export function TaskList({ group }) {
 							)}
 						</Draggable>
 					))}
+					{provided.placeholder}
 					<li className="add-task full">
 						<AddTask group={group} />
 					</li>

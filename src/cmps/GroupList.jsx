@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addGroup, updateBoard } from '../store/actions/board.actions.js'
+import { addGroup, updateBoard, updateBoardOptimistic } from '../store/actions/board.actions.js'
 
 import { boardService } from '../services/board/index.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 
 import { svgs } from '../services/svg.service.jsx'
-import { GroupPreview } from './GroupPreview.jsx'
+
 import { GroupHeader } from './GroupHeader.jsx'
+import { GroupPreview } from './GroupPreview.jsx'
+
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 
 export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, scrollContainer }) {
@@ -72,10 +74,43 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 			console.log('cannot add group', err)
 		}
 	}
-	console.log(titleColWidth)
 
-	function handleDrag(res) {
-		console.log(res)
+	async function handleDrag(result) {
+		if (!result.destination) return
+		if (result.type === 'group') await handleGroupDrag(result)
+		else await handleTaskDrag(result)
+	}
+
+	async function handleGroupDrag(result) {
+		const newBoard = structuredClone(board)
+		const groupToMove = newBoard.groups.splice(result.source.index, 1)[0]
+
+		newBoard.groups.splice(result.destination.index, 0, groupToMove)
+
+		try {
+			updateBoardOptimistic(newBoard)
+		} catch (err) {
+			showErrorMsg('cannot save board')
+		}
+	}
+
+	async function handleTaskDrag(result) {
+		const { destination, source } = result
+		if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) return
+
+		try {
+			const boardToSave = structuredClone(board)
+			const sourceGroupIdx = boardToSave.groups.findIndex(g => g.id === source.droppableId)
+			const destGroupIdx = boardToSave.groups.findIndex(g => g.id === destination.droppableId)
+
+			const [task] = boardToSave.groups[sourceGroupIdx].tasks.splice(source.index, 1)
+			boardToSave.groups[destGroupIdx].tasks.splice(destination.index, 0, task)
+
+			await updateBoardOptimistic(boardToSave)
+		} catch (err) {
+			showErrorMsg('Failed to move task')
+			console.error('Task drag error:', err)
+		}
 	}
 
 	return (
@@ -90,12 +125,13 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 								<Draggable key={group.id} draggableId={group.id} index={idx}>
 									{provided => (
 										<section className="group-preview item-col full" {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-											<GroupPreview group={group} cmpsOrder={board.cmpsOrder} ref={provided.innerRef} provided={provided} />
+											<GroupPreview group={group} cmpsOrder={board.cmpsOrder} provided={provided} />
 										</section>
 									)}
 								</Draggable>
 							</div>
 						))}
+						{provided.placeholder}
 						<div className="add-group-btn" onClick={onAddGroup}>
 							<span className="icon flex align-center">{svgs.plus}</span>
 							<span className="txt">Add new group</span>
