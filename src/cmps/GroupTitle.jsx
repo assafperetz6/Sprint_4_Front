@@ -61,9 +61,7 @@ export function GroupTitle({ group }) {
 			<div className="toggle-group-preview flex align-center justify-center" style={{ color: group.style.color }}>
 				{svgs.arrowDown}
 			</div>
-			<HeaderInlineEdit entity={group} onSave={handleSave} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
-
-			<div className="title-count flex align-center justify-center">{getTasksCount(group.tasks.length)}</div>
+			<HeaderInlineEdit entity={group} onSave={handleSave} getTasksCount={getTasksCount} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
 		</div>
 	)
 }

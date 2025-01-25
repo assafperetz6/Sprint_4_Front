@@ -161,3 +161,21 @@
         }
     }
   }
+
+  @mixin title-count {
+    .title-count {
+			opacity: 0;
+			font-size: rem(14px);
+			margin-inline-start: 10px;
+			white-space: nowrap;
+			color: $clr4;
+
+			transition: opacity 0.2s;
+		}
+
+		&:hover {
+			.title-count {
+				opacity: 1;
+			}
+		}
+  }

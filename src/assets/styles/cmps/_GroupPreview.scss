@@ -17,6 +17,8 @@
 	// 	margin-inline-start: 40px;
 	// }
 
+	@include title-count;
+
 	.task-preview > * {
 		display: flex;
 		align-items: center;
@@ -130,21 +132,21 @@
 					margin: 4px;
 				}
 			}
-		}
 
-		.title-count {
-			opacity: 0;
-			font-size: rem(14px);
-			margin-inline-start: 10px;
-			white-space: nowrap;
-			color: $clr4;
-
-			transition: opacity 0.2s;
-		}
-
-		&:hover {
 			.title-count {
-				opacity: 1;
+				opacity: 0;
+				font-size: rem(14px);
+				margin-inline-start: 10px;
+				white-space: nowrap;
+				color: $clr4;
+	
+				transition: opacity 0.2s;
+			}
+	
+			&:hover {
+				.title-count {
+					opacity: 1;
+				}
 			}
 		}
 	}
