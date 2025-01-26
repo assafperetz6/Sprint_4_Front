@@ -17,6 +17,7 @@ export function TaskPreview({ group, task, idx }) {
 	const [isTaskHovered, setIsTaskHovered] = useState(false)
 	const [titleToEdit, setTitleToEdit] = useState(task.title)
 	const [activeMenuId, setActiveMenuId] = useState(null)
+	const [isEditing, setIsEditing] = useState(false)
 	const buttonRef = useRef(null)
 
 	useEffect(() => {
@@ -31,8 +32,6 @@ export function TaskPreview({ group, task, idx }) {
 			console.error('Cannot update title:', err)
 		}
 	}
-
-	console.log(board.activities)
 
 	return (
 		<Draggable key={task.id} draggableId={task.id} index={idx}>
@@ -50,12 +49,22 @@ export function TaskPreview({ group, task, idx }) {
 						<Checkbox />
 
 						<section className="task-title">
-							<div className="title-main-container" onMouseEnter={() => setIsTaskHovered(true)} onMouseLeave={() => setIsTaskHovered(false)} {...provided.dragHandleProps}>
-								<InlineEdit value={titleToEdit} onSave={onSaveTask} />
-								<Link to={`task/${task.id}`} className="open-task-details" style={{ display: isTaskHovered ? 'flex' : 'none' }}>
+							<div className={`title-main-container`} onMouseEnter={() => setIsTaskHovered(true)} onMouseLeave={() => setIsTaskHovered(false)} {...provided.dragHandleProps}>
+								<InlineEdit
+									value={titleToEdit}
+									onSave={onSaveTask}
+									// isEditing={isEditing}
+								/>
+
+								<Link
+									to={`task/${task.id}`}
+									className="open-task-details"
+									// style={{ display: isTaskHovered && !isEditing ? 'flex' : 'none' }}
+								>
 									&nbsp; {svgs.expand} open
 								</Link>
 							</div>
+
 							<div className="add-update-btn">{svgs.addUpdate}</div>
 						</section>
 					</section>

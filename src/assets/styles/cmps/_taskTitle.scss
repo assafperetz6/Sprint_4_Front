@@ -17,18 +17,16 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		flex: 1;
 
 		height: $task-row-height;
 
-		flex: 1;
 		min-width: 0;
 
 		&:hover {
-
 			.inline-edit span {
 				width: calc(100% - 70px);
 			}
-
 			.open-task-details {
 				gap: 4px;
 
@@ -44,33 +42,6 @@
 			}
 		}
 
-		// input {
-		// 	all: unset;
-
-		// 	width: fit-content;
-		// 	max-width: 100%;
-		// 	flex-shrink: 1;
-		// 	margin: 6px 10px 6px 26px;
-
-		// 	text-overflow: ellipsis;
-		// 	overflow: hidden;
-		// 	white-space: nowrap;
-
-		// 	cursor: text;
-
-		// 	&:hover {
-		// 		outline: 1px solid $input-hover-border-clr;
-		// 		border-radius: 4px;
-		// 		cursor: text;
-		// 	}
-
-		// 	&:focus {
-		// 		background-color: #ffff;
-		// 		outline: 1px solid $clr7;
-		// 		border-radius: 4px;
-		// 	}
-		// }
-
 		.input-wrapper {
 			display: flex;
 			// flex: 1;
@@ -78,42 +49,22 @@
 			margin: 6px 10px 6px 26px;
 		}
 
-		// input {
-		// 	flex: 1;
-		// 	height: 24px;
-		// 	width: 100%; // Let it size naturally
-			
-		// 	padding: 0 0 0 4px;
-		// 	border: none;
-		// 	border-radius: 4px;
-
-		// 	text-overflow: ellipsis;
-		// 	overflow: hidden;
-		// 	white-space: nowrap;
-
-		// 	font-family: $main-font-family;
-		// 	font-size: rem(14px);
-		
-		// 	cursor: text;
-
-		// 	background: none;
-		// }
-
 		.inline-edit {
-			flex: 1;
-
 			padding-inline-start: 32px;
 
 			text-overflow: ellipsis;
 			overflow: hidden;
 			white-space: nowrap;
-			
+
 			padding-inline: 4px;
 			border-radius: 4px;
 			margin-inline-start: 30px;
 
-			&:hover {
+			&.edit {
+				flex: 0 0 80%;
+			}
 
+			&:hover:not(.edit) {
 				// text-overflow: ellipsis;
 				// overflow: hidden;
 				// white-space: nowrap;
@@ -127,10 +78,9 @@
 
 			input {
 				all: unset;
-				flex: 1;
 				width: 100%;
-				
-				border-radius: 2px;
+
+				border-radius: 4px;
 
 				overflow: hidden;
 				white-space: nowrap;
@@ -139,33 +89,9 @@
 				&:focus {
 					height: 20px;
 					background-color: #ffff;
-					outline: 1px solid $clr7;
+					border: 1px solid $clr7;
 				}
 			}
-		}
-	}
-
-	.open-task-details {
-		display: none;
-		justify-content: center;
-		align-items: center;
-		
-		height: 100%;
-		width: 64px;
-		
-		margin-inline-end: 10px;
-		// visibility: hidden;
-		// opacity: 0;
-
-		z-index: 40;
-
-		.open {
-			color: rgb(50, 51, 56);
-			font-size: rem(13px);
-		}
-
-		.icon {
-			font-size: rem(13px);
 		}
 	}
 
@@ -184,13 +110,13 @@
 	}
 
 	.open-task-details {
-		display: flex;
-		align-items: center;
-		gap: 4px;
+		display: none;
 
 		height: 100%;
 
 		z-index: 40;
+		margin-inline-end: 10px;
+
 		.open {
 			color: rgb(50, 51, 56);
 			font-size: rem(13px);
@@ -201,37 +127,110 @@
 		}
 	}
 
-	&:hover {
-		.open-task-details {
-			margin-inline-end: 10px;
-			opacity: 1;
-		}
-
-		.delete-btn {
-			background-color: $hovered-btns;
-
-			opacity: 100;
-			visibility: visible;
+	.title-main-container {
+		&:hover {
+			.inline-edit:not(.edit) ~ .open-task-details {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+			}
 		}
 	}
+	// .delete-btn {
+	// 	background-color: $hovered-btns;
 
-	.delete-btn {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		background-color: #00000000;
-		padding: 4px;
-		border-radius: 4px;
-		margin: 0;
-
-		color: $gray4;
-		opacity: 0;
-		visibility: hidden;
-
-		transition: opacity 100ms, visibility 100ms;
-	}
+	// 	opacity: 100;
+	// 	visibility: visible;
+	// }
 }
+
+// input {
+// 	all: unset;
+
+// 	width: fit-content;
+// 	max-width: 100%;
+// 	flex-shrink: 1;
+// 	margin: 6px 10px 6px 26px;
+
+// 	text-overflow: ellipsis;
+// 	overflow: hidden;
+// 	white-space: nowrap;
+
+// 	cursor: text;
+
+// 	&:hover {
+// 		outline: 1px solid $input-hover-border-clr;
+// 		border-radius: 4px;
+// 		cursor: text;
+// 	}
+
+// 	&:focus {
+// 		background-color: #ffff;
+// 		outline: 1px solid $clr7;
+// 		border-radius: 4px;
+// 	}
+// }
+
+// input {
+// 	flex: 1;
+// 	height: 24px;
+// 	width: 100%; // Let it size naturally
+
+// 	padding: 0 0 0 4px;
+// 	border: none;
+// 	border-radius: 4px;
+
+// 	text-overflow: ellipsis;
+// 	overflow: hidden;
+// 	white-space: nowrap;
+
+// 	font-family: $main-font-family;
+// 	font-size: rem(14px);
+
+// 	cursor: text;
+
+// 	background: none;
+// }
+
+// .open-task-details {
+// 	display: none;
+// 	justify-content: center;
+// 	align-items: center;
+
+// 	height: 100%;
+// 	width: 64px;
+
+// 	// visibility: hidden;
+// 	// opacity: 0;
+
+// 	z-index: 40;
+
+// 	.open {
+// 		color: rgb(50, 51, 56);
+// 		font-size: rem(13px);
+// 	}
+
+// 	.icon {
+// 		font-size: rem(13px);
+// 	}
+// }
+
+// .delete-btn {
+// 	display: flex;
+// 	justify-content: center;
+// 	align-items: center;
+
+// 	background-color: #00000000;
+// 	padding: 4px;
+// 	border-radius: 4px;
+// 	margin: 0;
+
+// 	color: $gray4;
+// 	opacity: 0;
+// 	visibility: hidden;
+
+// 	transition: opacity 100ms, visibility 100ms;
+// }
 
 // .conversation-icon-container {
 // 	cursor: pointer;
