@@ -50,7 +50,7 @@ export function TaskListHeader({ groupColor, shadow }) {
 
 				<Droppable droppableId="task-columns" direction="horizontal" type="column">
 					{provided => (
-						<ul className="task-columns flex" {...provided.droppableProps} ref={provided.innerRef}>
+						<ul className={`task-columns flex ${shadow ? 'shadow' : ''}`} {...provided.droppableProps} ref={provided.innerRef}>
 							{board.cmpsOrder.map((cmp, idx) => (
 								<Draggable key={cmp} draggableId={cmp} index={idx}>
 									{provided => (

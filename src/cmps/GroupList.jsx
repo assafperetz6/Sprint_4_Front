@@ -79,15 +79,8 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 
 	async function handleDrag(result) {
 		if (!result.destination) return
-
-		switch (result.type) {
-			case 'group':
-				await handleGroupDrag(result)
-				break
-			case 'task':
-				await handleTaskDrag(result)
-				break
-		}
+		if (result.type === 'group') return await handleGroupDrag(result)
+		else handleTaskDrag(result)
 		setIsDragging(false)
 	}
 
@@ -134,7 +127,7 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 			<Droppable droppableId={board._id} type="group">
 				{provided => (
 					<section className="group-list" {...provided.droppableProps} ref={provided.innerRef}>
-						<div className={`sticky-header-container full`}>{currentGroup && !isDragging && <GroupHeader group={currentGroup} shadow={!isScrolledTop} />}</div>
+						<div className={`sticky-header-container full`}>{currentGroup && <GroupHeader group={currentGroup} shadow={!isScrolledTop} />}</div>
 
 						{groups.map((group, idx) => (
 							<div key={group.id} ref={el => (groupRefs.current[idx] = el)} className="full">

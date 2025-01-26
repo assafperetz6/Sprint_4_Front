@@ -7,8 +7,8 @@ export function GroupPreview({ group, cmpsOrder, idx, showHeader }) {
 	return (
 		<Draggable key={group.id} draggableId={group.id} index={idx}>
 			{provided => (
-				<section className="group-preview item-col full" {...provided.draggableProps} ref={provided.innerRef}>
-					{showHeader && <GroupHeader group={group} provided={provided} dragHandleProps={provided.dragHandleProps} />}
+				<section className="group-preview item-col full" {...provided.draggableProps} ref={provided.innerRef} {...provided.dragHandleProps}>
+					{showHeader && <GroupHeader group={group} />}
 					<TaskList group={group} />
 					<GroupSummary group={group} cmpsOrder={cmpsOrder} />
 					{provided.placeholder}
