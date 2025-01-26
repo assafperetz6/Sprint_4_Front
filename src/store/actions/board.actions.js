@@ -153,6 +153,8 @@ export async function updateTask(boardId, groupId, task, activity) {
 }
 
 async function _addActivity(boardId, groupId, task, activity) {
+	if (!activity) return
+
 	const group = await boardService.getGroupById(boardId, groupId)
 	const activtyToSave = {
 		id: makeId(),
