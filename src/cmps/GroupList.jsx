@@ -21,6 +21,10 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 	const [titleColWidth, setTitleColWidth] = useState(null)
 	const groupRefs = useRef([])
 
+	useEffect(() => {
+		setCurrentGroup(groups[0])
+	}, [groups])
+
 	// useEffect(() => {
 	// 	const longestTaskTitle = () => {
 	// 		const text = board.groups.map(group => group.tasks.map(task => task.title).toSorted((t1, t2) => t2.length - t1.length)[0]).toSorted((title1, title2) => title2.length - title1.length)[0]

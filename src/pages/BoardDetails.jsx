@@ -9,19 +9,19 @@ import { GroupList } from '../cmps/GroupList.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
 
 export function BoardDetails() {
-	const board = useSelector((storeState) => storeState.boardModule.board)
+	const board = useSelector(storeState => storeState.boardModule.board)
 	const [isClosing, setIsClosing] = useState(false)
 	const { boardId } = useParams()
 	const navigate = useNavigate()
 
 	const [isScrolledTop, setIsScrolledTop] = useState(true)
 	const boardDetailsRef = useRef(null)
-	
-	const handleScroll = (e) => {
+
+	const handleScroll = e => {
 		if (e.target.scrollTop === 0 && !isScrolledTop) setIsScrolledTop(true)
 		else if (e.target.scrollTop > 0 && isScrolledTop) setIsScrolledTop(false)
 	}
-	
+
 	useEffect(() => {
 		loadBoard(boardId)
 	}, [boardId])
@@ -36,20 +36,10 @@ export function BoardDetails() {
 
 	if (!board) return null
 	return (
-		<section
-			className="board-details"
-			ref={boardDetailsRef}
-			onScroll={handleScroll}
-		>
+		<section className="board-details" ref={boardDetailsRef} onScroll={handleScroll}>
 			<BoardHeader board={board} />
 
-			{!!board.groups.length && (
-				<GroupList
-					groups={board.groups}
-					isScrolledTop={isScrolledTop}
-					scrollContainer={boardDetailsRef.current}
-				/>
-			)}
+			{!!board.groups.length && <GroupList groups={board.groups} isScrolledTop={isScrolledTop} scrollContainer={boardDetailsRef.current} />}
 			<Outlet context={{ isClosing, closeTaskDetails }} />
 		</section>
 	)

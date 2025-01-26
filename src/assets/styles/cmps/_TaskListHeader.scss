@@ -66,7 +66,9 @@
 
 	.colored-border {
 		box-sizing: content-box;
-		border-inline-start: 40px solid $clr3;
+		position: sticky;
+		left: 40px;
+		// border-inline-start: 40px solid $clr3;
 		border-radius: 4px 0 0 0;
 	}
 }

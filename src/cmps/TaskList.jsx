@@ -11,9 +11,7 @@ export function TaskList({ group }) {
 						<TaskPreview key={task.id} group={group} task={task} idx={idx} />
 					))}
 					{provided.placeholder}
-					<li className="add-task full">
-						<AddTask group={group} />
-					</li>
+					<AddTask group={group} />
 				</ul>
 			)}
 		</Droppable>
