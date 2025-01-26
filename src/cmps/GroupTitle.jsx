@@ -6,7 +6,7 @@ import { HeaderInlineEdit } from './HeaderInlineEdit'
 import { ContextMenu } from './ContextMenu'
 import { showErrorMsg } from '../services/event-bus.service'
 
-export function GroupTitle({ group }) {
+export function GroupTitle({ group, isCollapsed = false }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
 	const [activeMenuId, setActiveMenuId] = useState(null)
@@ -49,7 +49,7 @@ export function GroupTitle({ group }) {
 	}
 
 	return (
-		<div className="group-header flex align-center full">
+		<div className={`group-header flex align-center full ${ isCollapsed ? 'collapsed' : ''}`}>
 			<div className="context-btn-container">
 				<button className={`group-context-menu ${activeMenuId === group.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, group.id)} ref={buttonRef}>
 					{svgs.threeDots}
@@ -59,7 +59,7 @@ export function GroupTitle({ group }) {
 			</div>
 
 			<div className="toggle-group-preview flex align-center justify-center" style={{ color: group.style.color }}>
-				{svgs.arrowDown}
+				{isCollapsed ? svgs.arrowRight : svgs.arrowDown}
 			</div>
 			<HeaderInlineEdit entity={group} onSave={handleSave} getTasksCount={getTasksCount} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
 		</div>
