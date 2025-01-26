@@ -15,14 +15,30 @@ import { Draggable } from '@hello-pangea/dnd'
 export function TaskPreview({ group, task, idx }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [isTaskHovered, setIsTaskHovered] = useState(false)
+	const [isActive, setIsActive] = useState(false)
+
 	const [titleToEdit, setTitleToEdit] = useState(task.title)
 	const [activeMenuId, setActiveMenuId] = useState(null)
 	const [isEditing, setIsEditing] = useState(false)
 	const buttonRef = useRef(null)
 
+	const onClick = () => setIsActive(true)
+	const onBlur = () => setIsActive(false)
+
 	useEffect(() => {
 		setTitleToEdit(task.title)
 	}, [task.title])
+
+	useEffect(() => {
+		const handleClickOutside = event => {
+			if (!event.target.closest(`.task-preview-${task.id}`)) {
+				setIsActive(false)
+			}
+		}
+
+		document.addEventListener('click', handleClickOutside)
+		return () => document.removeEventListener('click', handleClickOutside)
+	}, [task.id])
 
 	async function onSaveTask(newTitle) {
 		try {
@@ -36,7 +52,7 @@ export function TaskPreview({ group, task, idx }) {
 	return (
 		<Draggable key={task.id} draggableId={task.id} index={idx}>
 			{(provided, snapshot) => (
-				<li className={`task-preview task-row flex full ${snapshot.isDragging ? 'dragging' : ''}`} {...provided.draggableProps} ref={provided.innerRef}>
+				<li className={`task-preview task-row flex full task-preview-${task.id} ${snapshot.isDragging ? 'dragging' : ''} ${isActive ? 'active' : ''} `} onClick={onClick} {...provided.draggableProps} ref={provided.innerRef}>
 					<section className="sticky-container">
 						<div className="context-btn-container">
 							<button className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`} onClick={ev => setActiveMenuId(prev => (prev === task.id ? null : task.id))} ref={buttonRef}>
