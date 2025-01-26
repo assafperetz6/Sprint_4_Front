@@ -14,6 +14,7 @@ import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 
 export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, scrollContainer }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
+	const [isDragging, setIsDragging] = useState(false)
 	const dispatch = useDispatch()
 
 	const [titleColWidth, setTitleColWidth] = useState(null)
@@ -77,8 +78,16 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 
 	async function handleDrag(result) {
 		if (!result.destination) return
-		if (result.type === 'group') await handleGroupDrag(result)
-		else await handleTaskDrag(result)
+
+		switch (result.type) {
+			case 'group':
+				await handleGroupDrag(result)
+				break
+			case 'task':
+				await handleTaskDrag(result)
+				break
+		}
+		setIsDragging(false)
 	}
 
 	async function handleGroupDrag(result) {
@@ -113,24 +122,25 @@ export function GroupList({ groups, isScrolling, currentGroup, setCurrentGroup, 
 		}
 	}
 
+	function handleStartDragging(result) {
+		setIsDragging(true)
+	}
+
+	console.log(isDragging)
+
 	return (
-		<DragDropContext onDragEnd={handleDrag}>
+		<DragDropContext onDragEnd={handleDrag} onBeforeDragStart={handleStartDragging}>
 			<Droppable droppableId={board._id} type="group">
 				{provided => (
 					<section className="group-list" {...provided.droppableProps} ref={provided.innerRef}>
-						<div className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}>{currentGroup && <GroupHeader group={currentGroup} />}</div>
+						<div className={`sticky-header-container full ${isScrolling ? 'show' : ''}`}>{currentGroup && !isDragging && <GroupHeader group={currentGroup} />}</div>
 
 						{groups.map((group, idx) => (
 							<div key={group.id} ref={el => (groupRefs.current[idx] = el)} className="full">
-								<Draggable key={group.id} draggableId={group.id} index={idx}>
-									{provided => (
-										<section className="group-preview item-col full" {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-											<GroupPreview group={group} cmpsOrder={board.cmpsOrder} provided={provided} />
-										</section>
-									)}
-								</Draggable>
+								<GroupPreview group={group} cmpsOrder={board.cmpsOrder} idx={idx} />
 							</div>
 						))}
+
 						{provided.placeholder}
 						<div className="add-group-btn" onClick={onAddGroup}>
 							<span className="icon flex align-center">{svgs.plus}</span>

@@ -31,7 +31,8 @@
 		border-inline-end: 1px solid $clr8;
 	}
 
-	.task-columns, > li > *:not(.colored-border) {
+	.task-columns,
+	> li > *:not(.colored-border) {
 		border-block: 1px solid $clr8;
 	}
 
@@ -43,7 +44,7 @@
 		display: flex;
 		flex-shrink: 0;
 		height: 100%;
-		
+
 		justify-content: center;
 		align-items: center;
 

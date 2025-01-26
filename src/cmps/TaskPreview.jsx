@@ -10,8 +10,9 @@ import { Checkbox } from './Checkbox'
 import { useEffect, useRef, useState } from 'react'
 import { InlineEdit } from './InlineEdit'
 import { ContextMenu } from './ContextMenu'
+import { Draggable } from '@hello-pangea/dnd'
 
-export function TaskPreview({ group, task }) {
+export function TaskPreview({ group, task, idx }) {
 	// eslint-disable-next-line no-unused-vars
 	const board = useSelector(storeState => storeState.boardModule.board)
 	const [isTaskHovered, setIsTaskHovered] = useState(false)
@@ -48,50 +49,54 @@ export function TaskPreview({ group, task }) {
 	}
 
 	return (
-		<>
-			<section className="sticky-container">
-				<div className="context-btn-container">
-					<button className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, task.id)} ref={buttonRef}>
-						{svgs.threeDots}
-					</button>
-				</div>
+		<Draggable key={task.id} draggableId={task.id} index={idx}>
+			{provided => (
+				<li className="task-preview task-row flex full" {...provided.draggableProps} ref={provided.innerRef}>
+					<section className="sticky-container">
+						<div className="context-btn-container">
+							<button className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, task.id)} ref={buttonRef}>
+								{svgs.threeDots}
+							</button>
+						</div>
 
-				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
+						<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
 
-				<Checkbox />
+						<Checkbox />
 
-				<section className="task-title">
-					<div className="title-main-container" onMouseEnter={() => setIsTaskHovered(true)} onMouseLeave={() => setIsTaskHovered(false)}>
-						<InlineEdit value={titleToEdit} onSave={newTitle => onSaveTask(newTitle)} />
-						<Link to={`task/${task.id}`} className="open-task-details" style={{ display: isTaskHovered ? 'flex' : 'none' }}>
-							&nbsp; {svgs.expand} open
-						</Link>
-					</div>
-					<div className="add-update-btn">{svgs.addUpdate}</div>
-				</section>
-			</section>
+						<section className="task-title">
+							<div className="title-main-container" onMouseEnter={() => setIsTaskHovered(true)} onMouseLeave={() => setIsTaskHovered(false)} {...provided.dragHandleProps}>
+								<InlineEdit value={titleToEdit} onSave={newTitle => onSaveTask(newTitle)} />
+								<Link to={`task/${task.id}`} className="open-task-details" style={{ display: isTaskHovered ? 'flex' : 'none' }}>
+									&nbsp; {svgs.expand} open
+								</Link>
+							</div>
+							<div className="add-update-btn">{svgs.addUpdate}</div>
+						</section>
+					</section>
 
-			<section className="task-col flex">
-				{board.cmpsOrder.map((cmp, idx) => (
-					<DynamicCmp cmp={cmp} key={idx} group={group} task={task} />
-				))}
-				<li className="line-end"></li>
-			</section>
+					<section className="task-col flex">
+						{board.cmpsOrder.map((cmp, idx) => (
+							<DynamicCmp cmp={cmp} key={idx} group={group} task={task} />
+						))}
+						<li className="line-end"></li>
+					</section>
 
-			{activeMenuId === task.id && (
-				<div className="popper-container">
-					<ContextMenu
-						type="task"
-						entity={task}
-						onClose={() => setActiveMenuId(null)}
-						onRemove={onRemoveTask}
-						onUpdate={updatedTask => onSaveTask(updatedTask.title)}
-						onRename={task => setTitleToEdit(task.title)}
-						referenceElement={buttonRef.current}
-					/>
-				</div>
+					{activeMenuId === task.id && (
+						<div className="popper-container">
+							<ContextMenu
+								type="task"
+								entity={task}
+								onClose={() => setActiveMenuId(null)}
+								onRemove={onRemoveTask}
+								onUpdate={updatedTask => onSaveTask(updatedTask.title)}
+								onRename={task => setTitleToEdit(task.title)}
+								referenceElement={buttonRef.current}
+							/>
+						</div>
+					)}
+				</li>
 			)}
-		</>
+		</Draggable>
 	)
 }
 
