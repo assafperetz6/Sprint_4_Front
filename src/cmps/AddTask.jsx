@@ -15,7 +15,7 @@ export function AddTask({ group }) {
 	async function onAddTask(ev) {
 		if (ev) ev.preventDefault()
 		try {
-			addTask(board._id, group.id, taskToAdd)
+			addTask(board._id, group.id, taskToAdd, { txt: 'Added task' })
 			setTaskToAdd(boardService.getEmptyTask())
 		} catch (err) {
 			showErrorMsg('cannot add task')

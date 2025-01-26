@@ -25,12 +25,14 @@ export function TaskPreview({ group, task, idx }) {
 
 	async function onSaveTask(newTitle) {
 		try {
-			await updateTask(board._id, group.id, { ...task, title: newTitle })
+			await updateTask(board._id, group.id, { ...task, title: newTitle }, { txt: 'Chnaged Title' })
 		} catch (err) {
 			showErrorMsg('Cannot update title')
 			console.error('Cannot update title:', err)
 		}
 	}
+
+	console.log(board.activities)
 
 	return (
 		<Draggable key={task.id} draggableId={task.id} index={idx}>

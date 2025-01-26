@@ -1,6 +1,8 @@
 import { boardService } from '../../services/board/'
 import { store } from '../store'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD } from '../reducers/board.reducer'
+import { makeId } from '../../services/util.service'
+import { userService } from '../../services/user'
 
 // Board Actions //
 
@@ -127,22 +129,39 @@ export async function removeTask(boardId, taskId) {
 		throw err
 	}
 }
-export async function addTask(boardId, groupId, task) {
+export async function addTask(boardId, groupId, task, activity) {
 	try {
-		const savedBoard = await boardService.saveTask(boardId, groupId, task)
+		const activityToSave = await _addActivity(boardId, groupId, task, activity)
+		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
+
 		store.dispatch(getCmdSetBoard(savedBoard))
 	} catch (err) {
 		console.log('error from actions--> cannot add task', err)
 		throw err
 	}
 }
-export async function updateTask(boardId, groupId, task) {
+export async function updateTask(boardId, groupId, task, activity) {
 	try {
-		const savedBoard = await boardService.saveTask(boardId, groupId, task)
+		const activityToSave = await _addActivity(boardId, groupId, task, activity)
+		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
 		store.dispatch(getCmdSetBoard(savedBoard))
 		return savedBoard
 	} catch (err) {
 		console.log('error from actions--> cannot update task', err)
 		throw err
 	}
+}
+
+async function _addActivity(boardId, groupId, task, activity) {
+	const group = await boardService.getGroupById(boardId, groupId)
+	const activtyToSave = {
+		id: makeId(),
+		title: activity.txt,
+		createdAt: Date.now(),
+		byMember: await userService.getLoggedinUser(),
+		group: { id: group.id, title: group.title },
+		task: { id: task.id, title: task.title }
+	}
+
+	return activtyToSave
 }
