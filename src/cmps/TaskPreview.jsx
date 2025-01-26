@@ -32,7 +32,7 @@ export function TaskPreview({ group, task, idx }) {
 		}
 	}
 
-	console.log(board.activities)
+	// console.log(board.activities)
 
 	return (
 		<Draggable key={task.id} draggableId={task.id} index={idx}>

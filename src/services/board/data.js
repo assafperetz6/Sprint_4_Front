@@ -71,7 +71,7 @@ export const defaultBoard = [
 								byMember: {
 									_id: 'u101',
 									fullname: 'Alon Wohl',
-									imgUrl: 'https://robohash.org/dror?set=set4'
+									imgUrl: 'https://robohash.org/alon?set=set4'
 								}
 							}
 						],
@@ -79,7 +79,7 @@ export const defaultBoard = [
 							{
 								_id: 'u101',
 								fullname: 'Alon Wohl',
-								imgUrl: 'https://robohash.org/dror?set=set4'
+								imgUrl: 'https://robohash.org/alon?set=set4'
 							}
 						]
 					}
