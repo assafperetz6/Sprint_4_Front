@@ -137,6 +137,11 @@
   }
 
   @mixin get-started-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
     background-color: $welcome-page-btn-clr;
     padding: 12px 24px;
     border-radius: 100vw;
@@ -150,8 +155,27 @@
 
     &:hover {
         filter: brightness(0.90);
+
         svg {
             transform: translateX(6px) ;
         }
     }
+  }
+
+  @mixin title-count {
+    .title-count {
+			opacity: 0;
+			font-size: rem(14px);
+			margin-inline-start: 10px;
+			white-space: nowrap;
+			color: $clr4;
+
+			transition: opacity 0.2s;
+		}
+
+		&:hover {
+			.title-count {
+				opacity: 1;
+			}
+		}
   }

@@ -30,7 +30,7 @@
         border-block-start: none;
         border-radius: 0 0 0 8px ;    
 
-        // box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
+        box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
         z-index: 30;
 
         .summary {
@@ -53,23 +53,75 @@
                 }
             }
     
-            .empty {
+            .date-summary, .timeline-summary {
                 display: flex;
                 justify-content: center;
                 align-items: center;
     
-                background-color: $lightgrey;
                 height: 22px;
                 border-radius: 100vw;
+                padding-inline: 8px;
     
                 color: $clr3;
                 font-size: 14px;
+
+                cursor: default;
     
+                &.empty {
+                    background-color: $lightgrey;
+
+                    &:hover {
+                        background-color: #ababab;
+                    }    
+                }
+
+                .normal-view {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .hover-view {
+                    display: none;
+                }
+
                 &:hover {
-    
-                    background-color: #ababab;
+                    .normal-view {
+                        display: none;
+                    }
+
+                    .hover-view {
+                        display: block;
+                    }    
                 }
             }
+
+                .member-summary-image {
+                    width: 30px;
+                    height: 30px;
+                    border: 2px solid #fff;
+                    border-radius: 50%;
+                }
+    
+                .extra-members {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+            
+                    height: 30px;
+                    min-width: 30px;
+                    border-radius: 50%;
+            
+                    background-color: $gray4;
+                    color: $clr3;
+                    border: 2px solid $task-hover-bgc;
+                    font-size: 12px;
+                    font-weight: 300;
+                }        
+                
+                .second {
+                    margin-inline-start: -8px;
+                }
         }    
     }
 }
