@@ -5,7 +5,7 @@ import { DateSummary } from "./dynamic-summary-cmp/DateSummary";
 import { MemberSummary } from "./dynamic-summary-cmp/MemberSummary";
 import { TimelineSummary } from "./dynamic-summary-cmp/TimelineSummary";
 
-export function GroupSummary({ group, cmpsOrder, collapsedPreview = false }){
+export function GroupSummary({ group, cmpsOrder, isCollapsed }){
 
     const statusLabels = useSelector(storeState => storeState.boardModule.board.statusLabels)
     const priorityLabels = useSelector(storeState => storeState.boardModule.board.priorityLabels)
@@ -104,7 +104,7 @@ export function GroupSummary({ group, cmpsOrder, collapsedPreview = false }){
 
 	return (
 		<section className="group-summary full">
-			{!collapsedPreview && <section style={{ width: 400 + 'px', height: '42px' }} className="white-space"></section>}
+			{!isCollapsed && <section style={{ width: 400 + 'px', height: '42px' }} className="white-space"></section>}
 			<section className="group-summary-container">
 				{groupSummaryArray.map((summary, idx) => (
 					<DynamicSummaryCmp group={group} padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} key={idx} />

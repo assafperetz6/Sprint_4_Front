@@ -11,6 +11,7 @@ import { GroupHeader } from './GroupHeader.jsx'
 import { GroupPreview } from './GroupPreview.jsx'
 
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
+import { CollapsedGroupPreview } from './CollapsedGroupPreview.jsx'
 
 export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
@@ -113,23 +114,24 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 			console.error('Task drag error:', err)
 		}
 	}
-
-	console.log(groups[0])
 	
-
+	// console.log(board.groups)
+	
 	return (
 		<DragDropContext onDragEnd={handleDrag}>
 			<Droppable droppableId={board._id} type="group">
 				{provided => (
 					<section className="group-list" {...provided.droppableProps} ref={provided.innerRef}>
-						<div className={`sticky-header-container full`}>{currentGroup && <GroupHeader group={currentGroup} shadow={!isScrolledTop} />}</div>
+						<div className={`sticky-header-container full`}>{currentGroup && !currentGroup.isCollapsed && <GroupHeader group={currentGroup} shadow={!isScrolledTop} />}</div>
 
 						{groups.map((group, idx) => (
 							<div key={group.id} ref={el => (groupRefs.current[idx] = el)} className="full">
 								<Draggable key={group.id} draggableId={group.id} index={idx}>
 									{provided => (
 										<section className="group-preview item-col full" {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-											<GroupPreview group={group} cmpsOrder={board.cmpsOrder} provided={provided} showHeader={idx >= 1} />
+											{group.isCollapsed 
+												? <CollapsedGroupPreview group={group} cmpsOrder={board.cmpsOrder} provided={provided} />
+												: <GroupPreview group={group} cmpsOrder={board.cmpsOrder} provided={provided} showHeader={idx >= 1} />}
 										</section>
 									)}
 								</Draggable>

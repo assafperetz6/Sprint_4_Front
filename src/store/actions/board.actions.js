@@ -98,6 +98,8 @@ export async function addGroup(boardId, group) {
 	}
 }
 export async function updateGroup(boardId, group) {
+	console.log(group)
+	
 	try {
 		const savedBoard = await boardService.saveGroup(boardId, group)
 		store.dispatch(getCmdSetBoard(savedBoard))

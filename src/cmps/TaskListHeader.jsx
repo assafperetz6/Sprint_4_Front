@@ -3,12 +3,12 @@ import { hexToRgba } from '../services/util.service'
 import { useSelector } from 'react-redux'
 import { Checkbox } from './Checkbox'
 
-export function TaskListHeader({ groupColor, shadow, collapsedPreview = false }) {
+export function TaskListHeader({ groupColor, shadow, isCollapsed }) {
 	const board = useSelector((storeState) => storeState.boardModule.board)
 
 	return (
 		<ul className="task-list-header task-row clean-list full">
-			{!collapsedPreview && 
+			{!isCollapsed && 
 			
 			<li className="sticky-container flex">
 				<div

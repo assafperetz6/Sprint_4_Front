@@ -35,7 +35,10 @@ export function BoardDetails() {
 		}, 75)
 	}
 
+	
+	
 	if (!board) return null
+
 	return (
 		<section
 			className="board-details"

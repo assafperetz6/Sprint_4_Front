@@ -117,7 +117,8 @@ async function saveGroup(boardId, group) {
 	const groupToSave = {
 		title: group.title,
 		style: group.style,
-		tasks: group.tasks
+		tasks: group.tasks,
+		isCollapsed: group.isCollapsed
 	}
 
 	try {

@@ -1,8 +1,4 @@
 .context-menu {
-	// position: absolute;
-	// top: 0;
-	// left: 250px;
-
 	display: flex;
 	flex-direction: column;
 
@@ -14,7 +10,6 @@
 
 	box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
 	background-color: $clr3;
-	z-index: 50;
 
 	button {
 		display: flex;

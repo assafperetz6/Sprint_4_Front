@@ -5,21 +5,18 @@ import { TaskListHeader } from './TaskListHeader.jsx'
 
 export function CollapsedGroupPreview({ group, cmpsOrder }) {
 	return (
-		<section className="collapsed-group-preview">
-			<div
-				className="white-space"
-				style={{ height: '60px', width: '40px' }}
-			></div>
-
-			<div
-				className="colored-border"
-				style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
-			></div>
-
-			<GroupTitle group={group} collapsedPreview={true} />
+		<section className="collapsed-group-preview full">
+			<section className="sticky-container">
+				<div className="white-space"></div>
+				<div
+					className="colored-border"
+					style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
+				></div>
+				<GroupTitle group={group} isCollapsed={true} />
+			</section>
 			<section className="summary-columns">
-				<TaskListHeader groupColor={group.style.color} tasks={group.tasks} collapsedPreview={true} />
-				<GroupSummary group={group} cmpsOrder={cmpsOrder} collapsedPreview={true} />
+				<TaskListHeader groupColor={group.style.color} tasks={group.tasks} isCollapsed={true} />
+				<GroupSummary group={group} cmpsOrder={cmpsOrder} isCollapsed={true} />
 
 			</section>
 		</section>

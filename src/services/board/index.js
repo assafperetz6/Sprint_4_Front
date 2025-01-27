@@ -63,12 +63,14 @@ function getDefaultGroups() {
 		{
 			id: makeId(),
 			title: 'Group 1',
+			isCollapsed: false,
 			tasks: getDefaultTasks(),
 			style: { color: getRandomColor() }
 		},
 		{
 			id: makeId(),
 			title: 'Group 2',
+			isCollapsed: false,
 			tasks: getDefaultTasks(),
 			style: { color: getRandomColor() }
 		}
@@ -79,6 +81,7 @@ function getDefaultGroups() {
 function getNewGroup() {
 	return {
 		title: 'New Group',
+		isCollapsed: false,
 		tasks: [],
 		style: { color: getRandomColor() }
 	}

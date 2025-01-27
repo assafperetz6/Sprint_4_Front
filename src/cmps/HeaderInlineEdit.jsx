@@ -160,9 +160,9 @@ export function HeaderInlineEdit({
 				<h4 className="title">{value}</h4>
 			)}
 
-			<div className="title-count flex align-center justify-center">
+			{!isEditing && <div className="title-count flex align-center justify-center">
 				{getTasksCount(entity.tasks.length)}
-			</div>
+			</div>}
 		</div>
 	)
 }

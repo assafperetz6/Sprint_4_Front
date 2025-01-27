@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { removeGroup, updateGroup } from '../store/actions/board.actions'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { svgs } from '../services/svg.service'
 import { HeaderInlineEdit } from './HeaderInlineEdit'
 import { ContextMenu } from './ContextMenu'
 import { showErrorMsg } from '../services/event-bus.service'
 
-export function GroupTitle({ group, collapsedPreview = false }) {
+export function GroupTitle({ group, isCollapsed: collapsedPreview }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
-
 	const [activeMenuId, setActiveMenuId] = useState(null)
+	const [isCollapsed, setIsCollapsed] = useState(collapsedPreview)
 	const buttonRef = useRef()
 
 	function toggleContextMenu(ev, taskId) {
@@ -42,14 +42,25 @@ export function GroupTitle({ group, collapsedPreview = false }) {
 			showErrorMsg('cannot remove group')
 		}
 	}
+
 	function getTasksCount(tasksCount) {
 		if (!tasksCount) return 'No Items'
 		if (tasksCount === 1) return tasksCount + ' Item'
 		return tasksCount + ' Items'
 	}
 
+	 async function onToggleGroupPreview() {
+		 try {
+			const groupToSave = { ...group, isCollapsed: !isCollapsed }
+			await updateGroup(board._id, groupToSave)
+			setIsCollapsed(prev => !prev)
+		} catch (err) {
+			console.error('Failed to update group title:', err)
+		}
+	}
+
 	return (
-		<div className={`group-header flex align-center full ${ collapsedPreview ? 'collapsed' : ''}`}>
+		<div className={`group-header flex align-center full ${ isCollapsed ? 'collapsed' : ''}`}>
 			<div className="context-btn-container">
 				<button className={`group-context-menu ${activeMenuId === group.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, group.id)} ref={buttonRef}>
 					{svgs.threeDots}
@@ -58,8 +69,11 @@ export function GroupTitle({ group, collapsedPreview = false }) {
 				{activeMenuId === group.id && <ContextMenu type="group" entity={group} onClose={() => setActiveMenuId(null)} onRemove={onRemoveGroup} onUpdate={handleStyleChange} onRename={() => null} referenceElement={buttonRef.current} />}
 			</div>
 
-			<div className="toggle-group-preview flex align-center justify-center" style={{ color: group.style.color }}>
-				{collapsedPreview ? svgs.arrowRight : svgs.arrowDown}
+			<div className="toggle-group-preview flex align-center justify-center"
+				style={{ color: group.style.color }}
+				onClick={onToggleGroupPreview}
+			>
+				{isCollapsed ? svgs.arrowRight : svgs.arrowDown}
 			</div>
 			<HeaderInlineEdit entity={group} onSave={handleSave} getTasksCount={getTasksCount} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
 		</div>
