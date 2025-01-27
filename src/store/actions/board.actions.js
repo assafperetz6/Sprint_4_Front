@@ -120,9 +120,9 @@ export async function removeGroup(boardId, groupId) {
 
 // tasks actions: //
 
-export async function removeTask(boardId, taskId) {
+export async function removeTask(boardId, taskId, groupId) {
 	try {
-		const savedBoard = await boardService.removeTask(boardId, taskId)
+		const savedBoard = await boardService.removeTask(boardId, taskId, groupId)
 		store.dispatch(getCmdSetBoard(savedBoard))
 	} catch (err) {
 		console.log('error from actions--> cannot remove task', err)

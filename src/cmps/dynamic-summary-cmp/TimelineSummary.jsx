@@ -4,7 +4,6 @@ export function TimelineSummary({ summary, padding, group }){
     
     const { timelineSummary } = summary
     const width = 140
-    console.log(timelineSummary)
 
     if (!timelineSummary.start) {
         return (

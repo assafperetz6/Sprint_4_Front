@@ -72,7 +72,7 @@ export function TaskPreview({ group, task, idx }) {
 							type="task"
 							entity={task}
 							onClose={() => setActiveMenuId(null)}
-							onRemove={() => removeTask(board._id, task.id)}
+							onRemove={() => removeTask(board._id, task.id, group.id)}
 							onUpdate={updatedTask => onSaveTask(updatedTask.title)}
 							onRename={task => setTitleToEdit(task.title)}
 							referenceElement={buttonRef.current}
