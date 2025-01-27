@@ -3,11 +3,13 @@ import { hexToRgba } from '../services/util.service'
 import { useSelector } from 'react-redux'
 import { Checkbox } from './Checkbox'
 
-export function TaskListHeader({ groupColor, shadow }) {
+export function TaskListHeader({ groupColor, shadow, collapsedPreview = false }) {
 	const board = useSelector((storeState) => storeState.boardModule.board)
 
 	return (
 		<ul className="task-list-header task-row clean-list full">
+			{!collapsedPreview && 
+			
 			<li className="sticky-container flex">
 				<div
 					className="colored-border"
@@ -15,7 +17,7 @@ export function TaskListHeader({ groupColor, shadow }) {
 				></div>
 				<Checkbox />
 				<div className={`task-title-header ${shadow ? 'shadow' : ''}`}>Task</div>
-			</li>
+			</li>}
 
 			<ul className={`task-columns flex ${shadow ? 'shadow' : ''}`}>
 				{board.cmpsOrder.map((cmp, idx) => {

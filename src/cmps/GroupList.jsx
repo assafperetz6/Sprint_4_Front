@@ -114,6 +114,9 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 		}
 	}
 
+	console.log(groups[0])
+	
+
 	return (
 		<DragDropContext onDragEnd={handleDrag}>
 			<Droppable droppableId={board._id} type="group">

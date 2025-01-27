@@ -43,15 +43,14 @@ export function BoardDetails() {
 			onScroll={handleScroll}
 		>
 			<BoardHeader board={board} />
-{/* 
+
 			{!!board.groups.length && (
 				<GroupList
 					groups={board.groups}
 					isScrolledTop={isScrolledTop}
 					scrollContainer={boardDetailsRef.current}
 				/>
-			)} */}
-			<CollapsedGroupPreview group={board.groups[1]} cmpsOrder={board.cmpsOrder} />
+			)}
 			<Outlet context={{ isClosing, closeTaskDetails }} />
 		</section>
 	)

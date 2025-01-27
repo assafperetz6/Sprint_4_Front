@@ -37,6 +37,7 @@ export const defaultBoard = [
 				id: 'g101',
 				title: 'Group 1',
 				archivedAt: 1589983468418,
+				isCollapsed: false,
 				tasks: [
 					{
 						id: 'c101',
@@ -91,6 +92,7 @@ export const defaultBoard = [
 			{
 				id: 'g102',
 				title: 'Group 2',
+				isCollapsed: false,
 				tasks: [
 					{
 						id: 'c103',
