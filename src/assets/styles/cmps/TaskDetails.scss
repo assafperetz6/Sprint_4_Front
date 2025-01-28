@@ -1,107 +1,111 @@
 .task-details {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
 
-    position: fixed;
-    top: 48px;
-    right: 0;
+	position: fixed;
+	top: 48px;
+	right: 0;
 
-    width: 500px;
-    height: 100%;
-    background-color: $clr3;
-    padding: 20px;
+	width: 500px;
+	height: 100%;
+	background-color: $clr3;
+	padding: 20px;
 
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+	box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 
-    transform: translateX(100%);
-    transition: transform 75ms linear;
-    z-index: 100;
+	transform: translateX(100%);
+	transition: transform 75ms linear;
+	z-index: 100;
 
-    &.open {
-        transform: translateX(0);
-    }
+	&.open {
+		transform: translateX(0);
+	}
 
-    &.closing {
-        transform: translateX(100%);
-    }
+	&.closing {
+		transform: translateX(100%);
+	}
 
-    &.details-top-bar{
-        position: relative;
+	&.details-top-bar {
+		position: relative;
 
-        height: max-content;
-    }
+		height: max-content;
+	}
 
-    & .details-top-bar::after{
-        content: '';
-        position: absolute;
-        right: 0;
+	& .details-top-bar::after {
+		content: '';
+		position: absolute;
+		right: 0;
 
-        width: 500px;
-        height: 0.5px;
-        border-block-end: 1px solid $line-clr;
-    }
+		width: 500px;
+		height: 0.5px;
+		border-block-end: 1px solid $line-clr;
+	}
 
-    & .exit-btn{
-        display: flex;
-        align-items: start;
+	& .details-bottom-bar {
+		width: 100%;
+	}
 
-        background-color: rgba(0, 0, 0, 0);
-        border-radius: 4px;
-        padding: 0;
-        margin: 0;
+	& .exit-btn {
+		display: flex;
+		align-items: start;
 
-        color: $darkgrey;
+		background-color: rgba(0, 0, 0, 0);
+		border-radius: 4px;
+		padding: 0;
+		margin: 0;
 
-        &:hover{
-            background-color: $hovered-btns;
-        }
-    }
+		color: $darkgrey;
 
-    & h2{
-        padding-inline: 5px;
-        margin-block: $spacing-xs $spacing-small;
+		&:hover {
+			background-color: $hovered-btns;
+		}
+	}
 
-        font-size: 1.25em;
-        line-height: 30px;
-        font-weight: 500;
-        font-family: $title-font-family ;
-    }
+	& h2 {
+		padding-inline: 5px;
+		margin-block: $spacing-xs $spacing-small;
 
-    & .task-details-actions{
-        display: flex;
+		font-size: 1.25em;
+		line-height: 30px;
+		font-weight: 500;
+		font-family: $title-font-family;
+	}
 
-        & button{
-            @include alt-btn;
-            position: relative;
+	& .task-details-actions {
+		display: flex;
 
-            padding: 8px 14px;
-            margin: 0;
+		& button {
+			@include alt-btn;
+			position: relative;
 
-            &.active::before{
-                content: '';
-                position: absolute;
-                bottom: 0 - 1px;
+			padding: 8px 14px;
+			margin: 0;
 
-                width: 100%;
-                height: 2.5px;
-                background-color: $blue3;
-            }
+			&.active::before {
+				content: '';
+				position: absolute;
+				bottom: 0 - 1px;
 
-            &:hover{
-                &::after{
-                    height: 0;
-                }
-            }
-    
-            &::after{
-                content: '';
-                position: absolute;
-                right: 0;
+				width: 100%;
+				height: 2.5px;
+				background-color: $blue3;
+			}
 
-                height: 16px;
-                border-inline-end: 1px solid $line-clr;
-            }
-        }
-    }
+			&:hover {
+				&::after {
+					height: 0;
+				}
+			}
+
+			&::after {
+				content: '';
+				position: absolute;
+				right: 0;
+
+				height: 16px;
+				border-inline-end: 1px solid $line-clr;
+			}
+		}
+	}
 }
