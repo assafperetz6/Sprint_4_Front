@@ -17,7 +17,7 @@ export const boardService = {
 	getTasks,
 	getTaskById,
 	saveTask,
-	removeTask
+	removeTask,
 }
 
 // Board //
