@@ -1,157 +1,267 @@
 /* Breakpoint mixins */
 
 @mixin for-mobile-layout {
-    @media (max-width: calc($mobile-breakpoint + 40px)) {
-        @content;
-    }
+	@media (max-width: calc($mobile-breakpoint + 40px)) {
+		@content;
+	}
 }
 
 @mixin for-narrow-layout {
-    @media (min-width: calc($mobile-breakpoint + 40px)) {
-        @content;
-    }
+	@media (min-width: calc($mobile-breakpoint + 40px)) {
+		@content;
+	}
 }
 
 @mixin for-normal-layout {
-    @media (min-width: calc($narrow-breakpoint + 40px)) {
-        @content;
-    }
+	@media (min-width: calc($narrow-breakpoint + 40px)) {
+		@content;
+	}
 }
 
 @mixin for-wide-layout {
-    @media (min-width: calc($normal-breakpoint + 40px)) {
-        @content;
-    }
+	@media (min-width: calc($normal-breakpoint + 40px)) {
+		@content;
+	}
 }
 
 /* Media  Mixins */
 @mixin aspect-ratio($width, $height) {
-    position: relative;
-    overflow: hidden;
-    &::before {
-      display: block;
-      content: "";
-      width: 100%;
-      padding-top: calc(($height / $width) * 100%);
-    }
-    > * {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-  
-    > img {
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-  
-  // Mixin for removing hover efects on iphone screen
-  @mixin hover-supported {    
-    @media not all and (pointer: coarse) {
-        &:hover {
-            @content;
-        }
-    }
-  }
+	position: relative;
+	overflow: hidden;
+	&::before {
+		display: block;
+		content: '';
+		width: 100%;
+		padding-top: calc(($height / $width) * 100%);
+	}
+	> * {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
 
-  @mixin boardGridTemplate {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 40px auto;
-  }
+	> img {
+		height: 100%;
+		object-fit: cover;
+	}
+}
 
-  @mixin btn {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+// Mixin for removing hover efects on iphone screen
+@mixin hover-supported {
+	@media not all and (pointer: coarse) {
+		&:hover {
+			@content;
+		}
+	}
+}
 
-    height: 32px;
-    width: 32px;
+@mixin boardGridTemplate {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-columns: 40px auto;
+}
 
-    border-radius: 4px;
+@mixin btn {
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-    > svg {
-        margin: 4px;
-    }
-  }
+	height: 32px;
+	width: 32px;
 
-  @mixin alt-btn{
-    display: flex;
-    justify-content: center;
-    gap: 2px;
-    align-items: center;
+	border-radius: 4px;
 
-    background-color: #00000000;
-    padding: 5px;
-    border-radius: 4px;
-    margin: 0 $spacing-small 0 0;
+	> svg {
+		margin: 4px;
+	}
+}
 
-    color: $txt-clr;
-    font-weight: 400;
+@mixin alt-btn {
+	display: flex;
+	justify-content: center;
+	gap: 2px;
+	align-items: center;
 
-    > svg{
-      color: $clr4;
-    }
+	background-color: #00000000;
+	padding: 5px;
+	border-radius: 4px;
+	margin: 0 $spacing-small 0 0;
 
-    &:hover{
-      background-color: $hovered-btns;
-    }
-  }
+	color: $txt-clr;
+	font-weight: 400;
 
-  @mixin context-menu {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 24px;
-      width: 24px;
-  
-      padding: 0;
-      border-radius: 4px;
-  
-      margin: 0;
-      background-color: $clr3;
-      transition: scale 0.2s;
-  
-      opacity: 0;
-  
-      &:hover {
-        background-color: $hovered-btns;
-      }
-  
-      &:active { 
-        scale: 0.9;
-      }
-  
-      svg {
-        height: 16px;
-        width: 16px;
-      }
-  
-    * > &:hover {
-      opacity: 1;
-    }
-  }
+	> svg {
+		color: $clr4;
+	}
 
-  @mixin get-started-btn {
-    background-color: $welcome-page-btn-clr;
-    padding: 12px 24px;
-    border-radius: 100vw;
+	&:hover {
+		background-color: $hovered-btns;
+	}
+}
 
-    color: $clr3;
-    transition: 200ms;
+@mixin context-menu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 24px;
+	width: 24px;
 
-    svg {
-        transition: transform 350ms ease-in-out;
-    }
+	padding: 0;
+	border-radius: 4px;
 
-    &:hover {
-        filter: brightness(0.90);
-        svg {
-            transform: translateX(6px) ;
-        }
-    }
-  }
+	margin: 0;
+	background-color: $clr3;
+	transition: scale 0.2s;
+
+	opacity: 0;
+
+	&:hover {
+		background-color: $hovered-btns;
+	}
+
+	&:active {
+		scale: 0.9;
+	}
+
+	svg {
+		height: 16px;
+		width: 16px;
+	}
+
+	* > &:hover {
+		opacity: 1;
+	}
+}
+
+@mixin get-started-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+
+	background-color: $welcome-page-btn-clr;
+	padding: 12px 24px;
+	border-radius: 100vw;
+
+	color: $clr3;
+	transition: 200ms;
+
+	svg {
+		transition: transform 350ms ease-in-out;
+	}
+
+	&:hover {
+		filter: brightness(0.9);
+
+		svg {
+			transform: translateX(6px);
+		}
+	}
+}
+
+@mixin color-picker-icon {
+	.color-picker-icon {
+		position: absolute;
+		left: $spacing-small;
+		cursor: pointer;
+		width: 14px;
+		height: 14px;
+		border-radius: 25%;
+	}
+}
+
+@mixin title-count {
+	.edit .title-count {
+		display: none;
+	}
+	.title-count {
+		opacity: 0;
+		font-size: rem(14px);
+		margin-inline-start: 10px;
+		white-space: nowrap;
+		color: $clr4;
+
+		transition: opacity 0.2s;
+	}
+
+	&:hover {
+		.title-count {
+			opacity: 1;
+		}
+	}
+}
+
+@mixin header-inline-edit {
+	.group-title-container {
+		position: sticky;
+		left: 86px;
+
+		display: flex;
+		align-items: center;
+		height: min-content;
+
+		background-color: $clr3;
+
+		h4 {
+			&:hover {
+				outline: 1px solid $input-hover-border-clr;
+				border-radius: 4px;
+				cursor: text;
+			}
+		}
+
+		input {
+			position: relative;
+			all: unset;
+			cursor: text;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			cursor: text;
+
+			&:focus {
+				background-color: #ffff;
+				outline: none;
+				border-radius: 4px;
+			}
+		}
+
+		&.edit {
+			width: 70vw;
+			border: 1px solid $clr7;
+			border-radius: 4px;
+			input {
+				padding-inline-start: 30px;
+			}
+
+			.title-count {
+				display: none;
+			}
+		}
+
+		@include color-picker-icon;
+		.color-picker {
+			display: flex;
+			flex-wrap: wrap;
+			width: rem(172px);
+			background-color: #ffff;
+			border: 1px $input-hover-border-clr solid;
+			border-radius: 4px;
+			padding: 5px;
+			justify-content: flex-start;
+
+			.color {
+				cursor: pointer;
+				height: rem(24px);
+				width: rem(24px);
+				border-radius: 4px;
+				margin: 4px;
+			}
+		}
+
+		@include title-count;
+	}
+}

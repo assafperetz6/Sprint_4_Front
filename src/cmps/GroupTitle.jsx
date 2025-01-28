@@ -6,7 +6,7 @@ import { HeaderInlineEdit } from './HeaderInlineEdit'
 import { ContextMenu } from './ContextMenu'
 import { showErrorMsg } from '../services/event-bus.service'
 
-export function GroupTitle({ group }) {
+export function GroupTitle({ group, dragHandleProps }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
 
 	const [activeMenuId, setActiveMenuId] = useState(null)
@@ -42,9 +42,14 @@ export function GroupTitle({ group }) {
 			showErrorMsg('cannot remove group')
 		}
 	}
+	function getTasksCount(tasksCount) {
+		if (!tasksCount) return 'No Items'
+		if (tasksCount === 1) return tasksCount + ' Item'
+		return tasksCount + ' Items'
+	}
 
 	return (
-		<div className="group-header flex align-center full">
+		<div className="group-header flex align-center full" {...dragHandleProps}>
 			<div className="context-btn-container">
 				<button className={`group-context-menu ${activeMenuId === group.id ? 'open' : ''}`} onClick={ev => toggleContextMenu(ev, group.id)} ref={buttonRef}>
 					{svgs.threeDots}
@@ -56,7 +61,7 @@ export function GroupTitle({ group }) {
 			<div className="toggle-group-preview flex align-center justify-center" style={{ color: group.style.color }}>
 				{svgs.arrowDown}
 			</div>
-			<HeaderInlineEdit entity={group} onSave={handleSave} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
+			<HeaderInlineEdit entity={group} onSave={handleSave} getTasksCount={getTasksCount} onStyleChange={handleStyleChange} style={group.style} className="group-title-container" />
 		</div>
 	)
 }

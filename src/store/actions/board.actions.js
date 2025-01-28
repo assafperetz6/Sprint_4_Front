@@ -1,6 +1,8 @@
 import { boardService } from '../../services/board/'
 import { store } from '../store'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD } from '../reducers/board.reducer'
+import { makeId } from '../../services/util.service'
+import { userService } from '../../services/user'
 
 // Board Actions //
 
@@ -38,6 +40,7 @@ export async function addBoard(board) {
 	try {
 		const savedBoard = await boardService.save(board)
 		store.dispatch(getCmdAddBoard(savedBoard))
+		store.dispatch({ type: SET_BOARD, board: savedBoard })
 		return savedBoard
 	} catch (err) {
 		console.log('error from actions--> Cannot add board', err)
@@ -49,6 +52,18 @@ export async function updateBoard(board) {
 	try {
 		const savedBoard = await boardService.save(board)
 		store.dispatch(getCmdUpdateBoard(savedBoard))
+		return savedBoard
+	} catch (err) {
+		console.log('error from actions--> Cannot save board', err)
+		throw err
+	}
+}
+
+export async function updateBoardOptimistic(board) {
+	try {
+		store.dispatch(getCmdUpdateBoard(board))
+		store.dispatch(getCmdSetBoard(board))
+		const savedBoard = await boardService.save(board)
 		return savedBoard
 	} catch (err) {
 		console.log('error from actions--> Cannot save board', err)
@@ -114,18 +129,21 @@ export async function removeTask(boardId, taskId) {
 		throw err
 	}
 }
-export async function addTask(boardId, groupId, task, tempTaskId) {
+export async function addTask(boardId, groupId, task, activity, tempTaskId) {
 	try {
-		const savedBoard = await boardService.saveTask(boardId, groupId, task, tempTaskId)
+		const activityToSave = await _addActivity(boardId, groupId, task, activity)
+		const savedBoard = await boardService.saveTask(boardId, groupId, task, tempTaskId, activityToSave)
+
 		store.dispatch(getCmdSetBoard(savedBoard))
 	} catch (err) {
 		console.log('error from actions--> cannot add task', err)
 		throw err
 	}
 }
-export async function updateTask(boardId, groupId, task) {
+export async function updateTask(boardId, groupId, task, activity) {
 	try {
-		const savedBoard = await boardService.saveTask(boardId, groupId, task)
+		const activityToSave = await _addActivity(boardId, groupId, task, activity)
+		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
 		store.dispatch(getCmdSetBoard(savedBoard))
 		return savedBoard
 	} catch (err) {
@@ -133,6 +151,24 @@ export async function updateTask(boardId, groupId, task) {
 		throw err
 	}
 }
+
+async function _addActivity(boardId, groupId, task, activity) {
+	if (!activity) return
+
+	const group = await boardService.getGroupById(boardId, groupId)
+	const activtyToSave = {
+		id: makeId(),
+		title: activity.txt,
+		createdAt: Date.now(),
+		byMember: await userService.getLoggedinUser(),
+		group: { id: group.id, title: group.title },
+		task: { id: task.id, title: task.title }
+	}
+
+	return activtyToSave
+}
+
+
 
 
 // TODO: add batch function for multiselect menu

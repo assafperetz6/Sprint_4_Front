@@ -138,7 +138,7 @@ export function TimelinePicker({ task, group, defaultWidth }) {
 	function getProgressStyle() {
 		if (!selectedRange.startDate || !selectedRange.endDate) return {}
 
-		const now = new Date().getTime()
+		const now = Date.parse(new Date().toDateString())
 		const startDate = new Date(selectedRange.startDate).getTime()
 		const endDate = new Date(selectedRange.endDate).getTime()
 

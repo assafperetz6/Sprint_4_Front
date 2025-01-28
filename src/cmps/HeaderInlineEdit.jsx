@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { usePopper } from 'react-popper'
 import { ColorPicker } from './ColorPicker'
 
-export function HeaderInlineEdit({ entity, onSave, onStyleChange, style, className = '' }) {
+export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange, style, className = '' }) {
 	const [isEditing, setIsEditing] = useState(false)
 	const [value, setValue] = useState(entity.title)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
@@ -86,7 +86,7 @@ export function HeaderInlineEdit({ entity, onSave, onStyleChange, style, classNa
 	}
 
 	function handleCancel() {
-		setValue(initialValue)
+		setValue(entity.value)
 		setIsEditing(false)
 		setIsColorPickerOpen(false)
 	}
@@ -123,6 +123,8 @@ export function HeaderInlineEdit({ entity, onSave, onStyleChange, style, classNa
 			) : (
 				<h4 className="title">{value}</h4>
 			)}
+
+			<div className="title-count flex align-center justify-center">{getTasksCount(entity.tasks.length)}</div>
 		</div>
 	)
 }

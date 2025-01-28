@@ -16,7 +16,7 @@
 	}
 
 	.task-context-menu {
-		@include context-menu
+		@include context-menu;
 	}
 
 	&:hover .task-context-menu {
@@ -27,13 +27,13 @@
 		position: sticky;
 		left: 0;
 
-
 		display: flex;
 		align-items: center;
 		height: calc($task-row-height);
 
 		border-inline-end: 1px solid $clr8;
 		border-block-end: 1px solid $clr8;
+		width: 400px;
 
 		background-color: $clr3;
 		z-index: 30;

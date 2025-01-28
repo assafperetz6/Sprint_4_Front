@@ -49,7 +49,8 @@ async function save(board) {
 			isStarred: board.isStarred,
 			cmpsOrder: board.cmpsOrder,
 			statusLabels: board.statusLabels,
-			priorityLabels: board.priorityLabels
+			priorityLabels: board.priorityLabels,
+			activities: board.activities
 		}
 		savedBoard = await storageService.put(STORAGE_KEY, boardToSave)
 	} else {
@@ -61,7 +62,8 @@ async function save(board) {
 			members: board.members,
 			cmpsOrder: board.cmpsOrder,
 			statusLabels: board.statusLabels,
-			priorityLabels: board.priorityLabels
+			priorityLabels: board.priorityLabels,
+			activities: board.activities
 		}
 		savedBoard = await storageService.post(STORAGE_KEY, boardToSave)
 	}
@@ -184,20 +186,20 @@ async function removeTask(boardId, taskId) {
 	}
 }
 
-async function saveTask(boardId, groupId, task, tempTaskId) {
-	const taskToSave = {
-		id: task.id,
-		title: task.title,
-		members: task.members,
-		priority: task.priority,
-		dueDate: task.dueDate,
-		timeline: task.timeline,
-		status: task.status
-	}
-	
-
+async function saveTask(boardId, groupId, task, activity, tempTaskId) {
 	try {
+		const taskToSave = {
+			id: task.id,
+			title: task.title,
+			members: task.members,
+			priority: task.priority,
+			dueDate: task.dueDate,
+			timeline: task.timeline,
+			status: task.status
+		}
+	
 		const board = await getById(boardId)
+
 		const groupIdx = board.groups.findIndex(group => group.id === groupId)
 		if (groupIdx === -1) throw new Error(`No group with id: ${groupId}`)
 
@@ -214,11 +216,26 @@ async function saveTask(boardId, groupId, task, tempTaskId) {
 				const appendAfterIdx = tasks.findIndex(task => task.id === tempTaskId)
 				
 				tasks.splice(appendAfterIdx + 1, 0, taskToSave)
-			} else tasks.push(taskToSave)
+			} else {
+				tasks.push(taskToSave)
+				activity.task.id = taskToSave.id
+			} 
 		}
+
+		board.activities.unshift(activity)
+
 		return save(board)
 	} catch (err) {
 		console.log('cannot save task', err)
 		throw err
 	}
 }
+
+// async function addActivity(boardId, groupId, task, txt) {
+// 	try {
+// 		const board = await getById(boardId)
+// 		const group = await getGroupById(groupId)
+
+// 		board.activities.unshift()
+// 	} catch (err) {}
+// }

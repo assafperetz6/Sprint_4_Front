@@ -10,32 +10,24 @@ import { TaskActionMenu } from '../cmps/TaskActionMenu.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
 
 export function BoardDetails() {
-	const board = useSelector((storeState) => storeState.boardModule.board)
+	const board = useSelector(storeState => storeState.boardModule.board)
 	const [isClosing, setIsClosing] = useState(false)
 	const { boardId } = useParams()
 	const navigate = useNavigate()
 
-	const [isScrolling, setIsScrolling] = useState(false)
-	const [currentGroup, setCurrentGroup] = useState(null)
+	const [isScrolledTop, setIsScrolledTop] = useState(true)
 	const boardDetailsRef = useRef(null)
 
 	const selectedTasks = useSelector(storeState => storeState.boardModule.selectedTasks)
-	
-	const handleScroll = (e) => {
-		if(!isScrolling && e.target.scrollTop > 0) setIsScrolling(true)
-		else if(isScrolling && e.target.scrollTop <= 76) setIsScrolling(false)
-		
+
+	const handleScroll = e => {
+		if (e.target.scrollTop === 0 && !isScrolledTop) setIsScrolledTop(true)
+		else if (e.target.scrollTop > 0 && isScrolledTop) setIsScrolledTop(false)
 	}
-	
+
 	useEffect(() => {
 		loadBoard(boardId)
 	}, [boardId])
-
-	useEffect(() => {
-		if (board?.groups?.length) {
-            setCurrentGroup(board.groups[0])
-        }
-	}, [board])
 
 	function closeTaskDetails() {
 		setIsClosing(true)
@@ -55,22 +47,10 @@ export function BoardDetails() {
 
 	if (!board) return null
 	return (
-		<section
-			className="board-details"
-			ref={boardDetailsRef}
-			onScroll={handleScroll}
-		>
+		<section className="board-details" ref={boardDetailsRef} onScroll={handleScroll}>
 			<BoardHeader board={board} />
 
-			{!!board.groups.length && (
-				<GroupList
-					groups={board.groups}
-					isScrolling={isScrolling}
-					currentGroup={currentGroup}
-					setCurrentGroup={setCurrentGroup}
-					scrollContainer={boardDetailsRef.current}
-				/>
-			)}
+			{!!board.groups.length && <GroupList groups={board.groups} isScrolledTop={isScrolledTop} scrollContainer={boardDetailsRef.current} />}
 			{selectedTasks.length > 0 && <TaskActionMenu tasks={selectedTasks} />}
 			<Outlet context={{ isClosing, closeTaskDetails }} />
 		</section>

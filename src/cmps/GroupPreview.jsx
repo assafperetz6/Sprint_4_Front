@@ -1,14 +1,19 @@
 import { TaskList } from './TaskList'
 import { GroupHeader } from './GroupHeader.jsx'
-import { GroupSummary } from './GroupSUmmary.jsx'
+import { GroupSummary } from './GroupSummary.jsx'
+import { Draggable } from '@hello-pangea/dnd'
 
-export function GroupPreview({ group, cmpsOrder }) {
-	
+export function GroupPreview({ group, cmpsOrder, idx, showHeader }) {
 	return (
-		<section className="group-preview item-col full">
-			<GroupHeader group={group} />
-			<TaskList group={group} />
-			<GroupSummary  group={group} cmpsOrder={cmpsOrder} />
-		</section>
+		<Draggable key={group.id} draggableId={group.id} index={idx}>
+			{provided => (
+				<section className="group-preview item-col full" {...provided.draggableProps} ref={provided.innerRef} {...provided.dragHandleProps}>
+					{showHeader && <GroupHeader group={group} />}
+					<TaskList group={group} />
+					<GroupSummary group={group} cmpsOrder={cmpsOrder} />
+					{provided.placeholder}
+				</section>
+			)}
+		</Draggable>
 	)
 }
