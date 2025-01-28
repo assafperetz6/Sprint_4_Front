@@ -14,6 +14,8 @@
 	border-radius: 4px 0 0 4px;
 
 	.sticky-container {
+        position: sticky;
+        left: 0;
 		grid-row: 1 / -1;
         display: flex;
 
@@ -51,19 +53,21 @@
 
             z-index: 60;
 
-            > * {
+            > *:not(.context-btn-container) {
                 height: 100%;
                 border-block: $border;
 
                 z-index: 60;
             }
         }
+
         .context-btn-container {
             position: absolute;
             // bottom: 12px;
             left: -40px;
 
-            border: 0;
+            width: 38px;
+            border-block: 0;
 
             z-index: 70;
 
@@ -74,7 +78,7 @@
 
         .toggle-group-preview {
             position: sticky;
-            left: 46px;
+            left: 48px;
             align-items: baseline;
 
             padding-inline: 6px 6px;
@@ -101,15 +105,16 @@
             padding-inline-start: 6px;
             border-inline-end: $border;
             background-color: $clr3;
+
+            @include title-count;
+    
+            .title-count {
+                margin-inline-start: 0;
+                justify-content: start;
+                opacity: 1;
+            }
         }
 
-        @include title-count;
-
-        .title-count {
-            margin: 0;
-            justify-content: start;
-            opacity: 1;
-        }
     
     }
 	// > *:not(.sticky-container) {
