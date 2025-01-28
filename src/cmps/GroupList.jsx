@@ -33,6 +33,7 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 
 	// 	setTitleColWidth(longestTaskTitle())
 	// }, [board])
+	window.board = board
 
 	useEffect(() => {
 		if (!scrollContainer) return
@@ -47,8 +48,13 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 			entries.forEach(entry => {
 				const idx = parseInt(entry.target.dataset.groupIndex)
 				const group = groups[idx]
-
-				if (entry.isIntersecting) setCurrentGroup(group)
+				
+				if (entry.isIntersecting) {
+					if (group.isCollapsed) {
+						const nextNonCollapsed = groups.slice(idx + 1).find(g => !g.isCollapsed)
+						setCurrentGroup(group || null)	
+					} else setCurrentGroup(group)
+				}
 			})
 		}, options)
 
@@ -65,7 +71,7 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 				if (element) observer.unobserve(element)
 			})
 		}
-	}, [groups, scrollContainer])
+	}, [groups, scrollContainer, currentGroup?.isCollapsed])
 
 	function onAddGroup() {
 		const groupToAdd = boardService.getNewGroup()
@@ -116,7 +122,9 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 	}
 	
 	// console.log(board.groups)
-	
+	console.log('Current group:', currentGroup.title, currentGroup?.isCollapsed)
+	// console.log('Groups:', groups.map(g => ({ id: g.id, isCollapsed: g.isCollapsed })))
+
 	return (
 		<DragDropContext onDragEnd={handleDrag}>
 			<Droppable droppableId={board._id} type="group">

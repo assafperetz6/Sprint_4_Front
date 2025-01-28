@@ -19,6 +19,13 @@
 
 	@include title-count;
 
+	&:has(.collapsed) {
+		padding-block-end: 28px;
+		margin-block-end: 0;
+		background-color: $clr3;
+		z-index: 51;
+	}
+
 	.task-preview > * {
 		display: flex;
 		align-items: center;
