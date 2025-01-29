@@ -11,6 +11,7 @@ import { GroupHeader } from './GroupHeader.jsx'
 import { GroupPreview } from './GroupPreview.jsx'
 
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
+import { CollapsedGroupPreview } from './CollapsedGroupPreview.jsx'
 
 export function GroupList({ isScrolledTop, scrollContainer }) {
   const board = useSelector((storeState) => storeState.boardModule.board)
@@ -71,12 +72,26 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
     }
   }
 
-  async function handleDrag(result) {
-    if (!result.destination) return
+  function handleStartDragging(result) {
     if (result.type === 'group') {
+      setIsAllCollapsed(true)
+      setIsDragging(true)
+    }
+  }
+
+  async function handleDrag(result) {
+    if (!result.destination) {
       setIsAllCollapsed(false)
-      return await handleGroupDrag(result)
-    } else handleTaskDrag(result)
+      setIsDragging(false)
+      return
+    }
+
+    if (result.type === 'group') {
+      await handleGroupDrag(result)
+      setIsAllCollapsed(false)
+    } else {
+      handleTaskDrag(result)
+    }
     setIsDragging(false)
   }
 
@@ -110,11 +125,6 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
       showErrorMsg('Failed to move task')
       console.error('Task drag error:', err)
     }
-  }
-
-  function handleStartDragging(result) {
-    if (result.type === 'group') setIsAllCollapsed(true)
-    setIsDragging(true)
   }
 
   // console.log(isDragging)

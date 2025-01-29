@@ -5,7 +5,17 @@ import { Draggable } from '@hello-pangea/dnd'
 import { CollapsedGroupPreview } from './CollapsedGroupPreview.jsx'
 
 export function GroupPreview({ group, cmpsOrder, idx, showHeader, isAllCollapsed }) {
-  if (isAllCollapsed || group.isCollapsed) return <CollapsedGroupPreview group={group} cmpsOrder={cmpsOrder} idx={idx} />
+  if (isAllCollapsed || group.isCollapsed) {
+    return (
+      <Draggable key={group.id} draggableId={group.id} index={idx}>
+        {(provided) => (
+          <section className="collapsed-group-preview full" {...provided.draggableProps} ref={provided.innerRef} {...provided.dragHandleProps}>
+            <CollapsedGroupPreview group={group} cmpsOrder={cmpsOrder} idx={idx} />
+          </section>
+        )}
+      </Draggable>
+    )
+  }
   return (
     <Draggable key={group.id} draggableId={group.id} index={idx}>
       {(provided) => (
