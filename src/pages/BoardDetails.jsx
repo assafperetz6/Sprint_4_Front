@@ -49,7 +49,7 @@ export function BoardDetails() {
 
 			{!!board.groups.length && (
 				<GroupList
-					groups={board.groups}
+					// groups={board.groups}
 					isScrolledTop={isScrolledTop}
 					scrollContainer={boardDetailsRef.current}
 				/>

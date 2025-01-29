@@ -103,6 +103,7 @@ export async function updateGroup(boardId, group) {
 	try {
 		const savedBoard = await boardService.saveGroup(boardId, group)
 		store.dispatch(getCmdSetBoard(savedBoard))
+		return savedBoard
 	} catch (err) {
 		console.log('error from actions--> cannot save group', err)
 		throw err
