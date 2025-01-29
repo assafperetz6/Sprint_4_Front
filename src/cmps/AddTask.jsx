@@ -16,8 +16,9 @@ export function AddTask({ group }) {
     if (ev) ev.preventDefault()
 
     try {
+      const activity = { type: 'Created', newState: taskToAdd.title }
       setTaskToAdd(boardService.getEmptyTask())
-      addTask(board._id, group.id, taskToAdd, { type: 'Created' })
+      addTask(board._id, group.id, taskToAdd, activity)
     } catch (err) {
       showErrorMsg('cannot add task')
       console.log(err)

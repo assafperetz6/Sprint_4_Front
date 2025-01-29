@@ -217,7 +217,7 @@ async function saveTask(boardId, groupId, task, activity) {
     } else {
       taskToSave.id = makeId()
       tasks.push(taskToSave)
-      activity.task.id = taskToSave.id
+      activity.entityId = taskToSave.id
     }
 
     board.activities.unshift(activity)

@@ -133,7 +133,6 @@ export async function removeTask(boardId, taskId) {
 export async function addTask(boardId, groupId, task, activity) {
   try {
     const activityToSave = await _addActivity(boardId, groupId, task, activity)
-    console.log(activityToSave)
 
     const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
 

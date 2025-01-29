@@ -110,6 +110,7 @@ function ActivityLog({ board, taskId }) {
   function formatDate(dateStr) {
     if (!dateStr) return '-'
     const date = new Date(dateStr)
+
     return date.toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'short'
@@ -121,7 +122,9 @@ function ActivityLog({ board, taskId }) {
       {activities.map((activity) => (
         <div key={activity.id} className="activity-item flex justify-between align-cneter">
           <div className="activity-header flex align-center">
-            <span className="time">{formatTime(activity.createdAt)}</span>
+            <span className="time">
+              {svgs.clock} {formatTime(activity.createdAt)}
+            </span>
             <img src={activity.byMember.imgUrl} className="user-avatar" />
             <span className="task-title">{activity.task.title}</span>
             <span className="activity-field">{activity.field}</span>
@@ -132,6 +135,22 @@ function ActivityLog({ board, taskId }) {
           </div>
 
           <div className="activity-content">
+            {activity.type === 'Created' && (
+              <div className="created-change">
+                <span>
+                  Group: <span style={{ color: activity.group.color }}>{activity.group.title}</span>
+                </span>
+              </div>
+            )}
+
+            {activity.type === 'Name' && (
+              <div className="name-change">
+                <span className="old-value">{activity.oldState}</span>
+                <span className="arrow">{svgs.arrowRight}</span>
+                <span className="new-value">{activity.newState}</span>
+              </div>
+            )}
+
             {activity.type === 'Status' && (
               <div className="status-change">
                 <span className="old-value" style={{ backgroundColor: getLabelColor('Status', activity.oldState) }}>
