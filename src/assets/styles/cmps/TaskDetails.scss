@@ -108,4 +108,20 @@
 			}
 		}
 	}
+
+	.activity-item {
+		display: grid;
+		grid-template-columns: 200px 1fr 1fr;
+		font-size: rem(14px);
+		text-wrap: nowrap;
+		overflow-x: hidden;
+
+		.activity-task-title {
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+		
+	
+	}
 }

@@ -120,21 +120,21 @@ function ActivityLog({ board, taskId }) {
   return (
     <section className="activity-log">
       {activities.map((activity) => (
-        <div key={activity.id} className="activity-item flex justify-between align-cneter">
+        <div key={activity.id} className="activity-item">
           <div className="activity-header flex align-center">
-            <span className="time">
+            <span className="time flex align-center">
               {svgs.clock} {formatTime(activity.createdAt)}
             </span>
-            <img src={activity.byMember.imgUrl} className="user-avatar" />
-            <span className="task-title">{activity.task.title}</span>
+
+            <img src={activity.byMember.imgUrl} className="user-avatar" style={{ width: '30px', height: '30px' }} />
+
+            <span className="activity-task-title">{activity.task.title}</span>
             <span className="activity-field">{activity.field}</span>
           </div>
 
-          <div className="activity-type">
-            <span className="type-indicator">{activity.type}</span>
-          </div>
+          <div className="type-indicator flex align-center">{activity.type}</div>
 
-          <div className="activity-content">
+          <div className="activity-content flex align-center">
             {activity.type === 'Created' && (
               <div className="created-change">
                 <span>
@@ -152,7 +152,7 @@ function ActivityLog({ board, taskId }) {
             )}
 
             {activity.type === 'Status' && (
-              <div className="status-change">
+              <div className="status-change flex align-center">
                 <span className="old-value" style={{ backgroundColor: getLabelColor('Status', activity.oldState) }}>
                   {getLabelTitle('Status', activity.oldState)}
                 </span>
