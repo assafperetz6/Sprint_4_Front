@@ -5,18 +5,17 @@ import { systemReducer } from './reducers/system.reducer'
 import { boardReducer } from './reducers/board.reducer'
 
 const rootReducer = combineReducers({
-    boardModule: boardReducer,
-    userModule: userReducer,
-    systemModule: systemReducer,
+	boardModule: boardReducer,
+	userModule: userReducer,
+	systemModule: systemReducer
 })
 
-
-const middleware = (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : undefined
+const middleware = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : undefined
 export const store = createStore(rootReducer, middleware)
 
 // For debug:
 // store.subscribe(() => {
 //     console.log('**** Store state changed: ****')
-//     console.log('storeState:\n', store.getState())
+// console.log('storeState:\n', store.getState())
 //     console.log('*******************************')
 // })

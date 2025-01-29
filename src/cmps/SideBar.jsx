@@ -29,7 +29,8 @@ export function SideBar() {
 	function getUserFirstName() {
 		if (!loggedInUser) return 'Guest'
 
-		let firstName = loggedInUser.fullname.split(' ')[0]
+		let fullname = loggedInUser.fullname
+		let firstName = fullname.includes(' ') ? loggedInUser.fullname.split(' ')[0] : fullname
 
 		firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
 		return firstName ? firstName : 'Guest'

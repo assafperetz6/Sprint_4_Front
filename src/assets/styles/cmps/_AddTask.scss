@@ -1,7 +1,7 @@
 .add-task {
 	position: sticky;
-	left: 0;
-	
+	left: 40px;
+
 	display: flex;
 	height: $task-row-height;
 
@@ -24,11 +24,23 @@
 	.sticky-container {
 		display: flex;
 		z-index: 2;
+
+		width: 100%;
+
+		.white-space {
+			position: sticky;
+			left: 0;
+			background-color: white;
+			width: 40px;
+			height: 36px;
+		}
 	}
 
 	.colored-border {
+		position: sticky;
+		left: 40px;
 		box-sizing: content-box;
-		border-inline-start: 40px solid $clr3;
+		// border-inline-start: 40px solid $clr3;
 		border-radius: 0 0 0 4px;
 	}
 
@@ -37,12 +49,13 @@
 		border-radius: 4px;
 	}
 
-	border-bottom-left-radius: 4px;
-
 	form {
 		display: flex;
 		align-items: center;
 		padding-inline-start: 10px;
+
+		position: sticky;
+		left: 80px;
 
 		input {
 			background: transparent;

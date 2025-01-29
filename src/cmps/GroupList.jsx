@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-	addGroup,
-	updateBoard,
-	updateBoardOptimistic,
-} from '../store/actions/board.actions.js'
+import { addGroup, updateBoard, updateBoardOptimistic } from '../store/actions/board.actions.js'
 
 import { boardService } from '../services/board/index.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
@@ -15,18 +11,21 @@ import { GroupHeader } from './GroupHeader.jsx'
 import { GroupPreview } from './GroupPreview.jsx'
 
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
-import { CollapsedGroupPreview } from './CollapsedGroupPreview.jsx'
 
 export function GroupList({ isScrolledTop, scrollContainer }) {
-	const board = useSelector((storeState) => storeState.boardModule.board)
-	// const groups = board.groups
+	const board = useSelector(storeState => storeState.boardModule.board)
+	const groups = board.groups
+	const [isDragging, setIsDragging] = useState(false)
 	const dispatch = useDispatch()
 
-	const [currentGroup, setCurrentGroup] = useState(board.groups[0])
+	const [currentGroup, setCurrentGroup] = useState(groups[0])
+	const [isAllCollapsed, setIsAllCollapsed] = useState(false)
 	const [titleColWidth, setTitleColWidth] = useState(null)
 	const groupRefs = useRef([])
 
-	// window.board = board
+	useEffect(() => {
+		setCurrentGroup(groups[0])
+	}, [groups])
 
 	useEffect(() => {
 		if (!scrollContainer) return
@@ -78,8 +77,9 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 
 	async function handleDrag(result) {
 		if (!result.destination) return
-		if (result.type === 'group') await handleGroupDrag(result)
-		else await handleTaskDrag(result)
+		if (result.type === 'group') return await handleGroupDrag(result)
+		else handleTaskDrag(result)
+		setIsDragging(false)
 	}
 
 	async function handleGroupDrag(result) {
@@ -90,6 +90,7 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 
 		try {
 			updateBoardOptimistic(newBoard)
+			setIsAllCollapsed(false)
 		} catch (err) {
 			showErrorMsg('cannot save board')
 		}
@@ -126,64 +127,36 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 		}
 	}
 
+	function handleStartDragging(result) {
+		if (result.type === 'group') setIsAllCollapsed(true)
+		setIsDragging(true)
+	}
+
+	// console.log(isDragging)
+
 	return (
-		<DragDropContext onDragEnd={handleDrag}>
+		<DragDropContext onDragEnd={handleDrag} onBeforeDragStart={handleStartDragging}>
 			<Droppable droppableId={board._id} type="group">
-				{(provided) => (
-					<section
-						className="group-list"
-						{...provided.droppableProps}
-						ref={provided.innerRef}
-					>
-						<div
-							className={`sticky-header-container full`}
-							style={{
+				{provided => (
+					<section className="group-list" {...provided.droppableProps} ref={provided.innerRef}>
+						<div className={`sticky-header-container full`}
+						style={{
 								visibility:
 									currentGroup && !currentGroup.isCollapsed
 										? 'visible'
 										: 'hidden',
-							}}
-						>
-							{<GroupHeader group={currentGroup} shadow={!isScrolledTop} />}
-						</div>
+							}}>{!isAllCollapsed && <GroupHeader group={currentGroup} shadow={!isScrolledTop} />}</div>
 
-						{board.groups.map((group, idx) => (
-							<div
-								key={group.id}
-								ref={(el) => (groupRefs.current[idx] = el)}
-								className="full"
-								style={{
-									marginBlockStart:
-										idx === 0 && group.isCollapsed ? '-72px' : 'unset',
-								}}
-							>
-								<Draggable key={group.id} draggableId={group.id} index={idx}>
-									{(provided) => (
-										<section
-											className="group-preview item-col full"
-											{...provided.dragHandleProps}
-											{...provided.draggableProps}
-											ref={provided.innerRef}
-										>
-											{group.isCollapsed ? (
-												<CollapsedGroupPreview
-													group={group}
-													cmpsOrder={board.cmpsOrder}
-													provided={provided}
-												/>
-											) : (
-												<GroupPreview
-													group={group}
-													cmpsOrder={board.cmpsOrder}
-													provided={provided}
-													showHeader={idx >= 1}
-												/>
-											)}
-										</section>
-									)}
-								</Draggable>
+						{groups.map((group, idx) => (
+							<div key={group.id} ref={el => (groupRefs.current[idx] = el)} className="full"
+							style={{
+								marginBlockStart:
+									idx === 0 && group.isCollapsed ? '-72px' : 'unset',
+							}}>
+								<GroupPreview group={group} cmpsOrder={board.cmpsOrder} idx={idx} showHeader={idx >= 1} isAllCollapsed={isAllCollapsed} />
 							</div>
 						))}
+
 						{provided.placeholder}
 						<div className="add-group-btn" onClick={onAddGroup}>
 							<span className="icon flex align-center">{svgs.plus}</span>
@@ -196,15 +169,16 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 	)
 }
 
-// useEffect(() => {
-// 	const longestTaskTitle = () => {
-// 		const text = board.groups.map(group => group.tasks.map(task => task.title).toSorted((t1, t2) => t2.length - t1.length)[0]).toSorted((title1, title2) => title2.length - title1.length)[0]
 
-// 		const canvas = document.createElement('canvas')
-// 		const context = canvas.getContext('2d')
-// 		context.font = '14px Figtree'
-// 		return context.measureText(text).width
-// 	}
+  // useEffect(() => {
+  // 	const longestTaskTitle = () => {
+  // 		const text = board.groups.map(group => group.tasks.map(task => task.title).toSorted((t1, t2) => t2.length - t1.length)[0]).toSorted((title1, title2) => title2.length - title1.length)[0]
 
-// 	setTitleColWidth(longestTaskTitle())
-// }, [board])
+  // 		const canvas = document.createElement('canvas')
+  // 		const context = canvas.getContext('2d')
+  // 		context.font = '14px Figtree'
+  // 		return context.measureText(text).width
+  // 	}
+
+  // 	setTitleColWidth(longestTaskTitle())
+  // }, [board])
