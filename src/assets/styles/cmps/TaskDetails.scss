@@ -1,127 +1,129 @@
 .task-details {
-	display: flex;
-	flex-direction: column;
-	align-items: start;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 
-	position: fixed;
-	top: 48px;
-	right: 0;
+  position: fixed;
+  top: 48px;
+  right: 0;
 
-	width: 500px;
-	height: 100%;
-	background-color: $clr3;
-	padding: 20px;
+  width: 500px;
+  height: 100%;
+  background-color: $clr3;
+  padding: 20px;
 
-	box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 
-	transform: translateX(100%);
-	transition: transform 75ms linear;
-	z-index: 100;
+  transform: translateX(100%);
+  transition: transform 75ms linear;
+  z-index: 100;
 
-	&.open {
-		transform: translateX(0);
-	}
+  &.open {
+    transform: translateX(0);
+  }
 
-	&.closing {
-		transform: translateX(100%);
-	}
+  &.closing {
+    transform: translateX(100%);
+  }
 
-	&.details-top-bar {
-		position: relative;
+  &.details-top-bar {
+    position: relative;
 
-		height: max-content;
-	}
+    height: max-content;
+  }
 
-	& .details-top-bar::after {
-		content: '';
-		position: absolute;
-		right: 0;
+  & .details-top-bar::after {
+    content: '';
+    position: absolute;
+    right: 0;
 
-		width: 500px;
-		height: 0.5px;
-		border-block-end: 1px solid $line-clr;
-	}
+    width: 500px;
+    height: 0.5px;
+    border-block-end: 1px solid $line-clr;
+  }
 
-	& .details-bottom-bar {
-		width: 100%;
-	}
+  & .details-bottom-bar {
+    width: 100%;
+  }
 
-	& .exit-btn {
-		display: flex;
-		align-items: start;
+  & .exit-btn {
+    display: flex;
+    align-items: start;
 
-		background-color: rgba(0, 0, 0, 0);
-		border-radius: 4px;
-		padding: 0;
-		margin: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 4px;
+    padding: 0;
+    margin: 0;
 
-		color: $darkgrey;
+    color: $darkgrey;
 
-		&:hover {
-			background-color: $hovered-btns;
-		}
-	}
+    &:hover {
+      background-color: $hovered-btns;
+    }
+  }
 
-	& h2 {
-		padding-inline: 5px;
-		margin-block: $spacing-xs $spacing-small;
+  & h2 {
+    padding-inline: 5px;
+    margin-block: $spacing-xs $spacing-small;
 
-		font-size: 1.25em;
-		line-height: 30px;
-		font-weight: 500;
-		font-family: $title-font-family;
-	}
+    font-size: 1.25em;
+    line-height: 30px;
+    font-weight: 500;
+    font-family: $title-font-family;
+  }
 
-	& .task-details-actions {
-		display: flex;
+  & .task-details-actions {
+    display: flex;
 
-		& button {
-			@include alt-btn;
-			position: relative;
+    & button {
+      @include alt-btn;
+      position: relative;
 
-			padding: 8px 14px;
-			margin: 0;
+      padding: 8px 14px;
+      margin: 0;
 
-			&.active::before {
-				content: '';
-				position: absolute;
-				bottom: 0 - 1px;
+      &.active::before {
+        content: '';
+        position: absolute;
+        bottom: 0 - 1px;
 
-				width: 100%;
-				height: 2.5px;
-				background-color: $blue3;
-			}
+        width: 100%;
+        height: 2.5px;
+        background-color: $blue3;
+      }
 
-			&:hover {
-				&::after {
-					height: 0;
-				}
-			}
+      &:hover {
+        &::after {
+          height: 0;
+        }
+      }
 
-			&::after {
-				content: '';
-				position: absolute;
-				right: 0;
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
 
-				height: 16px;
-				border-inline-end: 1px solid $line-clr;
-			}
-		}
-	}
+        height: 16px;
+        border-inline-end: 1px solid $line-clr;
+      }
+    }
+  }
 
-	.activity-item {
-		display: grid;
-		grid-template-columns: 200px 1fr 1fr;
-		font-size: rem(14px);
-		text-wrap: nowrap;
-		overflow-x: hidden;
+  .activity-item {
+    padding-block: $spacing-small;
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    font-size: rem(14px);
+    text-wrap: nowrap;
+    overflow-x: hidden;
 
-		.activity-task-title {
-			text-overflow: ellipsis;
-			overflow: hidden;
-			white-space: nowrap;
-		}
-		
-	
-	}
+    .activity-header {
+      gap: $spacing-small;
+      .activity-task-title {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
 }

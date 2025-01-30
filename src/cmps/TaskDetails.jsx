@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext, useParams } from 'react-router'
 import { boardService } from '../services/board'
 import { svgs } from '../services/svg.service'
 import { useSelector } from 'react-redux'
+import { Truncate } from './Truncate.jsx'
 
 export function TaskDetails() {
   const board = useSelector((state) => state.boardModule.board)
@@ -126,8 +127,11 @@ function ActivityLog({ board, taskId }) {
               {svgs.clock} {formatTime(activity.createdAt)}
             </span>
 
-            <img src={activity.byMember.imgUrl} className="user-avatar" style={{ width: '30px', height: '30px' }} />
-
+            <div
+              className="circle flex align-center justify-center"
+              style={{ borderRadius: '50%', height: '30px', minWidth: '30px', border: '1px solid ' }}>
+              <img src={activity.byMember.imgUrl} className="user-avatar" style={{ height: '100%' }} />
+            </div>
             <span className="activity-task-title">{activity.task.title}</span>
             <span className="activity-field">{activity.field}</span>
           </div>
@@ -144,10 +148,14 @@ function ActivityLog({ board, taskId }) {
             )}
 
             {activity.type === 'Name' && (
-              <div className="name-change">
-                <span className="old-value">{activity.oldState}</span>
+              <div className="name-change flex align-center">
+                <span className="old-value">
+                  <Truncate>{activity.oldState}</Truncate>
+                </span>
                 <span className="arrow">{svgs.arrowRight}</span>
-                <span className="new-value">{activity.newState}</span>
+                <span className="new-value">
+                  <Truncate>{activity.newState}</Truncate>
+                </span>
               </div>
             )}
 
