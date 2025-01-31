@@ -5,7 +5,14 @@ export const boardService = {
     getById,
     save,
     remove,
-    // addBoardMsg
+    getGroups,
+	getGroupById,
+	removeGroup,
+	saveGroup,
+	getTasks,
+	getTaskById,
+	saveTask,
+	removeTask
 }
 
 async function query(filterBy = { txt: '', price: 0 }) {
@@ -19,6 +26,7 @@ function getById(boardId) {
 async function remove(boardId) {
     return httpService.delete(`board/${boardId}`)
 }
+
 async function save(board) {    
     var savedBoard
     if (board._id) {
@@ -29,7 +37,46 @@ async function save(board) {
     return savedBoard
 }
 
-// async function addBoardMsg(boardId, txt) {
-//     const savedMsg = await httpService.post(`board/${boardId}/msg`, {txt})
-//     return savedMsg
-// }
+async function getGroups(boardId) {
+    return httpService.get(`board/${boardId}/group`)
+}
+
+async function getGroupById(boardId, groupId) {
+    return httpService.get(`board/${boardId}/group/${groupId}`)
+}
+
+async function removeGroup(boardId, groupId) {
+    return httpService.delete(`board/${boardId}/group/${groupId}`)
+}
+
+async function saveGroup(boardId, group) {    
+    var savedGroup
+    if (group.id) {
+        savedGroup = await httpService.put(`board/${boardId}/group/${group.id}`, group)
+    } else {
+        savedGroup = await httpService.post(`board/${boardId}/group`, group)
+    }
+    return savedGroup
+}
+
+async function getTasks(boardId, groupId) {
+    return httpService.get(`board/${boardId}/group/${groupId}/task`)
+}
+
+async function getTaskById(boardId, groupId, taskId) {
+    return httpService.get(`board/${boardId}/group/${groupId}/task/${taskId}`)
+}
+
+async function removeTask(boardId, groupId, taskId) {
+    return httpService.delete(`board/${boardId}/group/${groupId}/task/${taskId}`)
+}
+
+async function saveTask(boardId, groupId, task) {    
+    var savedTask
+    if (task.id) {
+        savedTask = await httpService.put(`board/${boardId}/group/${groupId}/task/${task.id}`, task)
+    } else {
+        savedTask = await httpService.post(`board/${boardId}/group/${groupId}/task`, task)
+    }
+    return savedTask
+}
