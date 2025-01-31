@@ -19,6 +19,7 @@ export const boardService = {
 	saveTask,
 	removeTask,
 	removeTasks,
+	duplicateTasks,
 }
 
 // Board //
@@ -210,7 +211,7 @@ async function removeTask(boardId, taskId, groupId) {
 	}
 }
 
-async function saveTask(boardId, groupId, task, activity, tempTaskId) {
+async function saveTask(boardId, groupId, task, activity, isDuplicate = false) {
 	try {
 		const taskToSave = {
 			id: task.id,
@@ -230,23 +231,21 @@ async function saveTask(boardId, groupId, task, activity, tempTaskId) {
 		const { tasks } = board.groups[groupIdx]
 
  		if (task.id) {
-			taskToSave.id = task.id
 			const taskIdx = tasks.findIndex(task => task.id === taskToSave.id)
 			if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
-			tasks.splice(taskIdx, 1, taskToSave)
+			
+			if(isDuplicate) {
+				taskToSave.id = makeId()
+				taskToSave.title += ' (copy)'
+				tasks.splice(taskIdx, 0, taskToSave)
+			} else tasks.splice(taskIdx, 1, taskToSave)
 		} else {
 			taskToSave.id = makeId()
-			if (tempTaskId) {
-				const appendAfterIdx = tasks.findIndex(task => task.id === tempTaskId)
-				
-				tasks.splice(appendAfterIdx + 1, 0, taskToSave)
-			} else {
-				tasks.push(taskToSave)
-				activity.task.id = taskToSave.id
-			} 
+			tasks.push(taskToSave)
+			activity.task.id = taskToSave.id
 		}
 
-		board.activities.unshift(activity)
+		if (activity) board.activities.unshift(activity)
 
 		return save(board)
 	} catch (err) {
@@ -258,9 +257,20 @@ async function saveTask(boardId, groupId, task, activity, tempTaskId) {
 async function removeTasks(boardId, tasks) {
 	for (const task of tasks) {
 		try {
-		await removeTask(boardId, task.id, task.groupId)
+			await removeTask(boardId, task.id, task.groupId)			
 		} catch (err) {
 			throw new Error('problem with deleting tasks', err)
+		}
+	}
+	return getById(boardId)
+}
+
+async function duplicateTasks(boardId, tasks) {
+	for (const task of tasks) {
+		try {
+			await saveTask(boardId, task.groupId, task, null, true)
+		} catch (err) {
+			throw new Error('problem with duplicating tasks', err)
 		}
 	}
 	return getById(boardId)

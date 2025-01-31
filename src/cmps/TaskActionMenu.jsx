@@ -2,10 +2,8 @@ import { useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import { svgs } from '../services/svg.service'
 import {
-	addTask,
-	removeTask,
+	duplicateTasks,
 	removeTasks,
-	updateTask,
 } from '../store/actions/board.actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_SELECTED_TASKS } from '../store/reducers/board.reducer'
@@ -27,23 +25,19 @@ export function TaskActionMenu({ tasks }) {
 		try {
 			removeTasks(board._id, tasks)
 		} catch (err) {
-			console.log('Failed to remove task', err)
+			console.log('Failed to remove tasks', err)
 		}
 
 		onCloseMenu()
 	}
 
 	async function onDuplicate() {
-
-		for (const task of tasks) {
-			const groupId = board.groups.find((group) => {
-				return group.tasks.find((t) => t.id === task.id)
-			}).id
-
-            const copiedTask = { ...task, id: null, title: task.title + ' (copy)'}
-
-			await addTask(board._id, groupId, copiedTask, task.id)
+		try {
+			duplicateTasks(board._id, tasks)
+		} catch (err) {
+			console.log('Failed to duplicate tasks', err)
 		}
+
 		onCloseMenu()
 	}
 
