@@ -22,8 +22,9 @@ function getColumnConfig(cmp) {
 	}
 }
 
-export function TaskListHeader({ groupColor, shadow }) {
+export function TaskListHeader({ group, shadow }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
+	const groupColor = group.style.color
 
 	async function handleDrag(result) {
 		if (!result.destination) return
@@ -44,7 +45,7 @@ export function TaskListHeader({ groupColor, shadow }) {
 			<ul className="task-list-header task-row clean-list full">
 				<li className="sticky-container flex">
 					<div className="colored-border" style={{ backgroundColor: hexToRgba(groupColor, 1) }} />
-					<Checkbox />
+					<Checkbox groupId={group.id}/>
 					<div className={`task-title-header ${shadow ? 'shadow' : ''}`}>Task</div>
 				</li>
 

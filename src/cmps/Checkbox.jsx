@@ -3,10 +3,12 @@ import { svgs } from '../services/svg.service.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_SELECTED_TASKS } from '../store/reducers/board.reducer.js'
 
-export function Checkbox({ task, disable = false }) {
+export function Checkbox({ task, groupId, disable = false }) {
 	const selectedTasks = useSelector(storeState => storeState.boardModule.selectedTasks)
 	const dispatch = useDispatch()
     const [isChecked, setIsChecked] = useState(false)
+
+	const taskToSave = {...task, groupId}
 
 	useEffect(() => {
 		if (selectedTasks.length < 1) setIsChecked(false)
@@ -20,7 +22,7 @@ export function Checkbox({ task, disable = false }) {
 		if (disable) return
 
 		if (isChecked) dispatch({ type: SET_SELECTED_TASKS, tasks: selectedTasks.filter(t => t.id !== task.id)})
-		else dispatch({ type: SET_SELECTED_TASKS, tasks: [...selectedTasks, task]})
+		else dispatch({ type: SET_SELECTED_TASKS, tasks: [...selectedTasks, taskToSave]})
 
 		setIsChecked(prev => !prev)
 	}

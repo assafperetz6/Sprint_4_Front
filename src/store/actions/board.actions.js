@@ -99,6 +99,7 @@ export async function addGroup(boardId, group) {
 		throw err
 	}
 }
+
 export async function updateGroup(boardId, group) {
 	try {
 		const savedBoard = await boardService.saveGroup(boardId, group)
@@ -108,6 +109,7 @@ export async function updateGroup(boardId, group) {
 		throw err
 	}
 }
+
 export async function removeGroup(boardId, groupId) {
 	try {
 		const savedBoard = await boardService.removeGroup(boardId, groupId)
@@ -129,6 +131,7 @@ export async function removeTask(boardId, taskId, groupId) {
 		throw err
 	}
 }
+
 export async function addTask(boardId, groupId, task, activity, tempTaskId) {
 	try {
 		const activityToSave = await _addActivity(boardId, groupId, task, activity)
@@ -140,6 +143,7 @@ export async function addTask(boardId, groupId, task, activity, tempTaskId) {
 		throw err
 	}
 }
+
 export async function updateTask(boardId, groupId, task, activity) {
 	try {
 		const activityToSave = await _addActivity(boardId, groupId, task, activity)
@@ -168,7 +172,14 @@ async function _addActivity(boardId, groupId, task, activity) {
 	return activtyToSave
 }
 
-
-
-
 // TODO: add batch function for multiselect menu
+
+export async function removeTasks(boardId, tasks){
+	try {
+		const savedBoard = await boardService.removeTasks(boardId, tasks)
+		store.dispatch(getCmdSetBoard(savedBoard))
+	} catch (err) {
+		console.log('error from actions--> cannot remove tasks', err)
+		throw err
+	}
+}

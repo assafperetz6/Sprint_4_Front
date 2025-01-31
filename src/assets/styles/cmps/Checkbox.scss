@@ -41,10 +41,11 @@
 		position: absolute;
 		top: 6px;
 
+		height: 10px;
 		pointer-events: none;
 
 		.task-preview & {
-			top: 4px;
+			top: 6px;
 		}
 	}
 

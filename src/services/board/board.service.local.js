@@ -18,6 +18,7 @@ export const boardService = {
 	getTaskById,
 	saveTask,
 	removeTask,
+	removeTasks,
 }
 
 // Board //
@@ -252,6 +253,17 @@ async function saveTask(boardId, groupId, task, activity, tempTaskId) {
 		console.log('cannot save task', err)
 		throw err
 	}
+}
+
+async function removeTasks(boardId, tasks) {
+	for (const task of tasks) {
+		try {
+		await removeTask(boardId, task.id, task.groupId)
+		} catch (err) {
+			throw new Error('problem with deleting tasks', err)
+		}
+	}
+	return getById(boardId)
 }
 
 // async function addActivity(boardId, groupId, task, txt) {

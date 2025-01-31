@@ -4,6 +4,7 @@ import { svgs } from '../services/svg.service'
 import {
 	addTask,
 	removeTask,
+	removeTasks,
 	updateTask,
 } from '../store/actions/board.actions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,13 +24,11 @@ export function TaskActionMenu({ tasks }) {
 	}
 
 	async function onRemoveTask() {
-		await tasks.forEach((task) => {
-			try {
-				removeTask(board._id, task.id)
-			} catch (err) {
-				console.log('Failed to remove task: ', task.id)
-			}
-		})
+		try {
+			removeTasks(board._id, tasks)
+		} catch (err) {
+			console.log('Failed to remove task', err)
+		}
 
 		onCloseMenu()
 	}
