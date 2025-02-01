@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePopper } from 'react-popper'
 import { svgs } from '../services/svg.service.jsx'
+import { useSelector } from 'react-redux'
+import { hexToRgba } from '../services/util.service.js'
 
 export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdate, onMoveTo, onRename, referenceElement }) {
+	const board = useSelector((storeState) => storeState.boardModule.board)
 	const [popperElement, setPopperElement] = useState(null)
 	const [arrowElement, setArrowElement] = useState(null)
+	const [openGroupList, setOpenGroupList] = useState(false)
 
 	const { styles, attributes } = usePopper(referenceElement, popperElement, {
 		modifiers: [
@@ -57,7 +61,7 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
 			// { icon: svgs.pencil, text: 'Edit task', action: () => onRename(entity.id) },
 			{ icon: svgs.delete, text: 'Delete task', action: () => onRemove(entity.id) },
 			{ icon: svgs.archive, text: 'Archive', action: () => onUpdate( Date.now(), 'archivedAt') },
-			{ icon: svgs.arrowRightAlt, text: 'Move to', action: () => onMoveTo('g102') },
+			{ icon: svgs.arrowRightAlt, text: 'Move to', action: () => setOpenGroupList(true) },
 		]
 	}
 
@@ -73,7 +77,7 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
 						onClick={() => {
 							if (item.action) {
 								item.action()
-								onClose()
+								// onClose()
 							}
 						}}
 						disabled={!item.action}
@@ -82,6 +86,18 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
 					</button>
 				))}
 			</section>
+			{openGroupList &&
+				<ul className='secondary context-menu'>
+					{board.groups.filter(group => !group.tasks.find(t => t.id === entity.id))
+						.map(group => (
+							<li key={group.id}>
+								<button onClick={() => onMoveTo(group.id)}>
+									<span className='color-indicator' style={{ backgroundColor: hexToRgba(group.style.color, 1)}}></span>
+									{group.title}
+								</button>
+							</li>
+					))}
+				</ul>}
 		</div>
 	)
 }

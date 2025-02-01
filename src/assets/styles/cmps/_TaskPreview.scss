@@ -45,7 +45,7 @@
 		}
 	}
 
-	&:hover > *:not(.context-btn-container) {
+	&:hover > *:not(.context-btn-container, .popper-container) {
 		background-color: $task-hover-bgc;
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
 	}
@@ -59,9 +59,10 @@
 		height: $task-row-height;
 	}
 
-	&:hover {
+	&:hover:not(.popper-container) {
 		background-color: $task-hover-bgc;
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
+
 		.sticky-container {
 			background-color: $task-hover-bgc;
 			box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
