@@ -82,10 +82,11 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
       }
 
       const activity = {
-        oldState: [...task.members],
-        newState: [...task.members, member],
-        description: 'Members'
+        type: 'Member',
+        description: 'Added',
+        newState: member
       }
+
       const taskToSave = { ...task, members: [...task.members, member] }
       await updateTask(board._id, groupId, taskToSave, activity)
       setIsPickerOpen(false)
@@ -103,11 +104,14 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
         members: updatedMembers
       }
 
+      const removedMember = task.members.find((member) => member._id === memberId)
+
       const activity = {
-        oldState: [...task.members],
-        newState: updatedMembers,
-        description: 'Members'
+        type: 'Member',
+        newState: removedMember,
+        description: 'Removed'
       }
+
       await updateTask(board._id, groupId, taskToSave, activity)
     } catch (err) {
       console.error('Cannot remove member:', err)

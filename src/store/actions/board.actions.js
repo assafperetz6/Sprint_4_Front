@@ -20,6 +20,7 @@ export async function loadBoard(boardId) {
   try {
     const board = await boardService.getById(boardId)
     store.dispatch(getCmdSetBoard(board))
+    return board
   } catch (err) {
     console.log('error from actions--> Cannot load board', err)
     throw err
@@ -121,10 +122,14 @@ export async function removeGroup(boardId, groupId) {
 
 // tasks actions: //
 
-export async function removeTask(boardId, taskId) {
+export async function removeTask(boardId, groupId, taskId, activity) {
   try {
-    const savedBoard = await boardService.removeTask(boardId, taskId)
+    const task = await boardService.getTaskById(boardId, taskId)
+    const activityToSave = await _addActivity(boardId, groupId, task, activity)
+
+    const savedBoard = await boardService.removeTask(boardId, taskId, activityToSave)
     store.dispatch(getCmdSetBoard(savedBoard))
+    return savedBoard
   } catch (err) {
     console.log('error from actions--> cannot remove task', err)
     throw err
@@ -159,19 +164,21 @@ export async function updateTask(boardId, groupId, task, activity) {
 async function _addActivity(boardId, groupId, task, activityInfo) {
   if (!activityInfo) return
 
-  const group = await boardService.getGroupById(boardId, groupId)
+  const group = (await boardService.getGroupById(boardId, groupId)) || {}
   const loggedinUser = await userService.getLoggedinUser()
 
   const activityToSave = {
     id: makeId(),
     createdAt: Date.now(),
-    group: { id: group.id, title: group.title, color: group.style.color },
-    task: task,
+    group: { id: group.id || '', title: group.title || '', color: group.style.color || '' },
+    task: task || {},
+
     type: activityInfo.type,
     oldState: activityInfo.oldState,
     newState: activityInfo.newState,
     entityId: task.id,
-    byMember: loggedinUser
+    byMember: loggedinUser || userService.getDefaultUser(),
+    description: activityInfo.description
   }
 
   return activityToSave

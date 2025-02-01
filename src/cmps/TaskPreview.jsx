@@ -51,6 +51,20 @@ export function TaskPreview({ group, task, idx }) {
     }
   }
 
+  async function onRemoveTask(boardId, groupId, taskId) {
+    try {
+      const activity = {
+        type: 'Removed',
+        description: 'Removed task',
+        oldState: task
+      }
+      await removeTask(boardId, groupId, taskId, activity)
+    } catch (err) {
+      console.error('Cannot remove task:', err)
+      showErrorMsg('Cannot remove task')
+    }
+  }
+
   return (
     <Draggable key={task.id} draggableId={task.id} index={idx}>
       {(provided, snapshot) => (
@@ -110,7 +124,7 @@ export function TaskPreview({ group, task, idx }) {
               type="task"
               entity={task}
               onClose={() => setActiveMenuId(null)}
-              onRemove={() => removeTask(board._id, task.id)}
+              onRemove={() => onRemoveTask(board._id, group.id, task.id)}
               onUpdate={(updatedTask) => onSaveTask(updatedTask.title)}
               onRename={(task) => setTitleToEdit(task.title)}
               referenceElement={buttonRef.current}

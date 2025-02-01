@@ -109,21 +109,104 @@
     }
   }
 
+  .activity-log .activity-item:not(:last-child) {
+    border-bottom: 1px solid $input-hover-border-clr;
+  }
+
   .activity-item {
-    padding-block: $spacing-small;
-    display: grid;
-    grid-template-columns: 200px 1fr 1fr;
+    padding: $spacing-small;
+    display: flex;
+    align-items: center;
+    height: 56px;
+
     font-size: rem(14px);
     text-wrap: nowrap;
     overflow-x: hidden;
 
-    .activity-header {
-      gap: $spacing-small;
+    .time {
+      flex: 0 0 56px;
+    }
+
+    .activity-and-user {
+      flex: 1 0 0;
       .activity-task-title {
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        padding: 0 6px;
       }
+      .user {
+        background-color: $clr1;
+        flex: 0 1 auto;
+      }
+    }
+
+    .additional-values {
+      height: 100%;
+      flex: 1.5 0 0;
+
+      .type-indicator {
+        height: 100%;
+        flex: 1.2 0 0;
+      }
+
+      .activity-content {
+        width: 100%;
+        flex: 2.2 0 0;
+        height: 100%;
+        margin-inline-start: 1rem;
+
+        .status-change,
+        .priority-change {
+          height: 100%;
+          overflow: hidden;
+          flex: 1 1 auto;
+
+          .old-value,
+          .new-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 100%;
+            flex: 1 0 0;
+
+            padding: 0 8px;
+            color: $clr3;
+            border-radius: 2px;
+            line-height: 39px;
+
+            text-align: center;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .empty {
+            height: 100%;
+            width: 100%;
+
+            border-radius: 2px;
+            background-color: #c4c4c4;
+          }
+        }
+
+        .date-change {
+          align-items: center;
+          justify-content: center;
+
+          flex: 1 1 auto;
+        }
+      }
+
+      .seperator {
+        flex: 0 0 16px;
+        height: 100%;
+      }
+    }
+
+    .member-change {
+      width: 100%;
     }
   }
 }
