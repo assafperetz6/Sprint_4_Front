@@ -237,7 +237,7 @@ async function saveTask(boardId, groupId, task, activity, isDuplicate = false) {
 			if(isDuplicate) {
 				taskToSave.id = makeId()
 				taskToSave.title += ' (copy)'
-				tasks.splice(taskIdx, 0, taskToSave)
+				tasks.splice(taskIdx + 1, 0, taskToSave)
 			} else tasks.splice(taskIdx, 1, taskToSave)
 		} else {
 			taskToSave.id = makeId()
