@@ -1,3 +1,4 @@
+import { updateTask } from '../../store/actions/board.actions'
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
 import { makeId } from '../util.service'
@@ -20,6 +21,7 @@ export const boardService = {
 	removeTask,
 	removeTasks,
 	duplicateTasks,
+	archiveTasks,
 }
 
 // Board //
@@ -272,6 +274,18 @@ async function duplicateTasks(boardId, tasks) {
 			await saveTask(boardId, task.groupId, task, null, true)
 		} catch (err) {
 			throw new Error('problem with duplicating tasks', err)
+		}
+	}
+	return getById(boardId)
+}
+
+async function archiveTasks(boardId, tasks) {
+	for (const task of tasks) {
+		try {
+			task.archivedAt = Date.now()
+			await saveTask(boardId, task.groupId, task, null)
+		} catch (err) {
+			throw new Error('problem updating tasks', err)
 		}
 	}
 	return getById(boardId)

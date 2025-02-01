@@ -193,3 +193,14 @@ export async function duplicateTasks(boardId, tasks) {
 		throw err
 	}
 }
+
+export async function archiveTasks(boardId, tasks) {
+	try {
+		const savedBoard = await boardService.archiveTasks(boardId, tasks)
+		store.dispatch(getCmdSetBoard(savedBoard))
+				
+	} catch (err) {
+		console.log('error from actions--> cannot remove tasks', err)
+		throw err
+	}
+}

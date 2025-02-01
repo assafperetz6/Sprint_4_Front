@@ -3,11 +3,13 @@ import { AddTask } from './AddTask'
 import { TaskPreview } from './TaskPreview'
 
 export function TaskList({ group }) {
+	const activeTasks = group.tasks.filter(task => !task.archivedAt)
+
 	return (
 		<Droppable droppableId={group.id}>
 			{provided => (
 				<ul className="task-list task-col full" {...provided.droppableProps} ref={provided.innerRef}>
-					{group.tasks.map((task, idx) => (
+					{activeTasks.map((task, idx) => (
 						<TaskPreview key={task.id} group={group} task={task} idx={idx} />
 					))}
 					{provided.placeholder}

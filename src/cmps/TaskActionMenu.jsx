@@ -4,6 +4,7 @@ import { svgs } from '../services/svg.service'
 import {
 	duplicateTasks,
 	removeTasks,
+	archiveTasks,
 } from '../store/actions/board.actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_SELECTED_TASKS } from '../store/reducers/board.reducer'
@@ -39,6 +40,16 @@ export function TaskActionMenu({ tasks }) {
 		onCloseMenu()
 	}
 
+	async function onArchive() {
+		try {
+			archiveTasks(board._id, tasks)
+		} catch (err) {
+			console.log('Failed to archive tasks', err)
+		}
+
+		onCloseMenu()
+	}
+
 	return (
 		<section className="task-action-menu">
 			<div className="task-count">{tasks.length}</div>
@@ -49,7 +60,7 @@ export function TaskActionMenu({ tasks }) {
 					{svgs.duplicate}
 					Duplicate
 				</button>
-				<button>{svgs.archive} Archive</button>
+				<button onClick={onArchive}>{svgs.archive} Archive</button>
 				<button onClick={onRemoveTask}>{svgs.delete} Delete</button>
 				<button className="move-to-btn">{svgs.arrowRightAlt} Move to</button>
 			</section>
