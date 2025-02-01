@@ -1,4 +1,4 @@
-import { updateTask } from '../../store/actions/board.actions'
+import { store } from '../../store/store'
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
 import { makeId } from '../util.service'
@@ -22,6 +22,7 @@ export const boardService = {
 	removeTasks,
 	duplicateTasks,
 	archiveTasks,
+	moveTasksTo,
 }
 
 // Board //
@@ -54,7 +55,7 @@ async function save(board) {
 			cmpsOrder: board.cmpsOrder,
 			statusLabels: board.statusLabels,
 			priorityLabels: board.priorityLabels,
-			activities: board.activities
+			activities: board.activities,
 		}
 		savedBoard = await storageService.put(STORAGE_KEY, boardToSave)
 	} else {
@@ -67,7 +68,7 @@ async function save(board) {
 			cmpsOrder: board.cmpsOrder,
 			statusLabels: board.statusLabels,
 			priorityLabels: board.priorityLabels,
-			activities: board.activities
+			activities: board.activities,
 		}
 		savedBoard = await storageService.post(STORAGE_KEY, boardToSave)
 	}
@@ -96,7 +97,7 @@ async function getGroups(boardId) {
 async function getGroupById(boardId, groupId) {
 	try {
 		const { groups } = await getById(boardId)
-		const group = groups.find(group => group.id === groupId)
+		const group = groups.find((group) => group.id === groupId)
 		if (!group) throw new Error(`No group with id: ${groupId}`)
 		return group
 	} catch (err) {
@@ -108,7 +109,7 @@ async function getGroupById(boardId, groupId) {
 async function removeGroup(boardId, groupId) {
 	try {
 		const board = await getById(boardId)
-		const groupIdx = board.groups.findIndex(group => group.id === groupId)
+		const groupIdx = board.groups.findIndex((group) => group.id === groupId)
 		if (groupIdx === -1) throw new Error(`No group with id: ${groupId}`)
 
 		board.groups.splice(groupIdx, 1)
@@ -123,14 +124,16 @@ async function saveGroup(boardId, group) {
 	const groupToSave = {
 		title: group.title,
 		style: group.style,
-		tasks: group.tasks
+		tasks: group.tasks,
 	}
 
 	try {
 		const board = await getById(boardId)
 		if (group.id) {
 			groupToSave.id = group.id
-			const groupIdx = board.groups.findIndex(group => group.id === groupToSave.id)
+			const groupIdx = board.groups.findIndex(
+				(group) => group.id === groupToSave.id
+			)
 			if (groupIdx === -1) throw new Error(`No group with id: ${group.id}`)
 			board.groups.splice(groupIdx, 1, groupToSave)
 		} else {
@@ -161,23 +164,24 @@ async function getTaskById(boardId, taskId, groupId = null) {
 		try {
 			group = await getGroupById(boardId, groupId)
 		} catch (err) {
-			throw new Error(`Problem getting task`, err) 
+			throw new Error(`Problem getting task`, err)
 		}
 	} else {
 		try {
 			const board = await getById(boardId)
-			group = board.groups.find(group => {
-				return group.tasks.find(task => task.id === taskId)
-			})	
+			group = board.groups.find((group) => {
+				return group.tasks.find((task) => task.id === taskId)
+			})
 		} catch (err) {
-			throw new Error(`Problem getting task`, err) 
+			throw new Error(`Problem getting task`, err)
 		}
 	}
 	try {
 		let task
-		const taskToFind = group.tasks.find(task => task.id === taskId)
+		const taskToFind = group.tasks.find((task) => task.id === taskId)
 		if (taskToFind) task = taskToFind
-		if (!task) throw new Error(`No task with id: ${taskId} in group: ${group.id}`)
+		if (!task)
+			throw new Error(`No task with id: ${taskId} in group: ${group.id}`)
 		return task
 	} catch (err) {
 		console.log('cannot get task', err)
@@ -186,24 +190,27 @@ async function getTaskById(boardId, taskId, groupId = null) {
 }
 
 /**
- * 
- * @param {string} boardId 
- * @param {string} taskId 
- * @param {string} groupId 
+ *
+ * @param {string} boardId
+ * @param {string} taskId
+ * @param {string} groupId
  * @returns {object}
  */
+
 async function removeTask(boardId, taskId, groupId) {
 	try {
 		const board = await getById(boardId)
-		const groupToFind = board.groups.find(group => groupId === group.id)
+		const groupToFind = board.groups.find((group) => groupId === group.id)
 
 		let isTaskFound = false
-		
-		const taskIdx = groupToFind.tasks.findIndex(task => task.id === taskId)
+
+		const taskIdx = groupToFind.tasks.findIndex((task) => task.id === taskId)
 		if (taskIdx !== -1) {
 			isTaskFound = true
 			groupToFind.tasks.splice(taskIdx, 1)
-			board.groups.filter(group => group.id !== groupId ? group : groupToFind)
+			board.groups.filter((group) =>
+				group.id !== groupId ? group : groupToFind
+			)
 		}
 		if (!isTaskFound) throw new Error(`No task with id: ${taskId}`)
 		return storageService.put(STORAGE_KEY, board)
@@ -213,7 +220,25 @@ async function removeTask(boardId, taskId, groupId) {
 	}
 }
 
-async function saveTask(boardId, groupId, task, activity, isDuplicate = false, isMoved = false) {
+/**
+ * 
+ * @param {string} boardId 
+ * @param {string} groupId 
+ * @param {object} task 
+ * @param {object} activity 
+ * @param {boolean} isDuplicate 
+ * @param {boolean} isMoved 
+ * @returns {object}
+ */
+
+async function saveTask(
+	boardId,
+	groupId,
+	task,
+	activity,
+	isDuplicate = false,
+	isMoved = false
+) {
 	try {
 		const taskToSave = {
 			id: task.id,
@@ -223,30 +248,29 @@ async function saveTask(boardId, groupId, task, activity, isDuplicate = false, i
 			dueDate: task.dueDate,
 			timeline: task.timeline,
 			status: task.status,
-			archivedAt: task.archivedAt
+			archivedAt: task.archivedAt,
 		}
-	
+
 		const board = await getById(boardId)
 
-		const groupIdx = board.groups.findIndex(group => group.id === groupId)
+		const groupIdx = board.groups.findIndex((group) => group.id === groupId)
 		if (groupIdx === -1) throw new Error(`No group with id: ${groupId}`)
 
 		const { tasks } = board.groups[groupIdx]
 
- 		if (task.id) {
+		if (task.id) {
 			if (isMoved) tasks.push(taskToSave)
-
 			else {
-				const taskIdx = tasks.findIndex(task => task.id === taskToSave.id)
-				if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
-			
-				if(isDuplicate) {
+				const taskIdx = tasks.findIndex((task) => task.id === taskToSave.id)
+				if (taskIdx === -1)
+					throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
+
+				if (isDuplicate) {
 					taskToSave.id = makeId()
 					taskToSave.title += ' (copy)'
 					tasks.splice(taskIdx + 1, 0, taskToSave)
 				} else tasks.splice(taskIdx, 1, taskToSave)
 			}
-			
 		} else {
 			taskToSave.id = makeId()
 			tasks.push(taskToSave)
@@ -265,7 +289,7 @@ async function saveTask(boardId, groupId, task, activity, isDuplicate = false, i
 async function removeTasks(boardId, tasks) {
 	for (const task of tasks) {
 		try {
-			await removeTask(boardId, task.id, task.groupId)			
+			await removeTask(boardId, task.id, task.groupId)
 		} catch (err) {
 			throw new Error('problem with deleting tasks', err)
 		}
@@ -291,6 +315,26 @@ async function archiveTasks(boardId, tasks) {
 			await saveTask(boardId, task.groupId, task, null)
 		} catch (err) {
 			throw new Error('problem updating tasks', err)
+		}
+	}
+	return getById(boardId)
+}
+
+async function moveTasksTo(boardId, newGroupId, tasks) {
+	for (const task of tasks) {
+		try {
+			await saveTask(
+				boardId,
+				newGroupId,
+				task,
+				{ txt: `Moved task ${task.id} from group ${task.groupId}` },
+				false,
+				true
+			)
+
+			await removeTask(boardId, task.id, task.groupId)
+		} catch (err) {
+			throw new Error('problem moving tasks', err)
 		}
 	}
 	return getById(boardId)

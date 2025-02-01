@@ -5,14 +5,16 @@ import {
 	duplicateTasks,
 	removeTasks,
 	archiveTasks,
+	moveTasksTo,
 } from '../store/actions/board.actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_SELECTED_TASKS } from '../store/reducers/board.reducer'
-import { makeId } from '../services/util.service'
+import { hexToRgba, makeId } from '../services/util.service'
 
 export function TaskActionMenu({ tasks }) {
 	const dispatch = useDispatch()
 	const board = useSelector((storeState) => storeState.boardModule.board)
+	const [openGroupList, setOpenGroupList] = useState(false)
 
 	const params = useParams()
 
@@ -50,6 +52,18 @@ export function TaskActionMenu({ tasks }) {
 		onCloseMenu()
 	}
 
+	async function onMoveTo(newGroupId) {
+		// console.log(newGroupId)
+		
+		try {
+			moveTasksTo(board._id, newGroupId, tasks)
+		} catch (err) {
+			console.log('Failed to move tasks', err)
+		}
+
+		onCloseMenu()
+	}
+
 	return (
 		<section className="task-action-menu">
 			<div className="task-count">{tasks.length}</div>
@@ -62,12 +76,36 @@ export function TaskActionMenu({ tasks }) {
 				</button>
 				<button onClick={onArchive}>{svgs.archive} Archive</button>
 				<button onClick={onRemoveTask}>{svgs.delete} Delete</button>
-				<button className="move-to-btn">{svgs.arrowRightAlt} Move to</button>
+				<button className="move-to-btn" onClick={() => setOpenGroupList(true)}>
+					{svgs.arrowRightAlt} Move to
+				</button>
 			</section>
 
 			<button onClick={onCloseMenu} className="close-menu">
 				{svgs.closeBox}
 			</button>
+
+			{openGroupList && <GroupList board={board} onMoveTo={onMoveTo} />}
 		</section>
+	)
+}
+
+function GroupList({ board, onMoveTo }) {
+	return (
+		<ul className="secondary context-menu">
+			{board.groups
+				// .filter((group) => !group.tasks.find((t) => t.id === entity.id))
+				.map((group) => (
+					<li key={group.id}>
+						<button onClick={() => onMoveTo(group.id)}>
+							<span
+								className="color-indicator"
+								style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
+							></span>
+							{group.title}
+						</button>
+					</li>
+				))}
+		</ul>
 	)
 }
