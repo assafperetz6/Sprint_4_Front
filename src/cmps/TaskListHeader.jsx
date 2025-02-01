@@ -45,7 +45,7 @@ export function TaskListHeader({ group, shadow }) {
 			<ul className="task-list-header task-row clean-list full">
 				<li className="sticky-container flex">
 					<div className="colored-border" style={{ backgroundColor: hexToRgba(groupColor, 1) }} />
-					<Checkbox groupId={group.id}/>
+					<Checkbox group={group} isGroupHeader={true}/>
 					<div className={`task-title-header ${shadow ? 'shadow' : ''}`}>Task</div>
 				</li>
 

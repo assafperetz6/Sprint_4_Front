@@ -38,15 +38,16 @@
 	}
 
 	.check-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
 		position: absolute;
-		top: 6px;
 
-		height: 10px;
+		width: 16px;
+		height: 16px;
+		
 		pointer-events: none;
-
-		.task-preview & {
-			top: 6px;
-		}
 	}
 
 	// /* Assuming your checkmark SVG path is targetable with some class */

@@ -100,7 +100,7 @@ export function TaskPreview({ group, task, idx }) {
 							style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
 						/>
 
-						<Checkbox task={task} groupId={group.id} />
+						<Checkbox task={task} group={group} />
 
 						<section className="task-title">
 							<div
