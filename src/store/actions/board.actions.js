@@ -132,10 +132,10 @@ export async function removeTask(boardId, taskId, groupId) {
 	}
 }
 
-export async function addTask(boardId, groupId, task, activity) {
+export async function addTask(boardId, groupId, task, activity, isMoved = false) {
 	try {
 		const activityToSave = await _addActivity(boardId, groupId, task, activity)
-		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
+		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave, false, isMoved)
 
 		store.dispatch(getCmdSetBoard(savedBoard))
 	} catch (err) {
@@ -188,6 +188,17 @@ export async function duplicateTasks(boardId, tasks) {
 	try {
 		const savedBoard = await boardService.duplicateTasks(boardId, tasks)
 		store.dispatch(getCmdSetBoard(savedBoard))
+	} catch (err) {
+		console.log('error from actions--> cannot remove tasks', err)
+		throw err
+	}
+}
+
+export async function archiveTasks(boardId, tasks) {
+	try {
+		const savedBoard = await boardService.archiveTasks(boardId, tasks)
+		store.dispatch(getCmdSetBoard(savedBoard))
+				
 	} catch (err) {
 		console.log('error from actions--> cannot remove tasks', err)
 		throw err

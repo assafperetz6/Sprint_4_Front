@@ -1,3 +1,4 @@
+import { updateTask } from '../../store/actions/board.actions'
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
 import { makeId } from '../util.service'
@@ -20,6 +21,7 @@ export const boardService = {
 	removeTask,
 	removeTasks,
 	duplicateTasks,
+	archiveTasks,
 }
 
 // Board //
@@ -211,7 +213,7 @@ async function removeTask(boardId, taskId, groupId) {
 	}
 }
 
-async function saveTask(boardId, groupId, task, activity, isDuplicate = false) {
+async function saveTask(boardId, groupId, task, activity, isDuplicate = false, isMoved = false) {
 	try {
 		const taskToSave = {
 			id: task.id,
@@ -220,7 +222,8 @@ async function saveTask(boardId, groupId, task, activity, isDuplicate = false) {
 			priority: task.priority,
 			dueDate: task.dueDate,
 			timeline: task.timeline,
-			status: task.status
+			status: task.status,
+			archivedAt: task.archivedAt
 		}
 	
 		const board = await getById(boardId)
@@ -231,14 +234,19 @@ async function saveTask(boardId, groupId, task, activity, isDuplicate = false) {
 		const { tasks } = board.groups[groupIdx]
 
  		if (task.id) {
-			const taskIdx = tasks.findIndex(task => task.id === taskToSave.id)
-			if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
+			if (isMoved) tasks.push(taskToSave)
+
+			else {
+				const taskIdx = tasks.findIndex(task => task.id === taskToSave.id)
+				if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
 			
-			if(isDuplicate) {
-				taskToSave.id = makeId()
-				taskToSave.title += ' (copy)'
-				tasks.splice(taskIdx, 0, taskToSave)
-			} else tasks.splice(taskIdx, 1, taskToSave)
+				if(isDuplicate) {
+					taskToSave.id = makeId()
+					taskToSave.title += ' (copy)'
+					tasks.splice(taskIdx + 1, 0, taskToSave)
+				} else tasks.splice(taskIdx, 1, taskToSave)
+			}
+			
 		} else {
 			taskToSave.id = makeId()
 			tasks.push(taskToSave)
@@ -271,6 +279,18 @@ async function duplicateTasks(boardId, tasks) {
 			await saveTask(boardId, task.groupId, task, null, true)
 		} catch (err) {
 			throw new Error('problem with duplicating tasks', err)
+		}
+	}
+	return getById(boardId)
+}
+
+async function archiveTasks(boardId, tasks) {
+	for (const task of tasks) {
+		try {
+			task.archivedAt = Date.now()
+			await saveTask(boardId, task.groupId, task, null)
+		} catch (err) {
+			throw new Error('problem updating tasks', err)
 		}
 	}
 	return getById(boardId)
