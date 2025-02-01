@@ -5,7 +5,7 @@ import { hexToRgba } from '../services/util.service'
 import { useSelector } from 'react-redux'
 import { DynamicCmp } from './DynamicCmp'
 import { showErrorMsg } from '../services/event-bus.service'
-import { removeTask, updateTask } from '../store/actions/board.actions'
+import { addTask, removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
 import { useEffect, useRef, useState } from 'react'
 import { InlineEdit } from './InlineEdit'
@@ -53,8 +53,22 @@ export function TaskPreview({ group, task, idx }) {
 		  showErrorMsg(`Cannot update ${key}`)
 		  console.error(`Cannot update ${key}:`, err)
 		}
-	  }
-	// console.log(board.activities)
+	}
+
+	async function onMoveTo(newGroupId) {
+		try {
+			await addTask(board._id, newGroupId, task, { txt: `Moved task ${task.id} from ${group.title}` }, true)
+			await removeTask(
+				board._id,
+				task.id,
+				group.id
+			)
+		} catch (err) {
+			showErrorMsg(`Cannot move ${task.id}`)
+			console.error(`Cannot move ${task.id}:`, err)
+		}	
+	}
+	
 
 	return (
 		<Draggable key={task.id} draggableId={task.id} index={idx}>
@@ -122,6 +136,7 @@ export function TaskPreview({ group, task, idx }) {
 							onClose={() => setActiveMenuId(null)}
 							onRemove={() => removeTask(board._id, task.id, group.id)}
 							onUpdate={onSaveTask}
+							onMoveTo={onMoveTo}
 							onRename={(task) => setTitleToEdit(task.title)}
 							referenceElement={buttonRef.current}
 						/>

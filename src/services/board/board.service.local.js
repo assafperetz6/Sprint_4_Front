@@ -213,7 +213,7 @@ async function removeTask(boardId, taskId, groupId) {
 	}
 }
 
-async function saveTask(boardId, groupId, task, activity, isDuplicate = false) {
+async function saveTask(boardId, groupId, task, activity, isDuplicate = false, isMoved = false) {
 	try {
 		const taskToSave = {
 			id: task.id,
@@ -234,14 +234,19 @@ async function saveTask(boardId, groupId, task, activity, isDuplicate = false) {
 		const { tasks } = board.groups[groupIdx]
 
  		if (task.id) {
-			const taskIdx = tasks.findIndex(task => task.id === taskToSave.id)
-			if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
+			if (isMoved) tasks.push(taskToSave)
+
+			else {
+				const taskIdx = tasks.findIndex(task => task.id === taskToSave.id)
+				if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
 			
-			if(isDuplicate) {
-				taskToSave.id = makeId()
-				taskToSave.title += ' (copy)'
-				tasks.splice(taskIdx + 1, 0, taskToSave)
-			} else tasks.splice(taskIdx, 1, taskToSave)
+				if(isDuplicate) {
+					taskToSave.id = makeId()
+					taskToSave.title += ' (copy)'
+					tasks.splice(taskIdx + 1, 0, taskToSave)
+				} else tasks.splice(taskIdx, 1, taskToSave)
+			}
+			
 		} else {
 			taskToSave.id = makeId()
 			tasks.push(taskToSave)

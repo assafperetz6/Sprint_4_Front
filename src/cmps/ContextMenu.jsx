@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { usePopper } from 'react-popper'
 import { svgs } from '../services/svg.service.jsx'
 
-export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdate, onRename, referenceElement }) {
+export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdate, onMoveTo, onRename, referenceElement }) {
 	const [popperElement, setPopperElement] = useState(null)
 	const [arrowElement, setArrowElement] = useState(null)
 
@@ -57,6 +57,7 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
 			// { icon: svgs.pencil, text: 'Edit task', action: () => onRename(entity.id) },
 			{ icon: svgs.delete, text: 'Delete task', action: () => onRemove(entity.id) },
 			{ icon: svgs.archive, text: 'Archive', action: () => onUpdate( Date.now(), 'archivedAt') },
+			{ icon: svgs.arrowRightAlt, text: 'Move to', action: () => onMoveTo('g102') },
 		]
 	}
 

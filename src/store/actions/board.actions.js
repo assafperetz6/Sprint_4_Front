@@ -132,10 +132,10 @@ export async function removeTask(boardId, taskId, groupId) {
 	}
 }
 
-export async function addTask(boardId, groupId, task, activity) {
+export async function addTask(boardId, groupId, task, activity, isMoved = false) {
 	try {
 		const activityToSave = await _addActivity(boardId, groupId, task, activity)
-		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
+		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave, false, isMoved)
 
 		store.dispatch(getCmdSetBoard(savedBoard))
 	} catch (err) {
