@@ -1,37 +1,83 @@
 import { svgs } from '../services/svg.service'
 import { hexToRgba } from '../services/util.service'
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
+import {
+	CollapsedDraggedPreview,
+	CollapsedGroupPreview,
+} from './CollapsedGroupPreview'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-export function GroupsWhileDnd({ groups }) {
+export function GroupsWhileDnd({ groups, boardId }) {
+    const board = useSelector((storeState) => storeState.boardModule.board)
+	const [isDragging, setIsDragging] = useState(false)
+
 	function getTasksCount(tasksCount) {
 		if (!tasksCount) return 'No Items'
 		if (tasksCount === 1) return tasksCount + ' Item'
 		return tasksCount + ' Items'
 	}
 
-    console.log(groups)
-    
+	function handleStartDragging(result) {
+		if (result.type === 'group') {
+			setIsAllCollapsed(true)
+			setIsDragging(true)
+		}
+	}
+
+	async function handleDrag(result) {
+		if (!result.destination) {
+			setIsAllCollapsed(false)
+			setIsDragging(false)
+			return
+		}
+
+		if (result.type === 'group') {
+			await handleGroupDrag(result)
+			setIsAllCollapsed(false)
+		} else {
+			handleTaskDrag(result)
+		}
+		setIsDragging(false)
+	}
+
+	async function handleGroupDrag(result) {
+		const newBoard = structuredClone(board)
+		const groupToMove = newBoard.groups.splice(result.source.index, 1)[0]
+
+		newBoard.groups.splice(result.destination.index, 0, groupToMove)
+
+		try {
+			updateBoardOptimistic(newBoard)
+		} catch (err) {
+			showErrorMsg('cannot save board')
+		}
+	}
+
 	return (
-		<section>
-			{groups.map((group) => {
-				<div className="collapsed-group-preview" style={{ width: '200px', height: '400px', background: 'black' }}>
-					<div
-						className="colored-border"
-						style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
-					></div>
-					<div
-						className="toggle-group-preview flex align-center justify-center"
-						style={{ color: group.style.color }}
+		<DragDropContext
+			onDragEnd={handleDrag}
+			onBeforeDragStart={handleStartDragging}
+		>
+			<Droppable droppableId={boardId} type="group">
+				{(provided) => (
+					<section
+						className="collapsed group-list"
+						ref={provided.innerRef}
+						{...provided.droppableProps}
 					>
-						{svgs.arrowRight}
-					</div>
-
-					<h4 className="title">{group.title}</h4>
-
-					<div className="title-count flex align-center justify-center">
-						{getTasksCount(group.tasks.length)}
-					</div>
-				</div>
-			})}
-		</section>
+						{groups.map((group, idx) => (
+							<section
+								key={group.id}
+								className="collapsed-group-preview full"
+							>
+								<CollapsedDraggedPreview group={group} idx={idx} />
+							</section>
+						))}
+				{provided.placeholder}
+					</section>
+				)}
+			</Droppable>
+		</DragDropContext>
 	)
 }
