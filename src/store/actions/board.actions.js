@@ -3,6 +3,7 @@ import { store } from '../store'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD } from '../reducers/board.reducer'
 import { makeId } from '../../services/util.service'
 import { userService } from '../../services/user'
+import { showErrorMsg } from '../../services/event-bus.service'
 
 // Board Actions //
 
@@ -204,3 +205,13 @@ export async function archiveTasks(boardId, tasks) {
 		throw err
 	}
 }
+
+export async function moveTasksTo(boardId, newGroupId, tasks) {
+		try {
+			const savedBoard = await boardService.moveTasksTo(boardId, newGroupId, tasks)
+			store.dispatch(getCmdSetBoard(savedBoard))
+		} catch (err) {
+			console.log(`error from actions--> cannot move tasks to group ${newGroupId}`, err)
+			throw err
+		}	
+	}
