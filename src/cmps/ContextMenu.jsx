@@ -49,13 +49,14 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
 			},
 			{ icon: svgs.delete, text: 'Delete', action: () => onRemove(entity._id) }
 		],
-		task: [
-			// { icon: svgs.pencil, text: 'Edit task', action: () => onRename(entity.id) },
-			{ icon: svgs.delete, text: 'Delete task', action: () => onRemove(entity.id) }
-		],
 		group: [
 			// { icon: svgs.pencil, text: 'Rename group', action: () => onRename(entity) },
 			{ icon: svgs.delete, text: 'Delete group', action: () => onRemove(entity.id) }
+		],
+		task: [
+			// { icon: svgs.pencil, text: 'Edit task', action: () => onRename(entity.id) },
+			{ icon: svgs.delete, text: 'Delete task', action: () => onRemove(entity.id) },
+			{ icon: svgs.archive, text: 'Archive', action: () => onUpdate( Date.now(), 'archivedAt') },
 		]
 	}
 

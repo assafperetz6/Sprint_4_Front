@@ -8,8 +8,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_SELECTED_TASKS } from '../store/reducers/board.reducer'
 import { makeId } from '../services/util.service'
-// import '../assets/animted icons/Duplicate.json'
-// import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 
 export function TaskActionMenu({ tasks }) {
 	const dispatch = useDispatch()

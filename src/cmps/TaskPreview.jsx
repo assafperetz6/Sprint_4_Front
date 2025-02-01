@@ -13,7 +13,7 @@ import { ContextMenu } from './ContextMenu'
 import { Draggable } from '@hello-pangea/dnd'
 
 export function TaskPreview({ group, task, idx }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
+	const board = useSelector((storeState) => storeState.boardModule.board)
 	const [isTaskHovered, setIsTaskHovered] = useState(false)
 	const [titleToEdit, setTitleToEdit] = useState(task.title)
 	const [activeMenuId, setActiveMenuId] = useState(null)
@@ -23,36 +23,84 @@ export function TaskPreview({ group, task, idx }) {
 		setTitleToEdit(task.title)
 	}, [task.title])
 
-	async function onSaveTask(newTitle) {
-		try {
-			await updateTask(board._id, group.id, { ...task, title: newTitle }, { txt: 'Chnaged Title' })
-		} catch (err) {
-			showErrorMsg('Cannot update title')
-			console.error('Cannot update title:', err)
-		}
-	}
+	// async function onSaveTask(newTitle) {
+	// 	try {
+	// 		await updateTask(
+	// 			board._id,
+	// 			group.id,
+	// 			{ ...task, title: newTitle },
+	// 			{ txt: 'Changed Title' }
+	// 		)
+	// 	} catch (err) {
+	// 		showErrorMsg('Cannot update title')
+	// 		console.error('Cannot update title:', err)
+	// 	}
+	// }
 
+	// REFACTOR FN TO BE GENERIC
+
+	async function onSaveTask(value, key = 'title') {
+		console.log({ [key]: value })
+			
+		try {
+		  await updateTask(
+			board._id,
+			group.id,
+			{ ...task, [key]: value },
+			{ txt: key === 'archivedAt' ? `Archived task ${task.id}` : `Changed ${key}` }
+		  )
+		} catch (err) {
+		  showErrorMsg(`Cannot update ${key}`)
+		  console.error(`Cannot update ${key}:`, err)
+		}
+	  }
 	// console.log(board.activities)
 
 	return (
 		<Draggable key={task.id} draggableId={task.id} index={idx}>
 			{(provided, snapshot) => (
-				<li className={`task-preview task-row flex full ${snapshot.isDragging ? 'dragging' : ''}`} {...provided.draggableProps} ref={provided.innerRef}>
+				<li
+					className={`task-preview task-row flex full ${
+						snapshot.isDragging ? 'dragging' : ''
+					}`}
+					{...provided.draggableProps}
+					ref={provided.innerRef}
+				>
 					<section className="sticky-container">
 						<div className="context-btn-container">
-							<button className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`} onClick={ev => setActiveMenuId(prev => (prev === task.id ? null : task.id))} ref={buttonRef}>
+							<button
+								className={`task-context-menu ${
+									activeMenuId === task.id ? 'open' : ''
+								}`}
+								onClick={(ev) =>
+									setActiveMenuId((prev) => (prev === task.id ? null : task.id))
+								}
+								ref={buttonRef}
+							>
 								{svgs.threeDots}
 							</button>
 						</div>
 
-						<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }} />
+						<div
+							className="colored-border"
+							style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
+						/>
 
 						<Checkbox task={task} groupId={group.id} />
 
 						<section className="task-title">
-							<div className="title-main-container" onMouseEnter={() => setIsTaskHovered(true)} onMouseLeave={() => setIsTaskHovered(false)} {...provided.dragHandleProps}>
+							<div
+								className="title-main-container"
+								onMouseEnter={() => setIsTaskHovered(true)}
+								onMouseLeave={() => setIsTaskHovered(false)}
+								{...provided.dragHandleProps}
+							>
 								<InlineEdit value={titleToEdit} onSave={onSaveTask} />
-								<Link to={`task/${task.id}`} className="open-task-details" style={{ display: isTaskHovered ? 'flex' : 'none' }}>
+								<Link
+									to={`task/${task.id}`}
+									className="open-task-details"
+									style={{ display: isTaskHovered ? 'flex' : 'none' }}
+								>
 									&nbsp; {svgs.expand} open
 								</Link>
 							</div>
@@ -73,8 +121,8 @@ export function TaskPreview({ group, task, idx }) {
 							entity={task}
 							onClose={() => setActiveMenuId(null)}
 							onRemove={() => removeTask(board._id, task.id, group.id)}
-							onUpdate={updatedTask => onSaveTask(updatedTask.title)}
-							onRename={task => setTitleToEdit(task.title)}
+							onUpdate={onSaveTask}
+							onRename={(task) => setTitleToEdit(task.title)}
 							referenceElement={buttonRef.current}
 						/>
 					)}

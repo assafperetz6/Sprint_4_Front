@@ -220,7 +220,8 @@ async function saveTask(boardId, groupId, task, activity, isDuplicate = false) {
 			priority: task.priority,
 			dueDate: task.dueDate,
 			timeline: task.timeline,
-			status: task.status
+			status: task.status,
+			archivedAt: task.archivedAt
 		}
 	
 		const board = await getById(boardId)
