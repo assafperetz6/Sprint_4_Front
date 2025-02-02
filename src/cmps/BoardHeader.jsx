@@ -1,11 +1,38 @@
+import { useEffect, useState } from 'react'
+import { boardService } from '../services/board'
+import { showErrorMsg } from '../services/event-bus.service'
 import { svgs } from '../services/svg.service'
+import { addTask } from '../store/actions/board.actions'
+import { useParams } from 'react-router'
 
-export function BoardHeader({ board }) {
+export function BoardHeader({ board, setFilterBy, filterBy }) {
+	const [isTxtFilter, setIsTxtFilter] = useState(false)
+
 	function getMemberIcons() {
 		// TODO: should return last two members on the activity log
 
 		return svgs.person
 		return <img src={board.createdBy?.imgUrl} alt="userImg" />
+	}
+
+	async function onAddTask() {
+		try {
+			addTask(
+				board._id,
+				board.groups[0].id,
+				boardService.getEmptyTask(),
+				{ txt: 'Added task' },
+				'unShift'
+			)
+		} catch (err) {
+			showErrorMsg('cannot add task')
+			console.log(err)
+			throw err
+		}
+	}
+
+	function onSetFilterBy(value) {
+		setFilterBy(value)
 	}
 
 	return (
@@ -31,10 +58,22 @@ export function BoardHeader({ board }) {
 			</section>
 			<section className="task-actions">
 				<div className="add-task-header">
-					<button>New task</button>
+					<button onClick={onAddTask}>New task</button>
 					<button>{svgs.arrowDown}</button>
 				</div>
-				<button>{svgs.search} Search</button>
+				<label className="txt-filter-container flex align-center">
+					<span>{svgs.search}</span>
+					<input
+						className="txt-filter"
+
+						value={filterBy}
+						type="text"
+						onBlur={() => setIsTxtFilter(false) }
+						onFocus={(ev) => setIsTxtFilter(true)}
+						onChange={(ev) => onSetFilterBy(ev.target.value)}
+						placeholder={isTxtFilter ? 'Search this board' : 'Search'}
+					/>
+				</label>
 				<button>{svgs.person} Person</button>
 				<button>
 					{svgs.filter} Filter {svgs.arrowDown}

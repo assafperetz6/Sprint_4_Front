@@ -7,9 +7,14 @@ import { useNavigate } from 'react-router'
 import { svgs } from '../services/svg.service.jsx'
 import { GroupList } from '../cmps/GroupList.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
+import { useSearchParams } from 'react-router-dom'
 
 export function BoardDetails() {
-	const board = useSelector(storeState => storeState.boardModule.board)
+	const board = useSelector((storeState) => storeState.boardModule.board)
+
+	const [searchParams, setSearchParams] = useSearchParams()
+	const [filterBy, setFilterBy] = useState(searchParams.get('txt') || '')
+
 	const [isClosing, setIsClosing] = useState(false)
 	const { boardId } = useParams()
 	const navigate = useNavigate()
@@ -17,9 +22,37 @@ export function BoardDetails() {
 	const [isScrolledTop, setIsScrolledTop] = useState(true)
 	const boardDetailsRef = useRef(null)
 
-	const handleScroll = e => {
+	useEffect(() => {
+        const txtParam = searchParams.get('txt')
+        if (txtParam !== filterBy) {
+            setFilterBy(txtParam || '')
+        }
+    }, [searchParams])
+
+	const handleScroll = (e) => {
 		if (e.target.scrollTop === 0 && !isScrolledTop) setIsScrolledTop(true)
 		else if (e.target.scrollTop > 0 && isScrolledTop) setIsScrolledTop(false)
+	}
+
+	function handleFilter(txt) {
+        setFilterBy(txt)
+        if (txt) searchParams.set('txt', txt)
+        else searchParams.delete('txt')
+        setSearchParams(searchParams)
+    }
+
+	const filteredGroups = board?.groups
+		.map((group) => ({
+			...group,
+			tasks: group.tasks.filter((task) =>
+				task.title.toLowerCase().includes(filterBy.toLowerCase())
+			),
+		}))
+		.filter((group) => group.tasks.length > 0)
+
+	const displayedBoard = {
+		...board,
+		groups: filterBy ? filteredGroups : board?.groups,
 	}
 
 	useEffect(() => {
@@ -36,18 +69,21 @@ export function BoardDetails() {
 
 	if (!board) return null
 	return (
-		<section className="board-details" ref={boardDetailsRef} onScroll={handleScroll}>
-			<BoardHeader board={board} />
+		<section
+			className="board-details"
+			ref={boardDetailsRef}
+			onScroll={handleScroll}
+		>
+			<BoardHeader board={board} filterBy={filterBy} setFilterBy={handleFilter} />
 
-			{!!board.groups.length && <GroupList groups={board.groups} isScrolledTop={isScrolledTop} scrollContainer={boardDetailsRef.current} />}
+			{!!displayedBoard.groups.length && (
+				<GroupList
+					groups={displayedBoard.groups}
+					isScrolledTop={isScrolledTop}
+					scrollContainer={boardDetailsRef.current}
+				/>
+			)}
 			<Outlet context={{ isClosing, closeTaskDetails }} />
 		</section>
 	)
-}
-
-{
-	/* <section className="board-details">
-<button onClick={() => navigate('/board')}>back</button>
-<pre>{JSON.stringify(board, null, 2)}</pre>
-</section> */
 }

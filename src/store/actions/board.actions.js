@@ -129,10 +129,10 @@ export async function removeTask(boardId, taskId, groupId) {
 		throw err
 	}
 }
-export async function addTask(boardId, groupId, task, activity) {
+export async function addTask(boardId, groupId, task, activity, unShift = false) {
 	try {
 		const activityToSave = await _addActivity(boardId, groupId, task, activity)
-		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
+		const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave, unShift)
 
 		store.dispatch(getCmdSetBoard(savedBoard))
 	} catch (err) {

@@ -158,36 +158,4 @@
             padding: 4px 1px;
         }
     }
-
-    .task-actions {
-        align-items: center;
-        padding-block: 16px;
-
-        > button {
-            @include alt-btn;
-
-            width: unset;
-            height: 30px;
-
-            padding: 6px 12px 6px 8px;
-            text-wrap: nowrap;
-        }
-
-        .toggle-board-tabs {
-
-            height: 24px;
-            width: 24px;
-
-            background-color: $hovered-btns;
-            padding: 0;
-            border-radius: 50%;
-            margin-inline-start: auto;
-
-            transition: 100ms;
-
-            &:hover {
-                filter: brightness(0.95);
-            }
-        }
-    }
 }

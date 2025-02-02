@@ -209,7 +209,7 @@ async function removeTask(boardId, taskId, groupId) {
 	}
 }
 
-async function saveTask(boardId, groupId, task, activity) {
+async function saveTask(boardId, groupId, task, activity, unShift = false) {
 	try {
 		const taskToSave = {
 			id: task.id,
@@ -234,7 +234,7 @@ async function saveTask(boardId, groupId, task, activity) {
 			tasks.splice(taskIdx, 1, taskToSave)
 		} else {
 			taskToSave.id = makeId()
-			tasks.push(taskToSave)
+			unShift ? tasks.unshift(taskToSave) : tasks.push(taskToSave)
 			activity.task.id = taskToSave.id
 		}
 
