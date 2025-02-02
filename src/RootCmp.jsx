@@ -17,7 +17,7 @@ import { TopBar } from './cmps/TopBar.jsx'
 import { TaskDetails } from './cmps/TaskDetails.jsx'
 import { LandingPage } from './pages/LandingPage.jsx'
 
-export function RootCmp() {
+export function RootCmp() {	
 	return (
 		<div className="main-container">
 			<TopBar />

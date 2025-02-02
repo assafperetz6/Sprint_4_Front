@@ -20,12 +20,29 @@ export function SideBar() {
 
 	const [activeMenuId, setActiveMenuId] = useState(null)
 	const [boardToEdit, setboardToEdit] = useState(null)
+	const [toggleFavorites, setToggleFavorites] = useState(false)
+
 	const [isCollapsed, setIsCollapsed] = useState(false)
 	const [isEditing, setIsEditing] = useState(true)
 	const [isHovered, setIsHovered] = useState(false)
+
 	const { pathname } = useLocation()
 	const toggleSidebarRef = useRef()
 	const buttonRefs = useRef({})
+
+	const boardItemProps = {
+		onRemoveBoard,
+		onUpdateBoard,
+		onRenameBoard,
+		isEditing,
+		setIsEditing,
+		boardToEdit,
+		setboardToEdit,
+		toggleContextMenu,
+		activeMenuId,
+		setActiveMenuId,
+		buttonRefs,
+	}
 
 	useEffect(() => {
 		if (!boards?.length) loadBoards()
@@ -35,7 +52,9 @@ export function SideBar() {
 		if (!loggedInUser) return 'Guest'
 
 		let fullname = loggedInUser.fullname
-		let firstName = fullname.includes(' ') ? loggedInUser.fullname.split(' ')[0] : fullname
+		let firstName = fullname.includes(' ')
+			? loggedInUser.fullname.split(' ')[0]
+			: fullname
 
 		firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
 		return firstName ? firstName : 'Guest'
@@ -78,11 +97,14 @@ export function SideBar() {
 	}
 
 	if (pathname.startsWith('/login')) return null
+
 	return (
 		<>
 			<button
 				ref={toggleSidebarRef}
-				className={`collapsed-toggle-sidebar ${!isCollapsed || isHovered ? 'hidden' : ''}`}
+				className={`collapsed-toggle-sidebar ${
+					!isCollapsed || isHovered ? 'hidden' : ''
+				}`}
 				onClick={toggleSidebar}
 			>
 				{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}
@@ -111,77 +133,120 @@ export function SideBar() {
 				</nav>
 
 				<div className="favorite-container">
-					<button className="toggle-favorites">{svgs.star} Favorites</button>
+					<button
+						className={`toggle-favorites ${toggleFavorites ? 'open' : ''}`}
+						onClick={() => setToggleFavorites((prev) => !prev)}
+					>
+						<span>{svgs.star} Favorites</span>
+						<span>{toggleFavorites ? svgs.arrowUp : svgs.arrowDown}</span>
+					</button>
+
+					{toggleFavorites && (
+						<ul>
+							{boards
+								.filter((b) => b.isStarred)
+								.map((board) => (
+									<li key={board._id}>
+										<BoardListItem {...boardItemProps} board={board} />
+									</li>
+								))}
+						</ul>
+					)}
 				</div>
 
-				<section className="workspaces-actions">
-					<div className="workspaces-wrapper">
+				{!toggleFavorites && (
+				<>
+					<section className="workspaces-actions">
 						<div className="workspaces-wrapper">
-							<div>{svgs.workspaces} Workspaces</div>
-							<button>{svgs.threeDots}</button>
+							<div className="workspaces-wrapper">
+								<div>{svgs.workspaces} Workspaces</div>
+								<button>{svgs.threeDots}</button>
+							</div>
+							<button>{svgs.search}</button>
 						</div>
-						<button>{svgs.search}</button>
-					</div>
 
-					<div className="workspaces-wrapper">
-						<button className="workspace-list-btn">
-							<div>S {svgs.workspaceHouse}</div>
-							<span>{getUserFirstName()}'s main workspace</span>
-						</button>
-						<button className="add-workspace-item" onClick={onAddBoard}>
-							{svgs.plus}
-						</button>
-					</div>
-				</section>
-
-				<section className="board-links">
-					{boards.map((board) => (
-						<div key={board._id} className="link-wrapper">
-							<NavLink className="board-link" to={`/board/${board._id}`}>
-								{svgs.board}
-								{isEditing && boardToEdit === board._id ? (
-									<InlineEdit
-										value={board.title}
-										onSave={(newTitle) => {
-											onUpdateBoard({ ...board, title: newTitle })
-											setIsEditing(false)
-											setboardToEdit(null)
-										}}
-										isEditing={true}
-									/>
-								) : (
-									<span>{board.title}</span>
-								)}
-							</NavLink>
-							<button
-								className={`board-options ${
-									activeMenuId === board._id ? 'open' : ''
-								}`}
-								onClick={(ev) => toggleContextMenu(ev, board._id)}
-								ref={(el) => (buttonRefs.current[board._id] = el)}
-							>
-								{svgs.threeDots}
+						<div className="workspaces-wrapper">
+							<button className="workspace-list-btn">
+								<div>S {svgs.workspaceHouse}</div>
+								<span>{getUserFirstName()}'s main workspace</span>
 							</button>
-
-							{/* {activeMenuId === board._id && <ContextMenu board={board} onClose={() => setActiveMenuId(null)} onRemoveBoard={onRemoveBoard} onUpdateBoard={onUpdateBoard} onRenameBoard={onRenameBoard} />} */}
-							{activeMenuId === board._id && (
-								<ContextMenu
-									type="board"
-									entity={board}
-									onClose={() => setActiveMenuId(null)}
-									onRemove={onRemoveBoard}
-									onUpdate={onUpdateBoard}
-									onRename={onRenameBoard}
-									referenceElement={buttonRefs.current[board._id]}
-								/>
-							)}
+							<button className="add-workspace-item" onClick={onAddBoard}>
+								{svgs.plus}
+							</button>
 						</div>
-					))}
-					<NavLink to="/dashboard">
-						{svgs.dashboard} Dashboard and reporting
-					</NavLink>
-				</section>
+					</section>
+					<section className="board-links">
+						{boards.map((board) => (
+							<BoardListItem
+								key={board._id}
+								{...boardItemProps}
+								board={board}
+							/>
+						))}
+						<NavLink to="/dashboard">
+							{svgs.dashboard} Dashboard and reporting
+						</NavLink>
+					</section>
+				</>
+				)}
 			</aside>
 		</>
+	)
+}
+
+function BoardListItem({ ...props }) {
+	const {
+		board,
+		onRemoveBoard,
+		onUpdateBoard,
+		onRenameBoard,
+		isEditing,
+		setIsEditing,
+		boardToEdit,
+		setboardToEdit,
+		toggleContextMenu,
+		activeMenuId,
+		setActiveMenuId,
+		buttonRefs,
+	} = props
+
+	return (
+		<div className="link-wrapper">
+			<NavLink className="board-link" to={`/board/${board._id}`}>
+				{svgs.board}
+				{isEditing && boardToEdit === board._id ? (
+					<InlineEdit
+						value={board.title}
+						onSave={(newTitle) => {
+							onUpdateBoard({ ...board, title: newTitle })
+							setIsEditing(false)
+							setboardToEdit(null)
+						}}
+						isEditing={true}
+					/>
+				) : (
+					<span>{board.title}</span>
+				)}
+			</NavLink>
+			<button
+				className={`board-options ${activeMenuId === board._id ? 'open' : ''}`}
+				onClick={(ev) => toggleContextMenu(ev, board._id)}
+				ref={(el) => (buttonRefs.current[board._id] = el)}
+			>
+				{svgs.threeDots}
+			</button>
+
+			{activeMenuId === board._id && (
+				<ContextMenu
+					type="board"
+					entity={board}
+					onClose={() => setActiveMenuId(null)}
+					onRemove={onRemoveBoard}
+					onUpdate={onUpdateBoard}
+					onRename={onRenameBoard}
+					referenceElement={buttonRefs.current[board._id]}
+				/>
+			)}
+		</div>
 	)
 }
