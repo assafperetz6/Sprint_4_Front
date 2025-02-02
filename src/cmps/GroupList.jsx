@@ -37,7 +37,7 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 		const windowVH = window.innerHeight
 
 		const options = {
-			rootMargin: `-200px 0px -${windowVH - 100}px`,
+			rootMargin: `-200px 0px -${windowVH - 130}px`,
 		}
 
 		const observer = new IntersectionObserver((entries) => {
