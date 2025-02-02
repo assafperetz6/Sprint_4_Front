@@ -119,6 +119,7 @@ async function removeGroup(boardId, groupId) {
 
 function getGroupByTask(board, taskId) {
   const newBoard = structuredClone(board)
+  console.log('🚀 ~ getGroupByTask ~ newBoard:', newBoard)
   return newBoard.groups.find((g) => g.tasks.some((t) => t.id === taskId))
 }
 
@@ -207,7 +208,8 @@ async function saveTask(boardId, groupId, task, activity) {
       priority: task.priority,
       dueDate: task.dueDate,
       timeline: task.timeline,
-      status: task.status
+      status: task.status,
+      comments: task.comments
     }
     const board = await getById(boardId)
 
@@ -239,7 +241,7 @@ async function saveTask(boardId, groupId, task, activity) {
 async function getTaskActivities(boardId, taskId) {
   try {
     const board = await getById(boardId)
-
+    if (!board.activities) return
     const taskActivities = board.activities?.filter((activity) => activity.entityId === taskId) || []
 
     return taskActivities.sort((a, b) => b.createdAt - a.createdAt)
