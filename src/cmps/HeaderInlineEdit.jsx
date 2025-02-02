@@ -108,7 +108,7 @@ export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange,
 	}
 
 	return (
-		<div className={`header-inline-edit ${isEditing ? 'edit' : ''} ${className}`} onClick={startEditing} style={{ color: style?.color }}>
+		<div className={`header-inline-edit ${isEditing ? 'edit' : ''} ${className}`} onClick={startEditing} style={{ color: style?.color, width: '300px' }}>
 			{isEditing ? (
 				<>
 					<span className="color-picker-icon" style={{ background: style?.color }} onClick={openColorPicker} ref={setReferenceElement} />

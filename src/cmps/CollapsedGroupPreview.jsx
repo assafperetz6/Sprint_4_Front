@@ -9,7 +9,7 @@ import { Draggable } from '@hello-pangea/dnd'
 export function CollapsedGroupPreview({ group, cmpsOrder, idx, isAllCollapsed }) {
 	return (
 		<>
-			<section className="sticky-container" style={{ width: '400px', height: '60px'}}>
+			<section className="sticky-container" style={{ backgroundColor: '#fff', zIndex: '70' }}>
 				<div className="white-space"></div>
 				<div
 					className="colored-border"
