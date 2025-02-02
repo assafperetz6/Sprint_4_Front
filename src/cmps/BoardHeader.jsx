@@ -4,9 +4,10 @@ import { svgs } from '../services/svg.service'
 export function BoardHeader({ board }) {
   function getMemberIcons() {
     // TODO: should return last two members on the activity log
-
-    return svgs.person
-    return <img src={board.createdBy?.imgUrl} alt="userImg" />
+    const boardMembers = board.members
+    return boardMembers
+      .slice(0, 2)
+      .map((member) => <img src={member.imgUrl} alt="userImg" key={member._id} width={20} height={20} style={{ borderRadius: '50%' }} />)
   }
 
   return (
@@ -18,10 +19,12 @@ export function BoardHeader({ board }) {
 
         <section className="board-actions">
           <button className="group-chat">{svgs.chat}</button>
-          <button className="activity-log">
-            <Link to={`/board/${board._id}/activity_log`}>{getMemberIcons()}</Link>
+          <button className="activity-log flex align-center">
+            <Link className="flex align-center" to={`/board/${board._id}/activity_log`}>
+              {getMemberIcons()}
+            </Link>
           </button>
-          <button className="invite-members">Invite / 1</button>
+          <button className="invite-members">Invite / {board.members.length}</button>
           <button className="copy-link">{svgs.link}</button>
           <button className="options">{svgs.threeDots}</button>
         </section>

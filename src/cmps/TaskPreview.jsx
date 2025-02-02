@@ -113,8 +113,10 @@ export function TaskPreview({ group, task, idx }) {
                 <div className="add-update-btn">{svgs.addUpdate}</div>
               ) : (
                 <div className="add-update-btn has-updates">
-                  {svgs.comment}
-                  <span className="update-count">{task.comments.length}</span>
+                  <Link to={`task/${task.id}`}>
+                    {svgs.comment}
+                    <span className="update-count">{task.comments.length}</span>
+                  </Link>
                 </div>
               )}
             </section>
