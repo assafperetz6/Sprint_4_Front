@@ -4,7 +4,7 @@ import { hexToRgba } from '../services/util.service'
 
 import { useSelector } from 'react-redux'
 import { DynamicCmp } from './DynamicCmp'
-import { showErrorMsg } from '../services/event-bus.service'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
 import { useEffect, useRef, useState } from 'react'
@@ -59,6 +59,7 @@ export function TaskPreview({ group, task, idx }) {
         oldState: task
       }
       await removeTask(boardId, groupId, taskId, activity)
+      showSuccessMsg('We successfully deleted 1 item')
     } catch (err) {
       console.error('Cannot remove task:', err)
       showErrorMsg('Cannot remove task')
