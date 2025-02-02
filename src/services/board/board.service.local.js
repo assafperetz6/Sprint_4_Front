@@ -52,7 +52,8 @@ async function save(board) {
       cmpsOrder: board.cmpsOrder,
       statusLabels: board.statusLabels,
       priorityLabels: board.priorityLabels,
-      activities: board.activities
+      activities: board.activities,
+      comments: board.comments
     }
     savedBoard = await storageService.put(STORAGE_KEY, boardToSave)
   } else {
@@ -65,7 +66,8 @@ async function save(board) {
       cmpsOrder: board.cmpsOrder,
       statusLabels: board.statusLabels,
       priorityLabels: board.priorityLabels,
-      activities: board.activities
+      activities: board.activities,
+      comments: board.comments
     }
     savedBoard = await storageService.post(STORAGE_KEY, boardToSave)
   }

@@ -77,7 +77,7 @@ export function BoardModal() {
                 </button>
               </section>
               <section className="details-bottom-bar">
-                <DynamicCmp view={view} />
+                <DynamicCmp view={view} board={board} type="board" />
               </section>
             </>
           )}
@@ -87,10 +87,10 @@ export function BoardModal() {
   )
 }
 
-function DynamicCmp({ view, task }) {
+function DynamicCmp({ view, task, board, type = 'task' }) {
   switch (view) {
     case 'updates':
-      return <Updates task={task} />
+      return <Updates task={task} board={board} type={type} />
     case 'files':
       return <h1>files: under construction</h1>
     case 'activity':

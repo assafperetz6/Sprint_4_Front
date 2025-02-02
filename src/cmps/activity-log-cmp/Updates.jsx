@@ -3,17 +3,18 @@ import ReactQuill, { Quill } from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { useSelector } from 'react-redux'
 import { userService } from '../../services/user'
-import { updateTask } from '../../store/actions/board.actions'
+import { updateBoard, updateTask } from '../../store/actions/board.actions'
 import { boardService } from '../../services/board'
 import { showErrorMsg } from '../../services/event-bus.service'
 import { makeId } from '../../services/util.service'
+import { svgs } from '../../services/svg.service'
 
-export function Updates({ task }) {
+export function Updates({ task, board, type = 'task' }) {
   const DEFAULT_USER = userService.getDefaultUser()
   const [commentToEdit, setCommentToEdit] = useState('')
   const [isEditorOpen, setIsEditorOpen] = useState(false)
   const user = useSelector((storeState) => storeState.userModule.user)
-  const board = useSelector((storeState) => storeState.boardModule.board)
+  const currentBoard = useSelector((storeState) => storeState.boardModule.board)
 
   async function handleSave() {
     const newComment = {
@@ -23,22 +24,74 @@ export function Updates({ task }) {
       by: user || DEFAULT_USER
     }
 
-    const taskToSave = { ...task, comments: [...task.comments, newComment] }
+    if (type === 'task') {
+      const taskToSave = { ...task, comments: [...task.comments, newComment] }
+      const activity = {
+        type: 'update',
+        oldState: task.comments,
+        newState: taskToSave.comments,
+        description: 'Update task comments'
+      }
 
-    const activity = {
-      type: 'update',
-      oldState: task.comments,
-      newState: taskToSave.comments,
-      description: 'Update task comments'
+      try {
+        const group = await boardService.getGroupByTask(currentBoard, task.id)
+        updateTask(currentBoard._id, group.id, taskToSave, activity)
+        setIsEditorOpen(false)
+      } catch (err) {
+        console.log('cannot update task', err)
+        showErrorMsg('Cannot update task')
+      }
+    } else {
+      const boardToSave = { ...board, comments: [...(board.comments || []), newComment] }
+      const activity = {
+        type: 'update',
+        oldState: board.comments || [],
+        newState: boardToSave.comments,
+        description: 'Update board comments'
+      }
+
+      try {
+        await updateBoard(boardToSave)
+        setIsEditorOpen(false)
+      } catch (err) {
+        console.log('cannot update board', err)
+        showErrorMsg('Cannot update board')
+      }
     }
+  }
 
-    try {
-      const group = await boardService.getGroupByTask(board, task.id)
-      updateTask(board._id, group.id, taskToSave, activity)
-      setIsEditorOpen(false)
-    } catch (err) {
-      console.log('cannot update task', err)
-      showErrorMsg('Cannot update task')
+  async function handleDelete(commentId) {
+    if (type === 'task') {
+      const taskToSave = { ...task, comments: task.comments.filter((comment) => comment.id !== commentId) }
+      const activity = {
+        type: 'delete',
+        oldState: task.comments,
+        newState: taskToSave.comments,
+        description: 'Delete comment'
+      }
+
+      try {
+        const group = await boardService.getGroupByTask(currentBoard, task.id)
+        updateTask(currentBoard._id, group.id, taskToSave, activity)
+      } catch (err) {
+        console.log('cannot update task', err)
+        showErrorMsg('Cannot update task')
+      }
+    } else {
+      const boardToSave = { ...board, comments: board.comments.filter((comment) => comment.id !== commentId) }
+      const activity = {
+        type: 'delete',
+        oldState: board.comments,
+        newState: boardToSave.comments,
+        description: 'Delete comment'
+      }
+
+      try {
+        await updateBoard(boardToSave)
+      } catch (err) {
+        console.log('cannot update board', err)
+        showErrorMsg('Cannot update board')
+      }
     }
   }
 
@@ -56,6 +109,8 @@ export function Updates({ task }) {
     return `${days}d`
   }
 
+  const comments = type === 'task' ? task?.comments : board?.comments || []
+
   return (
     <section className="updates">
       <section className="editor-container">
@@ -68,23 +123,27 @@ export function Updates({ task }) {
           </>
         ) : (
           <div className="editor-placeholder" onClick={() => setIsEditorOpen(true)}>
-            Write a Update
+            Write an Update
           </div>
         )}
       </section>
 
       <section className="comments-container">
-        {task?.comments.length ? (
-          task.comments.map((comment) => (
+        {comments.length ? (
+          comments.map((comment) => (
             <article key={comment.id} className="post">
-              <div className="post-header">
+              <div className="post-header flex justify-between">
                 <div className="user-info flex align-center" style={{ gap: '10px' }}>
                   <img src={comment.by.imgUrl || DEFAULT_USER.imgUrl} alt="user img" style={{ width: '30px' }} className="user-avatar" />
                   <h3>{comment.by.fullname || DEFAULT_USER.fullname}</h3>
+                  <div className="post-time">
+                    <h3>{formatTimeAgo(comment.createdAt)}</h3>
+                  </div>
                 </div>
-                <div className="post-time">
-                  <h3>{formatTimeAgo(comment.createdAt)}</h3>
-                </div>
+
+                <button className="delete-btn" onClick={() => handleDelete(comment.id)}>
+                  {svgs.delete}
+                </button>
               </div>
 
               <div className="post-text" dangerouslySetInnerHTML={{ __html: comment.text }} />
@@ -577,13 +636,6 @@ export function NoUpdatesYet() {
                         fill="rgb(203,221,255)"
                         fillOpacity={1}
                         d=" M0,-3.2130000591278076 C1.7740000486373901,-3.2130000591278076 3.2130000591278076,-1.7740000486373901 3.2130000591278076,0 C3.2130000591278076,1.7740000486373901 1.7740000486373901,3.2130000591278076 0,3.2130000591278076 C-1.7740000486373901,3.2130000591278076 -3.2130000591278076,1.7740000486373901 -3.2130000591278076,0 C-3.2130000591278076,-1.7740000486373901 -1.7740000486373901,-3.2130000591278076 0,-3.2130000591278076z"
-                      />
-                    </g>
-                    <g opacity={1} transform="matrix(1,0,0,1,516.406982421875,552.823974609375)">
-                      <path
-                        fill="rgb(203,221,255)"
-                        fillOpacity={1}
-                        d=" M12.33899974822998,7.168000221252441 C12.33899974822998,7.168000221252441 -12.34000015258789,7.168000221252441 -12.34000015258789,7.168000221252441 C-13.368000030517578,7.168000221252441 -13.979999542236328,6.019999980926514 -13.406999588012695,5.166999816894531 C-13.406999588012695,5.166999816894531 -5.513000011444092,-6.5980000495910645 -5.513000011444092,-6.5980000495910645 C-5.010000228881836,-7.3480000495910645 -3.9119999408721924,-7.359000205993652 -3.3940000534057617,-6.619999885559082 C-3.3940000534057617,-6.619999885559082 2.7239999771118164,2.1080000400543213 2.7239999771118164,2.1080000400543213 C3.1710000038146973,2.746999979019165 4.079999923706055,2.8429999351501465 4.651000022888184,2.311000108718872 C4.651000022888184,2.311000108718872 7.663000106811523,-0.48899999260902405 7.663000106811523,-0.48899999260902405 C8.234000205993652,-1.0199999809265137 9.142999649047852,-0.9240000247955322 9.590999603271484,-0.2849999964237213 C9.590999603271484,-0.2849999964237213 13.392000198364258,5.145999908447266 13.392000198364258,5.145999908447266 C13.98799991607666,5.998000144958496 13.378000259399414,7.168000221252441 12.33899974822998,7.168000221252441z"
                       />
                     </g>
                   </g>
