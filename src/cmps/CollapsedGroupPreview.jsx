@@ -6,10 +6,10 @@ import { TaskListHeader } from './TaskListHeader.jsx'
 import { svgs } from '../services/svg.service.jsx'
 import { Draggable } from '@hello-pangea/dnd'
 
-export function CollapsedGroupPreview({ group, cmpsOrder, idx }) {
+export function CollapsedGroupPreview({ group, cmpsOrder, idx, isAllCollapsed }) {
 	return (
 		<>
-			<section className="sticky-container">
+			<section className="sticky-container" style={{ width: '400px', height: '60px'}}>
 				<div className="white-space"></div>
 				<div
 					className="colored-border"
@@ -17,43 +17,43 @@ export function CollapsedGroupPreview({ group, cmpsOrder, idx }) {
 				></div>
 				<GroupTitle group={group} />
 			</section>
-			<section className="summary-columns">
+			{!isAllCollapsed && <section className="summary-columns">
 				<TaskListHeader
 					groupColor={group.style.color}
 					tasks={group.tasks}
 					isCollapsed={true}
 				/>
-				<GroupSummary group={group} cmpsOrder={cmpsOrder} isCollapsed={true} />
-			</section>
+			<GroupSummary group={group} cmpsOrder={cmpsOrder} isCollapsed={true} />
+			</section>}
 		</>
 	)
 }
 
-export function CollapsedDraggedPreview({ group, idx }) {
-	const taskCount = group.tasks.length
+// export function CollapsedDraggedPreview({ group, idx }) {
+// 	const taskCount = group.tasks.length
 
-	return (
-		<Draggable draggableId={group.id} index={idx}>
-			{(provided) => (
-				<section
-					className="sticky-container"
-					ref={provided.innerRef}
-					{...provided.dragHandleProps}
-				>
-					{/* <div className="white-space"></div> */}
-					<div
-						className="colored-border"
-						style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
-					></div>
-					<span className="toggle-collapse">{svgs.arrowRight}</span>
-					<div className="title-count-wrapper">
-						<h4 className="group-title">{group.title}</h4>
-						<span className="task-count">
-							{taskCount < 1 ? 'No' : taskCount} Item{taskCount > 1 ? 's' : ''}
-						</span>
-					</div>
-				</section>
-			)}
-		</Draggable>
-	)
-}
+// 	return (
+// 		<Draggable draggableId={group.id} index={idx}>
+// 			{(provided) => (
+// 				<section
+// 					className="sticky-container"
+// 					ref={provided.innerRef}
+// 					{...provided.dragHandleProps}
+// 				>
+// 					{/* <div className="white-space"></div> */}
+// 					<div
+// 						className="colored-border"
+// 						style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
+// 					></div>
+// 					<span className="toggle-collapse">{svgs.arrowRight}</span>
+// 					<div className="title-count-wrapper">
+// 						<h4 className="group-title">{group.title}</h4>
+// 						<span className="task-count">
+// 							{taskCount < 1 ? 'No' : taskCount} Item{taskCount > 1 ? 's' : ''}
+// 						</span>
+// 					</div>
+// 				</section>
+// 			)}
+// 		</Draggable>
+// 	)
+// }

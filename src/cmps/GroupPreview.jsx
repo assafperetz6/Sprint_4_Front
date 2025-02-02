@@ -9,8 +9,8 @@ export function GroupPreview({ group, cmpsOrder, idx, showHeader, isAllCollapsed
     return (
       <Draggable key={group.id} draggableId={group.id} index={idx}>
         {(provided) => (
-          <section className="collapsed-group-preview full" {...provided.draggableProps} ref={provided.innerRef} {...provided.dragHandleProps}>
-            <CollapsedGroupPreview group={group} cmpsOrder={cmpsOrder} idx={idx} />
+          <section className="collapsed-group-preview full" style={{ width: '400px', height: '60px'}} {...provided.draggableProps} ref={provided.innerRef} {...provided.dragHandleProps}>
+            <CollapsedGroupPreview group={group} cmpsOrder={cmpsOrder} idx={idx} isAllCollapsed={isAllCollapsed} />
           </section>
         )}
       </Draggable>

@@ -16,7 +16,6 @@ import { GroupPreview } from './GroupPreview.jsx'
 
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import { CollapsedGroupPreview } from './CollapsedGroupPreview.jsx'
-import { GroupsWhileDnd } from './GroupsWhileDnd.jsx'
 
 export function GroupList({ isScrolledTop, scrollContainer }) {
 	const board = useSelector((storeState) => storeState.boardModule.board)
