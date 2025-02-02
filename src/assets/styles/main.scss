@@ -42,6 +42,8 @@
 @import 'cmps/BoardPreview';
 @import 'cmps/GroupList.scss';
 @import 'cmps/GroupPreview.scss';
+@import 'cmps/CollapsedGroupPreview.scss';
+@import 'cmps/CollapsedGroupList.scss';
 @import 'cmps/GroupSummary.scss';
 
 @import 'cmps/TaskListHeader.scss';
@@ -50,6 +52,7 @@
 @import 'cmps/AddTask.scss';
 @import 'cmps/taskTitle.scss';
 @import 'cmps/TaskDetails.scss';
+
 @import 'cmps/Checkbox.scss';
 @import 'cmps/dynamic-cmps/MemberPicker';
 @import 'cmps/dynamic-cmps/LabelPicker';

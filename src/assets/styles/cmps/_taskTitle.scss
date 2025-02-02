@@ -1,237 +1,253 @@
 .task-title {
-	display: flex;
+  display: flex;
 
-	align-items: center;
-	justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
 
-	width: calc(100% - 78px);
-	flex-shrink: 0;
+  width: calc(100% - 78px);
+  flex-shrink: 0;
 
-	font-size: rem(14px);
-	height: 100%;
-	// width: var(--left-side-width);
-	flex-shrink: 0;
-	user-select: none;
+  font-size: rem(14px);
+  height: 100%;
+  // width: var(--left-side-width);
+  flex-shrink: 0;
+  user-select: none;
 
-	.title-main-container {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+  .title-main-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
 
-		height: $task-row-height;
+    height: $task-row-height;
 
-		flex: 1;
-		min-width: 0;
+    min-width: 0;
 
-		&:hover {
+    &:hover {
+      .inline-edit span {
+        width: calc(100% - 70px);
+      }
+      .open-task-details {
+        gap: 4px;
 
-			.inline-edit span {
-				width: calc(100% - 70px);
-			}
+        justify-content: center;
+        align-items: center;
+      }
 
-			.open-task-details {
-				gap: 4px;
+      .delete-btn {
+        background-color: $hovered-btns;
 
-				justify-content: center;
-				align-items: center;
-			}
+        opacity: 100;
+        visibility: visible;
+      }
+    }
 
-			.delete-btn {
-				background-color: $hovered-btns;
+    .input-wrapper {
+      display: flex;
+      // flex: 1;
+      width: max-content;
+      margin: 6px 10px 6px 26px;
+    }
 
-				opacity: 100;
-				visibility: visible;
-			}
-		}
+    .inline-edit {
+      padding-inline-start: 32px;
 
-		// input {
-		// 	all: unset;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
 
-		// 	width: fit-content;
-		// 	max-width: 100%;
-		// 	flex-shrink: 1;
-		// 	margin: 6px 10px 6px 26px;
+      padding-inline: 4px;
+      border-radius: 4px;
+      margin-inline-start: 30px;
 
-		// 	text-overflow: ellipsis;
-		// 	overflow: hidden;
-		// 	white-space: nowrap;
+      &.edit {
+        flex: 0 0 80%;
+      }
 
-		// 	cursor: text;
+      &:hover:not(.edit) {
+        // text-overflow: ellipsis;
+        // overflow: hidden;
+        // white-space: nowrap;
 
-		// 	&:hover {
-		// 		outline: 1px solid $input-hover-border-clr;
-		// 		border-radius: 4px;
-		// 		cursor: text;
-		// 	}
+        outline: 1px solid $input-hover-border-clr;
+        padding-inline: 4px;
 
-		// 	&:focus {
-		// 		background-color: #ffff;
-		// 		outline: 1px solid $clr7;
-		// 		border-radius: 4px;
-		// 	}
-		// }
+        border-radius: 4px;
+        cursor: text;
+      }
 
-		.input-wrapper {
-			display: flex;
-			// flex: 1;
-			width: max-content;
-			margin: 6px 10px 6px 26px;
-		}
+      input {
+        all: unset;
+        width: 100%;
 
-		// input {
-		// 	flex: 1;
-		// 	height: 24px;
-		// 	width: 100%; // Let it size naturally
-			
-		// 	padding: 0 0 0 4px;
-		// 	border: none;
-		// 	border-radius: 4px;
+        border-radius: 4px;
 
-		// 	text-overflow: ellipsis;
-		// 	overflow: hidden;
-		// 	white-space: nowrap;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
-		// 	font-family: $main-font-family;
-		// 	font-size: rem(14px);
-		
-		// 	cursor: text;
+        &:focus {
+          height: 20px;
+          background-color: #ffff;
+          border: 1px solid $clr7;
+        }
+      }
+    }
+  }
 
-		// 	background: none;
-		// }
+  .add-update-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 
-		.inline-edit {
-			flex: 1;
+    height: $task-row-height;
+    width: 65px;
 
-			padding-inline-start: 32px;
+    flex-shrink: 0;
 
-			text-overflow: ellipsis;
-			overflow: hidden;
-			white-space: nowrap;
-			
-			padding-inline: 4px;
-			border-radius: 4px;
-			margin-inline-start: 30px;
+    border-inline-start: $border;
 
-			&:hover {
+    &.has-updates {
+      color: $clr7;
+      position: relative;
 
-				// text-overflow: ellipsis;
-				// overflow: hidden;
-				// white-space: nowrap;
+      .update-count {
+        position: absolute;
+        right: 15px;
+        bottom: 9px;
+        line-height: 9px;
+        font-size: rem(10px);
+        padding: 2px 4px;
+        border-radius: 10px;
+        background-color: $clr7;
+        color: #ffff;
+      }
+    }
+  }
 
-				outline: 1px solid $input-hover-border-clr;
-				padding-inline: 4px;
+  .open-task-details {
+    display: none;
 
-				border-radius: 4px;
-				cursor: text;
-			}
+    height: 100%;
 
-			input {
-				all: unset;
-				flex: 1;
-				width: 100%;
-				
-				border-radius: 2px;
+    z-index: 40;
+    margin-inline-end: 10px;
 
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
+    .open {
+      color: rgb(50, 51, 56);
+      font-size: rem(13px);
+    }
 
-				&:focus {
-					height: 20px;
-					background-color: #ffff;
-					outline: 1px solid $clr7;
-				}
-			}
-		}
-	}
+    .icon {
+      font-size: rem(13px);
+    }
+  }
 
-	.open-task-details {
-		display: none;
-		justify-content: center;
-		align-items: center;
-		
-		height: 100%;
-		width: 64px;
-		
-		margin-inline-end: 10px;
-		// visibility: hidden;
-		// opacity: 0;
+  .title-main-container {
+    &:hover {
+      .inline-edit:not(.edit) ~ .open-task-details {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+  }
+  // .delete-btn {
+  // 	background-color: $hovered-btns;
 
-		z-index: 40;
-
-		.open {
-			color: rgb(50, 51, 56);
-			font-size: rem(13px);
-		}
-
-		.icon {
-			font-size: rem(13px);
-		}
-	}
-
-	.add-update-btn {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		cursor: pointer;
-
-		height: $task-row-height;
-		width: 65px;
-
-		flex-shrink: 0;
-
-		border-inline-start: $border;
-	}
-
-	.open-task-details {
-		display: flex;
-		align-items: center;
-		gap: 4px;
-
-		height: 100%;
-
-		z-index: 40;
-		.open {
-			color: rgb(50, 51, 56);
-			font-size: rem(13px);
-		}
-
-		.icon {
-			font-size: rem(13px);
-		}
-	}
-
-	&:hover {
-		.open-task-details {
-			margin-inline-end: 10px;
-			opacity: 1;
-		}
-
-		.delete-btn {
-			background-color: $hovered-btns;
-
-			opacity: 100;
-			visibility: visible;
-		}
-	}
-
-	.delete-btn {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		background-color: #00000000;
-		padding: 4px;
-		border-radius: 4px;
-		margin: 0;
-
-		color: $gray4;
-		opacity: 0;
-		visibility: hidden;
-
-		transition: opacity 100ms, visibility 100ms;
-	}
+  // 	opacity: 100;
+  // 	visibility: visible;
+  // }
 }
+
+// input {
+// 	all: unset;
+
+// 	width: fit-content;
+// 	max-width: 100%;
+// 	flex-shrink: 1;
+// 	margin: 6px 10px 6px 26px;
+
+// 	text-overflow: ellipsis;
+// 	overflow: hidden;
+// 	white-space: nowrap;
+
+// 	cursor: text;
+
+// 	&:hover {
+// 		outline: 1px solid $input-hover-border-clr;
+// 		border-radius: 4px;
+// 		cursor: text;
+// 	}
+
+// 	&:focus {
+// 		background-color: #ffff;
+// 		outline: 1px solid $clr7;
+// 		border-radius: 4px;
+// 	}
+// }
+
+// input {
+// 	flex: 1;
+// 	height: 24px;
+// 	width: 100%; // Let it size naturally
+
+// 	padding: 0 0 0 4px;
+// 	border: none;
+// 	border-radius: 4px;
+
+// 	text-overflow: ellipsis;
+// 	overflow: hidden;
+// 	white-space: nowrap;
+
+// 	font-family: $main-font-family;
+// 	font-size: rem(14px);
+
+// 	cursor: text;
+
+// 	background: none;
+// }
+
+// .open-task-details {
+// 	display: none;
+// 	justify-content: center;
+// 	align-items: center;
+
+// 	height: 100%;
+// 	width: 64px;
+
+// 	// visibility: hidden;
+// 	// opacity: 0;
+
+// 	z-index: 40;
+
+// 	.open {
+// 		color: rgb(50, 51, 56);
+// 		font-size: rem(13px);
+// 	}
+
+// 	.icon {
+// 		font-size: rem(13px);
+// 	}
+// }
+
+// .delete-btn {
+// 	display: flex;
+// 	justify-content: center;
+// 	align-items: center;
+
+// 	background-color: #00000000;
+// 	padding: 4px;
+// 	border-radius: 4px;
+// 	margin: 0;
+
+// 	color: $gray4;
+// 	opacity: 0;
+// 	visibility: hidden;
+
+// 	transition: opacity 100ms, visibility 100ms;
+// }
 
 // .conversation-icon-container {
 // 	cursor: pointer;

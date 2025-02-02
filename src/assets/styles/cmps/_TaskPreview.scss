@@ -4,6 +4,18 @@
 	border-block-end: 1px solid $clr8;
 	// margin-inline-start: 6px;
 
+	&.active {
+		background-color: $button-clicked-bgc;
+		.sticky-container {
+			background-color: $button-clicked-bgc;
+			box-shadow: none;
+		}
+		&:hover {
+			background-color: $button-clicked-bgc;
+			box-shadow: none;
+		}
+	}
+
 	.context-btn-container {
 		display: flex;
 		justify-content: center;
@@ -39,13 +51,13 @@
 		z-index: 30;
 	}
 
-	&:hover {
+	&:hover:not(.active) {
 		.sticky-container {
 			background-color: $task-hover-bgc;
 		}
 	}
 
-	&:hover > *:not(.context-btn-container) {
+	&:hover:not(.active) > *:not(.context-btn-container) {
 		background-color: $task-hover-bgc;
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
 	}
@@ -59,7 +71,7 @@
 		height: $task-row-height;
 	}
 
-	&:hover {
+	&:hover:not(.active) {
 		background-color: $task-hover-bgc;
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
 		.sticky-container {
