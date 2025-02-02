@@ -12,7 +12,7 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
 			{
 				name: 'offset',
 				options: {
-					offset: [-8, 4]
+					offset: type === 'board' ? [40, -25] : [0, 4]
 				}
 			},
 			{
@@ -60,7 +60,7 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
 	}
 
 	const currentMenuItems = menuItems[type] || []
-
+	
 	return (
 		<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
 			<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />

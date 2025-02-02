@@ -69,7 +69,7 @@
 	}
 
 	*:not(.toggle-sidebar) {
-		overflow: hidden;
+		// overflow: hidden;
 		transition: opacity 0.2s ease 150ms, padding 50ms;
 	}
 
