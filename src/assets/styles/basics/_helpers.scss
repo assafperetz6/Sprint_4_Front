@@ -1,76 +1,76 @@
 // Font Sizes
 .fs12 {
-	font-size: rem(12px);
+  font-size: rem(12px);
 }
 .fs14 {
-	font-size: rem(14px);
+  font-size: rem(14px);
 }
 .fs18 {
-	font-size: rem(18px);
+  font-size: rem(18px);
 }
 .fs20 {
-	font-size: rem(20px);
+  font-size: rem(20px);
 }
 .fs24 {
-	font-size: rem(24px);
+  font-size: rem(24px);
 }
 .fs28 {
-	font-size: rem(28px);
+  font-size: rem(28px);
 }
 .fs30 {
-	font-size: rem(30px);
+  font-size: rem(30px);
 }
 
 // flex helpers
 
 .flex {
-	display: flex;
+  display: flex;
 
-	> *.full {
-		flex: 1;
-	}
-	&.column {
-		flex-direction: column;
-	}
-	&.justify-center {
-		justify-content: center;
-	}
-	&.align-center {
-		align-items: center;
-	}
-	&.justify-between {
-		justify-content: space-between;
-	}
-	&.col {
-		flex-direction: column;
-	}
+  > *.full {
+    flex: 1;
+  }
+  &.col {
+    flex-direction: column;
+  }
+  &.justify-center {
+    justify-content: center;
+  }
+  &.align-center {
+    align-items: center;
+  }
+  &.justify-between {
+    justify-content: space-between;
+  }
+  &.col {
+    flex-direction: column;
+  }
 }
 
 .full {
-	grid-column: 1 / -1;
+  grid-column: 1 / -1;
 }
 
 .clickable {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .clean-link {
-	color: inherit;
-	text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 .clean-list {
-	list-style-type: none;
-	padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 // Media helpers
 
 .square-ratio {
-	@include aspect-ratio(1, 1);
+  @include aspect-ratio(1, 1);
 }
 .video-ratio {
-	@include aspect-ratio(16, 9);
+  @include aspect-ratio(16, 9);
 }
 .portrait-ratio {
-	@include aspect-ratio(9, 16);
+  @include aspect-ratio(9, 16);
 }

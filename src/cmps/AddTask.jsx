@@ -8,49 +8,56 @@ import { hexToRgba } from '../services/util.service'
 import { Checkbox } from './Checkbox'
 
 export function AddTask({ group }) {
-	const board = useSelector(storeState => storeState.boardModule.board)
-	const [taskToAdd, setTaskToAdd] = useState(boardService.getEmptyTask())
-	const elInput = useRef()
+  const board = useSelector((storeState) => storeState.boardModule.board)
+  const [taskToAdd, setTaskToAdd] = useState(boardService.getEmptyTask())
+  const elInput = useRef()
 
-	async function onAddTask(ev) {
-		if (ev) ev.preventDefault()
-		try {
-			addTask(board._id, group.id, taskToAdd, { txt: 'Added task' })
-			setTaskToAdd(boardService.getEmptyTask())
-		} catch (err) {
-			showErrorMsg('cannot add task')
-			console.log(err)
-			throw err
-		}
-	}
+  async function onAddTask(ev) {
+    if (ev) ev.preventDefault()
 
-	function onBlur() {
-		if (taskToAdd.title) onAddTask()
-		else return
-	}
+    try {
+      const activity = { type: 'Created', newState: taskToAdd.title }
+      setTaskToAdd(boardService.getEmptyTask())
+      addTask(board._id, group.id, taskToAdd, activity)
+    } catch (err) {
+      showErrorMsg('cannot add task')
+      console.log(err)
+      throw err
+    }
+  }
 
-	function handleChange({ target }) {
-		setTaskToAdd(prev => ({ ...prev, title: target.value }))
-	}
+  function onBlur() {
+    if (taskToAdd.title) onAddTask()
+    else return
+  }
 
-	return (
-		<li
-			className="add-task full"
-			onClick={() => {
-				elInput.current.focus()
-			}}
-		>
-			<div className="sticky-container">
-				<div className="white-space"></div>
+  function handleChange({ target }) {
+    setTaskToAdd((prev) => ({ ...prev, title: target.value }))
+  }
 
-				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
+  return (
+    <li
+      className="add-task full"
+      onClick={() => {
+        elInput.current.focus()
+      }}>
+      <div className="sticky-container">
+        <div className="white-space"></div>
 
-				<Checkbox disable={true} />
+        <div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
 
-				<form onSubmit={onAddTask}>
-					<input className="add-task-input" ref={elInput} placeholder="+ Add task" value={taskToAdd.title} onBlur={onBlur} onChange={handleChange}></input>
-				</form>
-			</div>
-		</li>
-	)
+        <Checkbox disable={true} />
+
+        <form onSubmit={onAddTask}>
+          <input
+            className="add-task-input"
+            ref={elInput}
+            placeholder="+ Add task"
+            value={taskToAdd.title}
+            onBlur={onBlur}
+            onChange={handleChange}></input>
+        </form>
+      </div>
+    </li>
+  )
 }

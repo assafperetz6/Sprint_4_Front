@@ -13,45 +13,39 @@ import { ContextMenu } from './ContextMenu'
 import { Draggable } from '@hello-pangea/dnd'
 
 export function TaskPreview({ group, task, idx }) {
-	const board = useSelector((storeState) => storeState.boardModule.board)
-	const [isTaskHovered, setIsTaskHovered] = useState(false)
-	const [titleToEdit, setTitleToEdit] = useState(task.title)
-	const [activeMenuId, setActiveMenuId] = useState(null)
-	const buttonRef = useRef(null)
+  const board = useSelector((storeState) => storeState.boardModule.board)
+  const [isTaskHovered, setIsTaskHovered] = useState(false)
+  const [isActive, setIsActive] = useState(false)
 
-	useEffect(() => {
-		setTitleToEdit(task.title)
-	}, [task.title])
+  const [titleToEdit, setTitleToEdit] = useState(task.title)
+  const [activeMenuId, setActiveMenuId] = useState(null)
+  const [isEditing, setIsEditing] = useState(false)
+  const buttonRef = useRef(null)
 
-	// async function onSaveTask(newTitle) {
-	// 	try {
-	// 		await updateTask(
-	// 			board._id,
-	// 			group.id,
-	// 			{ ...task, title: newTitle },
-	// 			{ txt: 'Changed Title' }
-	// 		)
-	// 	} catch (err) {
-	// 		showErrorMsg('Cannot update title')
-	// 		console.error('Cannot update title:', err)
-	// 	}
-	// }
+  const onClick = () => setIsActive(true)
+  const onBlur = () => setIsActive(false)
 
-	// REFACTOR FN TO BE GENERIC
+  useEffect(() => {
+    setTitleToEdit(task.title)
+  }, [task.title])
 
-	async function onSaveTask(value, key = 'title') {
-		console.log({ [key]: value })
-			
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(`.task-preview-${task.id}`)) {
+        setIsActive(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [task.id])
+
+	async function onSaveTask(newTitle) {
 		try {
-		  await updateTask(
-			board._id,
-			group.id,
-			{ ...task, [key]: value },
-			{ txt: key === 'archivedAt' ? `Archived task ${task.id}` : `Changed ${key}` }
-		  )
+			await updateTask(board._id, group.id, { ...task, title: newTitle }, { txt: 'Chnaged Title' })
 		} catch (err) {
-		  showErrorMsg(`Cannot update ${key}`)
-		  console.error(`Cannot update ${key}:`, err)
+			showErrorMsg('Cannot update title')
+			console.error('Cannot update title:', err)
 		}
 	}
 
@@ -69,31 +63,37 @@ export function TaskPreview({ group, task, idx }) {
 		}	
 	}
 	
+  async function onRemoveTask(boardId, groupId, taskId) {
+    try {
+      const activity = {
+        type: 'Removed',
+        description: 'Removed task',
+        oldState: task
+      }
+      await removeTask(boardId, groupId, taskId, activity)
+    } catch (err) {
+      console.error('Cannot remove task:', err)
+      showErrorMsg('Cannot remove task')
+    }
+  }
 
-	return (
-		<Draggable key={task.id} draggableId={task.id} index={idx}>
-			{(provided, snapshot) => (
-				<li
-					className={`task-preview task-row flex full ${
-						snapshot.isDragging ? 'dragging' : ''
-					}`}
-					{...provided.draggableProps}
-					ref={provided.innerRef}
-				>
-					<section className="sticky-container">
-						<div className="context-btn-container">
-							<button
-								className={`task-context-menu ${
-									activeMenuId === task.id ? 'open' : ''
-								}`}
-								onClick={(ev) =>
-									setActiveMenuId((prev) => (prev === task.id ? null : task.id))
-								}
-								ref={buttonRef}
-							>
-								{svgs.threeDots}
-							</button>
-						</div>
+  return (
+    <Draggable key={task.id} draggableId={task.id} index={idx}>
+      {(provided, snapshot) => (
+        <li
+          className={`task-preview task-row flex full task-preview-${task.id} ${snapshot.isDragging ? 'dragging' : ''} ${isActive ? 'active' : ''} `}
+          onClick={onClick}
+          {...provided.draggableProps}
+          ref={provided.innerRef}>
+          <section className="sticky-container">
+            <div className="context-btn-container">
+              <button
+                className={`task-context-menu ${activeMenuId === task.id ? 'open' : ''}`}
+                onClick={(ev) => setActiveMenuId((prev) => (prev === task.id ? null : task.id))}
+                ref={buttonRef}>
+                {svgs.threeDots}
+              </button>
+            </div>
 
 						<div
 							className="colored-border"
@@ -102,32 +102,44 @@ export function TaskPreview({ group, task, idx }) {
 
 						<Checkbox task={task} group={group} />
 
-						<section className="task-title">
-							<div
-								className="title-main-container"
-								onMouseEnter={() => setIsTaskHovered(true)}
-								onMouseLeave={() => setIsTaskHovered(false)}
-								{...provided.dragHandleProps}
-							>
-								<InlineEdit value={titleToEdit} onSave={onSaveTask} />
-								<Link
-									to={`task/${task.id}`}
-									className="open-task-details"
-									style={{ display: isTaskHovered ? 'flex' : 'none' }}
-								>
-									&nbsp; {svgs.expand} open
-								</Link>
-							</div>
-							<div className="add-update-btn">{svgs.addUpdate}</div>
-						</section>
-					</section>
+            <section className="task-title">
+              <div
+                className={`title-main-container`}
+                onMouseEnter={() => setIsTaskHovered(true)}
+                onMouseLeave={() => setIsTaskHovered(false)}
+                {...provided.dragHandleProps}>
+                <InlineEdit
+                  value={titleToEdit}
+                  onSave={onSaveTask}
+                  // isEditing={isEditing}
+                />
 
-					<section className="task-col flex">
-						{board.cmpsOrder.map((cmp, idx) => (
-							<DynamicCmp key={idx} cmp={cmp} group={group} task={task} />
-						))}
-						<li className="line-end" />
-					</section>
+                <Link
+                  to={`task/${task.id}`}
+                  className="open-task-details"
+                  // style={{ display: isTaskHovered && !isEditing ? 'flex' : 'none' }}
+                >
+                  &nbsp; {svgs.expand} open
+                </Link>
+              </div>
+
+              {task.comments.length === 0 ? (
+                <div className="add-update-btn">{svgs.addUpdate}</div>
+              ) : (
+                <div className="add-update-btn has-updates">
+                  <Link to={`task/${task.id}`}>{svgs.comment}</Link>
+                  <span className="update-count">{task.comments.length}</span>
+                </div>
+              )}
+            </section>
+          </section>
+
+          <section className="task-col flex">
+            {board.cmpsOrder.map((cmp, idx) => (
+              <DynamicCmp key={idx} cmp={cmp} group={group} task={task} />
+            ))}
+            <li className="line-end" />
+          </section>
 
 					{activeMenuId === task.id && (
 						<ContextMenu
@@ -150,7 +162,7 @@ export function TaskPreview({ group, task, idx }) {
 // DELETE TASK BTN:
 
 {
-	/* <button className="delete-btn" onClick={() => deleteTask(task.id)}>
+  /* <button className="delete-btn" onClick={() => deleteTask(task.id)}>
 {svgs.delete}
 </button> */
 }

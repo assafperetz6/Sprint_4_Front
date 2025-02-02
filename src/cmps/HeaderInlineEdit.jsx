@@ -124,7 +124,9 @@ export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange,
 				<h4 className="title">{value}</h4>
 			)}
 
-			<div className="title-count flex align-center justify-center">{getTasksCount(entity.tasks.filter(t => !t.archivedAt).length)}</div>
+			{!isEditing && <div className="title-count flex align-center justify-center">
+				{getTasksCount(entity.tasks.length)}
+			</div>}
 		</div>
 	)
 }

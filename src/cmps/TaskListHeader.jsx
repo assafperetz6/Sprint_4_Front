@@ -22,9 +22,9 @@ function getColumnConfig(cmp) {
 	}
 }
 
-export function TaskListHeader({ group, shadow }) {
+export function TaskListHeader({ group, shadow, isCollapsed }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
-	const groupColor = group.style.color
+	const groupColor = group?.style.color
 
 	async function handleDrag(result) {
 		if (!result.destination) return
@@ -43,11 +43,13 @@ export function TaskListHeader({ group, shadow }) {
 	return (
 		<DragDropContext onDragEnd={handleDrag}>
 			<ul className="task-list-header task-row clean-list full">
-				<li className="sticky-container flex">
+				{!isCollapsed && 
+			
+			<li className="sticky-container flex">
 					<div className="colored-border" style={{ backgroundColor: hexToRgba(groupColor, 1) }} />
 					<Checkbox group={group} isGroupHeader={true}/>
 					<div className={`task-title-header ${shadow ? 'shadow' : ''}`}>Task</div>
-				</li>
+				</li>}
 
 				<Droppable droppableId="task-columns" direction="horizontal" type="column">
 					{provided => (
