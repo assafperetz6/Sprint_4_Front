@@ -109,8 +109,11 @@
     border-inline-start: $border;
 
     &.has-updates {
-      color: $clr7;
       position: relative;
+
+      svg {
+        color: $clr7;
+      }
 
       .update-count {
         position: absolute;
