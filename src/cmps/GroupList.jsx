@@ -14,11 +14,16 @@ import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 
 export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 	const board = useSelector(storeState => storeState.boardModule.board)
+	const [isDragging, setIsDragging] = useState(false)
 	const dispatch = useDispatch()
-	
+
 	const [currentGroup, setCurrentGroup] = useState(groups[0])
 	const [titleColWidth, setTitleColWidth] = useState(null)
 	const groupRefs = useRef([])
+
+	useEffect(() => {
+		setCurrentGroup(groups[0])
+	}, [groups])
 
 	// useEffect(() => {
 	// 	const longestTaskTitle = () => {
@@ -78,8 +83,9 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 
 	async function handleDrag(result) {
 		if (!result.destination) return
-		if (result.type === 'group') await handleGroupDrag(result)
-		else await handleTaskDrag(result)
+		if (result.type === 'group') return await handleGroupDrag(result)
+		else handleTaskDrag(result)
+		setIsDragging(false)
 	}
 
 	async function handleGroupDrag(result) {
@@ -114,8 +120,14 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 		}
 	}
 
+	function handleStartDragging(result) {
+		setIsDragging(true)
+	}
+
+	// console.log(isDragging)
+
 	return (
-		<DragDropContext onDragEnd={handleDrag}>
+		<DragDropContext onDragEnd={handleDrag} onBeforeDragStart={handleStartDragging}>
 			<Droppable droppableId={board._id} type="group">
 				{provided => (
 					<section className="group-list" {...provided.droppableProps} ref={provided.innerRef}>
@@ -123,15 +135,10 @@ export function GroupList({ groups, isScrolledTop, scrollContainer }) {
 
 						{groups.map((group, idx) => (
 							<div key={group.id} ref={el => (groupRefs.current[idx] = el)} className="full">
-								<Draggable key={group.id} draggableId={group.id} index={idx}>
-									{provided => (
-										<section className="group-preview item-col full" {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-											<GroupPreview group={group} cmpsOrder={board.cmpsOrder} provided={provided} showHeader={idx >= 1} />
-										</section>
-									)}
-								</Draggable>
+								<GroupPreview group={group} cmpsOrder={board.cmpsOrder} idx={idx} showHeader={idx >= 1} />
 							</div>
 						))}
+
 						{provided.placeholder}
 						<div className="add-group-btn" onClick={onAddGroup}>
 							<span className="icon flex align-center">{svgs.plus}</span>

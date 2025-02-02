@@ -15,7 +15,7 @@ export function AddTask({ group }) {
 	async function onAddTask(ev) {
 		if (ev) ev.preventDefault()
 		try {
-			addTask(board._id, group.id, taskToAdd)
+			addTask(board._id, group.id, taskToAdd, { txt: 'Added task' })
 			setTaskToAdd(boardService.getEmptyTask())
 		} catch (err) {
 			showErrorMsg('cannot add task')
@@ -34,21 +34,22 @@ export function AddTask({ group }) {
 	}
 
 	return (
-		<div
-			className="add-task clean-list"
+		<li
+			className="add-task full"
 			onClick={() => {
 				elInput.current.focus()
 			}}
 		>
 			<div className="sticky-container">
-				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
+				<div className="white-space"></div>
 
+				<div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
 				<Checkbox />
 
 				<form onSubmit={onAddTask}>
 					<input className="add-task-input" ref={elInput} placeholder="+ Add task" value={taskToAdd.title} onBlur={onBlur} onChange={handleChange}></input>
 				</form>
 			</div>
-		</div>
+		</li>
 	)
 }

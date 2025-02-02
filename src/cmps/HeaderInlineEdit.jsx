@@ -2,14 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { usePopper } from 'react-popper'
 import { ColorPicker } from './ColorPicker'
 
-export function HeaderInlineEdit({
-	entity,
-	getTasksCount,
-	onSave,
-	onStyleChange,
-	style,
-	className = '',
-}) {
+export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange, style, className = '' }) {
 	const [isEditing, setIsEditing] = useState(false)
 	const [value, setValue] = useState(entity.title)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
@@ -26,11 +19,11 @@ export function HeaderInlineEdit({
 			{
 				name: 'preventOverflow',
 				options: {
-					padding: 8,
-				},
-			},
+					padding: 8
+				}
+			}
 		],
-		placement: 'bottom-start',
+		placement: 'bottom-start'
 	})
 
 	useEffect(() => {
@@ -93,7 +86,7 @@ export function HeaderInlineEdit({
 	}
 
 	function handleCancel() {
-		setValue(initialValue)
+		setValue(entity.value)
 		setIsEditing(false)
 		setIsColorPickerOpen(false)
 	}
@@ -115,44 +108,15 @@ export function HeaderInlineEdit({
 	}
 
 	return (
-		<div
-			className={`header-inline-edit ${isEditing ? 'edit' : ''} ${className}`}
-			onClick={startEditing}
-			style={{ color: style?.color }}
-		>
+		<div className={`header-inline-edit ${isEditing ? 'edit' : ''} ${className}`} onClick={startEditing} style={{ color: style?.color }}>
 			{isEditing ? (
 				<>
-					<span
-						className="color-picker-icon"
-						style={{ background: style?.color }}
-						onClick={openColorPicker}
-						ref={setReferenceElement}
-					/>
-					<input
-						ref={inputRef}
-						type="text"
-						value={value}
-						onChange={handleChange}
-						onBlur={handleSave}
-						onKeyDown={handleKeyPressed}
-						autoFocus
-					/>
+					<span className="color-picker-icon" style={{ background: style?.color }} onClick={openColorPicker} ref={setReferenceElement} />
+					<input ref={inputRef} type="text" value={value} onChange={handleChange} onBlur={handleSave} onKeyDown={handleKeyPressed} autoFocus />
 					{isColorPickerOpen && (
-						<div
-							ref={setPopperElement}
-							className="popper-container"
-							style={styles.popper}
-							{...attributes.popper}
-						>
-							<div
-								ref={setArrowElement}
-								style={styles.arrow}
-								className="popper-arrow"
-							/>
-							<ColorPicker
-								setEntityStyle={handleStyleChange}
-								setIsColorPickerOpen={setIsColorPickerOpen}
-							/>
+						<div ref={setPopperElement} className="popper-container" style={styles.popper} {...attributes.popper}>
+							<div ref={setArrowElement} style={styles.arrow} className="popper-arrow" />
+							<ColorPicker setEntityStyle={handleStyleChange} setIsColorPickerOpen={setIsColorPickerOpen} />
 						</div>
 					)}
 				</>
@@ -160,9 +124,7 @@ export function HeaderInlineEdit({
 				<h4 className="title">{value}</h4>
 			)}
 
-			<div className="title-count flex align-center justify-center">
-				{getTasksCount(entity.tasks.length)}
-			</div>
+			<div className="title-count flex align-center justify-center">{getTasksCount(entity.tasks.length)}</div>
 		</div>
 	)
 }
