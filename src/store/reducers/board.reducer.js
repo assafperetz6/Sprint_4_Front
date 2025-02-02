@@ -3,10 +3,12 @@ export const SET_BOARD = 'SET_BOARD'
 export const REMOVE_BOARD = 'REMOVE_BOARD'
 export const ADD_BOARD = 'ADD_BOARD'
 export const UPDATE_BOARD = 'UPDATE_BOARD'
+export const SET_FILTER = 'SET_FILTER'
 
 const initialState = {
 	boards: [],
-	board: null
+	board: null,
+	filterBy: {}
 }
 
 export function boardReducer(state = initialState, action) {
@@ -17,7 +19,27 @@ export function boardReducer(state = initialState, action) {
 			newState = { ...state, boards: action.boards }
 			break
 		case SET_BOARD:
-			newState = { ...state, board: action.board }
+			if (state.filterBy.length) {
+				
+				const filterBy = state.filterBy
+				const filteredGroups = action.board.groups.filter((group) =>
+					group.title.toLowerCase().includes(filterBy.toLowerCase())
+				)
+
+				const groupsFilteredTasks = action.board.groups
+					.map((group) => ({
+						...group,
+						tasks: group.tasks.filter((task) =>
+							task.title.toLowerCase().includes(filterBy.toLowerCase())
+						),
+					}))
+					.filter((group) => group.tasks.length > 0)
+
+				const filteredBoard = { ...action.board, groups: [...filteredGroups, ...groupsFilteredTasks] }
+
+				newState = { ...state, board: filteredBoard }
+			} else newState = { ...state, board: action.board }
+
 			break
 		case REMOVE_BOARD:
 			const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
@@ -30,6 +52,11 @@ export function boardReducer(state = initialState, action) {
 		case UPDATE_BOARD:
 			boards = state.boards.map(board => (board._id === action.board._id ? action.board : board))
 			newState = { ...state, boards }
+			break
+		case SET_FILTER:
+			newState = { ...state, filterBy: { ...action.filterBy } }
+
+			
 			break
 
 		default:

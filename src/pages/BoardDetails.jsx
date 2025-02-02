@@ -1,15 +1,17 @@
 import { Outlet, useParams } from 'react-router'
 import { useEffect, useRef, useState } from 'react'
 import { loadBoard } from '../store/actions/board.actions'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
 import { svgs } from '../services/svg.service.jsx'
 import { GroupList } from '../cmps/GroupList.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
 import { useSearchParams } from 'react-router-dom'
+import { SET_FILTER } from '../store/reducers/board.reducer.js'
 
 export function BoardDetails() {
+	const dispatch = useDispatch()
 	const board = useSelector((storeState) => storeState.boardModule.board)
 
 	const [searchParams, setSearchParams] = useSearchParams()
@@ -23,11 +25,15 @@ export function BoardDetails() {
 	const boardDetailsRef = useRef(null)
 
 	useEffect(() => {
-        const txtParam = searchParams.get('txt')
-        if (txtParam !== filterBy) {
-            setFilterBy(txtParam || '')
-        }
-    }, [searchParams])
+		const txtParam = searchParams.get('txt')
+		if (txtParam !== filterBy) {
+			searchParams.set('txt', filterBy)
+			setSearchParams(searchParams)
+		}
+
+		dispatch({ type: SET_FILTER, filterBy: { txt: filterBy } })
+		
+	}, [filterBy])
 
 	const handleScroll = (e) => {
 		if (e.target.scrollTop === 0 && !isScrolledTop) setIsScrolledTop(true)
@@ -35,29 +41,15 @@ export function BoardDetails() {
 	}
 
 	function handleFilter(txt) {
-        setFilterBy(txt)
-        if (txt) searchParams.set('txt', txt)
-        else searchParams.delete('txt')
-        setSearchParams(searchParams)
-    }
-
-	const filteredGroups = board?.groups
-		.map((group) => ({
-			...group,
-			tasks: group.tasks.filter((task) =>
-				task.title.toLowerCase().includes(filterBy.toLowerCase())
-			),
-		}))
-		.filter((group) => group.tasks.length > 0)
-
-	const displayedBoard = {
-		...board,
-		groups: filterBy ? filteredGroups : board?.groups,
+		setFilterBy(txt)
+		// if (txt) searchParams.set('txt', txt)
+		// else searchParams.delete('txt')
+		// setSearchParams(searchParams)
 	}
 
 	useEffect(() => {
 		loadBoard(boardId)
-	}, [boardId])
+	}, [boardId, filterBy])
 
 	function closeTaskDetails() {
 		setIsClosing(true)
@@ -67,18 +59,25 @@ export function BoardDetails() {
 		}, 75)
 	}
 
+	
+	
 	if (!board) return null
+	
 	return (
 		<section
 			className="board-details"
 			ref={boardDetailsRef}
 			onScroll={handleScroll}
 		>
-			<BoardHeader board={board} filterBy={filterBy} setFilterBy={handleFilter} />
+			<BoardHeader
+				board={board}
+				filterBy={filterBy}
+				setFilterBy={handleFilter}
+			/>
 
-			{!!displayedBoard.groups.length && (
+			{!!board && (
 				<GroupList
-					groups={displayedBoard.groups}
+					groups={board.groups}
 					isScrolledTop={isScrolledTop}
 					scrollContainer={boardDetailsRef.current}
 				/>
