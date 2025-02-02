@@ -7,19 +7,25 @@
 
 	display: grid;
 	grid-template-columns: 400px 1fr;
+
 	padding: 0px 0px 40px;
 
 	@media (min-width: $mobile-breakpoint) {
 		padding-block-end: 40px;
 	}
 
-	h4 {
-		font-size: rem(18px);
+	&.active-drag {
+		overflow: hidden;
+		grid-template-rows: repeat(auto-fill, 80px);
 	}
 
 	> * {
 		display: grid;
 		grid-template-columns: subgrid;
+	}
+
+	h4 {
+		font-size: rem(18px);
 	}
 
 	min-width: 1100px;

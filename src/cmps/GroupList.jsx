@@ -147,7 +147,6 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 		}
 	}
 
-	// console.log(isDragging)
 	return (
 		<DragDropContext
 			onDragEnd={handleDrag}
@@ -156,13 +155,15 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 			<Droppable droppableId={board._id} type="group">
 				{(provided) => (
 					<section
-						className="group-list"
+						className={`group-list ${isDragging ? 'active-drag' : ''}`}
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
 						<Draggable draggableId={currentGroup.id} index={0}>
-							{(provided) => (
-								<div
+							{(provided) => {
+								// console.log(provided)
+								
+								return <div									
 									className={`sticky-header-container full`}
 									style={{
 										visibility:
@@ -177,7 +178,7 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 										<GroupHeader group={currentGroup} shadow={!isScrolledTop} />
 									)}
 								</div>
-							)}
+							}}
 						</Draggable>
 
 						{groups.map((group, idx) => (
