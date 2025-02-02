@@ -19,11 +19,12 @@
 
 	transition: opacity 0s 200ms;
 	
-	z-index: 50;
-	&.hidden {
+	z-index: 61;
+
+	.sidebar + &, &.hidden {
 		opacity: 0;
+		visibility: hidden;
 		transition: opacity 0s 0s;
-		// display: none;
 	}
 
 	svg {
