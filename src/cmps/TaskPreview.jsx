@@ -5,7 +5,7 @@ import { hexToRgba } from '../services/util.service'
 import { useSelector } from 'react-redux'
 import { DynamicCmp } from './DynamicCmp'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { removeTask, updateTask } from '../store/actions/board.actions'
+import { addTask, removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
 import { useEffect, useRef, useState } from 'react'
 import { InlineEdit } from './InlineEdit'
@@ -23,7 +23,7 @@ export function TaskPreview({ group, task, idx }) {
   const buttonRef = useRef(null)
 
   const onClick = () => setIsActive(true)
-  const onBlur = () => setIsActive(false)
+  // const onBlur = () => setIsActive(false)
 
   useEffect(() => {
     setTitleToEdit(task.title)
@@ -144,7 +144,7 @@ export function TaskPreview({ group, task, idx }) {
               type="task"
               entity={task}
               onClose={() => setActiveMenuId(null)}
-              onRemove={onRemoveTask(board._id, group.id, task.id)}
+              onRemove={() => onRemoveTask(board._id, group.id, task.id)}
               onUpdate={onSaveTask}
               onMoveTo={onMoveTo}
               onRename={(task) => setTitleToEdit(task.title)}
