@@ -51,7 +51,7 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
         text: `${entity.isStarred ? 'Remove from' : 'Add to'} favorites`,
         action: () => onUpdate({ ...entity, isStarred: !entity.isStarred })
       },
-      { icon: svgs.delete, text: 'Delete', action: () => onRemove(entity.id) }
+      { icon: svgs.delete, text: 'Delete', action: () => onRemove(entity._id) }
     ],
     group: [
       // { icon: svgs.pencil, text: 'Rename group', action: () => onRename(entity) },
