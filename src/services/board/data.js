@@ -47,6 +47,7 @@ export const defaultBoard = [
             dueDate: getRandomTimestamp(),
             timeline: null,
             description: 'description',
+						archivedAt: null,
             comments: [],
             members: [
               {
@@ -64,12 +65,13 @@ export const defaultBoard = [
             dueDate: getRandomTimestamp(),
             timeline: null,
             description: 'description',
+						archivedAt: null,
             comments: [
               {
                 id: 'ZdPnm',
-                title: 'also @yaronb please CR this',
+                text: 'also @yaronb please CR this',
                 createdAt: 1590999817436,
-                byMember: {
+                by: {
                   _id: 'u101',
                   fullname: 'Alon Wohl',
                   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
@@ -102,12 +104,13 @@ export const defaultBoard = [
             dueDate: getRandomTimestamp(),
             timeline: null,
             description: 'description',
+						archivedAt: null,
             comments: [
               {
                 id: 'ZdfEm',
-                title: 'also @yaronb please CR this',
+                text: 'also @yaronb please CR this',
                 createdAt: 1590934517436,
-                byMember: {
+                by: {
                   _id: 'u102',
                   fullname: 'Alon Wohl',
                   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
@@ -130,12 +133,13 @@ export const defaultBoard = [
             dueDate: getRandomTimestamp(),
             timeline: null,
             description: 'description',
+						archivedAt: null,
             comments: [
               {
                 id: 'ZdPnm',
-                title: 'also @yaronb please CR this',
+                text: 'also @yaronb please CR this',
                 createdAt: 1590999817436,
-                byMember: {
+                by: {
                   _id: 'u101',
                   fullname: 'Alon Wohl',
                   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'

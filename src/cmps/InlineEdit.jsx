@@ -37,7 +37,7 @@ export function InlineEdit({ value: initialValue, onSave, isEditing: externalIsE
 		}
 	}
 
-	function onBlur() {
+	function onBlur() {		
 		if (value) {
 			onSave(value)
 			setIsEditing(false)

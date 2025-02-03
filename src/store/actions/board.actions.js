@@ -3,6 +3,7 @@ import { store } from '../store'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD } from '../reducers/board.reducer'
 import { makeId } from '../../services/util.service'
 import { userService } from '../../services/user'
+import { showErrorMsg } from '../../services/event-bus.service'
 
 // Board Actions //
 
@@ -111,6 +112,7 @@ export async function updateGroup(boardId, group) {
     throw err
   }
 }
+
 export async function removeGroup(boardId, groupId) {
   try {
     const savedBoard = await boardService.removeGroup(boardId, groupId)
@@ -124,6 +126,7 @@ export async function removeGroup(boardId, groupId) {
 // tasks actions: //
 
 export async function removeTask(boardId, groupId, taskId, activity) {
+	
   try {
     const task = await boardService.getTaskById(boardId, taskId)
     const activityToSave = await _addActivity(boardId, groupId, task, activity)
@@ -136,11 +139,12 @@ export async function removeTask(boardId, groupId, taskId, activity) {
     throw err
   }
 }
-export async function addTask(boardId, groupId, task, activity) {
+
+export async function addTask(boardId, groupId, task, activity, isMoved = false) {
   try {
     const activityToSave = await _addActivity(boardId, groupId, task, activity)
 
-    const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
+    const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave, false, isMoved)
 
     store.dispatch(getCmdSetBoard(savedBoard))
   } catch (err) {
@@ -148,6 +152,7 @@ export async function addTask(boardId, groupId, task, activity) {
     throw err
   }
 }
+
 export async function updateTask(boardId, groupId, task, activity) {
   try {
     const activityToSave = await _addActivity(boardId, groupId, task, activity)
@@ -165,22 +170,58 @@ export async function updateTask(boardId, groupId, task, activity) {
 async function _addActivity(boardId, groupId, task, activityInfo) {
   if (!activityInfo) return
 
-  const group = (await boardService.getGroupById(boardId, groupId)) || {}
-  const loggedinUser = await userService.getLoggedinUser()
+	const group = await boardService.getGroupById(boardId, groupId)
+	const activtyToSave = {
+		id: makeId(),
+		title: activity.txt,
+		createdAt: Date.now(),
+		byMember: await userService.getLoggedinUser(),
+		group: { id: group.id, title: group.title },
+		task: { id: task.id, title: task.title }
+	}
 
-  const activityToSave = {
-    id: makeId(),
-    createdAt: Date.now(),
-    group: { id: group.id || '', title: group.title || '', color: group.style.color || '' },
-    task: task || {},
-
-    type: activityInfo.type,
-    oldState: activityInfo.oldState,
-    newState: activityInfo.newState,
-    entityId: task.id,
-    byMember: loggedinUser || userService.getDefaultUser(),
-    description: activityInfo.description
-  }
-
-  return activityToSave
+	return activtyToSave
 }
+
+// TODO: add batch function for multiselect menu
+
+export async function removeTasks(boardId, tasks){
+	try {
+		const savedBoard = await boardService.removeTasks(boardId, tasks)
+		store.dispatch(getCmdSetBoard(savedBoard))
+	} catch (err) {
+		console.log('error from actions--> cannot remove tasks', err)
+		throw err
+	}
+}
+
+export async function duplicateTasks(boardId, tasks) {
+	try {
+		const savedBoard = await boardService.duplicateTasks(boardId, tasks)
+		store.dispatch(getCmdSetBoard(savedBoard))
+	} catch (err) {
+		console.log('error from actions--> cannot remove tasks', err)
+		throw err
+	}
+}
+
+export async function archiveTasks(boardId, tasks) {
+	try {
+		const savedBoard = await boardService.archiveTasks(boardId, tasks)
+		store.dispatch(getCmdSetBoard(savedBoard))
+				
+	} catch (err) {
+		console.log('error from actions--> cannot remove tasks', err)
+		throw err
+	}
+}
+
+export async function moveTasksTo(boardId, newGroupId, tasks) {
+		try {
+			const savedBoard = await boardService.moveTasksTo(boardId, newGroupId, tasks)
+			store.dispatch(getCmdSetBoard(savedBoard))
+		} catch (err) {
+			console.log(`error from actions--> cannot move tasks to group ${newGroupId}`, err)
+			throw err
+		}	
+	}

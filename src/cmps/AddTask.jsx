@@ -45,7 +45,8 @@ export function AddTask({ group }) {
         <div className="white-space"></div>
 
         <div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
-        <Checkbox />
+
+        <Checkbox disable={true} />
 
         <form onSubmit={onAddTask}>
           <input

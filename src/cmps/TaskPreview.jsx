@@ -42,12 +42,20 @@ export function TaskPreview({ group, task, idx }) {
 
   async function onSaveTask(newTitle) {
     try {
-      const activity = { oldState: task.title, newState: newTitle, type: 'Name' }
-
-      await updateTask(board._id, group.id, { ...task, title: newTitle }, activity)
+      await updateTask(board._id, group.id, { ...task, title: newTitle }, { txt: 'Chnaged Title' })
     } catch (err) {
       showErrorMsg('Cannot update title')
       console.error('Cannot update title:', err)
+    }
+  }
+
+  async function onMoveTo(newGroupId) {
+    try {
+      await addTask(board._id, newGroupId, task, { txt: `Moved task ${task.id} from ${group.title}` }, true)
+      await removeTask(board._id, task.id, group.id)
+    } catch (err) {
+      showErrorMsg(`Cannot move ${task.id}`)
+      console.error(`Cannot move ${task.id}:`, err)
     }
   }
 
@@ -86,7 +94,7 @@ export function TaskPreview({ group, task, idx }) {
 
             <div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }} />
 
-            <Checkbox />
+            <Checkbox task={task} group={group} />
 
             <section className="task-title">
               <div
@@ -134,8 +142,9 @@ export function TaskPreview({ group, task, idx }) {
               type="task"
               entity={task}
               onClose={() => setActiveMenuId(null)}
-              onRemove={() => onRemoveTask(board._id, group.id, task.id)}
-              onUpdate={(updatedTask) => onSaveTask(updatedTask.title)}
+              onRemove={onRemoveTask(board._id, group.id, task.id)}
+              onUpdate={onSaveTask}
+              onMoveTo={onMoveTo}
               onRename={(task) => setTitleToEdit(task.title)}
               referenceElement={buttonRef.current}
             />

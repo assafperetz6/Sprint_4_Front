@@ -25,7 +25,7 @@ export function MemberSummary({ summary }){
             avatars = 
                 <>
                     <img className="member-summary-image" src={memberSummary[0].imgUrl} alt="" />
-                    <h1 className="extra-members second">+2</h1>
+                    <h1 className="extra-members second">+{memberSummary.length - 1}</h1>
                 </>
             break;
     }

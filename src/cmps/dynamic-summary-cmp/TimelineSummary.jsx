@@ -1,6 +1,7 @@
 
 
 export function TimelineSummary({ summary, padding, group }){
+    
     const { timelineSummary } = summary
     const width = 140
 
@@ -74,7 +75,7 @@ export function TimelineSummary({ summary, padding, group }){
             `
         }    
 
-        const daysStr = (timelineSummary.end - timelineSummary.start) / 86400000 + 1 + 'd' // 86400000 is the number of milliseconds in a day
+        const daysStr = Math.round((timelineSummary.end - timelineSummary.start) / 86400000 + 1) + 'd' // 86400000 is the number of milliseconds in a day
         return (
         <section style={{ width: width + 'px'}} className="summary">
             <div style={{width: width - (padding * 4), background: getProgressStyle()}} className="date-summary">
