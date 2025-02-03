@@ -51,8 +51,8 @@ export function TaskPreview({ group, task, idx }) {
 
   async function onMoveTo(newGroupId) {
     try {
+      await removeTask(board._id, group.id, task.id, { txt: `Moved task ${task.id} from ${group.title}` })
       await addTask(board._id, newGroupId, task, { txt: `Moved task ${task.id} from ${group.title}` }, true)
-      await removeTask(board._id, task.id, group.id)
     } catch (err) {
       showErrorMsg(`Cannot move ${task.id}`)
       console.error(`Cannot move ${task.id}:`, err)
