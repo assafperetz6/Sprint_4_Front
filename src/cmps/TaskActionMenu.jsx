@@ -5,6 +5,7 @@ import { duplicateTasks, removeTasks, archiveTasks, moveTasksTo } from '../store
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_SELECTED_TASKS } from '../store/reducers/board.reducer'
 import { hexToRgba, makeId } from '../services/util.service'
+import { showSuccessMsg } from '../services/event-bus.service'
 
 export function TaskActionMenu({ tasks }) {
   const dispatch = useDispatch()
@@ -20,6 +21,7 @@ export function TaskActionMenu({ tasks }) {
   async function onRemoveTask() {
     try {
       removeTasks(board._id, tasks)
+      showSuccessMsg(`We successfully deleted ${tasks.length} items`)
     } catch (err) {
       console.log('Failed to remove tasks', err)
     }
