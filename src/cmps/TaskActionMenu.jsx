@@ -32,6 +32,7 @@ export function TaskActionMenu({ tasks }) {
   async function onDuplicate() {
     try {
       duplicateTasks(board._id, tasks)
+      showSuccessMsg(`We successfully duplicated ${tasks.length} items`)
     } catch (err) {
       console.log('Failed to duplicate tasks', err)
     }
@@ -42,6 +43,7 @@ export function TaskActionMenu({ tasks }) {
   async function onArchive() {
     try {
       archiveTasks(board._id, tasks)
+      showSuccessMsg(`We successfully archived ${tasks.length} items`)
     } catch (err) {
       console.log('Failed to archive tasks', err)
     }
@@ -54,6 +56,7 @@ export function TaskActionMenu({ tasks }) {
 
     try {
       moveTasksTo(board._id, newGroupId, tasks)
+      showSuccessMsg(`We successfully moved ${tasks.length} items`)
     } catch (err) {
       console.log('Failed to move tasks', err)
     }
