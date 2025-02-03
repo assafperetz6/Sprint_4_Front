@@ -46,8 +46,8 @@ export function GroupPreview({
 			key={group.id}
 			draggableId={group.id}
 			index={idx}
-			onMouseDown={() => setIsAllCollapsed(true)}
-			// onMouseUp={() => group.isCollapsed = false}
+			onMouseDown={() => group.isCollapsed = true}
+			onMouseUp={() => group.isCollapsed = false}
 		>
 			{(provided) => (
 				<section

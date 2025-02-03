@@ -82,7 +82,7 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 
 	function handleStartDragging(result) {
 		if (result.type === 'group') {
-			// setIsAllCollapsed(true)
+			setIsAllCollapsed(true)
 			setIsDragging(true)
 		}
 	}
