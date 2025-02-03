@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import { usePopper } from 'react-popper'
 import { useSelector } from 'react-redux'
 import { svgs } from '../../services/svg.service'
@@ -49,10 +49,9 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
 
     if (task.members.length <= 2) {
       return task.members.map((member, index) => (
-        <>
-          <TooltipContainer key={member._id || index} txt={member.fullname}>
+        <Fragment key={member.id || index}>
+          <TooltipContainer txt={member.fullname}>
             <img
-              key={member._id || index}
               src={member.imgUrl}
               alt={member.fullname || 'Member avatar'}
               className="member-avatar"
@@ -61,7 +60,7 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
               }}
             />
           </TooltipContainer>
-        </>
+        </Fragment>
       ))
     }
     const extraMembersNames = task.members
@@ -72,7 +71,7 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
 
     return (
       <>
-        <TooltipContainer key={task.members[0]._id} txt={task.members[0].fullname}>
+        <TooltipContainer txt={task.members[0].fullname}>
           <img src={task.members[0].imgUrl} alt={task.members[0].fullname || 'Member avatar'} className="member-avatar" />
         </TooltipContainer>
         <TooltipContainer txt={extraMembersNames}>
