@@ -99,6 +99,7 @@ export function BoardHeader({ board }) {
 
 				<button onClick={() => setIsPersonFilter((prev) => !prev)}>
 					{svgs.person} Person
+					{filterBy.members.length > 0 && <button onClick={() => setFilterBy(({ ...filterBy, members: [] }))}>x</button>}
 				</button>
 				{isPersonFilter && (
 					<section className="filter-by-person flex column">
