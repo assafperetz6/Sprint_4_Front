@@ -87,6 +87,7 @@ export function SideBar() {
 		setIsEditing(true)
 		setActiveMenuId(null)
 	}
+	
 	function onAddBoard() {
 		try {
 			addBoard(boardService.getEmptyBoard())

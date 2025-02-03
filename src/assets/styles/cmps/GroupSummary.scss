@@ -31,38 +31,39 @@
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
 		z-index: 30;
 
-		.summary {
-			display: flex;
-			justify-content: center;
-			align-items: center;
+        .summary {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+    
+            height: 36px;
+            border-inline-end: 1px solid $clr8;
 
-			height: 36px;
-			border-inline-end: 1px solid $clr8;
-
-			.summary-colored-block {
-				display: block;
-				height: 24px;
-
-				transition: height 100ms, border 100ms;
-
-				&:hover {
-					height: 30px;
-					border-radius: 3px;
-				}
-			}
-
-			.date-summary,
-			.timeline-summary {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-
-				height: 22px;
-				border-radius: 100vw;
-				padding-inline: 8px;
-
-				color: $clr3;
-				font-size: 14px;
+            background-color: $clr3;
+    
+            .summary-colored-block {
+                display: block;
+                height: 24px;
+    
+                transition: height 100ms, border 100ms;
+    
+                &:hover {
+                    height: 30px;
+                    border-radius: 3px;
+                }
+            }
+    
+            .date-summary, .timeline-summary {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+                height: 22px;
+                border-radius: 100vw;
+                padding-inline: 8px;
+    
+                color: $clr3;
+                font-size: 14px;
 
 				cursor: default;
 

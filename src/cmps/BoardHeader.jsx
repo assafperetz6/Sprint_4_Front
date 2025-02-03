@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
@@ -10,9 +11,19 @@ export function BoardHeader({ board, setFilterBy, filterBy }) {
 
 	function getMemberIcons() {
 		// TODO: should return last two members on the activity log
-
-		return svgs.person
-		return <img src={board.createdBy?.imgUrl} alt="userImg" />
+		const boardMembers = board.members
+		return boardMembers
+			.slice(0, 2)
+			.map((member) => (
+				<img
+					src={member.imgUrl}
+					alt="userImg"
+					key={member._id}
+					width={20}
+					height={20}
+					style={{ borderRadius: '50%' }}
+				/>
+			))
 	}
 
 	async function onAddTask() {
@@ -44,8 +55,17 @@ export function BoardHeader({ board, setFilterBy, filterBy }) {
 
 				<section className="board-actions">
 					<button className="group-chat">{svgs.chat}</button>
-					<button className="activity-log">{getMemberIcons()}</button>
-					<button className="invite-members">Invite / 1</button>
+					<button className="activity-log flex align-center">
+						<Link
+							className="flex align-center"
+							to={`/board/${board._id}/activity_log`}
+						>
+							{getMemberIcons()}
+						</Link>
+					</button>
+					<button className="invite-members">
+						Invite / {board.members.length}
+					</button>
 					<button className="copy-link">{svgs.link}</button>
 					<button className="options">{svgs.threeDots}</button>
 				</section>
@@ -65,10 +85,9 @@ export function BoardHeader({ board, setFilterBy, filterBy }) {
 					<span>{svgs.search}</span>
 					<input
 						className="txt-filter"
-
 						value={filterBy}
 						type="text"
-						onBlur={() => setIsTxtFilter(false) }
+						onBlur={() => setIsTxtFilter(false)}
 						onFocus={(ev) => setIsTxtFilter(true)}
 						onChange={(ev) => onSetFilterBy(ev.target.value)}
 						placeholder={isTxtFilter ? 'Search this board' : 'Search'}

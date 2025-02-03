@@ -2,9 +2,9 @@ import { useState, useRef, useEffect } from 'react'
 import { usePopper } from 'react-popper'
 import { ColorPicker } from './ColorPicker'
 
-export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange, style, className = '' }) {
+export function HeaderInlineEdit({ value: initialValue, onSave, onStyleChange, style, className = '' }) {
 	const [isEditing, setIsEditing] = useState(false)
-	const [value, setValue] = useState(entity.title)
+	const [value, setValue] = useState(initialValue)
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
 	const inputRef = useRef(null)
 
@@ -25,10 +25,6 @@ export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange,
 		],
 		placement: 'bottom-start'
 	})
-
-	useEffect(() => {
-		setValue(entity.title)
-	}, [entity])
 
 	useEffect(() => {
 		function handleClickOutside(event) {
@@ -70,7 +66,7 @@ export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange,
 			return
 		}
 		onSave(value)
-		// setIsEditing(false)
+		setIsEditing(false)
 		setIsColorPickerOpen(false)
 	}
 
@@ -86,7 +82,7 @@ export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange,
 	}
 
 	function handleCancel() {
-		setValue(entity.value)
+		setValue(initialValue)
 		setIsEditing(false)
 		setIsColorPickerOpen(false)
 	}
@@ -123,10 +119,6 @@ export function HeaderInlineEdit({ entity, getTasksCount, onSave, onStyleChange,
 			) : (
 				<h4 className="title">{value}</h4>
 			)}
-
-			{!isEditing && <div className="title-count flex align-center justify-center">
-				{getTasksCount(entity.tasks.length)}
-			</div>}
 		</div>
 	)
 }

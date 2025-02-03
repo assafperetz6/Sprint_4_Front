@@ -6,20 +6,23 @@ import { useNavigate } from 'react-router'
 
 import { svgs } from '../services/svg.service.jsx'
 import { GroupList } from '../cmps/GroupList.jsx'
+import { TaskActionMenu } from '../cmps/TaskActionMenu.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
+import { CollapsedGroupPreview } from '../cmps/CollapsedGroupPreview.jsx'
+import { BoardActivityLog } from './BoardActivityLog.jsx'
 import { useSearchParams } from 'react-router-dom'
 import { SET_FILTER } from '../store/reducers/board.reducer.js'
 
 export function BoardDetails() {
 	const dispatch = useDispatch()
-	const board = useSelector((storeState) => storeState.boardModule.board)
+  const board = useSelector((storeState) => storeState.boardModule.board)
 
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [filterBy, setFilterBy] = useState(searchParams.get('txt') || '')
 
-	const [isClosing, setIsClosing] = useState(false)
-	const { boardId } = useParams()
-	const navigate = useNavigate()
+  const [isClosing, setIsClosing] = useState(false)
+  const { boardId } = useParams()
+  const navigate = useNavigate()
 
 	const [isScrolledTop, setIsScrolledTop] = useState(true)
 	const boardDetailsRef = useRef(null)
@@ -46,44 +49,47 @@ export function BoardDetails() {
 		// else searchParams.delete('txt')
 		// setSearchParams(searchParams)
 	}
+	const selectedTasks = useSelector(storeState => storeState.boardModule.selectedTasks)
 
-	useEffect(() => {
-		loadBoard(boardId)
+  useEffect(() => {
+    loadBoard(boardId)
 		
-	}, [boardId, filterBy])
+  }, [boardId, filterBy])
 
-	function closeTaskDetails() {
-		setIsClosing(true)
-		setTimeout(() => {
-			setIsClosing(false)
-			navigate(`/board/${boardId}`)
-		}, 75)
-	}
+  function closeTaskDetails() {
+    setIsClosing(true)
+    setTimeout(() => {
+      setIsClosing(false)
+      navigate(`/board/${boardId}`)
+    }, 75)
+  }
 
 	
 	
-	if (!board) return null
+  if (!board) return null
 	
-	return (
-		<section
+
+  return (
+    <section
 			className="board-details"
 			ref={boardDetailsRef}
 			onScroll={handleScroll}
 		>
-			<BoardHeader
+      <BoardHeader
 				board={board}
 				filterBy={filterBy}
 				setFilterBy={handleFilter}
 			/>
 
-			{!!board && (
-				<GroupList
-					groups={board.groups}
-					isScrolledTop={isScrolledTop}
-					scrollContainer={boardDetailsRef.current}
-				/>
-			)}
-			<Outlet context={{ isClosing, closeTaskDetails }} />
-		</section>
-	)
+      {!!board.groups.length && (
+        <GroupList
+          // groups={board.groups}
+          isScrolledTop={isScrolledTop}
+          scrollContainer={boardDetailsRef.current}
+        />
+      )}
+			{selectedTasks.length > 0 && <TaskActionMenu tasks={selectedTasks} />}
+      <Outlet context={{ isClosing, closeTaskDetails }} />
+    </section>
+  )
 }

@@ -1,107 +1,332 @@
-.task-details {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+.board-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 
-    position: fixed;
-    top: 48px;
+  position: fixed;
+  top: 48px;
+  right: 0;
+
+  width: 500px;
+  height: 100%;
+  background-color: $clr3;
+  padding: 20px;
+
+  overflow: auto;
+
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+
+  transform: translateX(100%);
+  transition: transform 75ms linear;
+  z-index: 100;
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  &.closing {
+    transform: translateX(100%);
+  }
+
+  &.details-top-bar {
+    position: relative;
+
+    height: max-content;
+  }
+
+  & .details-top-bar::after {
+    content: '';
+    position: absolute;
     right: 0;
 
     width: 500px;
-    height: 100%;
-    background-color: $clr3;
-    padding: 20px;
+    height: 0.5px;
+    border-block-end: 1px solid $line-clr;
+  }
 
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  & .details-bottom-bar {
+    width: 100%;
+  }
 
-    transform: translateX(100%);
-    transition: transform 75ms linear;
-    z-index: 100;
+  & .exit-btn {
+    display: flex;
+    align-items: start;
 
-    &.open {
-        transform: translateX(0);
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 4px;
+    padding: 0;
+    margin: 0;
+
+    color: $darkgrey;
+
+    &:hover {
+      background-color: $hovered-btns;
     }
+  }
 
-    &.closing {
-        transform: translateX(100%);
-    }
+  & h2 {
+    padding-inline: 5px;
+    margin-block: $spacing-xs $spacing-small;
 
-    &.details-top-bar{
-        position: relative;
+    font-size: 1.25em;
+    line-height: 30px;
+    font-weight: 500;
+    font-family: $title-font-family;
+  }
 
-        height: max-content;
-    }
+  & .task-details-actions {
+    display: flex;
 
-    & .details-top-bar::after{
+    & button {
+      @include alt-btn;
+      position: relative;
+
+      padding: 8px 14px;
+      margin: 0;
+
+      &.active::before {
+        content: '';
+        position: absolute;
+        bottom: 0 - 1px;
+
+        width: 100%;
+        height: 2.5px;
+        background-color: $blue3;
+      }
+
+      &:hover {
+        &::after {
+          height: 0;
+        }
+      }
+
+      &::after {
         content: '';
         position: absolute;
         right: 0;
 
-        width: 500px;
-        height: 0.5px;
-        border-block-end: 1px solid $line-clr;
+        height: 16px;
+        border-inline-end: 1px solid $line-clr;
+      }
+    }
+  }
+
+  .activity-log .activity-item:not(:last-child) {
+    border-bottom: 1px solid $input-hover-border-clr;
+  }
+
+  .activity-item {
+    padding: $spacing-small;
+    display: flex;
+    align-items: center;
+    height: 56px;
+
+    font-size: rem(14px);
+    text-wrap: nowrap;
+    overflow-x: hidden;
+
+    .time {
+      flex: 0 0 56px;
     }
 
-    & .exit-btn{
-        display: flex;
-        align-items: start;
+    .activity-and-user {
+      flex: 1 0 0;
+      .activity-task-title {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 0 6px;
+      }
+      .user {
+        background-color: $clr1;
+        flex: 0 1 auto;
+      }
+    }
 
-        background-color: rgba(0, 0, 0, 0);
+    .additional-values {
+      height: 100%;
+      flex: 1.5 0 0;
+
+      .type-indicator {
+        height: 100%;
+        flex: 1.2 0 0;
+      }
+
+      .activity-content {
+        width: 100%;
+        flex: 2.2 0 0;
+        height: 100%;
+        margin-inline-start: 1rem;
+
+        .status-change,
+        .priority-change {
+          height: 100%;
+          overflow: hidden;
+          flex: 1 1 auto;
+
+          .old-value,
+          .new-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 100%;
+            flex: 1 0 0;
+            max-width: rem(62px);
+
+            padding: 0 8px;
+            color: $clr3;
+            border-radius: 2px;
+            line-height: 39px;
+
+            text-align: center;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .empty {
+            height: 100%;
+            width: 100%;
+
+            border-radius: 2px;
+            background-color: #c4c4c4;
+          }
+        }
+
+        .date-change {
+          align-items: center;
+          justify-content: center;
+
+          flex: 1 1 auto;
+        }
+      }
+
+      .seperator {
+        flex: 0 0 16px;
+        height: 100%;
+      }
+    }
+
+    .member-change {
+      width: 100%;
+    }
+  }
+
+  .updates {
+    margin-block-start: 2rem;
+
+    .editor-container {
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+
+      border: 1px solid $clr7;
+      border-radius: 8px;
+
+      font-size: rem(14px);
+
+      .editor-placeholder {
+        padding: 16px 0 16px 8px;
+        cursor: pointer;
+        color: $clr4;
+      }
+
+      .quill {
+        .ql-toolbar {
+          border: none;
+        }
+        .ql-container {
+          border: none;
+          padding: 16px 18px 16px 18px;
+        }
+      }
+
+      .update-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin: 0 8px 8px 0;
+        background-color: $clr7;
+        padding: 4px 8px;
         border-radius: 4px;
-        padding: 0;
-        margin: 0;
+        height: 32px;
+        align-self: flex-end;
+        color: $clr3;
 
-        color: $darkgrey;
+        &:hover {
+          background-color: $hovered-blue;
+        }
+      }
+    }
 
-        &:hover{
+    .comments-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      margin-block-start: 16px;
+
+      .post {
+        padding: 8px 0;
+        border: 1px solid $input-hover-border-clr;
+        border-radius: 8px;
+
+        .post-header {
+          display: flex;
+          align-items: center;
+
+          gap: 10px;
+          padding: 16px;
+
+          h3 {
+            font-size: rem(14px);
+            color: $clr5;
+          }
+          .post-time h3 {
+            font-size: rem(15px);
+            color: $clr4;
+          }
+
+          .user-info {
+            img {
+              width: 30px;
+              border-radius: 50%;
+
+              background-color: $clr4;
+            }
+          }
+        }
+
+        .delete-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          background-color: transparent;
+          height: 32px;
+          width: 32px;
+          border-radius: 4px;
+          border: 0;
+          padding: 0;
+          margin: 0;
+
+          color: $clr4;
+
+          &:hover {
             background-color: $hovered-btns;
+          }
+
+          &:active {
+            background-color: darken($hovered-btns, 10%);
+          }
         }
-    }
 
-    & h2{
-        padding-inline: 5px;
-        margin-block: $spacing-xs $spacing-small;
-
-        font-size: 1.25em;
-        line-height: 30px;
-        font-weight: 500;
-        font-family: $title-font-family ;
-    }
-
-    & .task-details-actions{
-        display: flex;
-
-        & button{
-            @include alt-btn;
-            position: relative;
-
-            padding: 8px 14px;
-            margin: 0;
-
-            &.active::before{
-                content: '';
-                position: absolute;
-                bottom: 0 - 1px;
-
-                width: 100%;
-                height: 2.5px;
-                background-color: $blue3;
-            }
-
-            &:hover{
-                &::after{
-                    height: 0;
-                }
-            }
-    
-            &::after{
-                content: '';
-                position: absolute;
-                right: 0;
-
-                height: 16px;
-                border-inline-end: 1px solid $line-clr;
-            }
+        .post-text {
+          padding: 16px;
         }
+      }
     }
+  }
 }

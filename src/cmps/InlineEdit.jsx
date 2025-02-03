@@ -7,7 +7,10 @@ export function InlineEdit({ value: initialValue, onSave, isEditing: externalIsE
 	const inputRef = useRef(null)
 
 	useEffect(() => {
-		setIsEditing(externalIsEditing)
+		if (externalIsEditing) {
+			setIsEditing(externalIsEditing)
+		}
+		setIsEditing(false)
 	}, [externalIsEditing])
 
 	useEffect(() => {
@@ -34,12 +37,16 @@ export function InlineEdit({ value: initialValue, onSave, isEditing: externalIsE
 		}
 	}
 
-	function onBlur() {
+	function onBlur() {		
 		if (value) {
 			onSave(value)
 			setIsEditing(false)
 		} else return
 	}
 
-	return <div className="inline-edit">{isEditing ? <input ref={inputRef} type="text" value={value} onChange={e => setValue(e.target.value)} onKeyDown={handleKeyPress} onBlur={onBlur} /> : <span onClick={() => setIsEditing(true)}>{value}</span>}</div>
+	return (
+		<div className={`inline-edit ${isEditing ? 'edit' : ''}`}>
+			{isEditing ? <input ref={inputRef} type="text" value={value} onChange={e => setValue(e.target.value)} onKeyDown={handleKeyPress} onBlur={onBlur} /> : <span onClick={() => setIsEditing(true)}>{value}</span>}
+		</div>
+	)
 }
