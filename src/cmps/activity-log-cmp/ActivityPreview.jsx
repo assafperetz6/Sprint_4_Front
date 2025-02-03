@@ -1,5 +1,6 @@
 import { Truncate } from '../Truncate.jsx'
 import { svgs } from '../../services/svg.service'
+import { userService } from '../../services/user/user.service.local.js'
 
 export function ActivityPreview({ activity, board }) {
   function formatTime(date) {

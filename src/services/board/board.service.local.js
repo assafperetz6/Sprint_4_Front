@@ -331,10 +331,10 @@ async function archiveTasks(boardId, tasks) {
   return getById(boardId)
 }
 
-async function moveTasksTo(boardId, newGroupId, tasks) {
+async function moveTasksTo(boardId, newGroupId, tasks, activity) {
   for (const task of tasks) {
     try {
-      await saveTask(boardId, newGroupId, task, { txt: `Moved task ${task.id} from group ${task.groupId}` }, false, true)
+      await saveTask(boardId, newGroupId, task, activity, false, true)
 
       await removeTask(boardId, task.id, task.groupId)
     } catch (err) {
