@@ -3,11 +3,16 @@ import { useEffect, useState } from 'react'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
 import { svgs } from '../services/svg.service'
-import { addTask } from '../store/actions/board.actions'
+import { addTask, setFilterBy } from '../store/actions/board.actions'
 import { useParams } from 'react-router'
+import { useSelector } from 'react-redux'
 
-export function BoardHeader({ board, setFilterBy, filterBy }) {
+export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
+	const [isPersonFilter, setIsPersonFilter] = useState(false)
+	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
+
+	console.log(filterBy)
 
 	function getMemberIcons() {
 		// TODO: should return last two members on the activity log
@@ -40,10 +45,6 @@ export function BoardHeader({ board, setFilterBy, filterBy }) {
 			console.log(err)
 			throw err
 		}
-	}
-
-	function onSetFilterBy(value) {
-		setFilterBy(value)
 	}
 
 	return (
@@ -85,15 +86,47 @@ export function BoardHeader({ board, setFilterBy, filterBy }) {
 					<span>{svgs.search}</span>
 					<input
 						className="txt-filter"
-						value={filterBy}
+						value={filterBy.txt || ''}
 						type="text"
 						onBlur={() => setIsTxtFilter(false)}
 						onFocus={(ev) => setIsTxtFilter(true)}
-						onChange={(ev) => onSetFilterBy(ev.target.value)}
+						onChange={(ev) =>
+							setFilterBy({ ...filterBy, txt: ev.target.value })
+						}
 						placeholder={isTxtFilter ? 'Search this board' : 'Search'}
 					/>
 				</label>
-				<button>{svgs.person} Person</button>
+
+				<button onClick={() => setIsPersonFilter((prev) => !prev)}>
+					{svgs.person} Person
+				</button>
+				{isPersonFilter && (
+					<section className="filter-by-person flex column">
+						<div className="title-wrapper">
+							<h4>Filter this board by person</h4>
+							<span>And find tasks they're working on.</span>
+						</div>
+
+						<ul>
+							{board.members.map((member) => (
+								<li key={member._id}>
+									<img src={member.imgUrl} alt={`${member.fullname} img`} />
+									<button
+										onClick={() =>
+											setFilterBy({
+												...filterBy,
+												members: filterBy.members.includes(member._id)
+													? [...filterBy.members.filter((m) => m._id !== member._id)]
+													: [...filterBy.members, member._id]
+											})
+										}
+									/>
+								</li>
+							))}
+						</ul>
+					</section>
+				)}
+
 				<button>
 					{svgs.filter} Filter {svgs.arrowDown}
 				</button>

@@ -1,6 +1,6 @@
 import { Outlet, useParams } from 'react-router'
 import { useEffect, useRef, useState } from 'react'
-import { loadBoard } from '../store/actions/board.actions'
+import { loadBoard, setFilterBy } from '../store/actions/board.actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
@@ -15,27 +15,24 @@ import { SET_FILTER } from '../store/reducers/board.reducer.js'
 
 export function BoardDetails() {
 	const dispatch = useDispatch()
-  const board = useSelector((storeState) => storeState.boardModule.board)
+	const board = useSelector((storeState) => storeState.boardModule.board)
+	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
 
 	const [searchParams, setSearchParams] = useSearchParams()
-	const [filterBy, setFilterBy] = useState(searchParams.get('txt') || '')
 
-  const [isClosing, setIsClosing] = useState(false)
-  const { boardId } = useParams()
-  const navigate = useNavigate()
+	const [isClosing, setIsClosing] = useState(false)
+	const { boardId } = useParams()
+	const navigate = useNavigate()
 
 	const [isScrolledTop, setIsScrolledTop] = useState(true)
 	const boardDetailsRef = useRef(null)
 
 	useEffect(() => {
 		const txtParam = searchParams.get('txt')
-		if (txtParam !== filterBy) {
-			searchParams.set('txt', filterBy)
+		if (txtParam !== filterBy.txt) {
+			searchParams.set('txt', filterBy.txt)
 			setSearchParams(searchParams)
 		}
-
-		dispatch({ type: SET_FILTER, filterBy: { txt: filterBy } })
-		
 	}, [filterBy])
 
 	const handleScroll = (e) => {
@@ -43,53 +40,48 @@ export function BoardDetails() {
 		else if (e.target.scrollTop > 0 && isScrolledTop) setIsScrolledTop(false)
 	}
 
-	function handleFilter(txt) {
-		setFilterBy(txt)
-		// if (txt) searchParams.set('txt', txt)
-		// else searchParams.delete('txt')
-		// setSearchParams(searchParams)
+	// function handleFilter(value, filterType = 'txt') {
+	// 	setFilterBy(prev => ({ ...prev, [filterType]: value}))
+	// }
+	const selectedTasks = useSelector(
+		(storeState) => storeState.boardModule.selectedTasks
+	)
+
+	useEffect(() => {
+		loadBoard(boardId)
+	}, [boardId, filterBy])
+
+	function closeTaskDetails() {
+		setIsClosing(true)
+		setTimeout(() => {
+			setIsClosing(false)
+			navigate(`/board/${boardId}`)
+		}, 75)
 	}
-	const selectedTasks = useSelector(storeState => storeState.boardModule.selectedTasks)
 
-  useEffect(() => {
-    loadBoard(boardId)
-		
-  }, [boardId, filterBy])
+	if (!board) return null
 
-  function closeTaskDetails() {
-    setIsClosing(true)
-    setTimeout(() => {
-      setIsClosing(false)
-      navigate(`/board/${boardId}`)
-    }, 75)
-  }
-
-	
-	
-  if (!board) return null
-	
-
-  return (
-    <section
+	return (
+		<section
 			className="board-details"
 			ref={boardDetailsRef}
 			onScroll={handleScroll}
 		>
-      <BoardHeader
+			<BoardHeader
 				board={board}
-				filterBy={filterBy}
-				setFilterBy={handleFilter}
+				// filterBy={filterBy}
+				// setFilterBy={handleFilter}
 			/>
 
-      {!!board.groups.length && (
-        <GroupList
-          // groups={board.groups}
-          isScrolledTop={isScrolledTop}
-          scrollContainer={boardDetailsRef.current}
-        />
-      )}
+			{!!board.groups.length && (
+				<GroupList
+					// groups={board.groups}
+					isScrolledTop={isScrolledTop}
+					scrollContainer={boardDetailsRef.current}
+				/>
+			)}
 			{selectedTasks.length > 0 && <TaskActionMenu tasks={selectedTasks} />}
-      <Outlet context={{ isClosing, closeTaskDetails }} />
-    </section>
-  )
+			<Outlet context={{ isClosing, closeTaskDetails }} />
+		</section>
+	)
 }

@@ -4,6 +4,8 @@
     // }
 
     .task-actions {
+        position: relative;
+
         align-items: center;
         padding-block: 16px;
 
@@ -57,6 +59,60 @@
                         color: $txt-clr;
                     }
                 }
+            }
+        }
+
+        .filter-by-person {
+            position: absolute;
+            top: 55px;
+            left: 85px;
+            display: flex;
+            flex-wrap: wrap;
+            height: 150px;
+            width: 350px;
+
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 17px 6px #0000001a;
+            background-color: $clr3;
+
+            font-size: rem(14px);
+            h4 {
+                display: flex;
+                height: 32px;
+                align-items: center;
+                font-family: $main-font-family;
+                font-size: rem(15px);
+            }
+
+            ul {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                width: 100%;
+
+                li {
+                    position: relative;
+                    height: 40px;
+                    width: 40px;
+
+                    > * {
+                        position: absolute;
+                    }
+
+                    button {
+                        height: 100%;
+                        width: 100%;
+                        opacity: 0;
+                    }
+                }
+            }
+
+            img {
+                height: 30px;
+                width: 30px;
+
+                border-radius: 100%;
             }
         }
 

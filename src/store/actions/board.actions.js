@@ -1,6 +1,6 @@
 import { boardService } from '../../services/board/'
 import { store } from '../store'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD } from '../reducers/board.reducer'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, SET_FILTER } from '../reducers/board.reducer'
 import { makeId } from '../../services/util.service'
 import { userService } from '../../services/user'
 import { showErrorMsg } from '../../services/event-bus.service'
@@ -89,6 +89,11 @@ function getCmdAddBoard(board) {
 }
 function getCmdUpdateBoard(board) {
   return { type: UPDATE_BOARD, board }
+}
+
+// Filter actions: //
+export function setFilterBy(filterBy) {
+  store.dispatch({ type: SET_FILTER, filterBy })
 }
 
 // group actions: //
