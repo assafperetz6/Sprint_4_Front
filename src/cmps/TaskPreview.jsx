@@ -40,29 +40,25 @@ export function TaskPreview({ group, task, idx }) {
     return () => document.removeEventListener('click', handleClickOutside)
   }, [task.id])
 
-	async function onSaveTask(newTitle) {
-		try {
-			await updateTask(board._id, group.id, { ...task, title: newTitle }, { txt: 'Chnaged Title' })
-		} catch (err) {
-			showErrorMsg('Cannot update title')
-			console.error('Cannot update title:', err)
-		}
-	}
+  async function onSaveTask(newTitle) {
+    try {
+      await updateTask(board._id, group.id, { ...task, title: newTitle }, { txt: 'Chnaged Title' })
+    } catch (err) {
+      showErrorMsg('Cannot update title')
+      console.error('Cannot update title:', err)
+    }
+  }
 
-	async function onMoveTo(newGroupId) {
-		try {
-			await addTask(board._id, newGroupId, task, { txt: `Moved task ${task.id} from ${group.title}` }, true)
-			await removeTask(
-				board._id,
-				task.id,
-				group.id
-			)
-		} catch (err) {
-			showErrorMsg(`Cannot move ${task.id}`)
-			console.error(`Cannot move ${task.id}:`, err)
-		}	
-	}
-	
+  async function onMoveTo(newGroupId) {
+    try {
+      await addTask(board._id, newGroupId, task, { txt: `Moved task ${task.id} from ${group.title}` }, true)
+      await removeTask(board._id, task.id, group.id)
+    } catch (err) {
+      showErrorMsg(`Cannot move ${task.id}`)
+      console.error(`Cannot move ${task.id}:`, err)
+    }
+  }
+
   async function onRemoveTask(boardId, groupId, taskId) {
     try {
       const activity = {
@@ -95,12 +91,9 @@ export function TaskPreview({ group, task, idx }) {
               </button>
             </div>
 
-						<div
-							className="colored-border"
-							style={{ backgroundColor: hexToRgba(group.style.color, 1) }}
-						/>
+            <div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }} />
 
-						<Checkbox task={task} group={group} />
+            <Checkbox task={task} group={group} />
 
             <section className="task-title">
               <div
@@ -141,22 +134,22 @@ export function TaskPreview({ group, task, idx }) {
             <li className="line-end" />
           </section>
 
-					{activeMenuId === task.id && (
-						<ContextMenu
-							type="task"
-							entity={task}
-							onClose={() => setActiveMenuId(null)}
-							onRemove={() => removeTask(board._id, task.id, group.id)}
-							onUpdate={onSaveTask}
-							onMoveTo={onMoveTo}
-							onRename={(task) => setTitleToEdit(task.title)}
-							referenceElement={buttonRef.current}
-						/>
-					)}
-				</li>
-			)}
-		</Draggable>
-	)
+          {activeMenuId === task.id && (
+            <ContextMenu
+              type="task"
+              entity={task}
+              onClose={() => setActiveMenuId(null)}
+              onRemove={onRemoveTask(board._id, group.id, task.id)}
+              onUpdate={onSaveTask}
+              onMoveTo={onMoveTo}
+              onRename={(task) => setTitleToEdit(task.title)}
+              referenceElement={buttonRef.current}
+            />
+          )}
+        </li>
+      )}
+    </Draggable>
+  )
 }
 
 // DELETE TASK BTN:
