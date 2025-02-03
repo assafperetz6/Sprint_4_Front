@@ -47,7 +47,7 @@ export const defaultBoard = [
             dueDate: getRandomTimestamp(),
             timeline: null,
             description: 'description',
-						archivedAt: null,
+            archivedAt: null,
             comments: [],
             members: [
               {
@@ -65,7 +65,7 @@ export const defaultBoard = [
             dueDate: getRandomTimestamp(),
             timeline: null,
             description: 'description',
-						archivedAt: null,
+            archivedAt: null,
             comments: [
               {
                 id: 'ZdPnm',
@@ -104,7 +104,7 @@ export const defaultBoard = [
             dueDate: getRandomTimestamp(),
             timeline: null,
             description: 'description',
-						archivedAt: null,
+            archivedAt: null,
             comments: [
               {
                 id: 'ZdfEm',
@@ -133,7 +133,7 @@ export const defaultBoard = [
             dueDate: getRandomTimestamp(),
             timeline: null,
             description: 'description',
-						archivedAt: null,
+            archivedAt: null,
             comments: [
               {
                 id: 'ZdPnm',

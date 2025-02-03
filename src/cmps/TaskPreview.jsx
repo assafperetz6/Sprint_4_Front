@@ -118,7 +118,9 @@ export function TaskPreview({ group, task, idx }) {
               </div>
 
               {task.comments.length === 0 ? (
-                <div className="add-update-btn">{svgs.addUpdate}</div>
+                <Link to={`task/${task.id}`}>
+                  <div className="add-update-btn">{svgs.addUpdate}</div>
+                </Link>
               ) : (
                 <div className="add-update-btn has-updates">
                   <Link to={`task/${task.id}`}>
