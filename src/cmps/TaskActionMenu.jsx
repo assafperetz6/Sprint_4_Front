@@ -51,13 +51,9 @@ export function TaskActionMenu({ tasks }) {
 
   async function onMoveTo(newGroupId) {
     // console.log(newGroupId)
-    const activity = {
-      type: 'Moved',
-      oldState: tasks[0].group,
-      newState: newGroupId
-    }
+
     try {
-      moveTasksTo(board._id, newGroupId, tasks, activity)
+      moveTasksTo(board._id, newGroupId, tasks)
     } catch (err) {
       console.log('Failed to move tasks', err)
     }

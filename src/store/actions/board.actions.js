@@ -221,10 +221,9 @@ export async function archiveTasks(boardId, tasks) {
   }
 }
 
-export async function moveTasksTo(boardId, newGroupId, tasks, activity) {
+export async function moveTasksTo(boardId, newGroupId, tasks) {
   try {
-    const activityToSave = await _addActivity(boardId, newGroupId, tasks, activity)
-    const savedBoard = await boardService.moveTasksTo(boardId, newGroupId, tasks, activityToSave)
+    const savedBoard = await boardService.moveTasksTo(boardId, newGroupId, tasks)
     store.dispatch(getCmdSetBoard(savedBoard))
   } catch (err) {
     console.log(`error from actions--> cannot move tasks to group ${newGroupId}`, err)
