@@ -49,6 +49,7 @@ export function BoardDetails() {
 
 	useEffect(() => {
 		loadBoard(boardId)
+		
 	}, [boardId, filterBy])
 
 	function closeTaskDetails() {

@@ -19,18 +19,19 @@ export function boardReducer(state = initialState, action) {
 			newState = { ...state, boards: action.boards }
 			break
 		case SET_BOARD:
-			if (state.filterBy.length) {
+			
+			if (state.filterBy.txt.length) {
 				
 				const filterBy = state.filterBy
 				const filteredGroups = action.board.groups.filter((group) =>
-					group.title.toLowerCase().includes(filterBy.toLowerCase())
+					group.title.toLowerCase().includes(filterBy.txt.toLowerCase())
 				)
 
 				const groupsFilteredTasks = action.board.groups
 					.map((group) => ({
 						...group,
 						tasks: group.tasks.filter((task) =>
-							task.title.toLowerCase().includes(filterBy.toLowerCase())
+							task.title.toLowerCase().includes(filterBy.txt.toLowerCase())
 						),
 					}))
 					.filter((group) => group.tasks.length > 0)
