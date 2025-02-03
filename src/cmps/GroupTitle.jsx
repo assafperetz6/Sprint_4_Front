@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { removeGroup, updateGroup } from '../store/actions/board.actions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { svgs } from '../services/svg.service'
 import { HeaderInlineEdit } from './HeaderInlineEdit'
 import { ContextMenu } from './ContextMenu'

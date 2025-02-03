@@ -5,6 +5,7 @@ import { svgs } from '../../services/svg.service'
 import { showErrorMsg } from '../../services/event-bus.service'
 import { updateTask } from '../../store/actions/board.actions'
 import { boardService } from '../../services/board'
+import { TooltipContainer } from '../TooltipContainer'
 
 export function MemberPicker({ task, groupId, defaultWidth }) {
   const DEFAULT_AVATAR = 'https://cdn.monday.com/icons/dapulse-person-column.svg'
@@ -48,22 +49,35 @@ export function MemberPicker({ task, groupId, defaultWidth }) {
 
     if (task.members.length <= 2) {
       return task.members.map((member, index) => (
-        <img
-          key={member._id || index}
-          src={member.imgUrl}
-          alt={member.fullname || 'Member avatar'}
-          className="member-avatar"
-          style={{
-            marginLeft: index > 0 ? '-8px' : '0'
-          }}
-        />
+        <>
+          <TooltipContainer key={member._id || index} txt={member.fullname}>
+            <img
+              key={member._id || index}
+              src={member.imgUrl}
+              alt={member.fullname || 'Member avatar'}
+              className="member-avatar"
+              style={{
+                marginLeft: index > 0 ? '-8px' : '0'
+              }}
+            />
+          </TooltipContainer>
+        </>
       ))
     }
+    const extraMembersNames = task.members
+
+      .slice(1)
+      .map((member) => member.fullname)
+      .join(', ')
 
     return (
       <>
-        <img src={task.members[0].imgUrl} alt={task.members[0].fullname || 'Member avatar'} className="member-avatar" />
-        <div className="extra-members">+{task.members.length - 1}</div>
+        <TooltipContainer key={task.members[0]._id} txt={task.members[0].fullname}>
+          <img src={task.members[0].imgUrl} alt={task.members[0].fullname || 'Member avatar'} className="member-avatar" />
+        </TooltipContainer>
+        <TooltipContainer txt={extraMembersNames}>
+          <div className="extra-members">+{task.members.length - 1}</div>
+        </TooltipContainer>
       </>
     )
   }

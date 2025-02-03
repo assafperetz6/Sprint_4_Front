@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import { InlineEdit } from './InlineEdit'
 import { ContextMenu } from './ContextMenu'
 import { Draggable } from '@hello-pangea/dnd'
+import { TooltipContainer } from './TooltipContainer'
 
 export function TaskPreview({ group, task, idx }) {
   const board = useSelector((storeState) => storeState.boardModule.board)
@@ -123,10 +124,12 @@ export function TaskPreview({ group, task, idx }) {
                 </Link>
               ) : (
                 <div className="add-update-btn has-updates">
-                  <Link to={`task/${task.id}`}>
-                    {svgs.comment}
-                    <span className="update-count">{task.comments.length}</span>
-                  </Link>
+                  <TooltipContainer content={`${task.comments.length} comments`}>
+                    <Link to={`task/${task.id}`}>
+                      {svgs.comment}
+                      <span className="update-count">{task.comments.length}</span>
+                    </Link>
+                  </TooltipContainer>
                 </div>
               )}
             </section>

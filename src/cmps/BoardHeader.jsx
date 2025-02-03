@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { svgs } from '../services/svg.service'
 import { showSuccessMsg } from '../services/event-bus.service'
+import { TooltipContainer } from './TooltipContainer'
 
 export function BoardHeader({ board }) {
   function getMemberIcons() {
@@ -25,17 +26,29 @@ export function BoardHeader({ board }) {
 
         <section className="board-actions">
           <button className="group-chat">
-            <Link to={`/board/${board._id}/activity_log`}>{svgs.chat}</Link>
-          </button>
-          <button className="activity-log flex align-center">
-            <Link className="flex align-center" to={`/board/${board._id}/activity_log`}>
-              {getMemberIcons()}
+            <Link to={`/board/${board._id}/activity_log`}>
+              <TooltipContainer txt="Start board discussion" placement="bottom">
+                {svgs.chat}
+              </TooltipContainer>
             </Link>
           </button>
+
+          <TooltipContainer txt="View activity log" placement="bottom">
+            <button className="activity-log flex align-center">
+              <Link className="flex align-center" to={`/board/${board._id}/activity_log`}>
+                {getMemberIcons()}
+              </Link>
+            </button>
+          </TooltipContainer>
+
           <button className="invite-members">Invite / {board.members.length}</button>
-          <button className="copy-link" onClick={() => copyLink()}>
-            {svgs.link}
-          </button>
+
+          <TooltipContainer txt="Copy link" placement="bottom">
+            <button className="copy-link" onClick={() => copyLink()}>
+              {svgs.link}
+            </button>
+          </TooltipContainer>
+
           <button className="options">{svgs.threeDots}</button>
         </section>
       </header>
@@ -50,8 +63,12 @@ export function BoardHeader({ board }) {
           <button>New task</button>
           <button>{svgs.arrowDown}</button>
         </div>
+
         <button>{svgs.search} Search</button>
-        <button>{svgs.person} Person</button>
+
+        <TooltipContainer txt="Filter board by person">
+          <button>{svgs.person} Person</button>
+        </TooltipContainer>
         <button>
           {svgs.filter} Filter {svgs.arrowDown}
         </button>

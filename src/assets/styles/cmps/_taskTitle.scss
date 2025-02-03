@@ -18,7 +18,6 @@
     align-items: center;
     justify-content: space-between;
     flex: 1;
-
     height: $task-row-height;
 
     min-width: 0;
@@ -52,13 +51,22 @@
     .inline-edit {
       padding-inline-start: 32px;
 
-      text-overflow: ellipsis;
       overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
 
       padding-inline: 4px;
       border-radius: 4px;
       margin-inline-start: 30px;
+
+      .tooltip-container {
+        span {
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
 
       &.edit {
         flex: 0 0 80%;
