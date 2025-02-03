@@ -10,6 +10,8 @@ export function GroupPreview({
 	idx,
 	showHeader,
 	isAllCollapsed,
+	setIsAllCollapsed,
+	isDragging
 }) {
 	if (isAllCollapsed || group.isCollapsed) {
 		return (
@@ -31,6 +33,7 @@ export function GroupPreview({
 								group={group}
 								cmpsOrder={cmpsOrder}
 								idx={idx}
+								dragHandleProps={provided.dragHandleProps}
 							/>
 						</section>
 					)
@@ -43,8 +46,8 @@ export function GroupPreview({
 			key={group.id}
 			draggableId={group.id}
 			index={idx}
-			onMouseDown={() => group.isCollapsed = true}
-			onMouseUp={() => group.isCollapsed = false}
+			onMouseDown={() => setIsAllCollapsed(true)}
+			// onMouseUp={() => group.isCollapsed = false}
 		>
 			{(provided) => (
 				<section

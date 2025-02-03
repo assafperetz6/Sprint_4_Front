@@ -6,7 +6,7 @@ import { TaskListHeader } from './TaskListHeader.jsx'
 import { svgs } from '../services/svg.service.jsx'
 import { Draggable } from '@hello-pangea/dnd'
 
-export function CollapsedGroupPreview({ group, cmpsOrder, idx, dragHandleProps, isAllCollapsed }) {
+export function CollapsedGroupPreview({ group, cmpsOrder, idx, dragHandleProps, isAllCollapsed }) {	
   return (
     <>
       <section className="sticky-container" {...dragHandleProps} style={{ backgroundColor: '#fff', zIndex: '70' }}>
@@ -14,10 +14,10 @@ export function CollapsedGroupPreview({ group, cmpsOrder, idx, dragHandleProps, 
         <div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }}></div>
         <GroupTitle group={group} />
       </section>
-      <section className="summary-columns">
+      {!isAllCollapsed && <section className="summary-columns">
         <TaskListHeader groupColor={group.style.color} tasks={group.tasks} isCollapsed={true} />
         <GroupSummary group={group} cmpsOrder={cmpsOrder} isCollapsed={true} />
-      </section>
+      </section>}
     </>
   )
 }
