@@ -14,6 +14,7 @@ export function AddTask({ group }) {
 
   async function onAddTask(ev) {
     if (ev) ev.preventDefault()
+    if (!taskToAdd.title?.trim()) return
 
     try {
       const activity = { type: 'Created', newState: taskToAdd.title }
@@ -27,8 +28,7 @@ export function AddTask({ group }) {
   }
 
   function onBlur() {
-    if (taskToAdd.title) onAddTask()
-    else return
+    if (taskToAdd.title?.trim()) onAddTask()
   }
 
   function handleChange({ target }) {
