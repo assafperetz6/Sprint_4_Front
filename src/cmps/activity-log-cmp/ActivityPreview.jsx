@@ -63,7 +63,7 @@ export function ActivityPreview({ activity, board }) {
         <div className="activity-content flex align-center">
           {activity.type === 'Created' && (
             <div className="created-change flex align-center">
-              Group: <span style={{ color: activity.group.color }}>{activity.group.title}</span>
+              Group: <span style={{ color: activity.group.color }}> {activity.group.title}</span>
             </div>
           )}
           {activity.type === 'Name' && (
@@ -80,10 +80,9 @@ export function ActivityPreview({ activity, board }) {
           {activity.type === 'Member' && (
             <div className="member-change flex align-center justify-between">
               <span>{activity.description}</span>
-              <div className="user-avatar" style={{ borderRadius: '50%', height: '30px', minWidth: '30px' }}>
+              <div className="user-avatar" style={{ borderRadius: '50%', height: '30px', minWidth: '30px', overflow: 'hidden' }}>
                 <img src={activity?.newState.imgUrl} style={{ height: '100%' }} />
               </div>
-              {console.log('🚀 ~ ActivityLog ~ activity:', activity)}
             </div>
           )}
 

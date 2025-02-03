@@ -15,12 +15,12 @@ function getEmptyUser() {
 
 function getDefaultUser() {
   return {
-    username: 'Guest',
-    password: 'Guest',
-    fullname: 'Guest',
+    username: 'Alonwohl',
+    password: 'alon',
+    fullname: 'Alon Wohl',
     isAdmin: false,
     score: 100,
-    imgUrl: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+    imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
   }
 }
 

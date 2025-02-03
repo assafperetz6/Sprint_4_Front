@@ -13,24 +13,24 @@ function getEmptyBoard() {
     createdBy: {
       _id: 'u101',
       fullname: 'Alon Wohl',
-      imgUrl: `https://robohash.org/alon?set=set4`
+      imgUrl: `https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg`
     },
 
     members: [
       {
         _id: 'u101',
         fullname: 'Alon Wohl',
-        imgUrl: 'https://robohash.org/alon?set=set4'
+        imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
       },
       {
         _id: 'u102',
         fullname: 'Dror gaon',
-        imgUrl: 'https://robohash.org/dror?set=set4'
+        imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738423038/amup7iyjt0htiedqb91c.jpg'
       },
       {
         _id: 'u103',
         fullname: 'Assaf Peretz',
-        imgUrl: 'https://robohash.org/assaf?set=set4'
+        imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738492332/PHOTO-2025-02-02-12-30-47_pbbrwt.jpg'
       }
     ],
     groups: getDefaultGroups(),
@@ -59,32 +59,32 @@ function getDefaultFilter() {
 }
 
 function getDefaultGroups() {
-	const groups = [
-		{
-			id: makeId(),
-			title: 'Group 1',
-			isCollapsed: false,
-			tasks: getDefaultTasks(),
-			style: { color: getRandomColor() }
-		},
-		{
-			id: makeId(),
-			title: 'Group 2',
-			isCollapsed: false,
-			tasks: getDefaultTasks(),
-			style: { color: getRandomColor() }
-		}
-	]
+  const groups = [
+    {
+      id: makeId(),
+      title: 'Group 1',
+      isCollapsed: false,
+      tasks: getDefaultTasks(),
+      style: { color: getRandomColor() }
+    },
+    {
+      id: makeId(),
+      title: 'Group 2',
+      isCollapsed: false,
+      tasks: getDefaultTasks(),
+      style: { color: getRandomColor() }
+    }
+  ]
 
   return groups
 }
 function getNewGroup() {
-	return {
-		title: 'New Group',
-		isCollapsed: false,
-		tasks: [],
-		style: { color: getRandomColor() }
-	}
+  return {
+    title: 'New Group',
+    isCollapsed: false,
+    tasks: [],
+    style: { color: getRandomColor() }
+  }
 }
 
 function getDefaultTask() {
@@ -101,7 +101,7 @@ function getDefaultTask() {
       {
         _id: 'u101',
         fullname: 'Alon Wohl',
-        imgUrl: 'https://robohash.org/alon?set=set4'
+        imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
       }
     ]
   }
@@ -124,7 +124,7 @@ function getDefaultTasks() {
         {
           _id: 'u101',
           fullname: 'Alon Wohl',
-          imgUrl: 'https://robohash.org/alon?set=set4'
+          imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
         }
       ]
     },
@@ -140,12 +140,12 @@ function getDefaultTasks() {
         {
           _id: 'u102',
           fullname: 'Dror Gaon',
-          imgUrl: 'https://robohash.org/dror?set=set4'
+          imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738423038/amup7iyjt0htiedqb91c.jpg'
         },
         {
           _id: 'u101',
           fullname: 'Alon Wohl',
-          imgUrl: 'https://robohash.org/alon?set=set4'
+          imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
         }
       ]
     }

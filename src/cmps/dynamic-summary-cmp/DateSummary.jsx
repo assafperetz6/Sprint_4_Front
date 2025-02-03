@@ -57,7 +57,7 @@ export function DateSummary({ summary, padding, group }){
             dateRange = `${startDay} ${startMonth} ${startYear} - ${endDay} ${endMonth} ${endYear}`
         }
 
-        const daysStr = (dateSummary.end - dateSummary.start) / 86400000 + 1 + 'd' // 86400000 is the number of milliseconds in a day
+        const daysStr = Math.round((dateSummary.end - dateSummary.start) / 86400000 + 1) + 'd' // 86400000 is the number of milliseconds in a day
 
         function getProgressStyle() {
             if (!dateSummary.start || !dateSummary.end) return {}

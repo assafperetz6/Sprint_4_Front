@@ -14,6 +14,7 @@ export function AddTask({ group }) {
 
   async function onAddTask(ev) {
     if (ev) ev.preventDefault()
+    if (!taskToAdd.title?.trim()) return
 
     try {
       const activity = { type: 'Created', newState: taskToAdd.title }
@@ -27,8 +28,7 @@ export function AddTask({ group }) {
   }
 
   function onBlur() {
-    if (taskToAdd.title) onAddTask()
-    else return
+    if (taskToAdd.title?.trim()) onAddTask()
   }
 
   function handleChange({ target }) {
@@ -45,7 +45,8 @@ export function AddTask({ group }) {
         <div className="white-space"></div>
 
         <div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 0.6) }}></div>
-        <Checkbox />
+
+        <Checkbox disable={true} />
 
         <form onSubmit={onAddTask}>
           <input

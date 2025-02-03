@@ -4,8 +4,8 @@ import { hexToRgba } from '../services/util.service'
 
 import { useSelector } from 'react-redux'
 import { DynamicCmp } from './DynamicCmp'
-import { showErrorMsg } from '../services/event-bus.service'
-import { removeTask, updateTask } from '../store/actions/board.actions'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import { addTask, removeTask, updateTask } from '../store/actions/board.actions'
 import { Checkbox } from './Checkbox'
 import { useEffect, useRef, useState } from 'react'
 import { InlineEdit } from './InlineEdit'
@@ -23,7 +23,7 @@ export function TaskPreview({ group, task, idx }) {
   const buttonRef = useRef(null)
 
   const onClick = () => setIsActive(true)
-  const onBlur = () => setIsActive(false)
+  // const onBlur = () => setIsActive(false)
 
   useEffect(() => {
     setTitleToEdit(task.title)
@@ -42,12 +42,20 @@ export function TaskPreview({ group, task, idx }) {
 
   async function onSaveTask(newTitle) {
     try {
-      const activity = { oldState: task.title, newState: newTitle, type: 'Name' }
-
-      await updateTask(board._id, group.id, { ...task, title: newTitle }, activity)
+      await updateTask(board._id, group.id, { ...task, title: newTitle }, { txt: 'Chnaged Title' })
     } catch (err) {
       showErrorMsg('Cannot update title')
       console.error('Cannot update title:', err)
+    }
+  }
+
+  async function onMoveTo(newGroupId) {
+    try {
+      await removeTask(board._id, group.id, task.id, { txt: `Moved task ${task.id} from ${group.title}` })
+      await addTask(board._id, newGroupId, task, { txt: `Moved task ${task.id} from ${group.title}` }, true)
+    } catch (err) {
+      showErrorMsg(`Cannot move ${task.id}`)
+      console.error(`Cannot move ${task.id}:`, err)
     }
   }
 
@@ -59,6 +67,7 @@ export function TaskPreview({ group, task, idx }) {
         oldState: task
       }
       await removeTask(boardId, groupId, taskId, activity)
+      showSuccessMsg('We successfully deleted 1 item')
     } catch (err) {
       console.error('Cannot remove task:', err)
       showErrorMsg('Cannot remove task')
@@ -85,7 +94,7 @@ export function TaskPreview({ group, task, idx }) {
 
             <div className="colored-border" style={{ backgroundColor: hexToRgba(group.style.color, 1) }} />
 
-            <Checkbox />
+            <Checkbox task={task} group={group} />
 
             <section className="task-title">
               <div
@@ -108,7 +117,18 @@ export function TaskPreview({ group, task, idx }) {
                 </Link>
               </div>
 
-              <div className="add-update-btn">{svgs.addUpdate}</div>
+              {task.comments.length === 0 ? (
+                <Link to={`task/${task.id}`}>
+                  <div className="add-update-btn">{svgs.addUpdate}</div>
+                </Link>
+              ) : (
+                <div className="add-update-btn has-updates">
+                  <Link to={`task/${task.id}`}>
+                    {svgs.comment}
+                    <span className="update-count">{task.comments.length}</span>
+                  </Link>
+                </div>
+              )}
             </section>
           </section>
 
@@ -125,7 +145,8 @@ export function TaskPreview({ group, task, idx }) {
               entity={task}
               onClose={() => setActiveMenuId(null)}
               onRemove={() => onRemoveTask(board._id, group.id, task.id)}
-              onUpdate={(updatedTask) => onSaveTask(updatedTask.title)}
+              onUpdate={onSaveTask}
+              onMoveTo={onMoveTo}
               onRename={(task) => setTitleToEdit(task.title)}
               referenceElement={buttonRef.current}
             />

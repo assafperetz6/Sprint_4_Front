@@ -57,7 +57,7 @@
 		}
 	}
 
-	&:hover:not(.active) > *:not(.context-btn-container) {
+	&:hover:not(.active) > *:not(.context-btn-container, .popper-container) {
 		background-color: $task-hover-bgc;
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
 	}
@@ -71,9 +71,10 @@
 		height: $task-row-height;
 	}
 
-	&:hover:not(.active) {
+	&:hover:not(.active, .popper-container) {
 		background-color: $task-hover-bgc;
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
+
 		.sticky-container {
 			background-color: $task-hover-bgc;
 			box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
