@@ -14,7 +14,7 @@ export function ActivityLog() {
 
   useEffect(() => {
     loadActivities()
-  }, [boardId, taskId, board])
+  }, [boardId, taskId, board.activities])
 
   async function loadActivities() {
     if (taskId) {
