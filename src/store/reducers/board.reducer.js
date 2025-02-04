@@ -10,7 +10,7 @@ const initialState = {
 	boards: [],
 	board: null,
 	selectedTasks: [],
-	filterBy: { txt: '', members: [] },
+	filterBy: { txt: '', members: [], sort: { sortField: '', dir: 1 } },
 }
 
 export function boardReducer(state = initialState, action) {

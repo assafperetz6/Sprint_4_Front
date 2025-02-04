@@ -36,7 +36,9 @@ export function BoardHeader({ board }) {
 				board.groups[0].id,
 				boardService.getEmptyTask(),
 				{ txt: 'Added task' },
-				'unShift'
+				false, // !isMoved
+				false, // !isDuplicate
+				'unshift'
 			)
 		} catch (err) {
 			showErrorMsg('cannot add task')

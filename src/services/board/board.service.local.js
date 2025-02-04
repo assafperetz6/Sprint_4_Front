@@ -271,7 +271,12 @@ async function saveTask(boardId, groupId, task, activity, isDuplicate = false, i
       }
     } else {
       taskToSave.id = makeId()
-      unShift ? tasks.unshift(taskToSave) : tasks.push(taskToSave)
+      if (unShift) {
+        taskToSave.title = 'New task'
+        tasks.unshift(taskToSave)
+      } else {
+        tasks.push(taskToSave)
+      }
       activity.task.id = taskToSave.id
     }
 
