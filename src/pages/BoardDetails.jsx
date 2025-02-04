@@ -40,9 +40,6 @@ export function BoardDetails() {
 		else if (e.target.scrollTop > 0 && isScrolledTop) setIsScrolledTop(false)
 	}
 
-	// function handleFilter(value, filterType = 'txt') {
-	// 	setFilterBy(prev => ({ ...prev, [filterType]: value}))
-	// }
 	const selectedTasks = useSelector(
 		(storeState) => storeState.boardModule.selectedTasks
 	)

@@ -107,7 +107,7 @@ export function GroupSummary({ group, cmpsOrder, isCollapsed }){
 			{!isCollapsed && <section style={{ width: 400 + 'px', height: '42px' }} className="white-space"></section>}
 			<section className="group-summary-container">
 				{groupSummaryArray.map((summary, idx) => (
-					<DynamicSummaryCmp group={group} key={Object.keys(summary)[0]} padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} key={idx} />
+					<DynamicSummaryCmp group={group} padding={8} summary={summary} statusLabels={statusLabels} priorityLabels={priorityLabels} key={idx} />
 				))}
 			</section>
 		</section>
