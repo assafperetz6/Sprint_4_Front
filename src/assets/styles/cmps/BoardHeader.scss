@@ -62,7 +62,7 @@
             }
         }
 
-        .filter-by-person {
+        .filter-by-member {
             position: absolute;
             top: 55px;
             left: 85px;
@@ -109,10 +109,20 @@
             }
 
             img {
+                position: relative;
                 height: 30px;
                 width: 30px;
 
                 border-radius: 100%;
+
+                &.selected-member::before {
+                    position: absolute;
+                    content: '';
+
+                    height: 30px;
+                    width: 30px;
+                    border: '6px solid #d9f0ff'
+                }
             }
         }
 

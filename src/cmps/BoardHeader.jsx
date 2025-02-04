@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
-	const [isPersonFilter, setIsPersonFilter] = useState(false)
+	const [isMemberFilter, setIsMemberFilter] = useState(false)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
 
 	console.log(filterBy)
@@ -104,12 +104,12 @@ export function BoardHeader({ board }) {
 					/>
 				</label>
 
-				<button onClick={() => setIsPersonFilter((prev) => !prev)}>
+				<button onClick={() => setIsMemberFilter((prev) => !prev)}>
 					{svgs.person} Person
 					{filterBy.members.length > 0 && <button onClick={() => setFilterBy(({ ...filterBy, members: [] }))}>x</button>}
 				</button>
-				{isPersonFilter && (
-					<section className="filter-by-person flex column">
+				{isMemberFilter && (
+					<section className="filter-by-member flex column">
 						<div className="title-wrapper">
 							<h4>Filter this board by person</h4>
 							<span>And find tasks they're working on.</span>
@@ -118,7 +118,7 @@ export function BoardHeader({ board }) {
 						<ul>
 							{board.members.map((member) => (
 								<li key={member._id}>
-									<img src={member.imgUrl} alt={`${member.fullname} img`} />
+									<img src={member.imgUrl} alt={`${member.fullname} img`}  />
 									<button
 										onClick={() => toggleFilteredMembers(member._id)
 										}
