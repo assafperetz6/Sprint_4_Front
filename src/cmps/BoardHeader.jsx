@@ -47,6 +47,13 @@ export function BoardHeader({ board }) {
 		}
 	}
 
+	function toggleFilteredMembers(id) {
+		let members = [...filterBy.members]
+		members.includes(id) ? members = members.filter(memberId => memberId !== id) : members.push(id)
+
+		setFilterBy({ ...filterBy, members })
+	}
+
 	return (
 		<section className="board-header-container">
 			<header className="board-header">
@@ -113,13 +120,7 @@ export function BoardHeader({ board }) {
 								<li key={member._id}>
 									<img src={member.imgUrl} alt={`${member.fullname} img`} />
 									<button
-										onClick={() =>
-											setFilterBy({
-												...filterBy,
-												members: filterBy.members.includes(member._id)
-													? [...filterBy.members.filter((m) => m._id !== member._id)]
-													: [...filterBy.members, member._id]
-											})
+										onClick={() => toggleFilteredMembers(member._id)
 										}
 									/>
 								</li>

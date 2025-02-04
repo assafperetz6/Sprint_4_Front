@@ -24,6 +24,8 @@ export function boardReducer(state = initialState, action) {
 		case SET_BOARD:
 			let filteredBoardGroups = [...action.board.groups]
 
+			// FILTER BY MEMBERS
+
 			if (state.filterBy.members.length) {
 				const filterBy = state.filterBy
 
@@ -42,6 +44,8 @@ export function boardReducer(state = initialState, action) {
 					}))
 					.filter((group) => group.tasks.length > 0)
 			}
+			
+			// FILTER BY TEXT
 
 			if (state.filterBy.txt) {
 				const filterBy = state.filterBy
@@ -54,7 +58,7 @@ export function boardReducer(state = initialState, action) {
 								...group,
 								tasks: group.tasks.filter((task) => regex.test(task.title)),
 						  }
-				)
+				).filter((group) => group.tasks.length > 0)
 			}
 
 			newState = {
