@@ -1,6 +1,6 @@
 import { useState } from 'react'
-// import ReactQuill, { Quill } from 'react-quill'
-// import 'react-quill/dist/quill.snow.css'
+import ReactQuill, { Quill } from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 import { useSelector } from 'react-redux'
 import { userService } from '../../services/user'
 import { updateBoard, updateTask } from '../../store/actions/board.actions'
@@ -168,19 +168,21 @@ export function TextEditor({ setCommentToEdit }) {
   }
 
   const modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-      ['link', 'image']
-    ]
+    toolbar: {
+      container: [
+        [{ header: [1, 2, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+        ['link', 'image']
+      ]
+    }
   }
 
   const formats = ['header', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image']
 
   return (
     <div className="quill-wrapper">
-      <ReactQuill value={text} modules={modules} formats={formats} onChange={handleChange} />
+      <ReactQuill theme="snow" value={text} modules={modules} formats={formats} onChange={handleChange} />
     </div>
   )
 }
