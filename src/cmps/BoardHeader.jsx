@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
 import { svgs } from '../services/svg.service'
@@ -11,8 +11,6 @@ export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
 	const [isMemberFilter, setIsMemberFilter] = useState(false)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
-
-	console.log(filterBy)
 
 	function getMemberIcons() {
 		// TODO: should return last two members on the activity log
@@ -49,7 +47,9 @@ export function BoardHeader({ board }) {
 
 	function toggleFilteredMembers(id) {
 		let members = [...filterBy.members]
-		members.includes(id) ? members = members.filter(memberId => memberId !== id) : members.push(id)
+		members.includes(id)
+			? (members = members.filter((memberId) => memberId !== id))
+			: members.push(id)
 
 		setFilterBy({ ...filterBy, members })
 	}
@@ -106,27 +106,39 @@ export function BoardHeader({ board }) {
 
 				<button onClick={() => setIsMemberFilter((prev) => !prev)}>
 					{svgs.person} Person
-					{filterBy.members.length > 0 && <button onClick={() => setFilterBy(({ ...filterBy, members: [] }))}>x</button>}
+					{filterBy.members.length > 0 && (
+						<button onClick={() => setFilterBy({ ...filterBy, members: [] })}>
+							x
+						</button>
+					)}
 				</button>
 				{isMemberFilter && (
-					<section className="filter-by-member flex column">
-						<div className="title-wrapper">
-							<h4>Filter this board by person</h4>
-							<span>And find tasks they're working on.</span>
-						</div>
+					<>
+						<div
+							style={{ position: 'fixed', inset: '0', zIndex: '1' }}
+							onClick={(ev) => {
+								ev.stopPropagation()
+								setIsMemberFilter(false)
+							}}
+						></div>
+						<section className="filter-by-member flex column">
+							<div className="title-wrapper">
+								<h4>Filter this board by person</h4>
+								<span>And find tasks they're working on.</span>
+							</div>
 
-						<ul>
-							{board.members.map((member) => (
-								<li key={member._id}>
-									<img src={member.imgUrl} alt={`${member.fullname} img`}  />
-									<button
-										onClick={() => toggleFilteredMembers(member._id)
-										}
-									/>
-								</li>
-							))}
-						</ul>
-					</section>
+							<ul>
+								{board.members.map((member) => (
+									<li key={member._id}>
+										<img src={member.imgUrl} alt={`${member.fullname} img`} />
+										<button
+											onClick={(ev) => toggleFilteredMembers(member._id, ev)}
+										/>
+									</li>
+								))}
+							</ul>
+						</section>
+					</>
 				)}
 
 				<button>
