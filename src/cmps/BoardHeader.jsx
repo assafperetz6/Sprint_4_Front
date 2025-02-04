@@ -12,10 +12,9 @@ export function BoardHeader({ board }) {
 	const [isMemberFilter, setIsMemberFilter] = useState(false)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
 
-	function getMemberIcons() {
+	function getMemberIcons(selectedMembers = board.members) {
 		// TODO: should return last two members on the activity log
-		const boardMembers = board.members
-		return boardMembers
+		return selectedMembers
 			.slice(0, 2)
 			.map((member) => (
 				<img
@@ -52,6 +51,10 @@ export function BoardHeader({ board }) {
 			: members.push(id)
 
 		setFilterBy({ ...filterBy, members })
+	}
+
+	function getSelectedMembers(ids) {
+		return board.members.filter((m) => ids.includes(m._id))
 	}
 
 	return (
@@ -104,14 +107,16 @@ export function BoardHeader({ board }) {
 					/>
 				</label>
 
-				<button onClick={() => setIsMemberFilter((prev) => !prev)}>
-					{svgs.person} Person
-					{filterBy.members.length > 0 && (
-						<button onClick={() => setFilterBy({ ...filterBy, members: [] })}>
-							x
-						</button>
-					)}
+				<button
+					className={isMemberFilter ? 'active' : ''}
+					onClick={() => setIsMemberFilter((prev) => !prev)}
+				>
+					{filterBy.members.length > 0
+						? getMemberIcons(getSelectedMembers(filterBy.members))
+						: svgs.person}{' '}
+					Person
 				</button>
+
 				{isMemberFilter && (
 					<>
 						<div
@@ -137,6 +142,12 @@ export function BoardHeader({ board }) {
 									</li>
 								))}
 							</ul>
+							{filterBy.members.length > 0 && <button
+								onClick={() => setFilterBy({ ...filterBy, members: [] })}
+								style={{ position: 'absolute', right: '8px', bottom: '8px', borderRadius: '4px' }}
+							>
+								Clear all
+							</button>}
 						</section>
 					</>
 				)}

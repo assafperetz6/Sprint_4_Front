@@ -17,6 +17,27 @@
 
             padding: 6px 12px 6px 8px;
             text-wrap: nowrap;
+
+            &.active {
+                background-color: $button-clicked-bgc;
+            }
+        }
+
+        img {
+            position: relative;
+            height: 20px;
+            width: 20px;
+
+            border-radius: 100%;
+
+            &.selected-member::before {
+                position: absolute;
+                content: '';
+
+                height: 30px;
+                width: 30px;
+                border: '6px solid #d9f0ff'
+            }
         }
 
         .txt-filter-container {
@@ -109,22 +130,11 @@
                         opacity: 0;
                     }
                 }
-            }
 
-            img {
-                position: relative;
-                height: 30px;
-                width: 30px;
-
-                border-radius: 100%;
-
-                &.selected-member::before {
-                    position: absolute;
-                    content: '';
-
+                img {
                     height: 30px;
                     width: 30px;
-                    border: '6px solid #d9f0ff'
+
                 }
             }
         }
