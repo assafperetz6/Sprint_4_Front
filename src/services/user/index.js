@@ -30,4 +30,4 @@ export const userService = { ...service, getEmptyUser, getDefaultUser }
 // Easy access to this service from the dev tools console
 // when using script - dev / dev:local
 
-if (DEV) window.userService = userService
+// if (DEV) window.userService = userService
