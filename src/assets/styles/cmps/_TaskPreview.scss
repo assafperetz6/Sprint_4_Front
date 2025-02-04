@@ -1,9 +1,6 @@
 .task-preview {
 	height: $task-row-height;
 
-	border-block-end: 1px solid $clr8;
-	// margin-inline-start: 6px;
-
 	&.active {
 		background-color: $button-clicked-bgc;
 		.sticky-container {
@@ -15,6 +12,8 @@
 			box-shadow: none;
 		}
 	}
+
+	
 
 	.context-btn-container {
 		display: flex;

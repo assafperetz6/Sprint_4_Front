@@ -17,27 +17,6 @@
 
             padding: 6px 12px 6px 8px;
             text-wrap: nowrap;
-
-            &.active {
-                background-color: $button-clicked-bgc;
-            }
-        }
-
-        img {
-            position: relative;
-            height: 20px;
-            width: 20px;
-
-            border-radius: 100%;
-
-            &.selected-member::before {
-                position: absolute;
-                content: '';
-
-                height: 30px;
-                width: 30px;
-                border: 6px solid #d9f0ff;
-            }
         }
 
         .txt-filter-container {
@@ -84,10 +63,27 @@
         }
 
         .filter-by-member {
-            @include filter-modal;
-            
+            position: absolute;
+            top: 55px;
+            left: 85px;
+            display: flex;
+            flex-wrap: wrap;
             height: 150px;
             width: 350px;
+
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 17px 6px #0000001a;
+            background-color: $clr3;
+
+            font-size: rem(14px);
+            h4 {
+                display: flex;
+                height: 32px;
+                align-items: center;
+                font-family: $main-font-family;
+                font-size: rem(15px);
+            }
 
             ul {
                 display: flex;
@@ -110,65 +106,29 @@
                         opacity: 0;
                     }
                 }
+            }
 
-                img {
+            img {
+                position: relative;
+                height: 30px;
+                width: 30px;
+
+                border-radius: 100%;
+
+                &.selected-member::before {
+                    position: absolute;
+                    content: '';
+
                     height: 30px;
                     width: 30px;
-
+                    border: '6px solid #d9f0ff'
                 }
-            }
-        }
-
-        .sort-modal {
-            @include filter-modal;
-            left: 275px;
-            
-            min-height: 180px;
-            width: 556px;
-
-            padding-block-start: 20px;
-
-            .sort-options {
-                display: flex;
-                justify-content: end;
-                gap: 8px;
-
-                height: 40px;
-                width: 100%;
-
-                select {
-                    position: relative;
-                    appearance: none;
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                      
-                    flex-grow: 1;
-
-                    padding-inline: 14px;
-                    border-color: $input-hover-border-clr;
-                    border-radius: 4px;
-
-                    &::before {
-                        content: "";
-                        position: absolute;
-    
-                        height: 100px;
-                        width: 100px;
-                        top: 0;
-                        right: 0;
-                        pointer-events: none;
-    
-                        background-color: black;
-                      }
-                }
-
-
-
             }
         }
 
 
         .toggle-board-tabs {
+
             height: 24px;
             width: 24px;
 

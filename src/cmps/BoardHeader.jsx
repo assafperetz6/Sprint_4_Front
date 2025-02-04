@@ -9,8 +9,9 @@ import { useSelector } from 'react-redux'
 
 export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
-	const [isMemberFilter, setIsMemberFilter] = useState(false)
+	const [modalType, setModalType] = useState(null)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
+
 
 	function getMemberIcons(selectedMembers = board.members) {
 		// TODO: should return last two members on the activity log
@@ -44,18 +45,12 @@ export function BoardHeader({ board }) {
 		}
 	}
 
-	function toggleFilteredMembers(id) {
-		let members = [...filterBy.members]
-		members.includes(id)
-			? (members = members.filter((memberId) => memberId !== id))
-			: members.push(id)
-
-		setFilterBy({ ...filterBy, members })
-	}
-
 	function getSelectedMembers(ids) {
 		return board.members.filter((m) => ids.includes(m._id))
 	}
+
+	console.log(board)
+	
 
 	return (
 		<section className="board-header-container">
@@ -108,8 +103,8 @@ export function BoardHeader({ board }) {
 				</label>
 
 				<button
-					className={isMemberFilter ? 'active' : ''}
-					onClick={() => setIsMemberFilter((prev) => !prev)}
+					className={modalType === 'member' ? 'active' : ''}
+					onClick={() => setModalType((prev) => prev === 'member' ? null : 'member' )}
 				>
 					{filterBy.members.length > 0
 						? getMemberIcons(getSelectedMembers(filterBy.members))
@@ -117,49 +112,117 @@ export function BoardHeader({ board }) {
 					Person
 				</button>
 
-				{isMemberFilter && (
-					<>
-						<div
-							style={{ position: 'fixed', inset: '0', zIndex: '1' }}
-							onClick={(ev) => {
-								ev.stopPropagation()
-								setIsMemberFilter(false)
-							}}
-						></div>
-						<section className="filter-by-member flex column">
-							<div className="title-wrapper">
-								<h4>Filter this board by person</h4>
-								<span>And find tasks they're working on.</span>
-							</div>
-
-							<ul>
-								{board.members.map((member) => (
-									<li key={member._id}>
-										<img src={member.imgUrl} alt={`${member.fullname} img`} />
-										<button
-											onClick={(ev) => toggleFilteredMembers(member._id, ev)}
-										/>
-									</li>
-								))}
-							</ul>
-							{filterBy.members.length > 0 && <button
-								onClick={() => setFilterBy({ ...filterBy, members: [] })}
-								style={{ position: 'absolute', right: '8px', bottom: '8px', borderRadius: '4px' }}
-							>
-								Clear all
-							</button>}
-						</section>
-					</>
-				)}
-
 				<button>
 					{svgs.filter} Filter {svgs.arrowDown}
 				</button>
-				<button>{svgs.sortDir} Sort</button>
+				<button onClick={() => setModalType((prev) => prev === 'sort' ? null : 'sort' )}>
+					{svgs.sortDir} Sort
+				</button>
+
 				<button>{svgs.hideEye} Hide</button>
 				<button>{svgs.groupBy} Group by</button>
 				<button className="more-task-actions">{svgs.threeDots}</button>
 				<button className="toggle-board-tabs">{svgs.arrowUp}</button>
+
+				<DynamicFilterModal
+					board={board}
+					modalType={modalType}
+					setModalType={setModalType}
+					filterBy={filterBy}
+					setFilterBy={setFilterBy}
+				/>
+			</section>
+		</section>
+	)
+}
+
+function DynamicFilterModal({
+	board,
+	modalType,
+	setModalType,
+	setFilterBy,
+	filterBy,
+}) {
+	const MODAL_CMPS = {
+		member: FilteredMembersModal,
+		sort: SortModal,
+	}
+
+	const ModalCmp = MODAL_CMPS[modalType]
+
+	if (!modalType || !ModalCmp) return null
+	return (
+		<>
+			<div
+				className="modal-overlay"
+				style={{ position: 'fixed', inset: '0', overflow: 'auto', zIndex: '1' }}
+				onClick={(ev) => {
+					ev.stopPropagation()
+					setModalType(null)
+				}}
+			></div>
+			<ModalCmp board={board} filterBy={filterBy} setFilterBy={setFilterBy} />
+		</>
+	)
+}
+
+function FilteredMembersModal({ board, filterBy, setFilterBy }) {
+	function toggleFilteredMembers(id) {
+		let members = [...filterBy.members]
+		members.includes(id)
+			? (members = members.filter((memberId) => memberId !== id))
+			: members.push(id)
+
+		setFilterBy({ ...filterBy, members })
+	}
+
+	return (
+		<section className="filter-by-member flex column">
+			<div className="title-wrapper">
+				<h4>Filter this board by person</h4>
+				<span>And find tasks they're working on.</span>
+			</div>
+
+			<ul>
+				{board.members.map((member) => (
+					<li key={member._id}>
+						<img src={member.imgUrl} alt={`${member.fullname} img`} />
+						<button onClick={(ev) => toggleFilteredMembers(member._id, ev)} />
+					</li>
+				))}
+			</ul>
+			{filterBy.members.length > 0 && (
+				<button
+					onClick={() => setFilterBy({ ...filterBy, members: [] })}
+					style={{
+						position: 'absolute',
+						right: '8px',
+						bottom: '8px',
+						borderRadius: '4px',
+					}}
+				>
+					Clear all
+				</button>
+			)}
+		</section>
+	)
+}
+
+function SortModal({ board, filterBy, setFilterBy }) {
+	return (
+		<section className="sort-modal">
+			<h4>Sort by</h4>
+			<section className='sort-options'>
+				<select className='col-select' placeholder="Choose column">
+					{board.cmpsOrder.map(columnType => (
+						<option key={columnType} value={columnType}>{columnType}</option>
+					))}
+				</select>
+
+				<select className='dir-select'>
+					<option value='1'>Ascending</option>
+					<option value=''>Descending</option>
+				</select>
 			</section>
 		</section>
 	)
