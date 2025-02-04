@@ -209,13 +209,15 @@ function FilteredMembersModal({ board, filterBy, setFilterBy }) {
 }
 
 function SortModal({ board, filterBy, setFilterBy }) {
+	const getColumnName = (colType) => colType.slice(0, 1).toUpperCase() + colType.slice(1, -6)
+
 	return (
 		<section className="sort-modal">
 			<h4>Sort by</h4>
 			<section className='sort-options'>
-				<select className='col-select' placeholder="Choose column">
+				<select className='col-select' placeholder="Choose column" onChange={() => setFilterBy({ ...filterBy, sort: { sortBy: value, dir: 1} })}>
 					{board.cmpsOrder.map(columnType => (
-						<option key={columnType} value={columnType}>{columnType}</option>
+						<option key={columnType} value={columnType}>{getColumnName(columnType)}</option>
 					))}
 				</select>
 
