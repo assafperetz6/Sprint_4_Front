@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import ReactQuill, { Quill } from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
+// import ReactQuill, { Quill } from 'react-quill'
+// import 'react-quill/dist/quill.snow.css'
 import { useSelector } from 'react-redux'
 import { userService } from '../../services/user'
 import { updateBoard, updateTask } from '../../store/actions/board.actions'
