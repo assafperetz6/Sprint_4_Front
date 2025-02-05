@@ -13,6 +13,9 @@ export function GroupPreview({
 	setIsAllCollapsed,
 	isDragging
 }) {
+
+	
+	
 	if (isAllCollapsed || group.isCollapsed) {
 		return (
 			<Draggable key={group.id} draggableId={group.id} index={idx}>
@@ -20,6 +23,7 @@ export function GroupPreview({
 					provided.draggableProps.style = {
 						...provided.draggableProps.style,
 						position: 'sticky',
+						height: '60px'
 					}
 
 					return (
@@ -46,11 +50,14 @@ export function GroupPreview({
 			key={group.id}
 			draggableId={group.id}
 			index={idx}
-			onMouseDown={() => group.isCollapsed = true}
-			onMouseUp={() => group.isCollapsed = false}
 		>
-			{(provided) => (
-				<section
+			{(provided) => {
+				provided.draggableProps.style = {
+					...provided.draggableProps.style,
+					position: 'sticky',
+					height: 'unset'
+				}
+			return <section
 					className="group-preview item-col full"
 					{...provided.draggableProps}
 					ref={provided.innerRef}
@@ -61,7 +68,7 @@ export function GroupPreview({
 					<GroupSummary group={group} cmpsOrder={cmpsOrder} />
 					{provided.placeholder}
 				</section>
-			)}
+			}}
 		</Draggable>
 	)
 }

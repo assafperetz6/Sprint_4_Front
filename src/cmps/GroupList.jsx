@@ -49,7 +49,11 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 					currentGroup.id === group.id &&
 					currentGroup.isCollapsed !== group.isCollapsed
 				)
-					setCurrentGroup({...group, prevGroupIdx: idx - 1, nextGroupIdx: idx + 1})
+					setCurrentGroup({
+						...group,
+						prevGroupIdx: idx - 1,
+						nextGroupIdx: idx + 1,
+					})
 
 				if (entry.isIntersecting) setCurrentGroup(group)
 			})
@@ -83,9 +87,10 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 	function handleStartDragging(result) {
 		if (result.type === 'group') {
 			setIsAllCollapsed(true)
-			setIsDragging(true)
+			requestAnimationFrame(() => setIsDragging(true))
 		}
 	}
+	
 
 	async function handleDrag(result) {
 		if (!result.destination) {
@@ -146,13 +151,11 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 			console.error('Task drag error:', err)
 		}
 	}
-
-	// function handleStartDragging(result) {
-	// 	setIsDragging(true)
-	// }
-
 	
-
+	const getCurrentGroupIndex = () => {
+		const currentGroupIdx = groups.findIndex(group => group.id === currentGroup.id)
+		return currentGroupIdx === -1 ? 0 : currentGroupIdx  // Fallback to 0 if not found
+	  }
 
 	return (
 		<DragDropContext
@@ -166,7 +169,7 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
-						<Draggable draggableId={currentGroup.id} index={0}>
+						{!isDragging && <Draggable draggableId={currentGroup.id} index={getCurrentGroupIndex()}>
 							{(provided) => (
 								<div
 									className={`sticky-header-container full`}
@@ -184,7 +187,7 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 									)}
 								</div>
 							)}
-						</Draggable>
+						</Draggable>}
 
 						{groups.map((group, idx) => (
 							<div
@@ -193,9 +196,8 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
 								className="full"
 								style={{
 									marginBlockStart:
-									idx === 0 && group.isCollapsed ? '-72px' : '0',
+										idx === 0 && group.isCollapsed && !isDragging ? '-72px' : '0',
 								}}
-								
 							>
 								<GroupPreview
 									group={group}
