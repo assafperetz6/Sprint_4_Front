@@ -14,7 +14,6 @@ export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
 	const [modalType, setModalType] = useState(null)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
-	
 
 	function getMemberIcons(selectedMembers = board.members) {
 		// TODO: should return last two members on the activity log
@@ -55,7 +54,6 @@ export function BoardHeader({ board }) {
 	}
 
 	// console.log(filterBy.sortBy)
-	
 
 	return (
 		<section className="board-header-container">
@@ -109,7 +107,9 @@ export function BoardHeader({ board }) {
 
 				<button
 					className={modalType === 'member' ? 'active' : ''}
-					onClick={() => setModalType((prev) => prev === 'member' ? null : 'member' )}
+					onClick={() =>
+						setModalType((prev) => (prev === 'member' ? null : 'member'))
+					}
 				>
 					{filterBy.members.length > 0
 						? getMemberIcons(getSelectedMembers(filterBy.members))
@@ -120,13 +120,23 @@ export function BoardHeader({ board }) {
 				<button>
 					{svgs.filter} Filter {svgs.arrowDown}
 				</button>
-				<button 
+				<button
 					className={modalType === 'sort' ? 'active' : ''}
-					onClick={() => setModalType((prev) => prev === 'sort' ? null : 'sort' )}>
+					onClick={() =>
+						setModalType((prev) => (prev === 'sort' ? null : 'sort'))
+					}
+				>
 					{svgs.sortDir} Sort
 				</button>
 
-				<button>{svgs.hideEye} Hide</button>
+				<button
+					onClick={() =>
+						setModalType((prev) => (prev === 'hide' ? null : 'hide'))
+					}
+				>
+					{svgs.hideEye} Hide
+				</button>
+
 				<button>{svgs.groupBy} Group by</button>
 				<button className="more-task-actions">{svgs.threeDots}</button>
 				<button className="toggle-board-tabs">{svgs.arrowUp}</button>
@@ -142,8 +152,3 @@ export function BoardHeader({ board }) {
 		</section>
 	)
 }
-
-
-
-
-

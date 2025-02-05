@@ -1,7 +1,6 @@
 import { svgs } from "../../services/svg.service"
 
-export function SortModal({ board, filterBy, setFilterBy }) {
-	const getColumnName = (colType) => colType.slice(0, 1).toUpperCase() + colType.slice(1, -6)
+export function SortModal({ board, filterBy, setFilterBy, getColumnName }) {
 	
 	return (
 		<section className="sort-modal">

@@ -189,6 +189,94 @@
             }
         }
 
+        .toggle-column-modal {
+            @include filter-modal;
+            left: 485px;
+
+            align-content: start;
+
+            height: 354px;
+            width: 340px;
+            
+            padding-block-end: 8px;
+
+            h4 {
+                font-size: rem(16px);
+
+                margin: 4px 8px 8px;
+            }
+
+            .search-columns {
+                position: relative;
+                height: 32px;
+                width: 100%;
+
+                > input {
+                    height: 100%;
+                    width: 100%;
+
+                    padding-inline-start: 16px;
+                    border: $border;
+                    border-radius: 4px;
+
+                    &:focus {
+                        border-color: $blue3;
+                    }
+
+                    &:hover {
+                        border-color: $clr5;
+                    }
+
+                    transition: border-color 150ms ease;
+                }
+
+                span {
+                    position: absolute;
+                    top: 4px;
+                    right: 4px;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    height: 24px;
+                    width: 24px;
+
+                    padding: 4px;
+                    border-radius: 4px;
+
+                    svg {
+                        stroke: $clr9;
+                    }
+                    &:hover {
+                        background-color: #f1f0f2;
+                    }
+                }
+            }
+
+            .column-list-container {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+
+                input {
+                    height: 16px;
+                    width: 16px;
+                }
+
+                .select-all {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                }
+
+                h6 {
+                    font-size: rem(14px);
+                }
+            }
+
+        }
+
 
         .toggle-board-tabs {
             height: 24px;
