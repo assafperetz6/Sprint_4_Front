@@ -6,12 +6,12 @@ import { useSelector } from 'react-redux'
 import { ActivityLog } from './activity-log-cmp/ActivityLog.jsx'
 import { Updates } from './activity-log-cmp/Updates.jsx'
 
-export function BoardModal() {
+export function BoardModal({ view: initialView = 'updates' }) {
   const board = useSelector((state) => state.boardModule.board)
   const location = useLocation()
   const { boardId, taskId } = useParams()
   const [task, setTask] = useState(null)
-  const [view, setView] = useState('updates')
+  const [view, setView] = useState(initialView)
   const { isClosing, closeTaskDetails: closeModal } = useOutletContext()
 
   const isTaskView = location.pathname.includes('/task/')
@@ -77,7 +77,7 @@ export function BoardModal() {
                 </button>
               </section>
               <section className="details-bottom-bar">
-                <DynamicCmp view={view} />
+                <DynamicCmp view={view} board={board} type="board" />
               </section>
             </>
           )}
@@ -87,10 +87,10 @@ export function BoardModal() {
   )
 }
 
-function DynamicCmp({ view, task }) {
+function DynamicCmp({ view, task, board, type = 'task' }) {
   switch (view) {
     case 'updates':
-      return <Updates task={task} />
+      return <Updates task={task} board={board} type={type} />
     case 'files':
       return <h1>files: under construction</h1>
     case 'activity':

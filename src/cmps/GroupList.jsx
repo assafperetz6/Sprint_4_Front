@@ -128,6 +128,10 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
     }
   }
 
+	function handleStartDragging(result) {
+		setIsDragging(true)
+	}
+
   // console.log(isDragging)
   return (
     <DragDropContext onDragEnd={handleDrag} onBeforeDragStart={handleStartDragging}>

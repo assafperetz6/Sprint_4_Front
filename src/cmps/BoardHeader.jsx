@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom'
 import { svgs } from '../services/svg.service'
+import { showSuccessMsg } from '../services/event-bus.service'
+import { TooltipContainer } from './TooltipContainer'
 
 export function BoardHeader({ board }) {
   function getMemberIcons() {
     // TODO: should return last two members on the activity log
+    const boardMembers = board.members
+    return boardMembers
+      .slice(0, 2)
+      .map((member) => <img src={member.imgUrl} alt="userImg" key={member._id} width={20} height={20} style={{ borderRadius: '50%' }} />)
+  }
 
-    return svgs.person
-    return <img src={board.createdBy?.imgUrl} alt="userImg" />
+  function copyLink() {
+    navigator.clipboard.writeText(`${window.location.origin}/board/${board._id}`)
+    showSuccessMsg('Link copied to clipboard')
   }
 
   return (
@@ -17,12 +25,30 @@ export function BoardHeader({ board }) {
         </h2>
 
         <section className="board-actions">
-          <button className="group-chat">{svgs.chat}</button>
-          <button className="activity-log">
-            <Link to={`/board/${board._id}/activity_log`}>{getMemberIcons()}</Link>
+          <button className="group-chat">
+            <Link to={`/board/${board._id}/activity_log`}>
+              <TooltipContainer txt="Start board discussion" placement="bottom">
+                {svgs.chat}
+              </TooltipContainer>
+            </Link>
           </button>
-          <button className="invite-members">Invite / 1</button>
-          <button className="copy-link">{svgs.link}</button>
+
+          <TooltipContainer txt="View activity log" placement="bottom">
+            <button className="activity-log flex align-center">
+              <Link className="flex align-center" to={`/board/${board._id}/activity_log`}>
+                {getMemberIcons()}
+              </Link>
+            </button>
+          </TooltipContainer>
+
+          <button className="invite-members">Invite / {board.members.length}</button>
+
+          <TooltipContainer txt="Copy link" placement="bottom">
+            <button className="copy-link" onClick={() => copyLink()}>
+              {svgs.link}
+            </button>
+          </TooltipContainer>
+
           <button className="options">{svgs.threeDots}</button>
         </section>
       </header>
@@ -37,8 +63,12 @@ export function BoardHeader({ board }) {
           <button>New task</button>
           <button>{svgs.arrowDown}</button>
         </div>
+
         <button>{svgs.search} Search</button>
-        <button>{svgs.person} Person</button>
+
+        <TooltipContainer txt="Filter board by person">
+          <button>{svgs.person} Person</button>
+        </TooltipContainer>
         <button>
           {svgs.filter} Filter {svgs.arrowDown}
         </button>

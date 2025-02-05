@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router'
 
 import { svgs } from '../services/svg.service.jsx'
 import { GroupList } from '../cmps/GroupList.jsx'
+import { TaskActionMenu } from '../cmps/TaskActionMenu.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
 import { CollapsedGroupPreview } from '../cmps/CollapsedGroupPreview.jsx'
 import { BoardActivityLog } from './BoardActivityLog.jsx'
@@ -16,8 +17,10 @@ export function BoardDetails() {
   const { boardId } = useParams()
   const navigate = useNavigate()
 
-  const [isScrolledTop, setIsScrolledTop] = useState(true)
-  const boardDetailsRef = useRef(null)
+	const [isScrolledTop, setIsScrolledTop] = useState(true)
+	const boardDetailsRef = useRef(null)
+
+	const selectedTasks = useSelector(storeState => storeState.boardModule.selectedTasks)
 
   const handleScroll = (e) => {
     if (e.target.scrollTop === 0 && !isScrolledTop) setIsScrolledTop(true)
@@ -49,6 +52,7 @@ export function BoardDetails() {
           scrollContainer={boardDetailsRef.current}
         />
       )}
+			{selectedTasks.length > 0 && <TaskActionMenu tasks={selectedTasks} />}
       <Outlet context={{ isClosing, closeTaskDetails }} />
     </section>
   )

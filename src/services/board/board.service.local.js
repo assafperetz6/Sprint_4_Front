@@ -1,3 +1,4 @@
+import { store } from '../../store/store'
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
 import { makeId } from '../util.service'
@@ -18,6 +19,10 @@ export const boardService = {
   getTaskById,
   saveTask,
   removeTask,
+  removeTasks,
+  duplicateTasks,
+  archiveTasks,
+  moveTasksTo,
   getGroupByTask,
   getTaskActivities
 }
@@ -52,7 +57,8 @@ async function save(board) {
       cmpsOrder: board.cmpsOrder,
       statusLabels: board.statusLabels,
       priorityLabels: board.priorityLabels,
-      activities: board.activities
+      activities: board.activities,
+      comments: board.comments
     }
     savedBoard = await storageService.put(STORAGE_KEY, boardToSave)
   } else {
@@ -65,7 +71,8 @@ async function save(board) {
       cmpsOrder: board.cmpsOrder,
       statusLabels: board.statusLabels,
       priorityLabels: board.priorityLabels,
-      activities: board.activities
+      activities: board.activities,
+      comments: board.comments
     }
     savedBoard = await storageService.post(STORAGE_KEY, boardToSave)
   }
@@ -196,6 +203,7 @@ async function getTaskById(boardId, taskId, groupId = null) {
  * @param {string} groupId
  * @returns {object}
  */
+
 async function removeTask(boardId, taskId, groupId) {
   try {
     const board = await getById(boardId)
@@ -217,7 +225,18 @@ async function removeTask(boardId, taskId, groupId) {
   }
 }
 
-async function saveTask(boardId, groupId, task, activity) {
+/**
+ *
+ * @param {string} boardId
+ * @param {string} groupId
+ * @param {object} task
+ * @param {object} activity
+ * @param {boolean} isDuplicate
+ * @param {boolean} isMoved
+ * @returns {object}
+ */
+
+async function saveTask(boardId, groupId, task, activity, isDuplicate = false, isMoved = false) {
   try {
     const taskToSave = {
       id: task.id,
@@ -227,8 +246,10 @@ async function saveTask(boardId, groupId, task, activity) {
       dueDate: task.dueDate,
       timeline: task.timeline,
       status: task.status,
+      archivedAt: task.archivedAt,
       comments: task.comments
     }
+
     const board = await getById(boardId)
 
     const groupIdx = board.groups.findIndex((group) => group.id === groupId)
@@ -237,17 +258,24 @@ async function saveTask(boardId, groupId, task, activity) {
     const { tasks } = board.groups[groupIdx]
 
     if (task.id) {
-      taskToSave.id = task.id
-      const taskIdx = tasks.findIndex((task) => task.id === taskToSave.id)
-      if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
-      tasks.splice(taskIdx, 1, taskToSave)
+      if (isMoved) tasks.push(taskToSave)
+      else {
+        const taskIdx = tasks.findIndex((task) => task.id === taskToSave.id)
+        if (taskIdx === -1) throw new Error(`No task with id: ${task.id} in group: ${groupId}`)
+
+        if (isDuplicate) {
+          taskToSave.id = makeId()
+          taskToSave.title += ' (copy)'
+          tasks.splice(taskIdx + 1, 0, taskToSave)
+        } else tasks.splice(taskIdx, 1, taskToSave)
+      }
     } else {
       taskToSave.id = makeId()
       tasks.push(taskToSave)
-      activity.entityId = taskToSave.id
+      activity.task.id = taskToSave.id
     }
 
-    board.activities.unshift(activity)
+    if (activity) board.activities.unshift(activity)
 
     return save(board)
   } catch (err) {
@@ -267,6 +295,53 @@ async function getTaskActivities(boardId, taskId) {
     console.error('Failed to get task activities:', err)
     throw err
   }
+}
+
+async function removeTasks(boardId, tasks) {
+  for (const task of tasks) {
+    try {
+      await removeTask(boardId, task.id, task.groupId)
+    } catch (err) {
+      throw new Error('problem with deleting tasks', err)
+    }
+  }
+  return getById(boardId)
+}
+
+async function duplicateTasks(boardId, tasks) {
+  for (const task of tasks) {
+    try {
+      await saveTask(boardId, task.groupId, task, null, true)
+    } catch (err) {
+      throw new Error('problem with duplicating tasks', err)
+    }
+  }
+  return getById(boardId)
+}
+
+async function archiveTasks(boardId, tasks) {
+  for (const task of tasks) {
+    try {
+      task.archivedAt = Date.now()
+      await saveTask(boardId, task.groupId, task, null)
+    } catch (err) {
+      throw new Error('problem updating tasks', err)
+    }
+  }
+  return getById(boardId)
+}
+
+async function moveTasksTo(boardId, newGroupId, tasks) {
+  for (const task of tasks) {
+    try {
+      await saveTask(boardId, newGroupId, task, { txt: `Moved task ${task.id} from group ${task.groupId}` }, false, true)
+
+      await removeTask(boardId, task.id, task.groupId)
+    } catch (err) {
+      throw new Error('problem moving tasks', err)
+    }
+  }
+  return getById(boardId)
 }
 
 // async function addActivity(boardId, groupId, task, txt) {

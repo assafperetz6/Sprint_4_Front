@@ -27,7 +27,7 @@
 			border-color: $clr4;
 		}
 
-		&:checked {
+		&.checked {
 			border: none;
 			background-color: $blue3;
 
@@ -38,14 +38,16 @@
 	}
 
 	.check-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
 		position: absolute;
-		top: 6px;
 
+		width: 16px;
+		height: 16px;
+		
 		pointer-events: none;
-
-		.task-preview & {
-			top: 4px;
-		}
 	}
 
 	// /* Assuming your checkmark SVG path is targetable with some class */

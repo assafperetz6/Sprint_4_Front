@@ -3,6 +3,7 @@ import { store } from '../store'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD } from '../reducers/board.reducer'
 import { makeId } from '../../services/util.service'
 import { userService } from '../../services/user'
+import { showErrorMsg } from '../../services/event-bus.service'
 
 // Board Actions //
 
@@ -41,7 +42,7 @@ export async function addBoard(board) {
   try {
     const savedBoard = await boardService.save(board)
     store.dispatch(getCmdAddBoard(savedBoard))
-    store.dispatch({ type: SET_BOARD, board: savedBoard })
+    // store.dispatch({ type: SET_BOARD, board: savedBoard })
     return savedBoard
   } catch (err) {
     console.log('error from actions--> Cannot add board', err)
@@ -53,6 +54,7 @@ export async function updateBoard(board) {
   try {
     const savedBoard = await boardService.save(board)
     store.dispatch(getCmdUpdateBoard(savedBoard))
+    store.dispatch(getCmdSetBoard(savedBoard))
     return savedBoard
   } catch (err) {
     console.log('error from actions--> Cannot save board', err)
@@ -110,6 +112,7 @@ export async function updateGroup(boardId, group) {
     throw err
   }
 }
+
 export async function removeGroup(boardId, groupId) {
   try {
     const savedBoard = await boardService.removeGroup(boardId, groupId)
@@ -127,7 +130,7 @@ export async function removeTask(boardId, groupId, taskId, activity) {
     const task = await boardService.getTaskById(boardId, taskId)
     const activityToSave = await _addActivity(boardId, groupId, task, activity)
 
-    const savedBoard = await boardService.removeTask(boardId, taskId, activityToSave)
+    const savedBoard = await boardService.removeTask(boardId, taskId, groupId, activityToSave)
     store.dispatch(getCmdSetBoard(savedBoard))
     return savedBoard
   } catch (err) {
@@ -135,11 +138,12 @@ export async function removeTask(boardId, groupId, taskId, activity) {
     throw err
   }
 }
-export async function addTask(boardId, groupId, task, activity) {
+
+export async function addTask(boardId, groupId, task, activity, isMoved = false) {
   try {
     const activityToSave = await _addActivity(boardId, groupId, task, activity)
 
-    const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave)
+    const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave, false, isMoved)
 
     store.dispatch(getCmdSetBoard(savedBoard))
   } catch (err) {
@@ -147,6 +151,7 @@ export async function addTask(boardId, groupId, task, activity) {
     throw err
   }
 }
+
 export async function updateTask(boardId, groupId, task, activity) {
   try {
     const activityToSave = await _addActivity(boardId, groupId, task, activity)
@@ -182,4 +187,46 @@ async function _addActivity(boardId, groupId, task, activityInfo) {
   }
 
   return activityToSave
+}
+
+// TODO: add batch function for multiselect menu
+
+export async function removeTasks(boardId, tasks) {
+  try {
+    const savedBoard = await boardService.removeTasks(boardId, tasks)
+    store.dispatch(getCmdSetBoard(savedBoard))
+  } catch (err) {
+    console.log('error from actions--> cannot remove tasks', err)
+    throw err
+  }
+}
+
+export async function duplicateTasks(boardId, tasks) {
+  try {
+    const savedBoard = await boardService.duplicateTasks(boardId, tasks)
+    store.dispatch(getCmdSetBoard(savedBoard))
+  } catch (err) {
+    console.log('error from actions--> cannot remove tasks', err)
+    throw err
+  }
+}
+
+export async function archiveTasks(boardId, tasks) {
+  try {
+    const savedBoard = await boardService.archiveTasks(boardId, tasks)
+    store.dispatch(getCmdSetBoard(savedBoard))
+  } catch (err) {
+    console.log('error from actions--> cannot remove tasks', err)
+    throw err
+  }
+}
+
+export async function moveTasksTo(boardId, newGroupId, tasks) {
+  try {
+    const savedBoard = await boardService.moveTasksTo(boardId, newGroupId, tasks)
+    store.dispatch(getCmdSetBoard(savedBoard))
+  } catch (err) {
+    console.log(`error from actions--> cannot move tasks to group ${newGroupId}`, err)
+    throw err
+  }
 }

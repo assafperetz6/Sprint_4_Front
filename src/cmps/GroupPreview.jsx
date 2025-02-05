@@ -9,8 +9,8 @@ export function GroupPreview({ group, cmpsOrder, idx, showHeader, isAllCollapsed
     return (
       <Draggable key={group.id} draggableId={group.id} index={idx}>
         {(provided) => (
-          <section className="collapsed-group-preview full" {...provided.draggableProps} ref={provided.innerRef} {...provided.dragHandleProps}>
-            <CollapsedGroupPreview group={group} cmpsOrder={cmpsOrder} idx={idx} />
+          <section className="collapsed-group-preview full" {...provided.draggableProps} ref={provided.innerRef}>
+            <CollapsedGroupPreview group={group} cmpsOrder={cmpsOrder} idx={idx} dragHandleProps={provided.dragHandleProps} />
           </section>
         )}
       </Draggable>
@@ -19,8 +19,8 @@ export function GroupPreview({ group, cmpsOrder, idx, showHeader, isAllCollapsed
   return (
     <Draggable key={group.id} draggableId={group.id} index={idx}>
       {(provided) => (
-        <section className="group-preview item-col full" {...provided.draggableProps} ref={provided.innerRef} {...provided.dragHandleProps}>
-          {showHeader && <GroupHeader group={group} />}
+        <section className="group-preview item-col full" {...provided.draggableProps} ref={provided.innerRef}>
+          {showHeader && <GroupHeader group={group} dragHandleProps={provided.dragHandleProps} />}
           <TaskList group={group} />
           <GroupSummary group={group} cmpsOrder={cmpsOrder} />
           {provided.placeholder}
