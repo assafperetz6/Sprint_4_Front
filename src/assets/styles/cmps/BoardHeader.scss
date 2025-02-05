@@ -127,8 +127,10 @@
             width: 556px;
 
             padding-block-start: 20px;
+            padding-inline-end: 52px;
 
             .sort-options {
+                position: relative;
                 display: flex;
                 justify-content: end;
                 gap: 8px;
@@ -160,10 +162,30 @@
     
                         background-color: black;
                       }
+                }   
+            }
+            .clear-sort {
+                position: absolute;
+                right: 12px;
+                bottom: 52px;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                height: 32px;
+                width: 32px;
+
+                padding: 4px;
+                background-color: $clr3;
+                
+                svg {
+                    stroke: $clr9;
                 }
+                &:hover svg {
+                    stroke: #323338;
 
-
-
+                }
             }
         }
 

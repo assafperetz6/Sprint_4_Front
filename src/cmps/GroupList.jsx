@@ -66,6 +66,7 @@ export function GroupList({ isScrolledTop, scrollContainer }) {
   function onAddGroup() {
     const groupToAdd = boardService.getNewGroup()
     try {
+      
       addGroup(board._id, groupToAdd)
     } catch (err) {
       showErrorMsg('cannot add group')

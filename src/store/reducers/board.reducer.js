@@ -10,7 +10,7 @@ const initialState = {
 	boards: [],
 	board: null,
 	selectedTasks: [],
-	filterBy: { txt: '', members: [], sort: { sortField: '', dir: 1 } },
+	filterBy: { txt: '', members: [], sortBy: { sortField: '', dir: 1 } },
 }
 
 export function boardReducer(state = initialState, action) {
@@ -22,11 +22,13 @@ export function boardReducer(state = initialState, action) {
 			break
 
 		case SET_BOARD:
+			// console.log(action.board.groups)
+			// debugger
 			let filteredBoardGroups = [...action.board.groups]
 
 			// FILTER BY MEMBERS
 
-			if (state.filterBy.members.length) {
+			if (state.filterBy.members.length > 0) {
 				const filterBy = state.filterBy
 
 				const tests = filterBy.members.map(
@@ -44,21 +46,88 @@ export function boardReducer(state = initialState, action) {
 					}))
 					.filter((group) => group.tasks.length > 0)
 			}
-			
+
 			// FILTER BY TEXT
 
 			if (state.filterBy.txt) {
 				const filterBy = state.filterBy
 				const regex = new RegExp(filterBy.txt, 'i')
 
-				filteredBoardGroups = filteredBoardGroups.map((group) =>
-					regex.test(group.title)
-						? group
-						: {
-								...group,
-								tasks: group.tasks.filter((task) => regex.test(task.title)),
-						  }
-				).filter((group) => group.tasks.length > 0)
+				filteredBoardGroups = filteredBoardGroups
+					.map((group) =>
+						regex.test(group.title)
+							? group
+							: {
+									...group,
+									tasks: group.tasks.filter((task) => regex.test(task.title)),
+							  }
+					)
+					.filter((group) => group.tasks.length > 0)
+			}
+
+			// SORTING
+			const { sortField, dir } = state.filterBy.sortBy
+			
+			if (sortField === 'title') {
+				filteredBoardGroups = filteredBoardGroups.map((group) => ({
+					...group,
+					tasks: group.tasks.toSorted((t1, t2) => t1.title.localeCompare(t2.title) * dir ),
+				}))
+			}
+
+			else if (sortField === 'status') {
+				filteredBoardGroups = filteredBoardGroups.map((group) => ({
+					...group,
+					tasks: group.tasks.toSorted((t1, t2) => t1.status.localeCompare(t2.status) * dir ),
+				}))
+			}
+
+			else if (sortField === 'priority') {
+				filteredBoardGroups = filteredBoardGroups.map((group) => ({
+					...group,
+					tasks: group.tasks.toSorted((t1, t2) => t1.priority.localeCompare(t2.priority) * dir ),
+				}))
+			}
+
+			else if (sortField === 'date') {
+				filteredBoardGroups = filteredBoardGroups.map((group) => ({
+					...group,
+					tasks: group.tasks.toSorted((t1, t2) => (t1.dueDate - t2.dueDate) * dir ),
+				}))
+			}
+
+			else if (sortField === 'timeline') {
+				filteredBoardGroups = filteredBoardGroups.map((group) => ({
+					...group,
+					tasks: group.tasks.toSorted((t1, t2) => {
+
+						const t1Deadline = t1.timeline ? t1.timeline.endDate : 0
+						const t2Deadline = t2.timeline ? t2.timeline.endDate : 0
+
+						const deadLineCompare = t2Deadline - t1Deadline
+
+						if (deadLineCompare === 0) {
+							const t1TotalTime = t1.timeline ? t1.timeline.endDate - t1.timeline.startDate : 0
+							const t2TotalTime = t2.timeline ? t2.timeline.endDate - t2.timeline.startDate : 0
+
+							return (t1TotalTime - t2TotalTime) * dir
+						} else {
+							return (t1Deadline - t2Deadline) * dir
+						}
+					}),
+				}))
+			}
+
+			else if (sortField === 'member') {
+				filteredBoardGroups = filteredBoardGroups.map((group) => ({
+					...group,
+					tasks: group.tasks.toSorted((t1, t2) => {
+						const t1Members = [...t1.members].sort().join(',')
+						const t2Members = [...t2.members].sort().join(',')
+
+						return t1Members.localeCompare(t2Members) * dir
+					}),
+				}))
 			}
 
 			newState = {

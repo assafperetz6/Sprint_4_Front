@@ -17,7 +17,7 @@ export function BoardDetails() {
 	const dispatch = useDispatch()
 	const board = useSelector((storeState) => storeState.boardModule.board)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
-
+	const isFirstRender = useRef(true)
 	const [searchParams, setSearchParams] = useSearchParams()
 
 	const [isClosing, setIsClosing] = useState(false)
@@ -27,10 +27,25 @@ export function BoardDetails() {
 	const [isScrolledTop, setIsScrolledTop] = useState(true)
 	const boardDetailsRef = useRef(null)
 
-	useEffect(() => {
+	useEffect(() => {		
 		const txtParam = searchParams.get('txt')
+		const membersParam = searchParams.get('members')
+
+		if (isFirstRender.current) {
+			const filter = { txt: txtParam || '', members: membersParam ? membersParam.split(',') : [] }
+			setFilterBy({ ...filterBy, ...filter })	
+			isFirstRender.current = false
+
+			return
+		}
+
 		if (txtParam !== filterBy.txt) {
 			searchParams.set('txt', filterBy.txt)
+			setSearchParams(searchParams)
+		}
+		
+		if (membersParam !== filterBy.members) {
+			searchParams.set('members', filterBy.members)
 			setSearchParams(searchParams)
 		}
 	}, [filterBy])
@@ -64,15 +79,10 @@ export function BoardDetails() {
 			ref={boardDetailsRef}
 			onScroll={handleScroll}
 		>
-			<BoardHeader
-				board={board}
-				// filterBy={filterBy}
-				// setFilterBy={handleFilter}
-			/>
+			<BoardHeader board={board} />
 
 			{!!board.groups.length && (
 				<GroupList
-					// groups={board.groups}
 					isScrolledTop={isScrolledTop}
 					scrollContainer={boardDetailsRef.current}
 				/>

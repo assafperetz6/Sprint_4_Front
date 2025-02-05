@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
@@ -6,12 +6,15 @@ import { svgs } from '../services/svg.service'
 import { addTask, setFilterBy } from '../store/actions/board.actions'
 import { useParams } from 'react-router'
 import { useSelector } from 'react-redux'
+import { SortModal } from './dynamic-filter-cmp/SortModal'
+import { FilteredMembersModal } from './dynamic-filter-cmp/FilteredMembersModal'
+import { DynamicFilterModal } from './dynamic-filter-cmp/DynamicModal'
 
 export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
 	const [modalType, setModalType] = useState(null)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
-
+	
 
 	function getMemberIcons(selectedMembers = board.members) {
 		// TODO: should return last two members on the activity log
@@ -51,7 +54,7 @@ export function BoardHeader({ board }) {
 		return board.members.filter((m) => ids.includes(m._id))
 	}
 
-	console.log(board)
+	// console.log(filterBy.sortBy)
 	
 
 	return (
@@ -117,7 +120,9 @@ export function BoardHeader({ board }) {
 				<button>
 					{svgs.filter} Filter {svgs.arrowDown}
 				</button>
-				<button onClick={() => setModalType((prev) => prev === 'sort' ? null : 'sort' )}>
+				<button 
+					className={modalType === 'sort' ? 'active' : ''}
+					onClick={() => setModalType((prev) => prev === 'sort' ? null : 'sort' )}>
 					{svgs.sortDir} Sort
 				</button>
 
@@ -138,96 +143,7 @@ export function BoardHeader({ board }) {
 	)
 }
 
-function DynamicFilterModal({
-	board,
-	modalType,
-	setModalType,
-	setFilterBy,
-	filterBy,
-}) {
-	const MODAL_CMPS = {
-		member: FilteredMembersModal,
-		sort: SortModal,
-	}
 
-	const ModalCmp = MODAL_CMPS[modalType]
 
-	if (!modalType || !ModalCmp) return null
-	return (
-		<>
-			<div
-				className="modal-overlay"
-				style={{ position: 'fixed', inset: '0', overflow: 'auto', zIndex: '1' }}
-				onClick={(ev) => {
-					ev.stopPropagation()
-					setModalType(null)
-				}}
-			></div>
-			<ModalCmp board={board} filterBy={filterBy} setFilterBy={setFilterBy} />
-		</>
-	)
-}
 
-function FilteredMembersModal({ board, filterBy, setFilterBy }) {
-	function toggleFilteredMembers(id) {
-		let members = [...filterBy.members]
-		members.includes(id)
-			? (members = members.filter((memberId) => memberId !== id))
-			: members.push(id)
 
-		setFilterBy({ ...filterBy, members })
-	}
-
-	return (
-		<section className="filter-by-member flex column">
-			<div className="title-wrapper">
-				<h4>Filter this board by person</h4>
-				<span>And find tasks they're working on.</span>
-			</div>
-
-			<ul>
-				{board.members.map((member) => (
-					<li key={member._id}>
-						<img src={member.imgUrl} alt={`${member.fullname} img`} />
-						<button onClick={(ev) => toggleFilteredMembers(member._id, ev)} />
-					</li>
-				))}
-			</ul>
-			{filterBy.members.length > 0 && (
-				<button
-					onClick={() => setFilterBy({ ...filterBy, members: [] })}
-					style={{
-						position: 'absolute',
-						right: '8px',
-						bottom: '8px',
-						borderRadius: '4px',
-					}}
-				>
-					Clear all
-				</button>
-			)}
-		</section>
-	)
-}
-
-function SortModal({ board, filterBy, setFilterBy }) {
-	const getColumnName = (colType) => colType.slice(0, 1).toUpperCase() + colType.slice(1, -6)
-
-	return (
-		<section className="sort-modal">
-			<h4>Sort by</h4>
-			<section className='sort-options'>
-				<select className='col-select' placeholder="Choose column" onChange={() => setFilterBy({ ...filterBy, sort: { sortBy: value, dir: 1} })}>
-					{board.cmpsOrder.map(columnType => (
-						<option key={columnType} value={columnType}>{getColumnName(columnType)}</option>
-					))}
-				</select>
-
-				<select className='dir-select'>
-					<option value='1'>Ascending</option>
-					<option value=''>Descending</option>
-				</select>
-			</section>
-		</section>
-	)
-}
