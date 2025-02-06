@@ -1,34 +1,26 @@
 import io from 'socket.io-client'
 import { userService } from './user'
+const { VITE_LOCAL } = import.meta.env
 
-export const SOCKET_EVENT_ADD_MSG = 'chat-add-msg'
-export const SOCKET_EMIT_SEND_MSG = 'chat-send-msg'
-export const SOCKET_EMIT_SET_TOPIC = 'chat-set-topic'
-export const SOCKET_EMIT_USER_WATCH = 'user-watch'
-export const SOCKET_EVENT_USER_UPDATED = 'user-updated'
-export const SOCKET_EVENT_REVIEW_ADDED = 'review-added'
-export const SOCKET_EVENT_REVIEW_REMOVED = 'review-removed'
-export const SOCKET_EVENT_REVIEW_ABOUT_YOU = 'review-about-you'
+export const SOCKET_EMIT_SET_VIEWED_BOARD = 'set-viewed-board'
+export const SOCKET_EVENT_BOARD_UPDATE = 'board-updated'
 
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
-
 const baseUrl = (process.env.NODE_ENV === 'production') ? '' : '//localhost:3030'
-// export const socketService = createSocketService()
-export const socketService = createDummySocketService()
-
-// for debugging from console
-window.socketService = socketService
+export const socketService = (VITE_LOCAL) ? createDummySocketService() : createSocketService()
 
 socketService.setup()
-
 
 function createSocketService() {
   var socket = null
   const socketService = {
     setup() {
-      socket = io(baseUrl)
+      socket = io(baseUrl,{
+        transports: ['websocket'],
+        withCredentials: true
+      })
       const user = userService.getLoggedinUser()
       if (user) this.login(user._id)
     },
@@ -83,9 +75,6 @@ function createDummySocketService() {
     },
     emit(eventName, data) {
       var listeners = listenersMap[eventName]
-      if (eventName === SOCKET_EMIT_SEND_MSG) {
-        listeners = listenersMap[SOCKET_EVENT_ADD_MSG]
-      }
 
       if (!listeners) return
 
@@ -96,9 +85,6 @@ function createDummySocketService() {
     testChatMsg() {
       this.emit(SOCKET_EVENT_ADD_MSG, { from: 'Someone', txt: 'Aha it worked!' })
     },
-    testUserUpdate() {
-      this.emit(SOCKET_EVENT_USER_UPDATED, { ...userService.getLoggedinUser(), score: 555 })
-    }
   }
   window.listenersMap = listenersMap
   return socketService

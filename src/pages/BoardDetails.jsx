@@ -1,7 +1,7 @@
 import { Outlet, useParams } from 'react-router'
 import { useEffect, useRef, useState } from 'react'
-import { loadBoard } from '../store/actions/board.actions'
-import { useSelector } from 'react-redux'
+import { getCmdSetBoard, loadBoard } from '../store/actions/board.actions'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
 import { svgs } from '../services/svg.service.jsx'
@@ -10,12 +10,16 @@ import { TaskActionMenu } from '../cmps/TaskActionMenu.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
 import { CollapsedGroupPreview } from '../cmps/CollapsedGroupPreview.jsx'
 import { BoardActivityLog } from './BoardActivityLog.jsx'
+import { userService } from '../services/user/index.js'
+import { SOCKET_EMIT_SET_VIEWED_BOARD, SOCKET_EVENT_BOARD_UPDATE, socketService } from '../services/socket.service.js'
+import { signup } from '../store/actions/user.actions.js'
 
 export function BoardDetails() {
   const board = useSelector((storeState) => storeState.boardModule.board)
   const [isClosing, setIsClosing] = useState(false)
   const { boardId } = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
 	const [isScrolledTop, setIsScrolledTop] = useState(true)
 	const boardDetailsRef = useRef(null)
@@ -27,8 +31,23 @@ export function BoardDetails() {
     else if (e.target.scrollTop > 0 && isScrolledTop) setIsScrolledTop(false)
   }
 
+  if (!userService.getLoggedinUser()){
+    signup(userService.getGuest())
+  }
+
+  useEffect(() => {
+    socketService.on(SOCKET_EVENT_BOARD_UPDATE, board => {
+      dispatch(getCmdSetBoard(board))
+    })
+
+    return () => {
+      socketService.off(SOCKET_EVENT_BOARD_UPDATE)
+    }
+  }, [])
+
   useEffect(() => {
     loadBoard(boardId)
+    socketService.emit(SOCKET_EMIT_SET_VIEWED_BOARD, boardId)
   }, [boardId])
 
   function closeTaskDetails() {
