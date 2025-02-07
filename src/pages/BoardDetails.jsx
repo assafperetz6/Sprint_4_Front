@@ -1,7 +1,7 @@
 import { Outlet, useParams } from 'react-router'
 import { useEffect, useRef, useState } from 'react'
 import { getCmdSetBoard, loadBoard, setFilterBy } from '../store/actions/board.actions'
-import { useDispatch, useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
 import { svgs } from '../services/svg.service.jsx'
