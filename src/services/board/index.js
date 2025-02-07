@@ -17,21 +17,21 @@ function getEmptyBoard() {
     },
 
     members: [
-      {
-        _id: 'u101',
-        fullname: 'Alon Wohl',
-        imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
-      },
-      {
-        _id: 'u102',
-        fullname: 'Dror gaon',
-        imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738423038/amup7iyjt0htiedqb91c.jpg'
-      },
-      {
-        _id: 'u103',
-        fullname: 'Assaf Peretz',
-        imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738492332/PHOTO-2025-02-02-12-30-47_pbbrwt.jpg'
-      }
+      // {
+      //   _id: 'u101',
+      //   fullname: 'Alon Wohl',
+      //   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
+      // },
+      // {
+      //   _id: 'u102',
+      //   fullname: 'Dror gaon',
+      //   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738423038/amup7iyjt0htiedqb91c.jpg'
+      // },
+      // {
+      //   _id: 'u103',
+      //   fullname: 'Assaf Peretz',
+      //   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738492332/PHOTO-2025-02-02-12-30-47_pbbrwt.jpg'
+      // }
     ],
     groups: getDefaultGroups(),
     activities: [],
@@ -121,11 +121,11 @@ function getDefaultTasks() {
       description: 'description',
       comments: [],
       members: [
-        {
-          _id: 'u101',
-          fullname: 'Alon Wohl',
-          imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
-        }
+        // {
+        //   _id: 'u101',
+        //   fullname: 'Alon Wohl',
+        //   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
+        // }
       ]
     },
     {
@@ -137,16 +137,16 @@ function getDefaultTasks() {
       description: 'description',
       comments: [],
       members: [
-        {
-          _id: 'u102',
-          fullname: 'Dror Gaon',
-          imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738423038/amup7iyjt0htiedqb91c.jpg'
-        },
-        {
-          _id: 'u101',
-          fullname: 'Alon Wohl',
-          imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
-        }
+        // {
+        //   _id: 'u102',
+        //   fullname: 'Dror Gaon',
+        //   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738423038/amup7iyjt0htiedqb91c.jpg'
+        // },
+        // {
+        //   _id: 'u101',
+        //   fullname: 'Alon Wohl',
+        //   imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1738491906/IMG_4602_bcxkfx.jpg'
+        // }
       ]
     }
   ]
