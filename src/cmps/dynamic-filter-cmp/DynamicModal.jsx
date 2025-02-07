@@ -4,6 +4,10 @@ import { Checkbox } from '../Checkbox'
 import { FilteredMembersModal } from './FilteredMembersModal'
 import { SortModal } from './SortModal'
 import { useState } from 'react'
+import { ToggleColumns } from './ToggleColumns'
+import { boardService } from '../../services/board'
+import { showErrorMsg } from '../../services/event-bus.service'
+import { addGroup } from '../../store/actions/board.actions'
 
 export function DynamicFilterModal({
 	board,
@@ -16,6 +20,7 @@ export function DynamicFilterModal({
 		member: FilteredMembersModal,
 		sort: SortModal,
 		hide: ToggleColumns,
+		addGroup: AddGroup,
 	}
 	const ModalCmp = MODAL_CMPS[modalType]
 
@@ -38,95 +43,27 @@ export function DynamicFilterModal({
 				filterBy={filterBy}
 				setFilterBy={setFilterBy}
 				getColumnName={getColumnName}
+                setModalType={setModalType}
 			/>
 		</>
 	)
 }
 
-function ToggleColumns({ board, setFilterBy, getColumnName }) {
-	const { cmpsOrder } = board
-	const [cmpsToToggle, setCmpsToToggle] = useState(cmpsOrder)
-
-	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
-	const { hiddenColumns } = filterBy
-
-	function getListIcon(column) {
-		switch (column) {
-			case 'StatusPicker':
-			case 'PriorityPicker':
-				return svgs.coloredList
-
-			case 'DatePicker':
-				return svgs.coloredCalendar
-
-			case 'TimelinePicker':
-				return svgs.coloredTimeline
-
-			case 'MemberPicker':
-				return svgs.coloredPerson
+function AddGroup({ board, setModalType }) {
+	function onAddGroup() {
+		const groupToAdd = boardService.getNewGroup()
+		try {
+			addGroup(board._id, groupToAdd, 'unshift')
+            setModalType(null)
+		} catch (err) {
+			showErrorMsg('cannot add group')
+			console.log('cannot add group', err)
 		}
 	}
 
-	if (!filterBy) return
 	return (
-		<section className="toggle-column-modal">
-			<h4>Display columns</h4>
-			<label className="search-columns">
-				<input
-					type="text"
-					placeholder="Find columns to show/hide"
-					onChange={({ target }) =>
-						setCmpsToToggle(
-							cmpsOrder.filter((cmp) =>
-								cmp.match(new RegExp(target.value, 'i'))
-							)
-						)
-					}
-				/>
-				<span>{svgs.search}</span>
-			</label>
-
-			<section className="column-list-container">
-				<div className="select-all">
-					<input
-						type="checkbox"
-						checked={hiddenColumns.length === 0}
-						onChange={() =>
-							setFilterBy({
-								...filterBy,
-								hiddenColumns: hiddenColumns.length > 0 ? [] : [...cmpsOrder],
-							})
-						}
-					/>
-					<h6>All columns</h6>
-                    <span>{cmpsToToggle.length - hiddenColumns.length} selected</span>
-				</div>
-
-				<ul>
-					{cmpsToToggle.map((column) => {
-						return (
-							<li key={column} className="col-item">
-								<input
-									type="checkbox"
-									checked={!hiddenColumns.includes(column)}
-									onChange={() =>
-										setFilterBy({
-											...filterBy,
-											hiddenColumns: hiddenColumns.includes(column)
-												? hiddenColumns.filter((col) => col !== column)
-												: [...hiddenColumns, column],
-										})
-									}
-								/>
-								<span className="flex align-center">{getListIcon(column)}</span>
-								<span className="flex align-center">
-									{getColumnName(column)}
-								</span>
-							</li>
-						)
-					})}
-				</ul>
-			</section>
-		</section>
-	)
+        <section className='header-add-group'>
+            <button onClick={onAddGroup}><span className='flex align-center'>{svgs.addGroup}</span> New group of tasks</button>
+        </section>
+    )
 }

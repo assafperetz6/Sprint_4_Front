@@ -98,9 +98,9 @@ export function setFilterBy(filterBy) {
 
 // group actions: //
 
-export async function addGroup(boardId, group) {
+export async function addGroup(boardId, group, unshift = false) {
   try {
-    const savedBoard = await boardService.saveGroup(boardId, group)
+    const savedBoard = await boardService.saveGroup(boardId, group, unshift)
     store.dispatch(getCmdSetBoard(savedBoard))
   } catch (err) {
     console.log('error from actions--> cannot add group', err)

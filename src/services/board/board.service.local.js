@@ -130,7 +130,7 @@ function getGroupByTask(board, taskId) {
   return newBoard.groups.find((g) => g.tasks.some((t) => t.id === taskId))
 }
 
-async function saveGroup(boardId, group) {
+async function saveGroup(boardId, group, unshift = false) {
   const groupToSave = {
     title: group.title,
     style: group.style,
@@ -146,7 +146,7 @@ async function saveGroup(boardId, group) {
       board.groups.splice(groupIdx, 1, groupToSave)
     } else {
       groupToSave.id = makeId()
-      board.groups.push(groupToSave)
+      unshift ? board.groups.unshift(groupToSave) : board.groups.push(groupToSave)
     }
     return storageService.put(STORAGE_KEY, board)
   } catch (err) {

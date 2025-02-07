@@ -1,8 +1,4 @@
 .board-header-container {
-    // .board-actions {
-
-    // }
-
     .task-actions {
         position: relative;
 
@@ -37,6 +33,31 @@
                 height: 30px;
                 width: 30px;
                 border: 6px solid #d9f0ff;
+            }
+        }
+
+        .header-add-group {
+            @include filter-modal;
+            padding: 8px;
+            left: 72px;
+
+            width: 220px;
+            button {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                height: 32px;
+                width: 100%;
+
+                padding: 4px 8px;
+                border-radius: 4px;
+                margin: 0;
+                background-color: unset;
+
+                &:hover {
+                    background-color: $hovered-btns;
+                }
             }
         }
 
