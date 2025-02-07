@@ -1793,7 +1793,7 @@ export const svgs = {
 				width="20"
 				height="20"
 				rx="3.636"
-				fill="var(--color-done-green)"
+				fill="#00c875"
 			></rect>
 			<g filter="url(#filter0_d_43912_44076)" fill="#fff">
 				<rect x="5.227" y="5.453" width="9.318" height="2.727" rx=".455"></rect>
@@ -1840,7 +1840,7 @@ export const svgs = {
 	),
 	coloredCalendar: (
 		<svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-			<rect width="20" height="20" rx="3.636" fill="var(--color-purple)"></rect>
+			<rect width="20" height="20" rx="3.636" fill="#9d50dd"></rect>
 			<g
 				filter="url(#filter0_d_43912_44067)"
 				fill="#fff"
@@ -1893,7 +1893,7 @@ export const svgs = {
 				width="20"
 				height="20"
 				rx="3.636"
-				fill="var(--color-chili-blue)"
+				fill="#66ccff"
 			></rect>
 			<g filter="url(#filter0_d_43912_44048)">
 				<path
@@ -1937,7 +1937,7 @@ export const svgs = {
 	),
 	coloredTimeline: (
 		<svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
-			<rect width="20" height="20" rx="3.636" fill="var(--color-purple)"></rect>
+			<rect width="20" height="20" rx="3.636" fill="#9d50dd"></rect>
 			<g
 				filter="url(#filter0_d_43912_44075)"
 				fill="#fff"
