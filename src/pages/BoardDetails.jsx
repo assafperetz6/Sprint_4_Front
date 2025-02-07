@@ -101,6 +101,10 @@ export function BoardDetails() {
 	useEffect(() => {
 		loadBoard(boardId)
 		socketService.emit(SOCKET_EMIT_SET_VIEWED_BOARD, boardId)
+
+		return () => {
+			document.title = 'mundane'
+		}
 	}, [boardId, filterBy])
 
 	function closeTaskDetails() {
@@ -112,7 +116,7 @@ export function BoardDetails() {
 	}
 
 	if (!board) return null
-
+	document.title = board.title
 	return (
 		<section
 			className="board-details"
