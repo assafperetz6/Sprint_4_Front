@@ -1,19 +1,19 @@
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-	// line-height: 1.6;
-	color: $txt-clr;
+  // line-height: 1.6;
+  color: $txt-clr;
 }
 
 body {
-	// max-width: 1024px;
-	margin: 0 auto;
+  // max-width: 1024px;
+  margin: 0 auto;
 
-	font-family: $main-font-family;
-	font-size: rem(18px);
-	letter-spacing: 0.2px;
+  font-family: $main-font-family;
+  font-size: rem(18px);
+  letter-spacing: 0.2px;
 }
 
 h1,
@@ -22,54 +22,55 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 0 0 0 0;
-	font-family: $title-font-family;
-	font-weight: 500;
+  margin: 0 0 0 0;
+  font-family: $title-font-family;
+  font-weight: 500;
 }
 
 img {
-	display: block;
-	max-width: 100%;
+  display: block;
+  max-width: 100%;
 }
 
 p {
-	margin: 0 0 1em;
+  margin: 0 0 1em;
 }
 
 a {
-	text-decoration: none;
-	color: $txt-clr;
+  text-decoration: none;
+  color: $txt-clr;
 }
 
 a:hover {
-	// text-decoration: underline;
+  // text-decoration: underline;
 }
 
 ul {
-	list-style: none;
-	padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 input {
-	max-width: 100%;
+  max-width: 100%;
 }
 ul {
-	margin: 0;
+  margin: 0;
 }
 
 button {
-	font-family: $main-font-family;
+  font-family: $main-font-family;
 }
 
-*:focus, *:focus-visible {
-	outline: none;
+*:focus,
+*:focus-visible {
+  outline: none;
 }
 
 @media screen and (min-width: $mobile-breakpoint) {
-	:root {
-		--options-size: 22px;
-		--left-side-width: 400px;
-		--left-margin-size: 36px;
-		font-size: 16px;
-	}
+  :root {
+    --options-size: 22px;
+    --left-side-width: 400px;
+    --left-margin-size: 36px;
+    font-size: 16px;
+  }
 }

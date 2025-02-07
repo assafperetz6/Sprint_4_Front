@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { boardService } from '../services/board'
 import { showErrorMsg } from '../services/event-bus.service'
 import { svgs } from '../services/svg.service'
+import { showSuccessMsg } from '../services/event-bus.service'
+import { TooltipContainer } from './TooltipContainer'
 import { addTask, setFilterBy } from '../store/actions/board.actions'
 import { useParams } from 'react-router'
 import { useSelector } from 'react-redux'
@@ -55,6 +57,11 @@ export function BoardHeader({ board }) {
 
 	// console.log(filterBy.sortBy)
 
+  function copyLink() {
+    navigator.clipboard.writeText(`${window.location.origin}/board/${board._id}`)
+    showSuccessMsg('Link copied to clipboard')
+  }
+
 	return (
 		<section className="board-header-container">
 			<header className="board-header">
@@ -62,35 +69,47 @@ export function BoardHeader({ board }) {
 					{board.title}&nbsp;{svgs.arrowDown}
 				</h2>
 
-				<section className="board-actions">
-					<button className="group-chat">{svgs.chat}</button>
-					<button className="activity-log flex align-center">
-						<Link
-							className="flex align-center"
-							to={`/board/${board._id}/activity_log`}
-						>
-							{getMemberIcons()}
-						</Link>
-					</button>
-					<button className="invite-members">
-						Invite / {board.members.length}
-					</button>
-					<button className="copy-link">{svgs.link}</button>
-					<button className="options">{svgs.threeDots}</button>
-				</section>
-			</header>
-			<section className="board-tabs">
-				<button className="active">
-					{svgs.house}&nbsp;Main Table&nbsp;<span>{svgs.threeDots}</span>
-				</button>
-				<button className="add-view-btn">{svgs.plus}</button>
-			</section>
-			<section className="task-actions">
-				<div className="add-task-header">
-					<button onClick={onAddTask}>New task</button>
-					<button>{svgs.arrowDown}</button>
-				</div>
-				<label className="txt-filter-container flex align-center">
+        <section className="board-actions">
+          <button className="group-chat">
+            <Link to={`/board/${board._id}/activity_log`}>
+              <TooltipContainer txt="Start board discussion" placement="bottom">
+                {svgs.chat}
+              </TooltipContainer>
+            </Link>
+          </button>
+
+          <TooltipContainer txt="View activity log" placement="bottom">
+            <button className="activity-log flex align-center">
+              <Link className="flex align-center" to={`/board/${board._id}/activity_log`}>
+                {getMemberIcons()}
+              </Link>
+            </button>
+          </TooltipContainer>
+
+          <button className="invite-members">Invite / {board.members.length}</button>
+
+          <TooltipContainer txt="Copy link" placement="bottom">
+            <button className="copy-link" onClick={() => copyLink()}>
+              {svgs.link}
+            </button>
+          </TooltipContainer>
+
+          <button className="options">{svgs.threeDots}</button>
+        </section>
+      </header>
+      <section className="board-tabs">
+        <button className="active">
+          {svgs.house}&nbsp;Main Table&nbsp;<span>{svgs.threeDots}</span>
+        </button>
+        <button className="add-view-btn">{svgs.plus}</button>
+      </section>
+      <section className="task-actions">
+        <div className="add-task-header">
+          <button onClick={onAddTask}>New task</button>
+          <button>{svgs.arrowDown}</button>
+        </div>
+
+        <label className="txt-filter-container flex align-center">
 					<span>{svgs.search}</span>
 					<input
 						className="txt-filter"
@@ -105,7 +124,8 @@ export function BoardHeader({ board }) {
 					/>
 				</label>
 
-				<button
+        <TooltipContainer txt="Filter board by person">
+		<button
 					className={modalType === 'member' ? 'active' : ''}
 					onClick={() =>
 						setModalType((prev) => (prev === 'member' ? null : 'member'))
@@ -116,8 +136,11 @@ export function BoardHeader({ board }) {
 						: svgs.person}{' '}
 					Person
 				</button>
-
-				<button>
+        </TooltipContainer>
+        <button>
+          {svgs.filter} Filter {svgs.arrowDown}
+        </button>
+        <button>
 					{svgs.filter} Filter {svgs.arrowDown}
 				</button>
 				<button
@@ -128,7 +151,6 @@ export function BoardHeader({ board }) {
 				>
 					{svgs.sortDir} Sort
 				</button>
-
 				<button
 					onClick={() =>
 						setModalType((prev) => (prev === 'hide' ? null : 'hide'))
@@ -136,19 +158,18 @@ export function BoardHeader({ board }) {
 				>
 					{svgs.hideEye} Hide
 				</button>
+        <button>{svgs.groupBy} Group by</button>
+        <button className="more-task-actions">{svgs.threeDots}</button>
+        <button className="toggle-board-tabs">{svgs.arrowUp}</button>
 
-				<button>{svgs.groupBy} Group by</button>
-				<button className="more-task-actions">{svgs.threeDots}</button>
-				<button className="toggle-board-tabs">{svgs.arrowUp}</button>
-
-				<DynamicFilterModal
+		<DynamicFilterModal
 					board={board}
 					modalType={modalType}
 					setModalType={setModalType}
 					filterBy={filterBy}
 					setFilterBy={setFilterBy}
 				/>
-			</section>
-		</section>
-	)
+      </section>
+    </section>
+  )
 }

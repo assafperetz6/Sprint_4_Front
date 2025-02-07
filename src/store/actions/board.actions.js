@@ -78,7 +78,7 @@ export async function updateBoardOptimistic(board) {
 function getCmdSetBoards(boards) {
   return { type: SET_BOARDS, boards }
 }
-function getCmdSetBoard(board) {
+export function getCmdSetBoard(board) {
   return { type: SET_BOARD, board }
 }
 function getCmdRemoveBoard(boardId) {

@@ -1,7 +1,7 @@
 import { Outlet, useParams } from 'react-router'
 import { useEffect, useRef, useState } from 'react'
-import { loadBoard, setFilterBy } from '../store/actions/board.actions'
-import { useDispatch, useSelector } from 'react-redux'
+import { getCmdSetBoard, loadBoard, setFilterBy } from '../store/actions/board.actions'
+import { useDispatch, useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
 import { svgs } from '../services/svg.service.jsx'
@@ -10,6 +10,9 @@ import { TaskActionMenu } from '../cmps/TaskActionMenu.jsx'
 import { BoardHeader } from '../cmps/BoardHeader.jsx'
 import { CollapsedGroupPreview } from '../cmps/CollapsedGroupPreview.jsx'
 import { BoardActivityLog } from './BoardActivityLog.jsx'
+import { userService } from '../services/user/index.js'
+import { SOCKET_EMIT_SET_VIEWED_BOARD, SOCKET_EVENT_BOARD_UPDATE, socketService } from '../services/socket.service.js'
+import { signup } from '../store/actions/user.actions.js'
 import { useSearchParams } from 'react-router-dom'
 import { SET_FILTER } from '../store/reducers/board.reducer.js'
 
@@ -59,8 +62,23 @@ export function BoardDetails() {
 		(storeState) => storeState.boardModule.selectedTasks
 	)
 
+  if (!userService.getLoggedinUser()){
+    signup(userService.getGuest())
+  }
+
+  useEffect(() => {
+    socketService.on(SOCKET_EVENT_BOARD_UPDATE, board => {
+      dispatch(getCmdSetBoard(board))
+    })
+
+    return () => {
+      socketService.off(SOCKET_EVENT_BOARD_UPDATE)
+    }
+  }, [])
+
 	useEffect(() => {
 		loadBoard(boardId)
+    	socketService.emit(SOCKET_EMIT_SET_VIEWED_BOARD, boardId)
 	}, [boardId, filterBy])
 
 	function closeTaskDetails() {

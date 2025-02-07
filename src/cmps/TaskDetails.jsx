@@ -6,12 +6,12 @@ import { useSelector } from 'react-redux'
 import { ActivityLog } from './activity-log-cmp/ActivityLog.jsx'
 import { Updates } from './activity-log-cmp/Updates.jsx'
 
-export function BoardModal() {
+export function BoardModal({ view: initialView = 'updates' }) {
   const board = useSelector((state) => state.boardModule.board)
   const location = useLocation()
   const { boardId, taskId } = useParams()
   const [task, setTask] = useState(null)
-  const [view, setView] = useState('updates')
+  const [view, setView] = useState(initialView)
   const { isClosing, closeTaskDetails: closeModal } = useOutletContext()
 
   const isTaskView = location.pathname.includes('/task/')
