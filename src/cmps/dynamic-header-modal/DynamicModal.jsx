@@ -8,8 +8,10 @@ import { ToggleColumns } from './ToggleColumns'
 import { boardService } from '../../services/board'
 import { showErrorMsg } from '../../services/event-bus.service'
 import { addGroup } from '../../store/actions/board.actions'
+import { InviteMembers } from './InviteMembers'
+import { AddGroup } from './AddGroup'
 
-export function DynamicFilterModal({
+export function DynamicHeaderModal({
 	board,
 	modalType,
 	setModalType,
@@ -21,6 +23,7 @@ export function DynamicFilterModal({
 		sort: SortModal,
 		hide: ToggleColumns,
 		addGroup: AddGroup,
+        invite: InviteMembers
 	}
 	const ModalCmp = MODAL_CMPS[modalType]
 
@@ -47,23 +50,4 @@ export function DynamicFilterModal({
 			/>
 		</>
 	)
-}
-
-function AddGroup({ board, setModalType }) {
-	function onAddGroup() {
-		const groupToAdd = boardService.getNewGroup()
-		try {
-			addGroup(board._id, groupToAdd, 'unshift')
-            setModalType(null)
-		} catch (err) {
-			showErrorMsg('cannot add group')
-			console.log('cannot add group', err)
-		}
-	}
-
-	return (
-        <section className='header-add-group'>
-            <button onClick={onAddGroup}><span className='flex align-center'>{svgs.addGroup}</span> New group of tasks</button>
-        </section>
-    )
 }

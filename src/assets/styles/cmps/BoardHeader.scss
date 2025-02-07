@@ -352,7 +352,6 @@
 
         }
 
-
         .toggle-board-tabs {
             height: 24px;
             width: 24px;
@@ -368,71 +367,64 @@
                 filter: brightness(0.95);
             }
         }
+
+        .invite-members-modal {
+            @include filter-modal;
+            right: 16px;
+            top: -32px;
+
+            padding: 8px;
+
+            > * {
+                width: 100%;
+            }
+
+            h4 {
+                margin-block-end: 16px;
+                padding-inline-start: 8px;
+            }
+
+            li {
+                position: relative;
+
+                display: flex;
+                gap: 4px;
+                align-items: center;
+
+                height: 32px;
+                width: 100%;
+
+                padding-inline-start: 8px;
+                border-radius: 4px;
+                &:hover {
+                    background-color: #c3c3c327;
+                }
+                
+                button {
+                    position: absolute;
+                    right: 0;
+                    display: none;
+
+                    height: 24px;
+                    width: 24px;
+
+                    border-radius: 4px;
+                    background-color: unset;
+
+                    &:hover {
+                        background-color: $gray1;
+                    }
+                }
+                
+                &:hover button {
+                    display: flex;
+                    align-items: center;
+
+                    svg {
+                        stroke: $gray4;
+                    }
+                }
+            }
+        }
     }
 }
-// .board-filter {
-//     display: grid;
-//     grid-template-columns: 1fr 5em 5em auto;
-//     align-items: center;
-//     gap: 0 .5em;
-
-//     background-color: $clr4;
-//     padding: .5em;
-
-//     h3 {
-//         grid-column: 1 / -1;
-//         font-size: rem(14px);
-//         margin: 0;
-//     }
-
-//     & :not(h3) {
-//         cursor: pointer;
-//     }
-
-//     input:is([type="text"], [type="number"]){
-//         height: 1.8em;
-//         border: none;
-//         border-block-end: 1px solid $gray1;
-    
-//         &:focus {
-//             outline: none;
-//             background-color: $gray1;
-//         }
-//     }
-
-
-//     .btn-clear {
-//         grid-column: 4;
-//     }
-
-//     .sort-field, .sort-dir {
-//         display: flex;
-//         align-items: center;
-//         gap: 1em;
-
-//         // margin-inline-start: .4em;
-
-//         font-size: .8em;
-//     }
-
-//     .sort-dir {
-//         grid-column: 2 / 3;
-//     }
-
-//     input[type="radio"] {
-//         display: none;
-//     }
-
-//     label {
-//         span {
-//             font-size: .9em;
-//             padding: 0.1em 0.3em;
-//             outline: 1px solid $gray1;
-//         }
-
-//         &:has(:checked) span  {
-//             background-color: $clr3;
-//             color: $gray1;
-//         }
-//     }
-// }

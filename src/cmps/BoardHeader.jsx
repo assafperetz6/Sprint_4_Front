@@ -8,9 +8,9 @@ import { TooltipContainer } from './TooltipContainer'
 import { addTask, setFilterBy } from '../store/actions/board.actions'
 import { useParams } from 'react-router'
 import { useSelector } from 'react-redux'
-import { SortModal } from './dynamic-filter-cmp/SortModal'
-import { FilteredMembersModal } from './dynamic-filter-cmp/FilteredMembersModal'
-import { DynamicFilterModal } from './dynamic-filter-cmp/DynamicModal'
+import { SortModal } from './dynamic-header-modal/SortModal'
+import { FilteredMembersModal } from './dynamic-header-modal/FilteredMembersModal'
+import { DynamicHeaderModal } from './dynamic-header-modal/DynamicModal'
 
 export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
@@ -92,9 +92,10 @@ export function BoardHeader({ board }) {
 					</TooltipContainer>
 
 					<div className='invite-container'>
-						<button className="invite-members">
+						<button className="invite-members" onClick={() => setModalType((prev) => (prev === 'invite' ? null : 'invite'))}>
 							Invite / {board.members.length}
 						</button>
+
 						<TooltipContainer txt="Copy link" placement="bottom">
 							<button className="copy-link" onClick={() => copyLink()}>
 								{svgs.link}
@@ -165,7 +166,7 @@ export function BoardHeader({ board }) {
 					</button>
 				</TooltipContainer>
 
-				<DynamicFilterModal
+				<DynamicHeaderModal
 					board={board}
 					modalType={modalType}
 					setModalType={setModalType}
