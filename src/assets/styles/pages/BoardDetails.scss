@@ -144,7 +144,7 @@
                 width: 18px;
             }
 
-            &:hover{
+            &:hover, &.active{
                 color: white;
                 background-color: $hovered-blue;
                 // filter: brightness(0.90);

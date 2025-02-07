@@ -36,6 +36,17 @@
   margin: 0 0 0 8px;
 
   color: $clr3;
+
+  &.clear-filter-btn {
+    width: max-content;
+    
+    padding: 2px 4px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    margin: 0;
+
+    font-size: 1rem;
+  }
 }
 
 .user-msg.success {

@@ -44,6 +44,8 @@ export function BoardHeader({ board }) {
 				false, // !isDuplicate
 				'unshift'
 			)
+
+			if (filterBy.members.length > 0 || filterBy.txt) showSuccessMsg('Your task was filtered out, clear the filter to see it')
 		} catch (err) {
 			showErrorMsg('cannot add task')
 			console.log(err)
@@ -54,8 +56,6 @@ export function BoardHeader({ board }) {
 	function getSelectedMembers(ids) {
 		return board.members.filter((m) => ids.includes(m._id))
 	}
-
-	// console.log(filterBy.sortBy)
 
 	function copyLink() {
 		navigator.clipboard.writeText(
@@ -113,7 +113,7 @@ export function BoardHeader({ board }) {
 			<section className="task-actions">
 				<div className="add-task-header">
 					<button onClick={onAddTask}>New task</button>
-					<button onClick={() =>
+					<button className={ modalType === 'addGroup' ? 'active' : ''} onClick={() =>
 							setModalType((prev) => (prev === 'addGroup' ? null : 'addGroup'))
 						}>{svgs.arrowDown}</button>
 				</div>
