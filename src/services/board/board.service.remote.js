@@ -15,6 +15,7 @@ export const boardService = {
 	removeTask,
     removeTasks,
     duplicateTasks,
+    archiveTasks,
 }
 
 async function query(filterBy = { txt: '', price: 0 }) {
@@ -65,11 +66,11 @@ async function getTasks(boardId, groupId) {
     return httpService.get(`board/${boardId}/group/${groupId}/task`)
 }
 
-async function getTaskById(boardId, groupId, taskId) {
+async function getTaskById(boardId, taskId, groupId = null) {
     return httpService.get(`board/${boardId}/group/${groupId}/task/${taskId}`)
 }
 
-async function removeTask(boardId, groupId, taskId) {
+async function removeTask(boardId, taskId, groupId) {
     return httpService.delete(`board/${boardId}/group/${groupId}/task/${taskId}`)
 }
 
@@ -90,4 +91,12 @@ async function removeTasks(boardId, tasks) {
 
 async function duplicateTasks(boardId, tasks) {
     return httpService.post(`board/${boardId}/tasks`, tasks)
+}
+
+async function archiveTasks(boardId, tasks) {
+    return httpService.put(`board/${boardId}/tasks`, tasks)
+}
+
+async function moveTasksTo(boardId, tasks) {
+    
 }
