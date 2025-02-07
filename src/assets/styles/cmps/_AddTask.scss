@@ -6,6 +6,7 @@
 	height: $task-row-height;
 
 	border-block-end: 1px solid $clr8;
+	border-radius: 7px;
 
 	background-color: #ffff;
 
@@ -33,6 +34,17 @@
 			background-color: white;
 			width: 40px;
 			height: 36px;
+			
+			&::after {
+				position: absolute;
+				content: '';
+				right: -6px;
+				bottom: 0;
+				height: 1px;
+				width: 8px;
+
+				background-color: $clr3;
+			}
 		}
 	}
 

@@ -61,6 +61,8 @@
 		place-content: center;
 		justify-self: center;
 
+		border-radius: 7px 0 0 0;
+
 		text-align: center;
 	}
 
@@ -70,6 +72,19 @@
 		left: 40px;
 		// border-inline-start: 40px solid $clr3;
 		border-radius: 4px 0 0 0;
+
+		&::after {
+			position: absolute;
+			content: '';
+			left: -2px;
+			height: 100%;
+			width: 2px;
+
+			// border-radius: 2px;
+			background-color: $clr3;
+
+			// clip-path: path('M 0,0 L 0,37');
+		}
 	}
 }
 
