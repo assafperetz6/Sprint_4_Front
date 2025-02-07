@@ -10,7 +10,11 @@ const initialState = {
 	boards: [],
 	board: null,
 	selectedTasks: [],
-	filterBy: { txt: '', members: [], sortBy: { sortField: '', dir: 1 } },
+	filterBy: { txt: '',
+				members: [],
+				sortBy: { sortField: '', dir: 1 },
+				hiddenColumns: []
+			 },
 }
 
 export function boardReducer(state = initialState, action) {
@@ -22,8 +26,6 @@ export function boardReducer(state = initialState, action) {
 			break
 
 		case SET_BOARD:
-			// console.log(action.board.groups)
-			// debugger
 			let filteredBoardGroups = [...action.board.groups]
 
 			// FILTER BY MEMBERS

@@ -6,7 +6,6 @@ import { MemberSummary } from "./dynamic-summary-cmp/MemberSummary";
 import { TimelineSummary } from "./dynamic-summary-cmp/TimelineSummary";
 
 export function GroupSummary({ group, cmpsOrder, isCollapsed }){
-
     const statusLabels = useSelector(storeState => storeState.boardModule.board.statusLabels)
     const priorityLabels = useSelector(storeState => storeState.boardModule.board.priorityLabels)
     
@@ -115,24 +114,26 @@ export function GroupSummary({ group, cmpsOrder, isCollapsed }){
 }
 
 function DynamicSummaryCmp( props ){
+    const hiddenColumns = useSelector(storeState => storeState.boardModule.filterBy.hiddenColumns)
+    
     const field  = Object.keys(props.summary)[0]
 
     switch (field) {
         case 'dateSummary':
             
-            return <DateSummary {...props} />
+            return !hiddenColumns.includes('DatePicker') && <DateSummary {...props} />
         case 'statusSummary':
             
-            return <StatusSummary {...props} />
+            return !hiddenColumns.includes('StatusPicker') && <StatusSummary {...props} />
         case 'prioritySummary':
             
-            return <PrioritySummary {...props} />
+            return !hiddenColumns.includes('PriorityPicker') && <PrioritySummary {...props} />
         case 'timelineSummary':
                 
-            return <TimelineSummary {...props} />
+            return !hiddenColumns.includes('TimelinePicker') && <TimelineSummary {...props} />
         case 'memberSummary':
             
-            return <MemberSummary {...props} />
+            return !hiddenColumns.includes('MemberPicker') && <MemberSummary {...props} />
     
         default:
             break;

@@ -14,6 +14,7 @@ import { Draggable } from '@hello-pangea/dnd'
 
 export function TaskPreview({ group, task, idx }) {
   const board = useSelector((storeState) => storeState.boardModule.board)
+  const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
   const [isTaskHovered, setIsTaskHovered] = useState(false)
   const [isActive, setIsActive] = useState(false)
 
@@ -134,9 +135,9 @@ export function TaskPreview({ group, task, idx }) {
 
           <section className="task-col flex">
             {board.cmpsOrder.map((cmp, idx) => (
-              <DynamicCmp key={idx} cmp={cmp} group={group} task={task} />
+              !filterBy.hiddenColumns.includes(cmp) && <DynamicCmp key={idx} cmp={cmp} group={group} task={task} />
             ))}
-            <li className="line-end" />
+            {/* <li className="line-end" /> */}
           </section>
 
           {activeMenuId === task.id && (
