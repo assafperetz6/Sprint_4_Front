@@ -1,4 +1,29 @@
 .board-header-container {
+    .invite-container {
+        display: flex;
+
+        height: 32px;
+
+        border: $border;
+        border-radius: 4px;
+        margin-inline-end: 16px;
+
+        & > :first-child {
+            width: 70px;
+            flex-grow: 1;
+
+            border-inline-end: 1px solid $gray1;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        & > :nth-child(2) {
+            width: 32px;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
     .task-actions {
         position: relative;
 
@@ -106,7 +131,7 @@
 
         .filter-by-member {
             @include filter-modal;
-            
+            left: 80px;
             height: 150px;
             width: 350px;
 
@@ -212,7 +237,7 @@
 
         .toggle-column-modal {
             @include filter-modal;
-            left: 485px;
+            left: 375px;
 
             align-content: start;
 

@@ -91,17 +91,16 @@ export function BoardHeader({ board }) {
 						</button>
 					</TooltipContainer>
 
-					<button className="invite-members">
-						Invite / {board.members.length}
-					</button>
-
-					<TooltipContainer txt="Copy link" placement="bottom">
-						<button className="copy-link" onClick={() => copyLink()}>
-							{svgs.link}
+					<div className='invite-container'>
+						<button className="invite-members">
+							Invite / {board.members.length}
 						</button>
-					</TooltipContainer>
-
-					<button className="options">{svgs.threeDots}</button>
+						<TooltipContainer txt="Copy link" placement="bottom">
+							<button className="copy-link" onClick={() => copyLink()}>
+								{svgs.link}
+							</button>
+						</TooltipContainer>
+					</div>
 				</section>
 			</header>
 			<section className="board-tabs">
