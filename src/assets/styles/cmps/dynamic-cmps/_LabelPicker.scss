@@ -28,12 +28,11 @@
 	}
 
 	.label-picker-popup {
-		// position: absolute;
-		// top: calc($task-row-height + 5px);
-		// z-index: 999;
-		// position: relative;
+		position: absolute;
 		z-index: 60;
-		width: fit-content;
+
+		height: 273px;
+		width: 200px;
 		background-color: #ffff;
 		border-radius: 8px;
 		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.32);

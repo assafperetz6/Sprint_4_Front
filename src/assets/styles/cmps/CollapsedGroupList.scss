@@ -2,16 +2,17 @@
     grid-template-columns: 100%;
     min-width: unset;
     width: calc(100% - 40px);
-    // align-items: center;
 
     padding-inline-start: 40px;
 
     overflow: hidden;
     .collapsed-group-preview {
-        // grid-template-columns: 1fr;
-        // grid-column: 1 / -1;
+        position: relative;
+
+
         width: 60%;
         margin-block-end: 14px;
+
         .colored-border {
             position: unset;
             left: unset;
