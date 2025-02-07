@@ -1,0 +1,213 @@
+.board-header-container {
+    // .board-actions {
+
+    // }
+
+    .task-actions {
+        position: relative;
+
+        align-items: center;
+        padding-block: 16px;
+
+        > button {
+            @include alt-btn;
+
+            width: unset;
+            height: 30px;
+
+            padding: 6px 12px 6px 8px;
+            text-wrap: nowrap;
+        }
+
+        .txt-filter-container {
+            position: relative;
+
+            &:hover input:not(:focus), &:hover input:not(:focus) + span{
+                background-color: #ececf0;
+            }
+
+            > * {
+                cursor: pointer;
+            }
+
+            span {
+                position: absolute;
+                top: 4px;
+                left: 8px;
+
+                color: $clr4;
+            }
+
+            .txt-filter {
+                // @include alt-btn;
+                height: 30px;
+                width: 240px;
+
+                padding-inline-start: 29px;
+                border: $border;
+                border-color: $blue3;
+                border-radius: 4px;
+                transition: width .1s ease-in-out;
+                
+                
+                &:not(:focus) {
+                    width: 90px;
+                    padding-inline-start: 30px;
+                    border: 0;
+
+                    &::placeholder {
+                        color: $txt-clr;
+                    }
+                }
+            }
+        }
+
+        .filter-by-member {
+            position: absolute;
+            top: 55px;
+            left: 85px;
+            display: flex;
+            flex-wrap: wrap;
+            height: 150px;
+            width: 350px;
+
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 17px 6px #0000001a;
+            background-color: $clr3;
+
+            font-size: rem(14px);
+            h4 {
+                display: flex;
+                height: 32px;
+                align-items: center;
+                font-family: $main-font-family;
+                font-size: rem(15px);
+            }
+
+            ul {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                width: 100%;
+
+                li {
+                    position: relative;
+                    height: 40px;
+                    width: 40px;
+
+                    > * {
+                        position: absolute;
+                    }
+
+                    button {
+                        height: 100%;
+                        width: 100%;
+                        opacity: 0;
+                    }
+                }
+            }
+
+            img {
+                position: relative;
+                height: 30px;
+                width: 30px;
+
+                border-radius: 100%;
+
+                &.selected-member::before {
+                    position: absolute;
+                    content: '';
+
+                    height: 30px;
+                    width: 30px;
+                    border: '6px solid #d9f0ff'
+                }
+            }
+        }
+
+
+        .toggle-board-tabs {
+
+            height: 24px;
+            width: 24px;
+
+            background-color: $hovered-btns;
+            padding: 0;
+            border-radius: 50%;
+            margin-inline-start: auto;
+
+            transition: 100ms;
+
+            &:hover {
+                filter: brightness(0.95);
+            }
+        }
+    }
+}
+// .board-filter {
+//     display: grid;
+//     grid-template-columns: 1fr 5em 5em auto;
+//     align-items: center;
+//     gap: 0 .5em;
+
+//     background-color: $clr4;
+//     padding: .5em;
+
+//     h3 {
+//         grid-column: 1 / -1;
+//         font-size: rem(14px);
+//         margin: 0;
+//     }
+
+//     & :not(h3) {
+//         cursor: pointer;
+//     }
+
+//     input:is([type="text"], [type="number"]){
+//         height: 1.8em;
+//         border: none;
+//         border-block-end: 1px solid $gray1;
+    
+//         &:focus {
+//             outline: none;
+//             background-color: $gray1;
+//         }
+//     }
+
+
+//     .btn-clear {
+//         grid-column: 4;
+//     }
+
+//     .sort-field, .sort-dir {
+//         display: flex;
+//         align-items: center;
+//         gap: 1em;
+
+//         // margin-inline-start: .4em;
+
+//         font-size: .8em;
+//     }
+
+//     .sort-dir {
+//         grid-column: 2 / 3;
+//     }
+
+//     input[type="radio"] {
+//         display: none;
+//     }
+
+//     label {
+//         span {
+//             font-size: .9em;
+//             padding: 0.1em 0.3em;
+//             outline: 1px solid $gray1;
+//         }
+
+//         &:has(:checked) span  {
+//             background-color: $clr3;
+//             color: $gray1;
+//         }
+//     }
+// }

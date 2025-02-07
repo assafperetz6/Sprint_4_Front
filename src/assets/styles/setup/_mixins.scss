@@ -267,7 +267,6 @@
 }
 
 @mixin board-link {
-
 	.link-wrapper {
 		position: relative;
 		display: flex;
@@ -348,5 +347,31 @@
 
 		padding: 4px;
 		margin-inline-start: 6px;
+	}
+}
+
+@mixin filter-modal {
+	position: absolute;
+	top: 55px;
+
+	display: flex;
+	flex-wrap: wrap;
+
+	padding: 16px;
+	border-radius: 8px;
+	box-shadow: 0 4px 17px 6px #0000001a;
+	background-color: $clr3;
+
+	font-size: rem(14px);
+	z-index: 2;
+
+	h4 {
+		display: flex;
+		height: 32px;
+		width: 100%;
+		align-items: center;
+		
+		font-size: rem(15px);
+		font-family: $main-font-family;
 	}
 }

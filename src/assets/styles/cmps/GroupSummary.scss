@@ -2,7 +2,6 @@
 	display: flex;
 
 	height: 36px;
-
 	.white-space {
 		position: sticky;
 		left: 0;
@@ -36,11 +35,14 @@
             justify-content: center;
             align-items: center;
     
-            height: 36px;
+            height: 35px;
             border-inline-end: 1px solid $clr8;
-
             background-color: $clr3;
-    
+
+			&:first-child {
+				border-radius: 0 0 0 8px;
+			}
+			
             .summary-colored-block {
                 display: block;
                 height: 24px;

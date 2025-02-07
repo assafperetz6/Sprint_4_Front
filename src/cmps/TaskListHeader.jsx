@@ -24,6 +24,7 @@ function getColumnConfig(cmp) {
 
 export function TaskListHeader({ group, shadow, isCollapsed }) {
   const board = useSelector((storeState) => storeState.boardModule.board)
+  const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
   const groupColor = group?.style.color
 
   async function handleDrag(result) {
@@ -55,7 +56,7 @@ export function TaskListHeader({ group, shadow, isCollapsed }) {
           {(provided) => (
             <ul className={`task-columns flex ${shadow ? 'shadow' : ''}`} {...provided.droppableProps} ref={provided.innerRef}>
               {board.cmpsOrder.map((cmp, idx) => (
-                <Draggable key={cmp} draggableId={cmp} index={idx}>
+                !filterBy.hiddenColumns.includes(cmp) && <Draggable key={cmp} draggableId={cmp} index={idx}>
                   {(provided) => (
                     <li
                       className="task-item-col"
@@ -72,7 +73,7 @@ export function TaskListHeader({ group, shadow, isCollapsed }) {
                 </Draggable>
               ))}
               {provided.placeholder}
-              <li className="line-end task-item-col" />
+              {/* <li className="line-end task-item-col" /> */}
             </ul>
           )}
         </Droppable>

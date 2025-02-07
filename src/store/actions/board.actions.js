@@ -1,6 +1,6 @@
 import { boardService } from '../../services/board/'
 import { store } from '../store'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD } from '../reducers/board.reducer'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, SET_FILTER } from '../reducers/board.reducer'
 import { makeId } from '../../services/util.service'
 import { userService } from '../../services/user'
 import { showErrorMsg } from '../../services/event-bus.service'
@@ -78,7 +78,7 @@ export async function updateBoardOptimistic(board) {
 function getCmdSetBoards(boards) {
   return { type: SET_BOARDS, boards }
 }
-function getCmdSetBoard(board) {
+export function getCmdSetBoard(board) {
   return { type: SET_BOARD, board }
 }
 function getCmdRemoveBoard(boardId) {
@@ -91,11 +91,16 @@ function getCmdUpdateBoard(board) {
   return { type: UPDATE_BOARD, board }
 }
 
+// Filter actions: //
+export function setFilterBy(filterBy) {
+  store.dispatch({ type: SET_FILTER, filterBy })
+}
+
 // group actions: //
 
-export async function addGroup(boardId, group) {
+export async function addGroup(boardId, group, unshift = false) {
   try {
-    const savedBoard = await boardService.saveGroup(boardId, group)
+    const savedBoard = await boardService.saveGroup(boardId, group, unshift)
     store.dispatch(getCmdSetBoard(savedBoard))
   } catch (err) {
     console.log('error from actions--> cannot add group', err)
@@ -139,11 +144,11 @@ export async function removeTask(boardId, groupId, taskId, activity) {
   }
 }
 
-export async function addTask(boardId, groupId, task, activity, isMoved = false) {
+export async function addTask(boardId, groupId, task, activity, isDuplicate = false, isMoved = false, unShift = false) {
   try {
     const activityToSave = await _addActivity(boardId, groupId, task, activity)
 
-    const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave, false, isMoved)
+    const savedBoard = await boardService.saveTask(boardId, groupId, task, activityToSave, isDuplicate, isMoved, unShift)
 
     store.dispatch(getCmdSetBoard(savedBoard))
   } catch (err) {
