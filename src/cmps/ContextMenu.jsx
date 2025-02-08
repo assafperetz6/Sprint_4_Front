@@ -71,7 +71,7 @@ export function ContextMenu({ type = 'board', entity, onClose, onRemove, onUpdat
       {
         icon: svgs.archive,
         text: 'Archive',
-        action: () => onUpdate(Date.now(), 'archivedAt')
+        action: () => onUpdate({ ...entity, archivedAt: Date.now()}, { txt: 'Task archived' })
       },
       {
         icon: svgs.arrowRightAlt,

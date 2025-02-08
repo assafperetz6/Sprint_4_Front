@@ -98,7 +98,7 @@ export function SideBar() {
 	}
 
 	if (pathname.startsWith('/login')) return null
-
+	const boardIndexLinkClass = pathname.startsWith('/board/') ? 'active-link' : ''
 	return (
 		<>
 			<button
@@ -130,7 +130,7 @@ export function SideBar() {
 							{svgs.house} Home
 						</NavLink>
 					</div>
-					<NavLink to="/board">{svgs.myWork} My work</NavLink>
+					<NavLink className={boardIndexLinkClass} to="/board">{svgs.myWork} My work</NavLink>
 				</nav>
 
 				<div className="favorite-container">

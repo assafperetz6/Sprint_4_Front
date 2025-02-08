@@ -29,6 +29,15 @@
     
             height: 32px;
         }
+
+        @include for-mobile-layout {
+            padding-inline-start: 10px;
+
+            .board-header {
+                display: flex;
+                justify-content: center;
+            }
+        }
     }
 
     .board-header, .board-tabs, .task-actions {
@@ -45,16 +54,24 @@
             height: 30px;
             padding: 0 5px;
         }
+
+        @include for-mobile-layout {
+            display: none;
+        }
     }
 
 
     .board-title{
-        font-size: 24px;
+        font-size: rem(24px);
         font-weight: 500;
         font-family: $title-font-family;
 
         svg {
             color: $clr4;
+        }
+
+        @include for-mobile-layout {
+            font-size: rem(16px);
         }
     }
 
@@ -64,9 +81,25 @@
         gap: 10px;
 
         height: 42px;
-        // margin-block-end: 16px;
 
         align-items: end;
+
+        @include for-mobile-layout {
+            &::after {
+                display: none;
+            }
+
+            & button {
+
+                background-color: $gray2;
+                border-radius: 4px;
+
+                &.active::before {
+                    display: none;
+                }
+            }
+        }
+
         &::after {
             content: '';
             position: absolute;

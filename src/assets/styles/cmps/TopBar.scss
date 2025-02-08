@@ -5,6 +5,10 @@
 	font-family: $title-font-family;
 	height: rem(48px);
 
+	@include for-mobile-layout {
+		display: none;
+	}
+	
 	.switcher {
 		padding: 10px;
 		margin-inline-start: $spacing-xs;
