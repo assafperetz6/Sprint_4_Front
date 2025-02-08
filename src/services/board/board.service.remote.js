@@ -16,7 +16,8 @@ export const boardService = {
   removeTasks,
   duplicateTasks,
   archiveTasks,
-  getTaskActivities
+  getTaskActivities,
+  getGroupByTask
 }
 
 async function query(filterBy = { txt: '', price: 0 }) {
@@ -111,4 +112,10 @@ async function getTaskActivities(boardId, taskId) {
     console.error('Failed to get task activities:', err)
     throw err
   }
+}
+
+function getGroupByTask(board, taskId) {
+  const newBoard = structuredClone(board)
+
+  return newBoard.groups.find((g) => g.tasks.some((t) => t.id === taskId))
 }
