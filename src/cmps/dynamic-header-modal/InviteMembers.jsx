@@ -22,7 +22,7 @@ export function InviteMembers({ board }) {
 	}
 
 	return (
-		<section className="invite-members-modal">
+		<section style={{maxWidth: 250 + 'px'}} className="invite-members-modal">
 			<h4>Invite board members</h4>
 			<ul>
 				{nonMembers.length

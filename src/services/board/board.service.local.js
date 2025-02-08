@@ -126,7 +126,7 @@ async function removeGroup(boardId, groupId) {
 
 function getGroupByTask(board, taskId) {
   const newBoard = structuredClone(board)
-  console.log('🚀 ~ getGroupByTask ~ newBoard:', newBoard)
+
   return newBoard.groups.find((g) => g.tasks.some((t) => t.id === taskId))
 }
 

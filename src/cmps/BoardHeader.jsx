@@ -20,7 +20,8 @@ export function BoardHeader({ board }) {
 	const emptyImgUrl = 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1739010711/dapulse_default_photo_q9x7an.png'
 	function getMemberIcons(selectedMembers = board.members) {
 		// TODO: should return last two members on the activity log
-		return selectedMembers
+		if (selectedMembers.length) 
+			return selectedMembers
 			.slice(0, 2)
 			.map((member) => (
 				<img
@@ -32,6 +33,15 @@ export function BoardHeader({ board }) {
 					style={{ borderRadius: '50%' }}
 				/>
 			))
+			else return (
+				<img
+				src={emptyImgUrl}
+				alt="userImg"
+				width={20}
+				height={20}
+				style={{ borderRadius: '50%' }}
+			/>
+			)
 	}
 
 	async function onAddTask() {

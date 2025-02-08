@@ -176,6 +176,7 @@ async function _addActivity(boardId, groupId, task, activityInfo) {
 
   const group = (await boardService.getGroupById(boardId, groupId)) || {}
   const loggedinUser = await userService.getLoggedinUser()
+  console.log('🚀 ~ _addActivity ~ loggedinUser:', loggedinUser)
 
   const activityToSave = {
     id: makeId(),

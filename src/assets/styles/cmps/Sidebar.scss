@@ -19,7 +19,7 @@
 
 	transition: opacity 0s 200ms;
 	
-	z-index: 61;
+	z-index: 63;
 
 	.sidebar + &, &.hidden {
 		opacity: 0;
@@ -27,10 +27,10 @@
 		transition: opacity 0s 0s;
 	}
 
-	svg {
-		height: 14px;
-		width: 14px;
-	}
+	// svg {
+	// 	// height: 14px;
+	// 	// width: 14px;
+	// }
 }
 
 .sidebar {
@@ -53,8 +53,12 @@
 
 	&.collapsed {
 		position: fixed;
-		z-index: 60;
+		z-index: 62;
 		width: 30px;
+
+		.toggle-sidebar svg {
+			rotate: 180deg;
+		}
 
 		&.hovered {
 			width: 250px;

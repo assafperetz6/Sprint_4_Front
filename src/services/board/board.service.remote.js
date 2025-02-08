@@ -1,21 +1,23 @@
 import { httpService } from '../http.service'
 
 export const boardService = {
-    query,
-    getById,
-    save,
-    remove,
-    getGroups,
-	getGroupById,
-	removeGroup,
-	saveGroup,
-	getTasks,
-	getTaskById,
-	saveTask,
-	removeTask,
-    removeTasks,
-    duplicateTasks,
-    archiveTasks,
+  query,
+  getById,
+  save,
+  remove,
+  getGroups,
+  getGroupById,
+  removeGroup,
+  saveGroup,
+  getTasks,
+  getTaskById,
+  saveTask,
+  removeTask,
+  removeTasks,
+  duplicateTasks,
+  archiveTasks,
+  getTaskActivities,
+  getGroupByTask
 }
 
 async function query(filterBy = { txt: '', price: 0 }) {
@@ -67,11 +69,11 @@ async function getTasks(boardId, groupId) {
 }
 
 async function getTaskById(boardId, taskId, groupId = null) {
-    return httpService.get(`board/${boardId}/group/${groupId}/task/${taskId}`)
+  return httpService.get(`board/${boardId}/group/${groupId}/task/${taskId}`)
 }
 
 async function removeTask(boardId, taskId, groupId) {
-    return httpService.delete(`board/${boardId}/group/${groupId}/task/${taskId}`)
+  return httpService.delete(`board/${boardId}/group/${groupId}/task/${taskId}`)
 }
 
 async function saveTask(boardId, groupId, task, activity) {
@@ -94,9 +96,26 @@ async function duplicateTasks(boardId, tasks) {
 }
 
 async function archiveTasks(boardId, tasks) {
-    return httpService.put(`board/${boardId}/tasks`, tasks)
+  return httpService.put(`board/${boardId}/tasks`, tasks)
 }
 
-async function moveTasksTo(boardId, tasks) {
-    
+async function moveTasksTo(boardId, tasks) {}
+
+async function getTaskActivities(boardId, taskId) {
+  try {
+    const board = await getById(boardId)
+    if (!board.activities) return
+    const taskActivities = board.activities?.filter((activity) => activity.entityId === taskId) || []
+
+    return taskActivities.sort((a, b) => b.createdAt - a.createdAt)
+  } catch (err) {
+    console.error('Failed to get task activities:', err)
+    throw err
+  }
+}
+
+function getGroupByTask(board, taskId) {
+  const newBoard = structuredClone(board)
+
+  return newBoard.groups.find((g) => g.tasks.some((t) => t.id === taskId))
 }
