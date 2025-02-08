@@ -1,4 +1,5 @@
 import { svgs } from '../../services/svg.service'
+import { addGroup } from '../../store/actions/board.actions'
 
 export function AddGroup({ board, setModalType }) {
 	function onAddGroup() {

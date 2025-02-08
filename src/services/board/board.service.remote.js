@@ -54,12 +54,12 @@ async function removeGroup(boardId, groupId) {
   return httpService.delete(`board/${boardId}/group/${groupId}`)
 }
 
-async function saveGroup(boardId, group) {
+async function saveGroup(boardId, group, isUnshift) {
   var savedGroup
   if (group.id) {
     savedGroup = await httpService.put(`board/${boardId}/group/${group.id}`, group)
   } else {
-    savedGroup = await httpService.post(`board/${boardId}/group`, group)
+    savedGroup = await httpService.post(`board/${boardId}/group`, {group, isUnshift})
   }
   return savedGroup
 }
@@ -76,12 +76,12 @@ async function removeTask(boardId, taskId, groupId) {
   return httpService.delete(`board/${boardId}/group/${groupId}/task/${taskId}`)
 }
 
-async function saveTask(boardId, groupId, task, activity) {
+async function saveTask(boardId, groupId, task, activity, isDuplicate, isMoved, isUnshift) {
   var savedTask
   if (task.id) {
     savedTask = await httpService.put(`board/${boardId}/group/${groupId}/task/${task.id}`, { task, activity })
   } else {
-    savedTask = await httpService.post(`board/${boardId}/group/${groupId}/task`, { task, activity })
+    savedTask = await httpService.post(`board/${boardId}/group/${groupId}/task`, { task, activity, isUnshift })
   }
   return savedTask
 }

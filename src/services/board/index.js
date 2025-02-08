@@ -155,7 +155,7 @@ function getDefaultTasks() {
 }
 function getEmptyTask() {
   return {
-    title: '',
+    title: 'New task',
     status: 'sl104',
     priority: 'pl104',
     comments: [],
