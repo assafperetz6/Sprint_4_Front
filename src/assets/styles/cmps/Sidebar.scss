@@ -26,14 +26,13 @@
 		visibility: hidden;
 		transition: opacity 0s 0s;
 	}
-
-	// svg {
-	// 	// height: 14px;
-	// 	// width: 14px;
-	// }
 }
 
 .sidebar {
+
+	@include for-mobile-layout {
+		display: none;
+	}
 	position: relative;
 
 	grid-column: 1;

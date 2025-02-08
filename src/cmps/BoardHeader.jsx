@@ -15,6 +15,7 @@ import { DynamicHeaderModal } from './dynamic-header-modal/DynamicModal'
 export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
 	const [modalType, setModalType] = useState(null)
+	const [isNarrowView, setIsNarrowView] = useState(window.outerWidth < 460)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
 
 	function getMemberIcons(selectedMembers = board.members) {
@@ -63,12 +64,13 @@ export function BoardHeader({ board }) {
 		)
 		showSuccessMsg('Link copied to clipboard')
 	}
+	
 
 	return (
-		<section className="board-header-container">
+		<section className="board-header-container" onResize={() => setIsNarrowView(window.outerWidth < 460)}>
 			<header className="board-header">
 				<h2 className="board-title flex justify-center align-center">
-					{board.title}&nbsp;{svgs.arrowDown}
+					{board.title}
 				</h2>
 
 				<section className="board-actions">
@@ -106,9 +108,9 @@ export function BoardHeader({ board }) {
 			</header>
 			<section className="board-tabs">
 				<button className="active">
-					{svgs.house}&nbsp;Main Table&nbsp;<span>{svgs.threeDots}</span>
+					{svgs.house}&nbsp;Main Table&nbsp;<span>{isNarrowView ? svgs.arrowDown : svgs.threeDots}</span>
 				</button>
-				<button className="add-view-btn">{svgs.plus}</button>
+				{/* <button className="add-view-btn">{svgs.plus}</button> */}
 			</section>
 			<section className="task-actions">
 				<div className="add-task-header">
