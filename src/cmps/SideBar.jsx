@@ -108,7 +108,7 @@ export function SideBar() {
 				}`}
 				onClick={toggleSidebar}
 			>
-				{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}
+				{svgs.arrowLeft}
 			</button>
 			<aside
 				className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${
@@ -122,7 +122,7 @@ export function SideBar() {
 					className={`toggle-sidebar ${!isHovered ? 'hidden' : ''}`}
 					onClick={toggleSidebar}
 				>
-					{isCollapsed ? svgs.arrowRight : svgs.arrowLeft}
+					{svgs.arrowLeft}
 				</button>
 				<nav>
 					<div>
