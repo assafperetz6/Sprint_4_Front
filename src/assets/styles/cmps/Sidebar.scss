@@ -100,7 +100,7 @@
 		width: 18px;
 	}
 
-	.active {
+	.active:not(.active-link) {
 		background-color: $button-clicked-bgc;
 	}
 
@@ -198,13 +198,12 @@
 
 				margin-inline-start: 5px;
 
-				fill-rule: evenodd;
 				&:last-child {
 					margin-inline-end: 2px;
 				}
 			}
 
-			&.open svg {
+			&.open span:first-child svg path{
 				fill-rule: unset;
 				fill: #ffcb00;
 			}
