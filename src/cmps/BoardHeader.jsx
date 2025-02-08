@@ -17,13 +17,14 @@ export function BoardHeader({ board }) {
 	const [modalType, setModalType] = useState(null)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
 
+	const emptyImgUrl = 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1739010711/dapulse_default_photo_q9x7an.png'
 	function getMemberIcons(selectedMembers = board.members) {
 		// TODO: should return last two members on the activity log
 		return selectedMembers
 			.slice(0, 2)
 			.map((member) => (
 				<img
-					src={member.imgUrl}
+					src={member.imgUrl || emptyImgUrl}
 					alt="userImg"
 					key={member._id}
 					width={20}

@@ -10,7 +10,7 @@ import { BoardHeader } from '../cmps/BoardHeader.jsx'
 
 import { userService } from '../services/user/index.js'
 import { SOCKET_EMIT_SET_VIEWED_BOARD, SOCKET_EVENT_BOARD_UPDATE, socketService } from '../services/socket.service.js'
-import { signup } from '../store/actions/user.actions.js'
+import { loadUsers, signup } from '../store/actions/user.actions.js'
 import { useSearchParams } from 'react-router-dom'
 
 export function BoardDetails() {
@@ -79,6 +79,8 @@ export function BoardDetails() {
     socketService.on(SOCKET_EVENT_BOARD_UPDATE, (board) => {
       dispatch(getCmdSetBoard(board))
     })
+
+    loadUsers()
 
     return () => {
       socketService.off(SOCKET_EVENT_BOARD_UPDATE)

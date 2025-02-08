@@ -28,7 +28,7 @@ function getGuest(){
     username: 'guest' + getRandomIntInclusive(1000, 9999),
     fullname: 'guest',
     password: '123',
-    imgUrl: '../../assets/images/dapulse_default_photo.png'
+    imgUrl: 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1739010711/dapulse_default_photo_q9x7an.png'
   }
 }
 

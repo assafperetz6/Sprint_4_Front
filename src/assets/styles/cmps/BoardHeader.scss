@@ -380,7 +380,11 @@
             }
 
             h4 {
-                margin-block-end: 16px;
+                padding-inline-start: 8px;
+                text-decoration: underline;
+            }
+
+            h5 {
                 padding-inline-start: 8px;
             }
 
@@ -396,6 +400,7 @@
 
                 padding-inline-start: 8px;
                 border-radius: 4px;
+                cursor: pointer;
                 &:hover {
                     background-color: #c3c3c327;
                 }
