@@ -1,93 +1,93 @@
 import { httpService } from '../http.service'
 
 export const boardService = {
-    query,
-    getById,
-    save,
-    remove,
-    getGroups,
-	getGroupById,
-	removeGroup,
-	saveGroup,
-	getTasks,
-	getTaskById,
-	saveTask,
-	removeTask,
-    removeTasks,
-    duplicateTasks,
+  query,
+  getById,
+  save,
+  remove,
+  getGroups,
+  getGroupById,
+  removeGroup,
+  saveGroup,
+  getTasks,
+  getTaskById,
+  saveTask,
+  removeTask,
+  removeTasks,
+  duplicateTasks
 }
 
 async function query(filterBy = { txt: '', price: 0 }) {
-    return httpService.get(`board`, filterBy)
+  return httpService.get(`board`, filterBy)
 }
 
 function getById(boardId) {
-    return httpService.get(`board/${boardId}`)
+  return httpService.get(`board/${boardId}`)
 }
 
 async function remove(boardId) {
-    return httpService.delete(`board/${boardId}`)
+  return httpService.delete(`board/${boardId}`)
 }
 
-async function save(board) {    
-    var savedBoard
-    if (board._id) {
-        savedBoard = await httpService.put(`board/${board._id}`, board)
-    } else {
-        savedBoard = await httpService.post('board', board)
-    }
-    return savedBoard
+async function save(board) {
+  var savedBoard
+  if (board._id) {
+    savedBoard = await httpService.put(`board/${board._id}`, board)
+  } else {
+    savedBoard = await httpService.post('board', board)
+  }
+  return savedBoard
 }
 
 async function getGroups(boardId) {
-    return httpService.get(`board/${boardId}/group`)
+  return httpService.get(`board/${boardId}/group`)
 }
 
 async function getGroupById(boardId, groupId) {
-    return httpService.get(`board/${boardId}/group/${groupId}`)
+  return httpService.get(`board/${boardId}/group/${groupId}`)
 }
 
 async function removeGroup(boardId, groupId) {
-    return httpService.delete(`board/${boardId}/group/${groupId}`)
+  return httpService.delete(`board/${boardId}/group/${groupId}`)
 }
 
-async function saveGroup(boardId, group) {    
-    var savedGroup
-    if (group.id) {
-        savedGroup = await httpService.put(`board/${boardId}/group/${group.id}`, group)
-    } else {
-        savedGroup = await httpService.post(`board/${boardId}/group`, group)
-    }
-    return savedGroup
+async function saveGroup(boardId, group) {
+  var savedGroup
+  if (group.id) {
+    savedGroup = await httpService.put(`board/${boardId}/group/${group.id}`, group)
+  } else {
+    savedGroup = await httpService.post(`board/${boardId}/group`, group)
+  }
+  return savedGroup
 }
 
 async function getTasks(boardId, groupId) {
-    return httpService.get(`board/${boardId}/group/${groupId}/task`)
+  return httpService.get(`board/${boardId}/group/${groupId}/task`)
 }
 
 async function getTaskById(boardId, groupId, taskId) {
-    return httpService.get(`board/${boardId}/group/${groupId}/task/${taskId}`)
+  return httpService.get(`board/${boardId}/group/${groupId}/task/${taskId}`)
 }
 
 async function removeTask(boardId, groupId, taskId) {
-    return httpService.delete(`board/${boardId}/group/${groupId}/task/${taskId}`)
+  return httpService.delete(`board/${boardId}/group/${groupId}/task/${taskId}`)
 }
 
-async function saveTask(boardId, groupId, task) {    
-    var savedTask
-    if (task.id) {
-        savedTask = await httpService.put(`board/${boardId}/group/${groupId}/task/${task.id}`, task)
-    } else {
-        savedTask = await httpService.post(`board/${boardId}/group/${groupId}/task`, task)
-    }
-    return savedTask
+async function saveTask(boardId, groupId, task, activity) {
+  var savedTask
+  if (task.id) {
+    savedTask = await httpService.put(`board/${boardId}/group/${groupId}/task/${task.id}`, { task, activity })
+  } else {
+    savedTask = await httpService.post(`board/${boardId}/group/${groupId}/task`, { task, activity })
+  }
+  return savedTask
 }
 
 async function removeTasks(boardId, tasks) {
-    const taskAndGroupIds = tasks.map(task => ({taskId: task.id, groupId: task.groupId}))
-    return httpService.delete(`board/${boardId}/tasks`, taskAndGroupIds)
+  const taskAndGroupIds = tasks.map((task) => ({ taskId: task.id, groupId: task.groupId }))
+  return httpService.delete(`board/${boardId}/tasks`, taskAndGroupIds)
 }
 
 async function duplicateTasks(boardId, tasks) {
-    return httpService.post(`board/${boardId}/tasks`, tasks)
+  return httpService.post(`board/${boardId}/tasks`, tasks)
 }
