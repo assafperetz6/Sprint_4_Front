@@ -42,9 +42,9 @@ export function TaskPreview({ group, task, idx }) {
     return () => document.removeEventListener('click', handleClickOutside)
   }, [task.id])
 
-  async function onSaveTask(newTitle) {
+  async function onSaveTask(taskToSave, activity) {
     try {
-      await updateTask(board._id, group.id, { ...task, title: newTitle }, { txt: 'Chnaged Title' })
+      await updateTask(board._id, group.id, taskToSave, activity)
     } catch (err) {
       showErrorMsg('Cannot update title')
       console.error('Cannot update title:', err)
@@ -106,7 +106,7 @@ export function TaskPreview({ group, task, idx }) {
                 {...provided.dragHandleProps}>
                 <InlineEdit
                   value={titleToEdit}
-                  onSave={onSaveTask}
+                  onSave={value => onSaveTask({ ...task, title: value}, { txt: 'Changed Title' })}
                   // isEditing={isEditing}
                 />
 
