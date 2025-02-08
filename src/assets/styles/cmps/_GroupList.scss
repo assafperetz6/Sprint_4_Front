@@ -10,8 +10,9 @@
 	grid-auto-flow: dense;
 	padding: 0px 0px 40px;
 
-	@media (min-width: $mobile-breakpoint) {
+	@include for-mobile-layout {
 		padding-block-end: 40px;
+		grid-template-columns: 150px 1fr;
 	}
 
 	&.active-drag {
