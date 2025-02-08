@@ -17,6 +17,7 @@ import { TopBar } from './cmps/TopBar.jsx'
 import { BoardModal } from './cmps/TaskDetails.jsx'
 import { LandingPage } from './pages/LandingPage.jsx'
 import { ActivityLog } from './cmps/activity-log-cmp/ActivityLog.jsx'
+import { NotFound } from './pages/NotFound.jsx'
 
 export function RootCmp() {
   return (
@@ -37,6 +38,7 @@ export function RootCmp() {
           <Route path="user/:id" element={<UserDetails />} />
           <Route path="admin" element={<AdminIndex />} />
           <Route path="login" element={<LoginSignup />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <UserMsg />

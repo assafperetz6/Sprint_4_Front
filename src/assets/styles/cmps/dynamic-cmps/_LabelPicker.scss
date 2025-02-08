@@ -1,105 +1,106 @@
 .label-picker {
-	cursor: pointer;
-	text-align: center;
-	position: relative;
-	color: #ffff;
-	height: 98%;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  color: #ffff;
+  height: 98%;
 
-	span {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		font-size: rem(14px);
-		line-height: $task-row-height;
-	}
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: rem(14px);
+    line-height: $task-row-height;
+  }
 
-	&:hover .corner-fold {
-		border-width: 0 10px 10px 0;
-	}
+  &:hover .corner-fold {
+    border-width: 0 10px 10px 0;
+  }
 
-	.corner-fold {
-		border-style: solid;
-		border-color: rgba(0, 0, 0, 0.2) #ffff;
-		border-width: 0;
-		transition: border-width 0.3s 0.2s ease;
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
+  .corner-fold {
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.2) #ffff;
+    border-width: 0;
+    transition: border-width 0.3s 0.2s ease;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
 
-	.label-picker-popup {
-		position: absolute;
-		z-index: 60;
+.label-picker-popup {
+  position: absolute;
+  top: -10px;
+  z-index: 99999999;
 
-		height: 273px;
-		width: 200px;
-		background-color: #ffff;
-		border-radius: 8px;
-		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.32);
+  height: 273px;
+  width: 200px;
+  background-color: #ffff;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.32);
 
-		ul {
-			display: grid;
-			grid-template-rows: repeat(6, auto);
-			grid-auto-flow: column;
-			column-gap: 20px;
-			padding: 16px 24px 8px;
+  ul {
+    display: grid;
+    grid-template-rows: repeat(6, auto);
+    grid-auto-flow: column;
+    column-gap: 20px;
+    padding: 16px 24px 8px;
 
-			li {
-				border-radius: 2px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: rem(32px);
-				width: rem(152px);
-				font-size: rem(14px);
-				margin-block-end: 8px;
+    li {
+      border-radius: 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: rem(32px);
+      width: rem(152px);
+      font-size: rem(14px);
+      margin-block-end: 8px;
 
-				&.edit-label {
-					color: $clr5;
-				}
+      &.edit-label {
+        color: $clr5;
+      }
 
-				&:active:not(.edit-label) {
-					scale: 0.95;
-				}
+      &:active:not(.edit-label) {
+        scale: 0.95;
+      }
 
-				&:hover .remove-label-btn {
-					opacity: 1;
-				}
-			}
-		}
+      &:hover .remove-label-btn {
+        opacity: 1;
+      }
+    }
+  }
 
-		// .labels-list {
-		// 	position: relative;
-		// 	z-index: 40;
-		// }
+  // .labels-list {
+  // 	position: relative;
+  // 	z-index: 40;
+  // }
 
-		.separator {
-			height: 1px;
-			width: 90%;
-			background-color: $clr8;
-			margin-inline: auto;
-		}
+  .separator {
+    height: 1px;
+    width: 90%;
+    background-color: $clr8;
+    margin-inline: auto;
+  }
 
-		button.edit-labels {
-			background-color: inherit;
-			border: none;
-			display: flex;
-			margin-inline: auto;
-			align-items: center;
-			gap: 4px;
-			cursor: pointer;
+  button.edit-labels {
+    background-color: inherit;
+    border: none;
+    display: flex;
+    margin-inline: auto;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
 
-			.icon {
-				display: flex;
-				align-items: center;
-			}
+    .icon {
+      display: flex;
+      align-items: center;
+    }
 
-			.title {
-				color: $clr5;
-				font-size: rem(14px);
-				font-weight: 400;
-				font-family: Figtree, Roboto, Rubik, sans-serif;
-			}
-		}
-	}
+    .title {
+      color: $clr5;
+      font-size: rem(14px);
+      font-weight: 400;
+      font-family: Figtree, Roboto, Rubik, sans-serif;
+    }
+  }
 }

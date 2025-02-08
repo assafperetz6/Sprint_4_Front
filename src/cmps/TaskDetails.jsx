@@ -9,7 +9,7 @@ import { Updates } from './activity-log-cmp/Updates.jsx'
 export function BoardModal({ view: initialView = 'updates' }) {
   const board = useSelector((state) => state.boardModule.board)
   const location = useLocation()
-  const { boardId, taskId } = useParams()
+  const { boardId, groupId, taskId } = useParams()
   const [task, setTask] = useState(null)
   const [view, setView] = useState(initialView)
   const { isClosing, closeTaskDetails: closeModal } = useOutletContext()
@@ -18,13 +18,13 @@ export function BoardModal({ view: initialView = 'updates' }) {
 
   useEffect(() => {
     if (isTaskView && taskId) {
-      getTask(boardId, taskId)
+      getTask(boardId, groupId, taskId)
     } else setView('activity')
   }, [taskId, isTaskView, task])
 
-  async function getTask(boardId, taskId) {
+  async function getTask(boardId, groupId, taskId) {
     try {
-      const task = await boardService.getTaskById(boardId, taskId)
+      const task = await boardService.getTaskById(boardId, groupId, taskId)
       setTask(task)
     } catch (err) {
       console.log(err, 'cannot get task')
