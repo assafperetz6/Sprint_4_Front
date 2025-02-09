@@ -27,7 +27,7 @@ export function InviteMembers({ board }) {
 			<ul>
 				{nonMembers.length
 				? <NonMemberList members={nonMembers} onAddMember={onAddMember}/>
-				: <h5>No avialble members</h5>
+				: <h5>No availble members</h5>
 				}
 			</ul>
 			<h4>Current board members</h4>
