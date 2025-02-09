@@ -36,6 +36,9 @@
             align-items: center;
     
             height: 35px;
+            width: 140px;
+            min-width: 140px;
+            flex-shrink: 0;
             border-inline-end: 1px solid $clr8;
             background-color: $clr3;
 
