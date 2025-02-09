@@ -531,22 +531,56 @@
     @include for-mobile-only {
         .task-actions {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
             
             &.show {
-                display: flex;
-                position: absolute;
-                top: 100%;
+                display: block;
+            }
+
+            > section {
+                position: fixed;
+                bottom: 0;
                 left: 0;
                 right: 0;
                 background-color: $clr3;
-                z-index: 50;
                 padding: 16px;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 16px 16px 0 0;
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+                display: flex;
                 flex-direction: column;
                 gap: 8px;
+                height: 33vh;
+                min-height: 300px;
+                overflow-y: auto;
 
                 > * {
                     width: 100%;
+                }
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: 8px;
+                    width: 100%;
+                    padding: 8px;
+                    border-radius: 4px;
+                    background-color: transparent;
+                    transition: background-color 0.2s;
+
+                    &:hover {
+                        background-color: $hovered-btns;
+                    }
+
+                    &.active {
+                        background-color: $button-clicked-bgc;
+                    }
                 }
 
                 .txt-filter-container {
@@ -558,6 +592,26 @@
                         }
                     }
                 }
+            }
+        }
+
+        .sticky-container {
+            width: 200px !important;
+        }
+
+        .task-title-header {
+            width: 200px !important;
+        }
+
+        .task-preview {
+            .sticky-container {
+                width: 200px !important;
+            }
+        }
+
+        .group-header-wrapper {
+            .task-title-header {
+                width: 200px !important;
             }
         }
     }

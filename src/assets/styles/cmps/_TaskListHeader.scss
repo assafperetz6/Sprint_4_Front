@@ -18,6 +18,12 @@
 		align-items: center;
 
 		background: $clr3;
+
+		@include for-mobile-only {
+			.checkbox-wrapper {
+				display: none;
+			}
+		}
 	}
 
 	& *:not(.sticky-container) {

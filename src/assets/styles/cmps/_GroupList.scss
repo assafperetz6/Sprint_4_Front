@@ -70,6 +70,10 @@
 		width: 40px;
 
 		background-color: $clr3;
+
+		@include for-mobile-only {
+			display: none;
+		}
 	}
 
 	.group-context-menu {
