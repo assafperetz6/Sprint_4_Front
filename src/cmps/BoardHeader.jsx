@@ -149,7 +149,7 @@ export function BoardHeader({ board }) {
 						className={`toggle-actions-btn ${showTaskActions ? 'active' : ''}`}
 						onClick={() => setShowTaskActions((prev) => !prev)}
 					>
-						{svgs.filter} Actions
+						{svgs.filter} Filter
 					</button>
 				)}
 			</section>
