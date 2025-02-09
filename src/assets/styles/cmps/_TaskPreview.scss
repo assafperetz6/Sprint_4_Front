@@ -54,18 +54,21 @@
 		display: flex;
 		align-items: center;
 		height: calc($task-row-height);
-
+		width: 400px;
+		
 		border-inline-end: 1px solid $clr8;
 		border-block-end: 1px solid $clr8;
-		width: 400px;
 
 		background-color: $clr3;
 		z-index: 30;
 
 		@include for-mobile-only {
-			width: 238px;
+			width: 232px;
 			position: sticky;
 			left: 0;
+
+			margin-inline-start: -20px;
+			
 			z-index: 31;
 			box-shadow: 4px 0 6px -3px rgba(0, 0, 0, 0.1);
 
@@ -78,17 +81,78 @@
 	.task-title {
 		flex: 1;
 		min-width: 0;
-		padding-right: 8px;
 
 		.title-main-container {
+			position: relative;
 			display: flex;
 			align-items: center;
 			gap: 4px;
-			width: 100%;
+			width: calc(400px - 86px);
 
 			@include for-mobile-only {
-				width: 238px;
+				width: calc(232px - 46px);
 				padding-left: 8px;
+			}
+
+			.inline-edit {
+				flex: 1;
+				min-width: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+				@include for-mobile-only {
+					margin-inline-start: 44px;
+				}
+
+				&:focus-within + .open-task-details {
+					opacity: 0 !important;
+					width: 0 !important;
+					padding: 0 !important;
+				}
+			}
+
+			.open-task-details {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+				width: 0;
+				overflow: hidden;
+				opacity: 0;
+				transition: all 0.2s;
+				padding: 0;
+				padding-right: 8px;
+				border-radius: 4px;
+				flex-shrink: 0;
+
+				svg {
+					width: 20px;
+					height: 20px;
+				}
+
+				@include for-mobile-only {
+					display: flex;
+					
+					span {
+						display: none;
+					}
+
+					svg {
+						width: 26px;
+						height: 26px;
+					}
+				}
+			}
+
+			&:hover .open-task-details {
+				opacity: 1;
+				width: 80px;
+				padding: 4px 8px;
+
+				@include for-mobile-only {
+					width: 45px;
+					padding: 4px 8px;
+				}
 			}
 		}
 
@@ -106,11 +170,18 @@
 		@include for-mobile-only {
 			overflow-x: auto;
 			min-width: max-content;
-			
-			> * {
-				flex-shrink: 0;
-				min-width: 140px;
-			}
+		}
+		
+		> * {
+			flex-shrink: 0;
+			min-width: 140px;
+			width: 140px;
+			border-inline-end: 1px solid $clr8;
+			border-block-end: 1px solid $clr8;
+			padding: 0 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 	}
 
@@ -123,11 +194,6 @@
 	&:hover:not(.active) > *:not(.context-btn-container, .popper-container) {
 		background-color: $task-hover-bgc;
 		box-shadow: 4px 3px 6px -3px $input-hover-border-clr;
-	}
-
-	.task-row > *,
-	.task-col > *:not(.line-end) {
-		border-inline-end: 1px solid $clr8;
 	}
 
 	li {

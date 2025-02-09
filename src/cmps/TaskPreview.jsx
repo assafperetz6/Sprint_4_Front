@@ -115,7 +115,7 @@ export function TaskPreview({ group, task, idx }) {
                   className="open-task-details"
                   // style={{ display: isTaskHovered && !isEditing ? 'flex' : 'none' }}
                 >
-                  &nbsp; {svgs.expand} open
+                  &nbsp; {svgs.expand} <span>open</span>
                 </Link>
               </div>
 

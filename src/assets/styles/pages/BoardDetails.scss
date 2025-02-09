@@ -8,6 +8,11 @@
 
     overflow: auto;
 
+    @include for-mobile-only {
+        overflow: auto;
+        -webkit-overflow-scrolling: touch; // For smoother scrolling on iOS
+    }
+
     & > *:not(.task-action-menu) {
         pointer-events: auto;
     }

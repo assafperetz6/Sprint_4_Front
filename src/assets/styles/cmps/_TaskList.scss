@@ -16,7 +16,6 @@
 
 	@include for-mobile-only {
 		min-width: max-content;
-		overflow-x: auto;
 		
 		.task-preview {
 			.sticky-container {
