@@ -44,6 +44,12 @@
         }
       }
     }
+
+    .group-title-container {
+      position: sticky;
+      left: 80px;
+      width: 232px;
+    }
   }
 
   &:has(.collapsed) {
