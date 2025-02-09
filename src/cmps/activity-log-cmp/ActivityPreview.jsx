@@ -41,18 +41,20 @@ export function ActivityPreview({ activity, board }) {
 
   return (
     <div key={activity.id} className="activity-item">
-      <time dateTime={new Date(activity.createdAt).toLocaleString()} className="time flex align-center">
-        {svgs.clock} {formatTime(activity.createdAt)}
-      </time>
+      <div className="top-row">
+        <time dateTime={new Date(activity.createdAt).toLocaleString()} className="time flex align-center">
+          {svgs.clock} {formatTime(activity.createdAt)}
+        </time>
 
-      <div className="activity-and-user flex align-center">
-        <div className="user flex align-center justify-center" style={{ borderRadius: '50%', height: '30px', minWidth: '30px', overflow: 'hidden' }}>
-          <img src={activity.byMember.imgUrl} className="user-avatar" style={{ height: '100%' }} />
+        <div className="activity-and-user flex align-center">
+          <div className="user flex align-center justify-center" style={{ borderRadius: '50%', height: '30px', minWidth: '30px', overflow: 'hidden' }}>
+            <img src={activity.byMember.imgUrl} className="user-avatar" style={{ height: '100%' }} />
+          </div>
+
+          <span className="activity-task-title">
+            <Truncate>{activity.task.title}</Truncate>
+          </span>
         </div>
-
-        <span className="activity-task-title">
-          <Truncate>{activity.task.title}</Truncate>
-        </span>
       </div>
 
       <div className="additional-values flex align-center">
@@ -78,7 +80,7 @@ export function ActivityPreview({ activity, board }) {
             </div>
           )}
           {activity.type === 'Member' && (
-            <div className="member-change flex align-center justify-between">
+            <div className="member-change flex align-center">
               <span>{activity.description}</span>
               <div className="user-avatar" style={{ borderRadius: '50%', height: '30px', minWidth: '30px', overflow: 'hidden' }}>
                 <img src={activity?.newState.imgUrl} style={{ height: '100%' }} />

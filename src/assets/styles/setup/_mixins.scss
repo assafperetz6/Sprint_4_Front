@@ -24,6 +24,44 @@
 	}
 }
 
+/* Additional responsive mixins */
+
+@mixin for-mobile-only {
+	@media (max-width: $mobile-breakpoint) {
+		@content;
+	}
+}
+
+@mixin for-tablet-portrait {
+	@media (min-width: calc($mobile-breakpoint + 1px)) and (max-width: calc($narrow-breakpoint - 1px)) {
+		@content;
+	}
+}
+
+@mixin for-tablet-landscape {
+	@media (min-width: $narrow-breakpoint) and (max-width: calc($normal-breakpoint - 1px)) {
+		@content;
+	}
+}
+
+@mixin for-tablet-and-mobile {
+	@media (max-width: calc($narrow-breakpoint - 1px)) {
+		@content;
+	}
+}
+
+@mixin for-desktop-only {
+	@media (min-width: $normal-breakpoint) {
+		@content;
+	}
+}
+
+@mixin for-touch-devices {
+	@media (hover: none) and (pointer: coarse) {
+		@content;
+	}
+}
+
 /* Media  Mixins */
 @mixin aspect-ratio($width, $height) {
 	position: relative;

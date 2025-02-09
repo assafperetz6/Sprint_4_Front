@@ -21,6 +21,7 @@ export function SideBar() {
 	const [activeMenuId, setActiveMenuId] = useState(null)
 	const [boardToEdit, setboardToEdit] = useState(null)
 	const [toggleFavorites, setToggleFavorites] = useState(false)
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
 	const [isCollapsed, setIsCollapsed] = useState(false)
 	const [isEditing, setIsEditing] = useState(true)
@@ -48,6 +49,11 @@ export function SideBar() {
 		if (!boards?.length) loadBoards()
 	}, [])
 
+	useEffect(() => {
+		// Close mobile menu when route changes
+		setIsMobileMenuOpen(false)
+	}, [pathname])
+
 	function getUserFirstName() {
 		if (!loggedInUser) return 'Guest'
 
@@ -65,9 +71,9 @@ export function SideBar() {
 		setIsCollapsed((prev) => !prev)
 	}
 
-	// function handleMouseHover(ev) {
-	// 	ev._reactName === 'onMouseEnter' && ev.target !== toggleSidebarRef.current ? setisHovered(true) : setisHovered(false)
-	// }
+	function toggleMobileMenu() {
+		setIsMobileMenuOpen(prev => !prev)
+	}
 
 	function toggleContextMenu(ev, boardId) {
 		setActiveMenuId((prev) => (prev === boardId ? null : boardId))
@@ -99,8 +105,23 @@ export function SideBar() {
 
 	if (pathname.startsWith('/login')) return null
 	const boardIndexLinkClass = pathname.startsWith('/board/') ? 'active-link' : ''
+	
 	return (
 		<>
+			{/* Mobile Menu Button */}
+			<button 
+				className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
+				onClick={toggleMobileMenu}
+			>
+				{isMobileMenuOpen ? svgs.exit : svgs.threeDots}
+			</button>
+
+			{/* Mobile Overlay */}
+			<div 
+				className={`mobile-overlay ${isMobileMenuOpen ? 'active' : ''}`}
+				onClick={() => setIsMobileMenuOpen(false)}
+			></div>
+
 			<button
 				ref={toggleSidebarRef}
 				className={`collapsed-toggle-sidebar ${
@@ -113,7 +134,7 @@ export function SideBar() {
 			<aside
 				className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${
 					isHovered ? 'hovered' : ''
-				}`}
+				} ${isMobileMenuOpen ? 'mobile-open' : ''}`}
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
 			>

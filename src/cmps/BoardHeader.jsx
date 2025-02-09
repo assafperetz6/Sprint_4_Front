@@ -16,32 +16,49 @@ export function BoardHeader({ board }) {
 	const [isTxtFilter, setIsTxtFilter] = useState(false)
 	const [modalType, setModalType] = useState(null)
 	const [isNarrowView, setIsNarrowView] = useState(window.outerWidth < 460)
+	const [showTaskActions, setShowTaskActions] = useState(false)
+	const [showFloatingMenu, setShowFloatingMenu] = useState(false)
 	const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
 
-	const emptyImgUrl = 'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1739010711/dapulse_default_photo_q9x7an.png'
+	const emptyImgUrl =
+		'https://res.cloudinary.com/dqfhbqcwv/image/upload/v1739010711/dapulse_default_photo_q9x7an.png'
+
+	useEffect(() => {
+		const handleResize = () => {
+			const newIsNarrowView = window.outerWidth < 460
+			setIsNarrowView(newIsNarrowView)
+			if (!newIsNarrowView) {
+				setShowTaskActions(false)
+			}
+		}
+		window.addEventListener('resize', handleResize)
+		return () => window.removeEventListener('resize', handleResize)
+	}, [])
+
 	function getMemberIcons(selectedMembers = board.members) {
 		// TODO: should return last two members on the activity log
-		if (selectedMembers.length) 
+		if (selectedMembers.length)
 			return selectedMembers
-			.slice(0, 2)
-			.map((member) => (
+				.slice(0, 2)
+				.map((member) => (
+					<img
+						src={member.imgUrl || emptyImgUrl}
+						alt="userImg"
+						key={member._id}
+						width={20}
+						height={20}
+						style={{ borderRadius: '50%' }}
+					/>
+				))
+		else
+			return (
 				<img
-					src={member.imgUrl || emptyImgUrl}
+					src={emptyImgUrl}
 					alt="userImg"
-					key={member._id}
 					width={20}
 					height={20}
 					style={{ borderRadius: '50%' }}
 				/>
-			))
-			else return (
-				<img
-				src={emptyImgUrl}
-				alt="userImg"
-				width={20}
-				height={20}
-				style={{ borderRadius: '50%' }}
-			/>
 			)
 	}
 
@@ -57,7 +74,8 @@ export function BoardHeader({ board }) {
 				'unshift'
 			)
 
-			if (filterBy.members.length > 0 || filterBy.txt) showSuccessMsg('Your task was filtered out, clear the filter to see it')
+			if (filterBy.members.length > 0 || filterBy.txt)
+				showSuccessMsg('Your task was filtered out, clear the filter to see it')
 		} catch (err) {
 			showErrorMsg('cannot add task')
 			console.log(err)
@@ -75,10 +93,9 @@ export function BoardHeader({ board }) {
 		)
 		showSuccessMsg('Link copied to clipboard')
 	}
-	
 
 	return (
-		<section className="board-header-container" onResize={() => setIsNarrowView(window.outerWidth < 460)}>
+		<section className="board-header-container">
 			<header className="board-header">
 				<h2 className="board-title flex justify-center align-center">
 					{board.title}
@@ -104,8 +121,13 @@ export function BoardHeader({ board }) {
 						</button>
 					</TooltipContainer>
 
-					<div className='invite-container'>
-						<button className="invite-members" onClick={() => setModalType((prev) => (prev === 'invite' ? null : 'invite'))}>
+					<div className="invite-container">
+						<button
+							className="invite-members"
+							onClick={() =>
+								setModalType((prev) => (prev === 'invite' ? null : 'invite'))
+							}
+						>
 							Invite / {board.members.length}
 						</button>
 
@@ -119,16 +141,29 @@ export function BoardHeader({ board }) {
 			</header>
 			<section className="board-tabs">
 				<button className="active">
-					{svgs.house}&nbsp;Main Table&nbsp;<span>{isNarrowView ? svgs.arrowDown : svgs.threeDots}</span>
+					{svgs.house}&nbsp;Main Table&nbsp;
+					<span>{isNarrowView ? svgs.arrowDown : svgs.threeDots}</span>
 				</button>
-				{/* <button className="add-view-btn">{svgs.plus}</button> */}
+				{isNarrowView && (
+					<button
+						className={`toggle-actions-btn ${showTaskActions ? 'active' : ''}`}
+						onClick={() => setShowTaskActions((prev) => !prev)}
+					>
+						{svgs.filter} Actions
+					</button>
+				)}
 			</section>
-			<section className="task-actions">
+			<section className={`task-actions ${showTaskActions ? 'show' : ''}`}>
 				<div className="add-task-header">
 					<button onClick={onAddTask}>New task</button>
-					<button className={ modalType === 'addGroup' ? 'active' : ''} onClick={() =>
+					<button
+						className={modalType === 'addGroup' ? 'active' : ''}
+						onClick={() =>
 							setModalType((prev) => (prev === 'addGroup' ? null : 'addGroup'))
-						}>{svgs.arrowDown}</button>
+						}
+					>
+						{svgs.arrowDown}
+					</button>
 				</div>
 
 				<label className="txt-filter-container flex align-center">
@@ -169,7 +204,7 @@ export function BoardHeader({ board }) {
 						{svgs.sortDir} Sort
 					</button>
 				</TooltipContainer>
-				<TooltipContainer txt={"Hidden columns"}>
+				<TooltipContainer txt={'Hidden columns'}>
 					<button
 						onClick={() =>
 							setModalType((prev) => (prev === 'hide' ? null : 'hide'))
@@ -187,6 +222,14 @@ export function BoardHeader({ board }) {
 					setFilterBy={setFilterBy}
 				/>
 			</section>
+
+			<button className={`floating-action-btn ${showFloatingMenu ? 'active' : ''}`} onClick={() => setShowFloatingMenu((prev) => !prev)}>
+				{svgs.plus}
+			</button>
+			<div className={`floating-menu ${showFloatingMenu ? 'show' : ''}`}>
+				<button onClick={() => { onAddTask(); setShowFloatingMenu(false); }}>{svgs.task} New Task</button>
+				<button onClick={() => { setModalType((prev) => (prev === 'addGroup' ? null : 'addGroup')); setShowFloatingMenu(false); }}>{svgs.group} New Group</button>
+			</div>
 		</section>
 	)
 }

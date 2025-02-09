@@ -10,8 +10,8 @@
 
     & > *:not(.task-action-menu) {
         pointer-events: auto;
-      }
-      pointer-events: none;
+    }
+    pointer-events: none;
 
     .board-header-container {
         position: sticky;
@@ -23,19 +23,28 @@
         background-color: $clr3;
         z-index: 61;
 
+        @include for-mobile-only {
+            padding: 8px;
+        }
+
+        @include for-tablet-portrait {
+            padding-inline: 16px;
+        }
+
         .board-header {
             justify-content: space-between;
             align-items: center;
-    
             height: 32px;
-        }
 
-        @include for-mobile-layout {
-            padding-inline-start: 10px;
+            @include for-mobile-only {
+                height: auto;
+                flex-direction: column;
+                gap: 8px;
+            }
 
-            .board-header {
-                display: flex;
-                justify-content: center;
+            @include for-tablet-portrait {
+                height: auto;
+                padding: 8px 0;
             }
         }
     }
@@ -43,35 +52,54 @@
     .board-header, .board-tabs, .task-actions {
         display: flex;
         flex-shrink: 0;
+
+        @include for-mobile-only {
+            width: 100%;
+        }
     }
 
     .board-actions {
         display: flex;
 
-        button{
-            @include alt-btn;
+        @include for-mobile-only {
+            width: 100%;
+            justify-content: center;
+            gap: 8px;
             
+            button {
+                flex: 1;
+                max-width: 150px;
+            }
+        }
+
+        @include for-tablet-portrait {
+            gap: 4px;
+        }
+
+        button {
+            @include alt-btn;
             height: 30px;
             padding: 0 5px;
         }
-
-        @include for-mobile-layout {
-            display: none;
-        }
     }
 
-
-    .board-title{
+    .board-title {
         font-size: rem(24px);
         font-weight: 500;
         font-family: $title-font-family;
 
-        svg {
-            color: $clr4;
+        @include for-mobile-only {
+            font-size: rem(18px);
+            text-align: center;
+            width: 100%;
         }
 
-        @include for-mobile-layout {
-            font-size: rem(16px);
+        @include for-tablet-portrait {
+            font-size: rem(20px);
+        }
+
+        svg {
+            color: $clr4;
         }
     }
 
@@ -79,45 +107,54 @@
         position: relative;
         display: flex;
         gap: 10px;
-
         height: 42px;
-
         align-items: end;
 
-        @include for-mobile-layout {
+        @include for-mobile-only {
+            height: auto;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            padding: 8px 0;
+
             &::after {
                 display: none;
             }
+        }
 
-            & button {
-
-                background-color: $gray2;
-                border-radius: 4px;
-
-                &.active::before {
-                    display: none;
-                }
-            }
+        @include for-tablet-portrait {
+            height: auto;
+            padding: 8px 0;
+            gap: 6px;
         }
 
         &::after {
             content: '';
             position: absolute;
             bottom: 0;
-    
             width: 100%;
             height: 0.5px;
             border-block-end: 1px solid $line-clr;
+
+            @include for-tablet-and-mobile {
+                display: none;
+            }
         }    
 
         button {
             position: relative;
             @include alt-btn;
-
             height: 34px;
-
             padding-block: 4px;
             margin: 0;
+
+            @include for-mobile-only {
+                flex: 1;
+                min-width: calc(33.333% - 4px);
+                max-width: 150px;
+                justify-content: center;
+                height: 40px;
+            }
 
             svg {
                 margin: 0;
@@ -128,66 +165,71 @@
                 content: '';
                 position: absolute;
                 bottom: .5px;
-
                 width: 100%;
                 height: 2px;
                 background-color: $blue3;
-
                 z-index: 2;
-            }
 
-            .add-view-btn svg {
-                height: 10px;
-                width: 10px;
-
-                
-                color: #373639;
+                @include for-mobile-only {
+                    bottom: 0;
+                }
             }
         }
     }
 
     .add-task-header {
         display: flex;
-
         border-radius: 4px;
         margin-inline-end: 1rem;
-
         width: 102px;
+
+        @include for-mobile-only {
+            width: 100%;
+            max-width: 300px;
+            margin: 8px auto;
+        }
+
+        @include for-tablet-portrait {
+            margin: 8px 0;
+        }
+
         button {
             @include alt-btn;
-
             height: 32px;
-
             padding: 4px 8px;
             margin: 0;
-
             color: white;
             background-color: $clr7;
-
             font-weight: 200;
+
+            @include for-mobile-only {
+                flex: 1;
+            }
             
             &:nth-child(2) {
                 width: 28px;
+
+                @include for-mobile-only {
+                    width: auto;
+                    flex: 0 0 40px;
+                }
             }
 
-            > svg{
+            > svg {
                 color: white;
-
                 height: 18px;
                 width: 18px;
             }
 
-            &:hover, &.active{
+            &:hover, &.active {
                 color: white;
                 background-color: $hovered-blue;
-                // filter: brightness(0.90);
             }
         }
 
         >:nth-child(1) {
             border-radius: 4px 0 0 4px;
             border-right: 1px solid $hovered-blue;
-
             text-wrap: nowrap;            
         }
 
