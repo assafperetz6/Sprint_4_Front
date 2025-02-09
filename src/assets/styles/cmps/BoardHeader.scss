@@ -181,10 +181,11 @@
                 @include for-mobile-only {
                     border: 1px solid $input-hover-border-clr;
                     border-radius: 4px;
-                    width: 100%;
+                    width: calc(100% - 8px);
+                    margin-inline: 4px;
 
                     &:not(:focus) {
-                        width: 100%;
+                        width: calc(100% - 8px);
                         border: 1px solid $input-hover-border-clr;
                     }
                 }
@@ -495,35 +496,205 @@
         }
 
         @include for-mobile-only {
-            .sort-modal,
-            .filter-by-member,
-            .toggle-column-modal {
+            .task-actions {
+                display: none;
                 position: fixed;
-                inset: auto 0 0 0;  // shorthand for top: auto, right: 0, bottom: 0, left: 0
-                width: 100vw;
-                height: 33vh;
-                min-height: 300px;
-                overflow-y: auto;
-                border-radius: 16px 16px 0 0;
-                margin: 0;
-                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+                bottom: 0;
+                right: 0;
+                left: 0;
+                width: 100%;
+                height: 50vh;
+                max-width: none;
                 background-color: $clr3;
-                z-index: 2000;
-                padding: 16px;
+                border-radius: 16px 16px 0 0;
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+                z-index: 1999;
+                
+                &.show {
+                    display: block;
+                }
+
+                > section {
+                    position: relative;
+                    background-color: $clr3;
+                    padding: 16px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    height: 100%;
+                    overflow-y: auto;
+
+                    > * {
+                        width: 100%;
+                    }
+                }
             }
 
-            .sort-modal {
-                padding: 16px;
+            .sticky-container {
+                width: 200px !important;
             }
 
-            .filter-by-member {
-                padding: 16px;
-                height: 33vh;
+            .task-title-header {
+                width: 200px !important;
             }
 
-            .toggle-column-modal {
-                padding: 16px;
-                height: 33vh;
+            .task-preview {
+                .sticky-container {
+                    width: 200px !important;
+                }
+            }
+
+            .group-header-wrapper {
+                .task-title-header {
+                    width: 200px !important;
+                }
+            }
+        }
+
+        @include for-tablet-portrait {
+            .task-actions {
+                flex-wrap: wrap;
+                gap: 8px;
+                
+                > * {
+                    flex: 1;
+                    min-width: calc(50% - 4px);
+                }
+            }
+        }
+
+        .board-header {
+            @include for-mobile-only {
+                flex-direction: column;
+                gap: 8px;
+                align-items: center;
+
+                .board-actions {
+                    width: 100%;
+                    justify-content: center;
+                    gap: 8px;
+                }
+            }
+        }
+
+        .board-tabs {
+            display: flex;
+            align-items: end;
+            gap: 8px;
+            position: relative;
+
+            @include for-mobile-only {
+                width: 100%;
+                justify-content: space-between;
+                
+                .toggle-actions-btn {
+                    @include alt-btn;
+                    height: 34px;
+                    padding: 4px 8px;
+                    margin: 0;
+                    position: relative;
+                    
+                    &.active {
+                        background-color: $button-clicked-bgc;
+                    }
+                }
+
+                .sort-modal,
+                .filter-by-member,
+                .toggle-column-modal {
+                    position: fixed;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    min-height: 300px;
+                    max-height: 70vh;
+                    overflow-y: auto;
+                    border-radius: 16px 16px 0 0;
+                    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+                    background-color: $clr3;
+                    z-index: 2000;
+                    padding: 16px;
+                    margin: 0;
+                }
+            }
+        }
+
+        .floating-action-btn {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            height: 56px;
+            width: 56px;
+            border-radius: 50%;
+            background-color: $clr7;
+            color: white;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.2s;
+
+            @include for-mobile-only {
+                display: flex;
+            }
+
+            svg {
+                height: 24px;
+                width: 24px;
+            }
+
+            &:hover {
+                transform: scale(1.05);
+                background-color: $hovered-blue;
+            }
+
+            &.active {
+                background-color: $button-clicked-bgc;
+                color: $txt-clr;
+            }
+        }
+
+        .floating-menu {
+            display: none;
+            position: fixed;
+            bottom: 88px;
+            right: 24px;
+            background-color: $clr3;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            padding: 8px;
+            z-index: 999;
+            min-width: 180px;
+            flex-direction: column;
+            gap: 4px;
+
+            @include for-mobile-only {
+                &.show {
+                    display: flex;
+                }
+            }
+
+            button {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 16px;
+                border-radius: 4px;
+                width: 100%;
+                text-align: left;
+                transition: background-color 0.2s;
+
+                &:hover {
+                    background-color: $hovered-btns;
+                }
+
+                svg {
+                    height: 20px;
+                    width: 20px;
+                    color: $clr4;
+                }
             }
         }
     }
@@ -532,11 +703,15 @@
         .task-actions {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
+            right: 0;
+            left: 0;
+            width: 100%;
+            height: 50vh;
+            max-width: none;
+            background-color: $clr3;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
             z-index: 1999;
             
             &.show {
@@ -544,54 +719,36 @@
             }
 
             > section {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
+                position: relative;
                 background-color: $clr3;
                 padding: 16px;
-                border-radius: 16px 16px 0 0;
-                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
                 display: flex;
                 flex-direction: column;
                 gap: 8px;
-                height: 33vh;
-                min-height: 300px;
+                height: 100%;
                 overflow-y: auto;
 
                 > * {
                     width: 100%;
                 }
+            }
 
-                button {
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    gap: 8px;
-                    width: 100%;
-                    padding: 8px;
-                    border-radius: 4px;
-                    background-color: transparent;
-                    transition: background-color 0.2s;
-
-                    &:hover {
-                        background-color: $hovered-btns;
-                    }
-
-                    &.active {
-                        background-color: $button-clicked-bgc;
-                    }
-                }
-
-                .txt-filter-container {
-                    .txt-filter {
-                        width: 100%;
-                        
-                        &:not(:focus) {
-                            width: 100%;
-                        }
-                    }
-                }
+            .sort-modal,
+            .filter-by-member,
+            .toggle-column-modal {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                min-height: 300px;
+                max-height: 70vh;
+                overflow-y: auto;
+                border-radius: 16px 16px 0 0;
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+                background-color: $clr3;
+                z-index: 2000;
+                padding: 16px;
             }
         }
 
@@ -644,8 +801,9 @@
 
     .board-tabs {
         display: flex;
-        align-items: center;
+        align-items: end;
         gap: 8px;
+        position: relative;
 
         @include for-mobile-only {
             width: 100%;
@@ -656,10 +814,30 @@
                 height: 34px;
                 padding: 4px 8px;
                 margin: 0;
+                position: relative;
                 
                 &.active {
                     background-color: $button-clicked-bgc;
                 }
+            }
+
+            .sort-modal,
+            .filter-by-member,
+            .toggle-column-modal {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                min-height: 300px;
+                max-height: 70vh;
+                overflow-y: auto;
+                border-radius: 16px 16px 0 0;
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+                background-color: $clr3;
+                z-index: 2000;
+                padding: 16px;
+                margin: 0;
             }
         }
     }
