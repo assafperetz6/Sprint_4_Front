@@ -29,7 +29,7 @@ export function RootCmp() {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<LandingPage />} />
           <Route path="about" element={<AboutUs />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          {/* <Route path="dashboard" element={<Dashboard />} /> */}
           <Route path="board" element={<BoardIndex />} />
           <Route path="board/:boardId" element={<BoardDetails />}>
             <Route path="activity_log" element={<BoardModal />} />

@@ -359,6 +359,7 @@
   .updates {
     margin-block-start: 2rem;
 
+
     @include for-mobile-only {
       margin-block-start: 1rem;
     }

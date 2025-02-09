@@ -681,15 +681,11 @@ export function NoUpdatesYet() {
         </div>
       </div>
       <h3
-        data-testid="text"
-        className="typography_7c37f0b7e0 primary_87c5fab302 center_5aa7b5a307 multiLineEllipsis_6f49a6e6c9 heading_7756e54c55 h3Normal_54317c77b6 xNOWF"
-        style={{ textClampLines: 3 }}>
+        style={{ textClampLines: 3, textDecoration: 'underline' }}>
         No updates yet for this item
       </h3>
-      <h3
-        data-testid="text"
-        className="typography_7c37f0b7e0 primary_87c5fab302 center_5aa7b5a307 singleLineEllipsis_fee38a8b17 heading_7756e54c55 h3Normal_54317c77b6 TE6ca">
-        Be the first one to update about progress, mention someone or upload files to share with your team members
+      <h3>
+        Be the first one to update about progress.
       </h3>
     </div>
   )

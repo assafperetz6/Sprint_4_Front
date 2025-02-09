@@ -50,9 +50,9 @@ export function BoardModal({ view: initialView = 'updates' }) {
                   <button className={view === 'updates' ? 'active' : ''} onClick={() => setView('updates')}>
                     <span>{svgs.home}</span>&nbsp;Updates
                   </button>
-                  <button className={view === 'files' ? 'active' : ''} onClick={() => setView('files')}>
+                  {/* <button className={view === 'files' ? 'active' : ''} onClick={() => setView('files')}>
                     Files
-                  </button>
+                  </button> */}
                   <button className={view === 'activity' ? 'active' : ''} onClick={() => setView('activity')}>
                     Activity Log
                   </button>

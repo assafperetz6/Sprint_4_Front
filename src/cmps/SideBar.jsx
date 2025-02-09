@@ -182,9 +182,9 @@ export function SideBar() {
 						<div className="workspaces-wrapper">
 							<div className="workspaces-wrapper">
 								<div>{svgs.workspaces} Workspaces</div>
-								<button>{svgs.threeDots}</button>
+								{/* <button>{svgs.threeDots}</button> */}
 							</div>
-							<button>{svgs.search}</button>
+							{/* <button>{svgs.search}</button> */}
 						</div>
 
 						<div className="workspaces-wrapper">
@@ -205,9 +205,9 @@ export function SideBar() {
 								board={board}
 							/>
 						))}
-						<NavLink to="/dashboard">
+						{/* <NavLink to="/dashboard">
 							{svgs.dashboard} Dashboard and reporting
-						</NavLink>
+						</NavLink> */}
 					</section>
 				</>
 				)}

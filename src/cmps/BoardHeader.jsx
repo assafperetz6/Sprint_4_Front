@@ -142,7 +142,7 @@ export function BoardHeader({ board }) {
 			<section className="board-tabs">
 				<button className="active">
 					{svgs.house}&nbsp;Main Table&nbsp;
-					<span>{isNarrowView ? svgs.arrowDown : svgs.threeDots}</span>
+					{/* <span>{isNarrowView ? svgs.arrowDown : svgs.threeDots}</span> */}
 				</button>
 				{isNarrowView && (
 					<button
