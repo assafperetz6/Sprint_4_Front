@@ -243,4 +243,95 @@
             padding: 4px 1px;
         }
     }
+
+    .task-actions {
+        @include for-mobile-only {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            padding: 8px;
+            background-color: $clr3;
+            border-bottom: 1px solid $line-clr;
+
+            &.show {
+                display: flex;
+            }
+        }
+
+        @include for-tablet-portrait {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+
+            .add-task-header {
+                margin: 0;
+                min-width: auto;
+                
+                button {
+                    padding: 4px 8px;
+                    height: 32px;
+                    
+                    &:first-child {
+                        min-width: 80px;
+                    }
+                }
+            }
+
+            .txt-filter-container {
+                min-width: 120px;
+                
+                input {
+                    width: 100%;
+                }
+            }
+
+            button {
+                padding: 4px 8px;
+                height: 32px;
+                min-width: auto;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    .sticky-header-container {
+        position: sticky;
+        top: 138px;
+        display: grid;
+        background-color: $clr3;
+        z-index: 50;
+
+        .group-header-wrapper {
+            display: grid;
+            grid-template-columns: subgrid;
+        }
+
+        @include for-tablet-portrait {
+            .group-header-wrapper {
+                grid-template-columns: 300px 1fr;
+                min-width: max-content;
+            }
+
+            .toggle-group-preview {
+                left: 8px;
+            }
+
+            .group-title-container {
+                left: 48px;
+            }
+
+            .colored-border {
+                left: 0;
+            }
+
+            .white-space {
+                display: none;
+            }
+
+            .checkbox-wrapper {
+                margin-left: 8px;
+            }
+        }
+    }
 }

@@ -12,6 +12,26 @@
 		}
 	}
 
+	@include for-tablet-portrait {
+		min-width: max-content;
+		
+		.sticky-container {
+			width: 300px;
+			left: 0;
+
+			.colored-border {
+				left: 0;
+			}
+
+			.task-title {
+				.title-main-container {
+					width: calc(300px - 46px);
+					padding-left: 8px;
+				}
+			}
+		}
+	}
+
 	&.active {
 		background-color: $button-clicked-bgc;
 		.sticky-container {
@@ -34,13 +54,17 @@
 
 		background-color: $clr3;
 
-		@include for-mobile-only {
+		@include for-tablet-and-mobile {
 			display: none;
 		}
 	}
 
 	.task-context-menu {
 		@include context-menu;
+
+		@include for-tablet-and-mobile {
+			display: none;
+		}
 	}
 
 	&:hover .task-context-menu {
@@ -76,6 +100,11 @@
 				display: none;
 			}
 		}
+
+		@include for-tablet-portrait {
+			width: 300px;
+			box-shadow: 4px 0 6px -3px rgba(0, 0, 0, 0.1);
+		}
 	}
 
 	.task-title {
@@ -94,6 +123,10 @@
 				padding-left: 8px;
 			}
 
+			@include for-tablet-portrait {
+				width: calc(300px - 86px);
+			}
+
 			.inline-edit {
 				flex: 1;
 				min-width: 0;
@@ -103,12 +136,6 @@
 
 				@include for-mobile-only {
 					margin-inline-start: 44px;
-				}
-
-				&:focus-within + .open-task-details {
-					opacity: 0 !important;
-					width: 0 !important;
-					padding: 0 !important;
 				}
 			}
 
@@ -142,6 +169,17 @@
 						height: 26px;
 					}
 				}
+
+				@include for-tablet-portrait {
+					span {
+						display: none;
+					}
+
+					svg {
+						width: 24px;
+						height: 24px;
+					}
+				}
 			}
 
 			&:hover .open-task-details {
@@ -152,6 +190,10 @@
 				@include for-mobile-only {
 					width: 45px;
 					padding: 4px 8px;
+				}
+
+				@include for-tablet-portrait {
+					width: 40px;
 				}
 			}
 		}
@@ -171,6 +213,11 @@
 			overflow-x: auto;
 			min-width: max-content;
 		}
+
+		@include for-tablet-portrait {
+			overflow-x: auto;
+			min-width: max-content;
+		}
 		
 		> * {
 			flex-shrink: 0;
@@ -182,6 +229,11 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+
+			@include for-tablet-portrait {
+				min-width: 120px;
+				width: 120px;
+			}
 		}
 	}
 

@@ -68,7 +68,6 @@
     left: 40px;
     height: calc(100% + 1px);
     width: 5px;
-    // min-width: 6px;
   }
 
   .group-header-wrapper {
@@ -78,6 +77,31 @@
     top: 138px;
     background-color: $clr3;
     z-index: 40;
+
+    @include for-tablet-portrait {
+      grid-template-columns: 300px 1fr;
+      min-width: max-content;
+
+      .toggle-group-preview {
+        left: 8px;
+      }
+
+      .group-title-container {
+        left: 48px;
+      }
+
+      .colored-border {
+        left: 0;
+      }
+
+      .white-space {
+        display: none;
+      }
+
+      .checkbox-wrapper {
+        margin-left: 8px;
+      }
+    }
 
     @include for-mobile-only {
       grid-template-columns: 232px 1fr;
@@ -91,7 +115,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 0 6px;
     margin: 0 5px;
     background-color: unset;

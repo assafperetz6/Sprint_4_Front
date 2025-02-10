@@ -15,6 +15,11 @@
 		min-width: max-content;
 	}
 
+	@include for-tablet-portrait {
+		grid-template-columns: 300px 1fr;
+		min-width: max-content;
+	}
+
 	.sticky-container {
 		position: sticky;
 		left: 0;
@@ -33,6 +38,10 @@
 			.checkbox-wrapper {
 				display: none;
 			}
+		}
+
+		@include for-tablet-portrait {
+			width: 300px;
 		}
 	}
 
@@ -53,6 +62,10 @@
 		min-width: max-content;
 		border-block: 1px solid $clr8;
 		background-color: $clr3;
+
+		@include for-tablet-portrait {
+			overflow-x: auto;
+		}
 	}
 
 	.task-columns > * {
@@ -65,6 +78,11 @@
 		line-height: rem(23px);
 		background-color: $clr3;
 		min-width: 140px;
+
+		@include for-tablet-portrait {
+			min-width: 120px;
+			width: 120px;
+		}
 	}
 
 	.task-title-header {
@@ -73,7 +91,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		// border-radius: 7px 0 0 0;
 		border-block: 1px solid $clr8;
 		background-color: $clr3;
 		z-index: 2;
@@ -81,6 +98,10 @@
 
 		@include for-mobile-only {
 			width: calc(232px - 46px);
+		}
+
+		@include for-tablet-portrait {
+			width: calc(300px - 46px);
 		}
 	}
 
@@ -90,15 +111,6 @@
 		left: 40px;
 		border-radius: 4px 0 0 0;
 		z-index: 2;
-
-		// &::after {
-		// 	position: absolute;
-		// 	content: '';
-		// 	left: -2px;
-		// 	height: 100%;
-		// 	width: 2px;
-		// 	background-color: $clr3;
-		// }
 	}
 }
 

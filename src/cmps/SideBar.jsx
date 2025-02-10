@@ -22,8 +22,9 @@ export function SideBar() {
 	const [boardToEdit, setboardToEdit] = useState(null)
 	const [toggleFavorites, setToggleFavorites] = useState(false)
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+	const [isNarrowView, setIsNarrowView] = useState(window.innerWidth < 460)
 
-	const [isCollapsed, setIsCollapsed] = useState(false)
+	const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 720)
 	const [isEditing, setIsEditing] = useState(true)
 	const [isHovered, setIsHovered] = useState(false)
 
@@ -53,6 +54,29 @@ export function SideBar() {
 		// Close mobile menu when route changes
 		setIsMobileMenuOpen(false)
 	}, [pathname])
+
+	useEffect(() => {
+		const handleResize = () => {
+			const width = window.innerWidth
+			const newIsNarrowView = width < 460
+			setIsNarrowView(newIsNarrowView)
+			
+			if (!newIsNarrowView) {
+				setIsMobileMenuOpen(false)
+			}
+
+			// Auto collapse/expand based on width
+			if (width <= 720) {
+				setIsCollapsed(true)
+				setIsHovered(false)
+			} else {
+				setIsCollapsed(false)
+			}
+		}
+
+		window.addEventListener('resize', handleResize)
+		return () => window.removeEventListener('resize', handleResize)
+	}, [])
 
 	function getUserFirstName() {
 		if (!loggedInUser) return 'Guest'
@@ -108,24 +132,28 @@ export function SideBar() {
 	
 	return (
 		<>
-			{/* Mobile Menu Button */}
-			<button 
-				className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
-				onClick={toggleMobileMenu}
-			>
-				{isMobileMenuOpen ? svgs.exit : svgs.threeDots}
-			</button>
+			{/* Mobile Menu Button - Only show in narrow view */}
+			{isNarrowView && (
+				<button 
+					className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
+					onClick={toggleMobileMenu}
+				>
+					{isMobileMenuOpen ? svgs.exit : svgs.threeDots}
+				</button>
+			)}
 
-			{/* Mobile Overlay */}
-			<div 
-				className={`mobile-overlay ${isMobileMenuOpen ? 'active' : ''}`}
-				onClick={() => setIsMobileMenuOpen(false)}
-			></div>
+			{/* Mobile Overlay - Only show in narrow view */}
+			{isNarrowView && (
+				<div 
+					className={`mobile-overlay ${isMobileMenuOpen ? 'active' : ''}`}
+					onClick={() => setIsMobileMenuOpen(false)}
+				></div>
+			)}
 
 			<button
 				ref={toggleSidebarRef}
 				className={`collapsed-toggle-sidebar ${
-					!isCollapsed || isHovered ? 'hidden' : ''
+					!isCollapsed || isHovered || isNarrowView ? 'hidden' : ''
 				}`}
 				onClick={toggleSidebar}
 			>
@@ -135,8 +163,8 @@ export function SideBar() {
 				className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${
 					isHovered ? 'hovered' : ''
 				} ${isMobileMenuOpen ? 'mobile-open' : ''}`}
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
+				onMouseEnter={() => !isNarrowView && setIsHovered(true)}
+				onMouseLeave={() => !isNarrowView && setIsHovered(false)}
 			>
 				<button
 					ref={toggleSidebarRef}

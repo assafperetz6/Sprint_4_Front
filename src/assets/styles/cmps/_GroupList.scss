@@ -10,9 +10,34 @@
 	grid-auto-flow: dense;
 	padding: 0px 0px 40px;
 
-	@include for-mobile-layout {
+	@include for-mobile-only {
 		padding-block-end: 40px;
 		grid-template-columns: 150px 1fr;
+	}
+
+	@include for-tablet-portrait {
+		grid-template-columns: 300px 1fr;
+		padding: 0 8px 40px;
+		
+		.sticky-header-container {
+			width: 100%;
+
+			.group-header {
+				width: 100%;
+				
+				.toggle-group-preview {
+					left: 6px;
+				}
+
+				.group-title-container {
+					left: 42px;
+				}
+
+				.colored-border {
+					left: 0;
+				}
+			}
+		}
 	}
 
 	&.active-drag {
@@ -23,10 +48,6 @@
 	> * {
 		display: grid;
 		grid-template-columns: subgrid;
-	}
-
-	h4 {
-		font-size: rem(18px);
 	}
 
 	h4 {
@@ -44,6 +65,10 @@
 		.group-header-wrapper {
 			display: grid;
 			grid-template-columns: subgrid;
+
+			@include for-tablet-portrait {
+				grid-template-columns: 300px 1fr;
+			}
 		}
 
 		.group-header {
@@ -71,13 +96,17 @@
 
 		background-color: $clr3;
 
-		@include for-mobile-only {
+		@include for-tablet-and-mobile {
 			display: none;
 		}
 	}
 
 	.group-context-menu {
 		@include context-menu;
+
+		@include for-tablet-and-mobile {
+			display: none;
+		}
 	}
 
 	.group-header:hover .group-context-menu {
@@ -94,7 +123,6 @@
 		padding: 0 6px;
 		margin: 0 5px;
 
-
 		background-color: unset;
 		cursor: pointer;
 		svg {
@@ -106,7 +134,6 @@
 	.colored-border {
 		height: calc(100% + 1px);
 		width: 5px;
-
 		flex-shrink: 0;
 	}
 
@@ -131,8 +158,6 @@
 		grid-column: 1;
 		position: sticky;
 		left: 40px;
-		// Ignore in regards to mq
-		// left: $task-row-height;
 		border: 1px solid rgb(195, 198, 212);
 		border-radius: 4px;
 		height: em(32px);
@@ -144,6 +169,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		@include for-tablet-portrait {
+			width: 120px;
+			margin-left: 8px;
+			left: 0;
+		}
 
 		.txt {
 			text-wrap: nowrap;

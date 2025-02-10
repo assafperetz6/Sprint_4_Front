@@ -28,10 +28,34 @@
 
     .task-actions {
         position: relative;
-        align-items: center;
-        padding-block: 16px;
         display: flex;
-        gap: 8px;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 8px 16px 0;
+        background-color: $clr3;
+
+        @include for-mobile-only {
+            flex-direction: column;
+            padding: 8px;
+            gap: 8px;
+        }
+
+        @include for-tablet-portrait {
+            padding: 8px 16px;
+            gap: 8px;
+
+            .add-task-header {
+                flex: 0 0 auto;
+                
+                button {
+                    font-size: rem(13px);
+                    
+                    &:first-child {
+                        padding: 4px 8px;
+                    }
+                }
+            }
+        }
 
         .add-task-header {
             display: flex;
@@ -142,7 +166,7 @@
         .txt-filter-container {
             position: relative;
 
-            &:hover input:not(:focus), &:hover input:not(:focus) + span{
+            &:hover input:not(:focus), &:hover input:not(:focus) + span {
                 background-color: #ececf0;
             }
 
@@ -154,7 +178,6 @@
                 position: absolute;
                 top: 4px;
                 left: 8px;
-
                 color: $clr4;
             }
 
@@ -189,6 +212,18 @@
                         border: 1px solid $input-hover-border-clr;
                     }
                 }
+
+                @include for-tablet-portrait {
+                    width: 180px;
+                    
+                    &:not(:focus) {
+                        width: 120px;
+                    }
+
+                    &:focus {
+                        width: 180px;
+                    }
+                }
             }
         }
 
@@ -197,6 +232,12 @@
             left: 80px;
             height: 150px;
             width: 350px;
+
+            @include for-tablet-portrait {
+                left: unset;
+                right: 8px;
+                width: 300px;
+            }
 
             ul {
                 display: flex;
@@ -237,6 +278,12 @@
 
             padding-block-start: 20px;
             padding-inline-end: 52px;
+
+            @include for-tablet-portrait {
+                left: unset;
+                right: 8px;
+                width: 340px;
+            }
 
             .sort-options {
                 position: relative;
@@ -308,6 +355,12 @@
             width: 340px;
             
             padding-block-end: 8px;
+
+            @include for-tablet-portrait {
+                left: unset;
+                right: 8px;
+                width: 300px;
+            }
 
             h4 {
                 font-size: rem(16px);
